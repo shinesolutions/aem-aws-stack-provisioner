@@ -1,14 +1,7 @@
 FORGE
   remote: https://forgeapi.puppetlabs.com
   specs:
-    bryana-ec2tagfacts (0.2.0)
-      puppetlabs-inifile (>= 1.1.2)
-      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
-      stahnma-epel (>= 1.0.2)
-    puppetlabs-inifile (1.6.0)
     puppetlabs-stdlib (4.14.0)
-    stahnma-epel (1.2.2)
-      puppetlabs-stdlib (>= 3.0.0)
 
 GIT
   remote: https://github.com/shinesolutions/puppet-aem-orchestrator
@@ -27,7 +20,6 @@ GIT
       puppetlabs-stdlib (>= 1.0.0)
 
 DEPENDENCIES
-  bryana-ec2tagfacts (= 0.2.0)
   shinesolutions-aem_orchestrator (>= 0)
   shinesolutions-aem_resources (>= 0)
 
