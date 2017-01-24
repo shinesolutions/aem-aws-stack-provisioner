@@ -1,0 +1,9 @@
+---
+:backends: yaml
+:yaml:
+  :datadir: /tmp/aem-stack-provisioner/data
+:hierarchy:
+  - common
+:logger: console
+:merge_behavior: native
+:deep_merge_options: {}

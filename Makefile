@@ -19,4 +19,4 @@ lint:
 tools:
 	gem install puppet puppet-lint librarian-puppet
 
-.PHONY: $(AMIS) amis-all ci clean deps lint tools
+.PHONY: ci clean deps lint tools

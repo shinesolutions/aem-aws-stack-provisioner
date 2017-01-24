@@ -1,0 +1,7 @@
+class publish (
+
+) {
+
+}
+
+include publish
