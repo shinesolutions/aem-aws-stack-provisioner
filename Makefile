@@ -1,4 +1,4 @@
-ci: clean tools deps lint
+ci: clean tools lint deps package
 
 deps:
 	librarian-puppet install --path modules --verbose
