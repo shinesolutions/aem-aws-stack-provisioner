@@ -3,6 +3,7 @@
 :yaml:
   :datadir: /tmp/aem-aws-stack-provisioner/data
 :hierarchy:
+  - "%{::component}"
   - common
 :logger: console
 :merge_behavior: native
