@@ -4,7 +4,7 @@ class author_standby (
 
   class { 'aem_resources::author_set_as_standby':
     crx_quickstart_dir => '/opt/aem/author/crx-quickstart/',
-    primary_host       => "${author_primary_host}",
+    primary_host       => "${authorprimaryhost}",
   }
 
 }
