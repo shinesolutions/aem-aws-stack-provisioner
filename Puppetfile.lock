@@ -6,18 +6,17 @@ FORGE
 GIT
   remote: https://github.com/shinesolutions/puppet-aem-orchestrator
   ref: master
-  sha: 150f13a08fb4b80851ea3391f281dfb9460be258
+  sha: 6ab9add3ba14950c47f34d011428d3ad8e2648dc
   specs:
     shinesolutions-aem_orchestrator (0.9.0)
-      puppetlabs-stdlib (= 4.14.0)
 
 GIT
   remote: https://github.com/shinesolutions/puppet-aem-resources
   ref: master
-  sha: ad02b95fff561b7e6006e91b7b1ddfe4039d69ff
+  sha: f192f9113ec47168619e492c0a1235955cb2c6a0
   specs:
     shinesolutions-aem_resources (0.9.1)
-      puppetlabs-stdlib (>= 1.0.0)
+      puppetlabs-stdlib (= 4.14.0)
 
 DEPENDENCIES
   shinesolutions-aem_orchestrator (>= 0)
