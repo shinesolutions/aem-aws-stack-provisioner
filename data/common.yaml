@@ -1,5 +1,5 @@
 ---
-common::base_dir: /tmp/aem-aws-stack-provisioner
+common::base_dir: /opt/shinesolutions/aem-aws-stack-provisioner
 common::aws_region: ap-southeast-2
 
 common::user: ec2-user

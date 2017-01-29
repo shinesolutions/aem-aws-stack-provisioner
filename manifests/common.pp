@@ -36,13 +36,13 @@ class common (
   }
 
   # Set up AWS tools
-  file { '/opt/aws-tools/':
+  file { '/opt/shinesolutions/aws-tools/':
     ensure => directory,
     mode   => '0775',
     owner  => 'root',
     group  => 'root',
   } ->
-  file { '/opt/aws-tools/ec2tags-facts.sh':
+  file { '/opt/shinesolutions/aws-tools/ec2tags-facts.sh':
     ensure => present,
     source => "${base_dir}/files/facter/ec2tags-facts.sh",
     mode   => '0775',

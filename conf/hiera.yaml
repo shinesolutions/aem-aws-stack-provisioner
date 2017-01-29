@@ -1,7 +1,7 @@
 ---
 :backends: yaml
 :yaml:
-  :datadir: /tmp/aem-aws-stack-provisioner/data
+  :datadir: /opt/shinesolutions/aem-aws-stack-provisioner/data
 :hierarchy:
   - "%{::component}"
   - common
