@@ -1,0 +1,5 @@
+---
+publish_dispatcher::publish_port: 4503
+
+publish_dispatcher::conf_dir: /etc/httpd/conf.modules.d/
+publish_dispatcher::docroot_dir: /var/www/html/
