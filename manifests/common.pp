@@ -14,7 +14,7 @@ class common (
   } ->
   file { '/root/.aws/credentials':
     ensure  => file,
-    content => epp("${base_dir}/templates/aws/credentials.epp", { 'region' => "${aws_region}" }),
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aws/credentials.epp", { 'region' => "${aws_region}" }),
     mode    => '0664',
     owner   => 'root',
     group   => 'root',
@@ -29,22 +29,22 @@ class common (
   } ->
   file { "/home/${user}/.aws/credentials":
     ensure  => file,
-    content => epp("${base_dir}/templates/aws/credentials.epp", { 'region' => "${aws_region}" }),
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aws/credentials.epp", { 'region' => "${aws_region}" }),
     mode    => '0664',
     owner   => "${user}",
     group   => "${group}",
   }
 
   # Set up AWS tools
-  file { '/opt/shinesolutions/aws-tools/':
+  file { "${base_dir}/aws-tools/":
     ensure => directory,
     mode   => '0775',
     owner  => 'root',
     group  => 'root',
   } ->
-  file { '/opt/shinesolutions/aws-tools/ec2tags-facts.sh':
+  file { "${base_dir}/aws-tools/ec2tags-facts.sh":
     ensure => present,
-    source => "${base_dir}/files/facter/ec2tags-facts.sh",
+    source => "${base_dir}/aem-aws-stack-provisioner/files/facter/ec2tags-facts.sh",
     mode   => '0775',
     owner  => 'root',
     group  => 'root',
