@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative 'spec_helper'
 
 aem_port = @hiera.lookup('author_primary::aem_port', nil, @scope)
 aem_port ||= '4503'
