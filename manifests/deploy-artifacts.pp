@@ -1,7 +1,7 @@
-class aem_packages (
+class deploy_artifacts (
   $descriptor = $::descriptor,
   $component  = $::component,
-  $path       = '/tmp/aem_packages'
+  $path       = '/tmp/deploy_artifacts'
 ) {
 
   # load descriptor file
@@ -13,6 +13,10 @@ class aem_packages (
   notify { "The component_hash is: ${component_hash}": }
 
   if $component_hash {
+
+
+    # TODO: if component is dispatcher then deploy configuration...
+
 
     # extract the packages hash
     $packages = $component_hash['packages']
@@ -77,4 +81,4 @@ class aem_packages (
 
 }
 
-include aem_packages
+include deploy_artifacts
