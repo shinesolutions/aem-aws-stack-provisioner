@@ -8,7 +8,6 @@ class aem_packages (
   $descriptor_hash = loadjson($descriptor)
   notify { "The descriptor_hash is: ${descriptor_hash}": }
 
-
   # extract component hash
   $component_hash = $descriptor_hash[$component]
   notify { "The component_hash is: ${component_hash}": }
@@ -50,8 +49,8 @@ class aem_packages (
           mode    => '0775',
           require => File["${path}/${package['group']}/${package['name']}"],
         } ->
-          file { "${path}/${package['group']}/${package['name']}/${package['version']}/${package['name']}-${package['version']}.zip":
-            ensure => file,
+          archive { "${path}/${package['group']}/${package['name']}/${package['version']}/${package['name']}-${package['version']}.zip":
+            ensure => present,
             source => $package[source],
             before => Class['aem_resources::deploy_packages'],
           }

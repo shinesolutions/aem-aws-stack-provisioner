@@ -1,6 +1,6 @@
 .DS_Store
 .librarian
 .tmp
-modules
+modules/
 stage
 .idea/
