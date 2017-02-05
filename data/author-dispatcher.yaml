@@ -1,5 +1,6 @@
 ---
 author_dispatcher::author_port: 4502
 
-author_dispatcher::conf_dir: /etc/httpd/conf.modules.d/
+author_dispatcher::dispatcher_conf_dir: /etc/httpd/conf.modules.d/
+author_dispatcher::httpd_conf_dir: /etc/httpd/conf.d/
 author_dispatcher::docroot_dir: /var/www/html/

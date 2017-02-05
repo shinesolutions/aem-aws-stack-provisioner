@@ -1,14 +1,16 @@
 class author_dispatcher (
-  $conf_dir,
+  $dispatcher_conf_dir,
+  $httpd_conf_dir,
   $docroot_dir,
   $author_port,
 ) {
 
   class { 'aem_resources::author_dispatcher_set_config':
-    conf_dir    => "${conf_dir}",
-    docroot_dir => "${docroot_dir}",
-    author_host => 'someauthorhost',
-    author_port => "${author_port}",
+    dispatcher_conf_dir => "${dispatcher_conf_dir}",
+    httpd_conf_dir      => "${httpd_conf_dir}",
+    docroot_dir         => "${docroot_dir}",
+    author_host         => "${::authorhost}",
+    author_port         => "${author_port}",
   } ->
   exec { 'httpd -k graceful':
     cwd  => '/tmp',

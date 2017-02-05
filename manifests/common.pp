@@ -41,13 +41,22 @@ class common (
     mode   => '0775',
     owner  => 'root',
     group  => 'root',
-  } ->
+  }
   file { "${base_dir}/aws-tools/ec2tags-facts.sh":
-    ensure => present,
-    source => "${base_dir}/aem-aws-stack-provisioner/files/facter/ec2tags-facts.sh",
-    mode   => '0775',
-    owner  => 'root',
-    group  => 'root',
+    ensure  => present,
+    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws/ec2tags-facts.sh",
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    require => File["${base_dir}/aws-tools/"],
+  }
+  file { "${base_dir}/aws-tools/wait_for_ec2tag.py":
+    ensure  => present,
+    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws/wait_for_ec2tag.py",
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    require => File["${base_dir}/aws-tools/"],
   }
 
 }

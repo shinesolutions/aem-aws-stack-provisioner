@@ -1,14 +1,16 @@
 class publish_dispatcher (
-  $conf_dir,
+  $dispatcher_conf_dir,
+  $httpd_conf_dir,
   $docroot_dir,
   $publish_port,
 ) {
 
   class { 'aem_resources::publish_dispatcher_set_config':
-    conf_dir     => "${conf_dir}",
-    docroot_dir  => "${docroot_dir}",
-    publish_host => 'somepublishhost',
-    publish_port => "${publish_port}",
+    dispatcher_conf_dir => "${dispatcher_conf_dir}",
+    httpd_conf_dir      => "${httpd_conf_dir}",
+    docroot_dir         => "${docroot_dir}",
+    publish_host         => "${::publishhost}",
+    publish_port         => "${publish_port}",
   } ->
   exec { 'httpd -k graceful':
     cwd  => '/tmp',
