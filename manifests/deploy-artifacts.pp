@@ -19,53 +19,54 @@ class deploy_artifacts (
       mode   => '0775',
     }
 
-    # TODO: If configurations exists send to deploy configurations
+    # extract the assets hash
+    $assets = $component_hash['assets']
+    notify { "The assets is: ${assets}": }
 
-    # extract the configurations hash
-    $configurations = $component_hash['configurations']
-    notify { "The configurations is: ${configurations}": }
+    if $assets {
 
-    if $configurations {
-
-      file { "${path}/configurations":
+      file { "${path}/assets":
         ensure  => directory,
         mode    => '0775',
         require => File[$path],
       }
 
-      $configurations.each | Integer $index, Hash $configuration| {
+      $assets.each | Integer $index, Hash $asset| {
 
-        archive { "${path}/configurations/${configuration[filename]}":
+        # TODO: validate the asset values exist and populated
+
+        archive { "${path}/assets/${asset[filename]}":
           ensure => present,
-          source => $configuration[source],
+          source => $asset[source],
         } ->
-          file { $configuration[destination]:
+          file { $asset[destination]:
             ensure => present,
-            group  => $configuration[group],
-            owner  => $configuration[owner],
-            mode   => $configuration[mode],
-            source => "${path}/configurations/${configuration[filename]}",
+            group  => $asset[group],
+            owner  => $asset[owner],
+            mode   => $asset[mode],
+            source => "${path}/assets/${asset[filename]}",
           }
 
-        #TODO: optional exec command to restart service. post file placement.
-        if $configuration[exec_command] {
+        if $asset[exec_command] and $asset[exec_command].strip.size > 0 {
 
-          exec { $configuration[exec_command]:
-            require => File[$configuration[destination]],
+          exec { $asset[exec_command]:
+            require => File[$asset[destination]],
           }
 
         }
 
       }
 
-    }
 
+    } else {
+
+      notify { "no 'assets' defined for component: ${component} in descriptor file: ${descriptor}. nothing to deploy": }
+
+    }
 
     # extract the packages hash
     $packages = $component_hash['packages']
     notify { "The packages is: ${packages}": }
-
-    # TODO: If packages exists send to deploy packages
 
     if $packages {
 
@@ -78,7 +79,7 @@ class deploy_artifacts (
 
       $packages.each | Integer $index, Hash $package| {
 
-        # TODO: validate the package values exist and populated?
+        # TODO: validate the package values exist and populated
 
         if !defined(File["${path}/packages/${package['group']}"]) {
           file { "${path}/packages/${package['group']}":
