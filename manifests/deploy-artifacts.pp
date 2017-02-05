@@ -14,9 +14,7 @@ class deploy_artifacts (
 
   if $component_hash {
 
-
     # TODO: if component is dispatcher then deploy configuration...
-
 
     # extract the packages hash
     $packages = $component_hash['packages']
@@ -31,6 +29,8 @@ class deploy_artifacts (
       }
 
       $packages.each | Integer $index, Hash $package| {
+
+        # TODO: validate the package values exist and populated?
 
         if !defined(File["${path}/${package['group']}"]) {
           file { "${path}/${package['group']}":
