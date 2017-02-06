@@ -1,0 +1,34 @@
+{
+  "author": {
+    "packages": [
+      {
+        "ensure": "present",
+        "group": "shinesolutions",
+        "name": "aem-healthcheck-content",
+        "version": "1.2",
+        "source": "https://github.com/shinesolutions/aem-healthcheck/releases/download/v1.2/aem-healthcheck-content-1.2.zip",
+        "replicate": false,
+        "activate": true,
+        "force": true
+      }
+    ]
+  },
+  "author-dispatcher": {
+    "assets": [
+      {
+        "ensure": "present",
+        "source": "https://gist.githubusercontent.com/craimbert/8c403df755b0f56ff60b/raw/d11e089bd6bef86e00ac8068a69b36741ef9bdd2/centos_default_httpd.conf",
+        "destination": "/tmp/httpd.conf",
+        "filename": "httpd.conf",
+        "group": "apache",
+        "owner": "apache",
+        "mode": "0644",
+        "exec_command": "/bin/echo complete"
+      }
+    ]
+  },
+  "publish": {
+  },
+  "publish-dispatcher": {
+  }
+}
