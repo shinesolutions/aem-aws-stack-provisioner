@@ -1,7 +1,7 @@
 class deploy_artifacts (
   $descriptor = $::descriptor,
   $component  = $::component,
-  $path       = '/tmp/deploy_artifacts'
+  $path       = '/tmp/shinesolutions/aem-aws-stack-provisioner/'
 ) {
 
   # load descriptor file
