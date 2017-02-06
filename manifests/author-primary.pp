@@ -9,12 +9,15 @@ class author_primary (
     port     => 4502,
     debug    => true,
   } ->
+  class { 'aem_resources::author_standby_set_config':
+    crx_quickstart_dir => '/opt/aem/author/crx-quickstart',
+  } ->
   service { 'aem-aem':
     ensure => 'running',
     enable => true,
   } ->
   aem_aem { 'Wait until login page is ready':
-    ensure  => login_page_is_ready,
+    ensure => login_page_is_ready,
   }
 
 }

@@ -10,8 +10,8 @@ class author_standby (
     debug    => true,
   } ->
   class { 'aem_resources::author_standby_set_config':
-    install_dir  => '/opt/aem/author/crx-quickstart/install',
-    primary_host => "${::authorprimaryhost}",
+    crx_quickstart_dir => '/opt/aem/author/crx-quickstart',
+    primary_host       => "${::authorprimaryhost}",
   } ->
   service { 'aem-aem':
     ensure => 'running',

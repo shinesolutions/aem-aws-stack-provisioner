@@ -12,4 +12,6 @@ aws ec2 describe-tags --filters "Name=resource-id,Values=${instance_id}" --query
 
 # Set S3 bucket name as Facter fact.
 data_bucket_name=$1
-echo "data_bucket=${data_bucket_name}" > /opt/puppetlabs/facter/facts.d/s3-buckets.txt
+if [ ! -z $data_bucket_name ]; then
+  echo "databucket=${data_bucket_name}" > /opt/puppetlabs/facter/facts.d/s3-buckets.txt
+fi
