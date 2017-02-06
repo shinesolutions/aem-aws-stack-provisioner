@@ -42,9 +42,9 @@ class common (
     owner  => 'root',
     group  => 'root',
   }
-  file { "${base_dir}/aws-tools/ec2tags-facts.sh":
+  file { "${base_dir}/aws-tools/set-facts.sh":
     ensure  => present,
-    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws/ec2tags-facts.sh",
+    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws/set-facts.sh",
     mode    => '0775',
     owner   => 'root',
     group   => 'root',

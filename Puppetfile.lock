@@ -13,7 +13,7 @@ GIT
 GIT
   remote: https://github.com/shinesolutions/puppet-aem-resources
   ref: master
-  sha: bc0f0e814cb9a03c8b3eca7abe5effbe4ce04a45
+  sha: 0a924e9cb426de0ecd15c614121f1017dc9c5bc0
   specs:
     shinesolutions-aem_resources (0.9.1)
       puppetlabs-stdlib (= 4.14.0)
