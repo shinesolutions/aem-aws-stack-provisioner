@@ -24,6 +24,8 @@ package:
 		--exclude='.librarian*' \
 		--exclude='.tmp*' \
 		--exclude='stage*' \
+		--exclude='.idea*' \
+		--exclude='.DS_Store*' \
 		-cvf \
 		stage/aem-aws-stack-provisioner-$(version).tar ./
 	gzip stage/aem-aws-stack-provisioner-$(version).tar

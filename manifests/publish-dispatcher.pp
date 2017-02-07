@@ -9,8 +9,8 @@ class publish_dispatcher (
     dispatcher_conf_dir => "${dispatcher_conf_dir}",
     httpd_conf_dir      => "${httpd_conf_dir}",
     docroot_dir         => "${docroot_dir}",
-    publish_host         => "${::publishhost}",
-    publish_port         => "${publish_port}",
+    publish_host        => "${::publishhost}",
+    publish_port        => "${publish_port}",
   } ->
   exec { 'httpd -k graceful':
     cwd  => '/tmp',
