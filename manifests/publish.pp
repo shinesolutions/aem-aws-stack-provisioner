@@ -1,12 +1,14 @@
 class publish (
-
+  $puppet_conf_dir,
+  $publish_protocol,
+  $publish_port,
 ) {
 
   class { 'aem_resources::puppet_aem_resources_set_config':
-    conf_dir => '/etc/puppetlabs/puppet/',
-    protocol => 'http',
+    conf_dir => "${puppet_conf_dir}",
+    protocol => "${author_protocol}",
     host     => 'localhost',
-    port     => 4503,
+    port     => "${author_port}",
     debug    => true,
   } ->
   service { 'aem-aem':

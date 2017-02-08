@@ -1,0 +1,6 @@
+---
+author_primary::puppet_conf_dir: /etc/puppetlabs/puppet/
+author_primary::crx_quickstart_dir: /opt/aem/author/crx-quickstart
+
+author_primary::author_protocol: http
+author_primary::author_port: 4502

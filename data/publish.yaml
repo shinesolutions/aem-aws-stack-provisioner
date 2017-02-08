@@ -1,0 +1,5 @@
+---
+publish::puppet_conf_dir: /etc/puppetlabs/puppet/
+
+publish::publish_protocol: http
+publish::publish_port: 4503
