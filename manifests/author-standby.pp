@@ -30,11 +30,11 @@ class author_standby (
     group  => 'root',
   } ->
   file { "${base_dir}/aem-tools/run-event.sh":
-    ensure  => present,
-    source  => "${base_dir}/aem-aws-stack-provisioner/files/aem/run-event.sh",
-    mode    => '0775',
-    owner   => 'root',
-    group   => 'root',
+    ensure => present,
+    source => "${base_dir}/aem-aws-stack-provisioner/files/aem/run-event.sh",
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
   }
 
 }
