@@ -1,5 +1,6 @@
 ---
-author_primary::puppet_conf_dir: "%{hiera('puppet_conf_dir')}"
+author_primary::base_dir: "%{hiera('common::base_dir')}"
+author_primary::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
 author_primary::crx_quickstart_dir: /opt/aem/author/crx-quickstart
 
 author_primary::author_protocol: http

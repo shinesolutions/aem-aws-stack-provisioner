@@ -1,4 +1,5 @@
 class publish (
+  $base_dir,
   $puppet_conf_dir,
   $publish_protocol,
   $publish_port,

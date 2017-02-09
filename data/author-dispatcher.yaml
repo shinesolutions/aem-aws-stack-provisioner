@@ -6,4 +6,4 @@ author_dispatcher::dispatcher_conf_dir: /etc/httpd/conf.modules.d/
 author_dispatcher::httpd_conf_dir: /etc/httpd/conf.d/
 author_dispatcher::docroot_dir: /var/www/html/
 
-author_dispatcher::tmp_dir: "%{hiera('tmp_dir')}"
+author_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"

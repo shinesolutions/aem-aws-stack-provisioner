@@ -15,22 +15,21 @@ GIT
 GIT
   remote: https://github.com/shinesolutions/puppet-aem-resources
   ref: master
-  sha: be6d30f63ec438a8519f5215255e08d86b40449c
+  sha: 5dee5be9aa8eaaf1a66fdf4d6431ce104543c916
   specs:
     shinesolutions-aem_resources (0.9.1)
       puppetlabs-stdlib (= 4.14.0)
 
 GIT
-  remote: https://github.com/shinesolutions/puppet-chaosmonkey1
+  remote: https://github.com/shinesolutions/puppet-simianarmy
   ref: master
-  sha: a44aa276dfe24c09f77a2f8f8d0aa78d8cf70e81
+  sha: 9eb839593c500ffab86b9087c8926a5ff7a77f9f
   specs:
-    shinesolutions-chaosmonkey1 (0.9.0)
-      puppetlabs-stdlib (>= 1.0.0)
+    shinesolutions-simianarmy (0.1.0)
 
 DEPENDENCIES
   puppet-archive (>= 0)
   shinesolutions-aem_orchestrator (>= 0)
   shinesolutions-aem_resources (>= 0)
-  shinesolutions-chaosmonkey1 (>= 0)
+  shinesolutions-simianarmy (>= 0)
 

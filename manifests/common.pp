@@ -1,11 +1,18 @@
 class common (
   $base_dir,
+  $tmp_base_dir,
   $tmp_dir,
   $aws_region,
   $user,
   $group,
 ){
 
+  file { "${tmp_base_dir}":
+    ensure => directory,
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  } ->
   file { "${tmp_dir}":
     ensure => directory,
     mode   => '0775',

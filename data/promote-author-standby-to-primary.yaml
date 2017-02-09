@@ -1,2 +1,2 @@
 ---
-promote_author_standby_to_primary::tmp_dir: "%{hiera('tmp_dir')}"
+promote_author_standby_to_primary::tmp_dir: "%{hiera('common::tmp_dir')}"

@@ -1,4 +1,5 @@
 class author_standby (
+  $base_dir,
   $puppet_conf_dir,
   $crx_quickstart_dir,
   $author_protocol,

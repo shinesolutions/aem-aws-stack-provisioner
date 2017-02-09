@@ -5,4 +5,4 @@ publish_dispatcher::dispatcher_conf_dir: /etc/httpd/conf.modules.d/
 publish_dispatcher::httpd_conf_dir: /etc/httpd/conf.d/
 publish_dispatcher::docroot_dir: /var/www/html/
 
-publish_dispatcher::tmp_dir: "%{hiera('tmp_dir')}"
+publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
