@@ -1,0 +1,6 @@
+---
+author_standby::puppet_conf_dir: "%{hiera('puppet_conf_dir')}"
+author_standby::crx_quickstart_dir: /opt/aem/author/crx-quickstart
+
+author_standby::author_protocol: http
+author_standby::author_port: 4502

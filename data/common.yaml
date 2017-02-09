@@ -6,3 +6,4 @@ common::user: ec2-user
 common::group: ec2-user
 
 common::tmp_dir: /tmp/shinesolutions/aem-aws-stack-provisioner
+common::puppet_conf_dir: /etc/puppetlabs/puppet/
