@@ -21,6 +21,21 @@ class author_standby (
     enable => true,
   }
 
+  # Set up AEM tools
+  file { "${base_dir}/aem-tools/":
+    ensure => directory,
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  } ->
+  file { "${base_dir}/aem-tools/run-event.sh":
+    ensure  => present,
+    source  => "${base_dir}/aem-aws-stack-provisioner/files/aem/run-event.sh",
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+  }
+
 }
 
 include author_standby
