@@ -20,8 +20,17 @@ GIT
     shinesolutions-aem_resources (0.9.1)
       puppetlabs-stdlib (= 4.14.0)
 
+GIT
+  remote: https://github.com/shinesolutions/puppet-chaosmonkey1
+  ref: master
+  sha: a44aa276dfe24c09f77a2f8f8d0aa78d8cf70e81
+  specs:
+    shinesolutions-chaosmonkey1 (0.9.0)
+      puppetlabs-stdlib (>= 1.0.0)
+
 DEPENDENCIES
   puppet-archive (>= 0)
   shinesolutions-aem_orchestrator (>= 0)
   shinesolutions-aem_resources (>= 0)
+  shinesolutions-chaosmonkey1 (>= 0)
 
