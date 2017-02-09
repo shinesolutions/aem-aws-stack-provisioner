@@ -6,9 +6,9 @@ class publish (
 
   class { 'aem_resources::puppet_aem_resources_set_config':
     conf_dir => "${puppet_conf_dir}",
-    protocol => "${author_protocol}",
+    protocol => "${publish_protocol}",
     host     => 'localhost',
-    port     => "${author_port}",
+    port     => "${publish_port}",
     debug    => true,
   } ->
   service { 'aem-aem':
