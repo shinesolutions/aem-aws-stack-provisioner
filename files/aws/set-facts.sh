@@ -7,11 +7,12 @@
 # and will only be updated on recovery events.
 # These facts are purposely not set on every Facter call in order to avoid
 # hitting the AWS API rate limit.
-instance_id=`curl --silent http://169.254.169.254/latest/meta-data/instance-id`
+instance_id=$(curl --silent http://169.254.169.254/latest/meta-data/instance-id)
+# shellcheck disable=2039
 aws ec2 describe-tags --filters "Name=resource-id,Values=${instance_id}" --query 'Tags[*].[Key,Value]' --output text | awk -F $'\t' '{print $1"="$2}' | grep -v -E '^(Name)=' > /opt/puppetlabs/facter/facts.d/ec2-tags.txt
 
 # Set S3 bucket name as Facter fact.
 data_bucket_name=$1
-if [ ! -z $data_bucket_name ]; then
+if [ ! -z "${data_bucket_name}" ]; then
   echo "databucket=${data_bucket_name}" > /opt/puppetlabs/facter/facts.d/s3-buckets.txt
 fi
