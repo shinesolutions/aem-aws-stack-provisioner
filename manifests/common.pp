@@ -1,9 +1,17 @@
 class common (
   $base_dir,
+  $tmp_dir,
   $aws_region,
   $user,
   $group,
 ){
+
+  file { "${tmp_dir}":
+    ensure => directory,
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  }
 
   # Set up AWS region for root user
   file { '/root/.aws/':

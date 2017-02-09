@@ -1,9 +1,9 @@
 class promote_author_standby_to_primary (
-
+  $tmp_dir,
 ) {
 
   exec { 'service aem-aem stop':
-    cwd  => '/tmp',
+    cwd  => "${tmp_dir}",
     path => ['/usr/bin', '/usr/sbin'],
   } ->
   exec { 'set-component.sh author-primary':
