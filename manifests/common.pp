@@ -59,7 +59,7 @@ class common (
   }
   file { "${base_dir}/aws-tools/set-component.sh":
     ensure  => file,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aws/set-component.sh.epp", { 'base_dir' => "${base_dir}" }),
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aws-tools/set-component.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
@@ -67,7 +67,7 @@ class common (
   }
   file { "${base_dir}/aws-tools/set-facts.sh":
     ensure  => present,
-    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws/set-facts.sh",
+    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws-tools/set-facts.sh",
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
@@ -75,7 +75,7 @@ class common (
   }
   file { "${base_dir}/aws-tools/wait_for_ec2tag.py":
     ensure  => present,
-    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws/wait_for_ec2tag.py",
+    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws-tools/wait_for_ec2tag.py",
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
