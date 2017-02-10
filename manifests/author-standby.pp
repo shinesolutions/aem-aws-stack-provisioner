@@ -20,6 +20,10 @@ class author_standby (
   service { 'aem-aem':
     ensure => 'running',
     enable => true,
+  } ->
+  aem_bundle { 'Stop webdav bundle':
+    ensure => stopped,
+    name   => 'org.apache.sling.jcr.webdav',
   }
 
   # Set up AEM tools

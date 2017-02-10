@@ -32,6 +32,10 @@ class publish (
     log_level     => 'info',
     retry_delay   => 60000,
     force         => true,
+  } ->
+  aem_bundle { 'Stop webdav bundle':
+    ensure => stopped,
+    name   => 'org.apache.sling.jcr.webdav',
   }
 
   # Set up AEM tools

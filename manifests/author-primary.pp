@@ -25,6 +25,10 @@ class author_primary (
     retries_max_tries          => 60,
     retries_base_sleep_seconds => 5,
     retries_max_sleep_seconds  => 5,
+  } ->
+  aem_bundle { 'Stop webdav bundle':
+    ensure => stopped,
+    name   => 'org.apache.sling.jcr.webdav',
   }
 
   # Set up AEM tools
