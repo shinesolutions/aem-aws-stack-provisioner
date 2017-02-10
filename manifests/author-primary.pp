@@ -34,9 +34,30 @@ class author_primary (
     owner  => 'root',
     group  => 'root',
   } ->
-  file { "${base_dir}/aem-tools/run-event.sh":
+  file { "${base_dir}/aem-tools/deploy-artifacts.sh":
     ensure => present,
-    source => "${base_dir}/aem-aws-stack-provisioner/files/aem/run-event.sh",
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/deploy-artifacts.sh.epp", { 'base_dir' => "${base_dir}" }),
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  } ->
+  file { "${base_dir}/aem-tools/export-backup.sh":
+    ensure => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/export-backup.sh.epp", { 'base_dir' => "${base_dir}" }),
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  } ->
+  file { "${base_dir}/aem-tools/import-backup.sh":
+    ensure => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/import-backup.sh.epp", { 'base_dir' => "${base_dir}" }),
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  } ->
+  file { "${base_dir}/aem-tools/promote-author-standby-to-primary.sh":
+    ensure => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/promote-author-standby-to-primary.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode   => '0775',
     owner  => 'root',
     group  => 'root',

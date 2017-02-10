@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -o nounset
+set -o errexit
+
+if [ "$#" -ne 1 ]; then
+  echo 'Usage: ./deploy-artifacts.sh <descriptor>'
+  exit 1
+fi
+
+descriptor=$1
+event=deploy-artifacts
+
+cd <%= $base_dir %>/aem-aws-stack-provisioner/
+FACTER_event=${event} \
+  FACTER_descriptor=$descriptor \
+  puppet apply \
+  --modulepath modules \
+  --hiera_config conf/hiera.yaml \
+  "manifests/${event}.pp"
