@@ -3,13 +3,13 @@ import boto3, requests, sys
 from retrying import retry
 
 component = sys.argv[1]
-max_retries = 60
+max_retries = 120
 delay = 5000
 
 tag_keys = {
-  'author-dispatcher': ['AuthorHost'],
-  'publish-dispatcher': ['PublishHost'],
-  'publish': ['PublishDispatcherHost']
+  'author-dispatcher': ['Component', 'StackPrefix', 'AuthorHost'],
+  'publish-dispatcher': ['Component', 'StackPrefix', 'PairInstanceId', 'PublishHost'],
+  'publish': ['Component', 'StackPrefix', 'PairInstanceId', 'PublishDispatcherHost']
 }
 
 def get_instance_id():

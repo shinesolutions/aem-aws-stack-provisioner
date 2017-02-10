@@ -1,4 +1,5 @@
 class publish_dispatcher (
+  $tmp_dir,
   $dispatcher_conf_dir,
   $httpd_conf_dir,
   $docroot_dir,
@@ -13,7 +14,7 @@ class publish_dispatcher (
     publish_port        => "${publish_port}",
   } ->
   exec { 'httpd -k graceful':
-    cwd  => '/tmp',
+    cwd  => "${tmp_dir}",
     path => ['/sbin'],
   }
 

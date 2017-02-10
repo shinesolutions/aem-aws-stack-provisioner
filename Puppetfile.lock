@@ -8,20 +8,28 @@ FORGE
 GIT
   remote: https://github.com/shinesolutions/puppet-aem-orchestrator
   ref: master
-  sha: 80850022fd9127ffaa8ac89613838aaa5f3711c9
+  sha: c031457db1a74624916472423d2630555c479838
   specs:
     shinesolutions-aem_orchestrator (0.9.3)
 
 GIT
   remote: https://github.com/shinesolutions/puppet-aem-resources
   ref: master
-  sha: e4013ae82fc59e1463403383f8f8b2f3f13f1175
+  sha: 5dee5be9aa8eaaf1a66fdf4d6431ce104543c916
   specs:
     shinesolutions-aem_resources (0.9.1)
       puppetlabs-stdlib (= 4.14.0)
+
+GIT
+  remote: https://github.com/shinesolutions/puppet-simianarmy
+  ref: master
+  sha: 9eb839593c500ffab86b9087c8926a5ff7a77f9f
+  specs:
+    shinesolutions-simianarmy (0.1.0)
 
 DEPENDENCIES
   puppet-archive (>= 0)
   shinesolutions-aem_orchestrator (>= 0)
   shinesolutions-aem_resources (>= 0)
+  shinesolutions-simianarmy (>= 0)
 

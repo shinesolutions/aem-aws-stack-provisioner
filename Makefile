@@ -15,6 +15,7 @@ lint:
 		--no-only_variable_string-check \
 		--no-selector_inside_resource-check \
 		manifests/*.pp
+	shellcheck files/*/*.sh
 
 package:
 	rm -rf stage
