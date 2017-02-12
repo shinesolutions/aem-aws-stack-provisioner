@@ -89,24 +89,12 @@ class deploy_artifacts (
           }
         }
 
-        if !defined(File["${path}/packages/${package['group']}/${package['name']}"]) {
-          file { "${path}/packages/${package['group']}/${package['name']}":
-            ensure  => directory,
-            mode    => '0775',
-            require => File["${path}/packages/${package['group']}"],
-          }
+        archive { "${path}/packages/${package['group']}/${package['name']}-${package['version']}.zip":
+          ensure => present,
+          source => $package[source],
+          require => File["${path}/packages/${package['group']}"],
+          before => Class['aem_resources::deploy_packages'],
         }
-
-        file { "${path}/packages/${package['group']}/${package['name']}/${package['version']}":
-          ensure  => directory,
-          mode    => '0775',
-          require => File["${path}/packages/${package['group']}/${package['name']}"],
-        } ->
-          archive { "${path}/packages/${package['group']}/${package['name']}/${package['version']}/${package['name']}-${package['version']}.zip":
-            ensure => present,
-            source => $package[source],
-            before => Class['aem_resources::deploy_packages'],
-          }
 
       }
 
