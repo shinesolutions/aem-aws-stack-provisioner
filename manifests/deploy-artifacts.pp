@@ -60,7 +60,7 @@ class deploy_artifacts (
 
     } else {
 
-      notify { "no 'assets' defined for component: ${component} in descriptor file: ${descriptor}. nothing to deploy": }
+      notify { "no 'assets' defined for component: ${component} in descriptor file: ${descriptor_file}. nothing to deploy": }
 
     }
 
@@ -90,10 +90,10 @@ class deploy_artifacts (
         }
 
         archive { "${path}/packages/${package['group']}/${package['name']}-${package['version']}.zip":
-          ensure => present,
-          source => $package[source],
+          ensure  => present,
+          source  => $package[source],
           require => File["${path}/packages/${package['group']}"],
-          before => Class['aem_resources::deploy_packages'],
+          before  => Class['aem_resources::deploy_packages'],
         }
 
       }
@@ -105,14 +105,14 @@ class deploy_artifacts (
 
     } else {
 
-      notify { "no 'packages' defined for component: ${component} in descriptor file: ${descriptor}. nothing to deploy": }
+      notify { "no 'packages' defined for component: ${component} in descriptor file: ${descriptor_file}. nothing to deploy": }
 
     }
 
 
   } else {
 
-    notify { "component: ${component} not found in descriptor file: ${descriptor}. nothing to deploy": }
+    notify { "component: ${component} not found in descriptor file: ${descriptor_file}. nothing to deploy": }
 
   }
 
