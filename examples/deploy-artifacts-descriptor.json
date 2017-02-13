@@ -1,8 +1,7 @@
 {
-  "author": {
+  "author-primary": {
     "packages": [
       {
-        "ensure": "present",
         "group": "shinesolutions",
         "name": "aem-healthcheck-content",
         "version": "1.2",
@@ -16,7 +15,6 @@
   "author-dispatcher": {
     "assets": [
       {
-        "ensure": "present",
         "source": "https://gist.githubusercontent.com/craimbert/8c403df755b0f56ff60b/raw/d11e089bd6bef86e00ac8068a69b36741ef9bdd2/centos_default_httpd.conf",
         "destination": "/tmp/httpd.conf",
         "filename": "httpd.conf",

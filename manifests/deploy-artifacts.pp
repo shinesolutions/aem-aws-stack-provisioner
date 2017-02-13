@@ -1,11 +1,11 @@
 class deploy_artifacts (
-  $descriptor = $::descriptor,
-  $component  = $::component,
-  $path       = '/tmp/shinesolutions/aem-aws-stack-provisioner/'
+  $descriptor_file = $::descriptor_file,
+  $component       = $::component,
+  $path            = '/tmp/shinesolutions/aem-aws-stack-provisioner/',
 ) {
 
   # load descriptor file
-  $descriptor_hash = loadjson($descriptor)
+  $descriptor_hash = loadjson("${path}/${descriptor_file}")
   notify { "The descriptor_hash is: ${descriptor_hash}": }
 
   # extract component hash

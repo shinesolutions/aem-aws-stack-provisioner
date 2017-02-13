@@ -3,16 +3,22 @@ set -o nounset
 set -o errexit
 
 if [ "$#" -ne 1 ]; then
-  echo 'Usage: ./deploy-artifacts.sh <descriptor>'
+  echo 'Usage: ./deploy-artifacts.sh <descriptor_file>'
   exit 1
 fi
 
-descriptor=$1
+descriptor_file=$1
 event=deploy-artifacts
 
 cd <%= $base_dir %>/aem-aws-stack-provisioner/
 FACTER_event=${event} \
-  FACTER_descriptor=$descriptor \
+  FACTER_descriptor_file=$descriptor_file \
+  puppet apply \
+  --modulepath modules \
+  --hiera_config conf/hiera.yaml \
+  "manifests/${event}-prepare.pp"
+FACTER_event=${event} \
+  FACTER_descriptor_file=$descriptor_file \
   puppet apply \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
