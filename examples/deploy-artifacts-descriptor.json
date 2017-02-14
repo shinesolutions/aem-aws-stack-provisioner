@@ -9,15 +9,6 @@
         "replicate": true,
         "activate": false,
         "force": true
-      },
-      {
-        "group": "shinesolutions",
-        "name": "aem-healthcheck-content",
-        "version": "1.2",
-        "source": "https://github.com/shinesolutions/aem-healthcheck/releases/download/v1.2/aem-healthcheck-content-1.2.zip",
-        "replicate": false,
-        "activate": false,
-        "force": true
       }
     ]
   },
@@ -36,15 +27,6 @@
   },
   "publish": {
     "packages": [
-      {
-        "group": "shinesolutions",
-        "name": "aem-healthcheck-content",
-        "version": "1.2",
-        "source": "https://github.com/shinesolutions/aem-healthcheck/releases/download/v1.2/aem-healthcheck-content-1.2.zip",
-        "replicate": false,
-        "activate": false,
-        "force": true
-      }
     ]
   },
   "publish-dispatcher": {
