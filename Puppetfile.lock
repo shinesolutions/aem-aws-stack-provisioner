@@ -7,7 +7,7 @@ FORGE
 
 GIT
   remote: https://github.com/shinesolutions/puppet-aem-orchestrator
-  ref: master
+  ref: 0.9.4
   sha: e37ec8a94381ca21fd5d0c546c1f2d3ead5369ba
   specs:
     shinesolutions-aem_orchestrator (0.9.4)
@@ -29,7 +29,7 @@ GIT
     shinesolutions-simianarmy (0.1.0)
 
 DEPENDENCIES
-  puppet-archive (>= 0)
+  puppet-archive (= 1.3.0)
   shinesolutions-aem_orchestrator (>= 0)
   shinesolutions-aem_resources (>= 0)
   shinesolutions-simianarmy (>= 0)
