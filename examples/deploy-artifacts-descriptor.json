@@ -3,11 +3,20 @@
     "packages": [
       {
         "group": "shinesolutions",
+        "name": "aem-helloworld-content",
+        "version": "0.0.1-SNAPSHOT",
+        "source": "s3://aem-stack-builder/library/aem-helloworld-content-0.0.1-SNAPSHOT.zip",
+        "replicate": true,
+        "activate": false,
+        "force": true
+      },
+      {
+        "group": "shinesolutions",
         "name": "aem-healthcheck-content",
         "version": "1.2",
         "source": "https://github.com/shinesolutions/aem-healthcheck/releases/download/v1.2/aem-healthcheck-content-1.2.zip",
         "replicate": false,
-        "activate": true,
+        "activate": false,
         "force": true
       }
     ]
@@ -26,6 +35,17 @@
     ]
   },
   "publish": {
+    "packages": [
+      {
+        "group": "shinesolutions",
+        "name": "aem-healthcheck-content",
+        "version": "1.2",
+        "source": "https://github.com/shinesolutions/aem-healthcheck/releases/download/v1.2/aem-healthcheck-content-1.2.zip",
+        "replicate": false,
+        "activate": false,
+        "force": true
+      }
+    ]
   },
   "publish-dispatcher": {
   }
