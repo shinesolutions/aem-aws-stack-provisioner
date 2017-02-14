@@ -45,6 +45,13 @@ class publish (
     owner  => 'root',
     group  => 'root',
   } ->
+  file { "${base_dir}/aem-tools/deploy-artifact.sh":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/deploy-artifact.sh.epp", { 'base_dir' => "${base_dir}" }),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+  } ->
   file { "${base_dir}/aem-tools/deploy-artifacts.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/deploy-artifacts.sh.epp", { 'base_dir' => "${base_dir}" }),
