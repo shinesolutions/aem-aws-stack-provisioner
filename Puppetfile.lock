@@ -23,7 +23,7 @@ GIT
 
 GIT
   remote: https://github.com/shinesolutions/puppet-simianarmy
-  ref: master
+  ref: 0.2.0
   sha: 7372a2fc0abbfe7a49f38b7f12d36123095e942c
   specs:
     shinesolutions-simianarmy (0.2.0)
