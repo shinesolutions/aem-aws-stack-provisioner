@@ -1,14 +1,13 @@
 {
-  "author": {
+  "author-primary": {
     "packages": [
       {
-        "ensure": "present",
         "group": "shinesolutions",
-        "name": "aem-healthcheck-content",
-        "version": "1.2",
-        "source": "https://github.com/shinesolutions/aem-healthcheck/releases/download/v1.2/aem-healthcheck-content-1.2.zip",
-        "replicate": false,
-        "activate": true,
+        "name": "aem-helloworld-content",
+        "version": "0.0.1-SNAPSHOT",
+        "source": "s3://aem-stack-builder/library/aem-helloworld-content-0.0.1-SNAPSHOT.zip",
+        "replicate": true,
+        "activate": false,
         "force": true
       }
     ]
@@ -16,7 +15,6 @@
   "author-dispatcher": {
     "assets": [
       {
-        "ensure": "present",
         "source": "https://gist.githubusercontent.com/craimbert/8c403df755b0f56ff60b/raw/d11e089bd6bef86e00ac8068a69b36741ef9bdd2/centos_default_httpd.conf",
         "destination": "/tmp/httpd.conf",
         "filename": "httpd.conf",
@@ -28,6 +26,8 @@
     ]
   },
   "publish": {
+    "packages": [
+    ]
   },
   "publish-dispatcher": {
   }

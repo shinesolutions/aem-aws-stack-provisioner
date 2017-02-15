@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -o nounset
+set -o errexit
+
+if [ "$#" -ne 5 ]; then
+  echo 'Usage: ./deploy-artifacts.sh <package_group> <package_name> <package_version> <package_replicate> <package_activate> <package_force>'
+  exit 1
+fi
+
+package_group=$1
+package_name=$2
+package_version=$3
+event=deploy-artifact
+
+cd <%= $base_dir %>/aem-aws-stack-provisioner/
+FACTER_event="${event}" \
+  FACTER_package_group="$package_group" \
+  FACTER_package_name="$package_name" \
+  FACTER_package_version="$package_version" \
+  FACTER_package_replicate="$package_replicate" \
+  FACTER_package_activate="$package_activate" \
+  FACTER_package_force="$package_force" \
+  puppet apply \
+  --modulepath modules \
+  --hiera_config conf/hiera.yaml \
+  "manifests/${event}.pp"

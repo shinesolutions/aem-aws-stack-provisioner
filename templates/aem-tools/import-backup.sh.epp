@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -o nounset
+set -o errexit
+
+if [ "$#" -ne 0 ]; then
+  echo 'Usage: ./import-backup.sh'
+  exit 1
+fi
+
+event=import-backup
+
+cd <%= $base_dir %>/aem-aws-stack-provisioner/
+FACTER_event=${event} \
+  puppet apply \
+  --modulepath modules \
+  --hiera_config conf/hiera.yaml \
+  "manifests/${event}.pp"

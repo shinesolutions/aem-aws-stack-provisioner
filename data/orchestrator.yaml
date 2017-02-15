@@ -1,4 +1,5 @@
 ---
+aem_orchestrator::jarfile_source: "s3://%{::databucket}/%{::stackprefix}/aem-orchestrator-0.9.0.jar"
 aem_orchestrator::manage_installdir: true
 aem_orchestrator::application_properties::aws_sqs_queue_name: "%{::stackprefix}-aem-asg-event-queue"
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_author: "%{::stackprefix}-aem-author-stack"

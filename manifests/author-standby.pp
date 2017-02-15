@@ -20,6 +20,10 @@ class author_standby (
   service { 'aem-aem':
     ensure => 'running',
     enable => true,
+  } ->
+  aem_bundle { 'Stop webdav bundle':
+    ensure => stopped,
+    name   => 'org.apache.sling.jcr.webdav',
   }
 
   # Set up AEM tools
@@ -29,14 +33,41 @@ class author_standby (
     owner  => 'root',
     group  => 'root',
   } ->
-  file { "${base_dir}/aem-tools/run-event.sh":
-    ensure => present,
-    source => "${base_dir}/aem-aws-stack-provisioner/files/aem/run-event.sh",
-    mode   => '0775',
-    owner  => 'root',
-    group  => 'root',
+  file { "${base_dir}/aem-tools/deploy-artifact.sh":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/deploy-artifact.sh.epp", { 'base_dir' => "${base_dir}" }),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+  } ->
+  file { "${base_dir}/aem-tools/deploy-artifacts.sh":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/deploy-artifacts.sh.epp", { 'base_dir' => "${base_dir}" }),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+  } ->
+  file { "${base_dir}/aem-tools/export-backup.sh":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/export-backup.sh.epp", { 'base_dir' => "${base_dir}" }),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+  } ->
+  file { "${base_dir}/aem-tools/import-backup.sh":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/import-backup.sh.epp", { 'base_dir' => "${base_dir}" }),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+  } ->
+  file { "${base_dir}/aem-tools/promote-author-standby-to-primary.sh":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/promote-author-standby-to-primary.sh.epp", { 'base_dir' => "${base_dir}" }),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
   }
-
 }
 
 include author_standby

@@ -1,3 +1,5 @@
+version ?= 0.9.0
+
 ci: clean tools lint deps package
 
 deps:
