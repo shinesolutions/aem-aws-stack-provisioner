@@ -11,15 +11,17 @@ descriptor_file=$1
 event=deploy-artifacts
 
 cd <%= $base_dir %>/aem-aws-stack-provisioner/
-FACTER_event=${event} \
-  FACTER_descriptor_file=$descriptor_file \
+FACTER_event="${event}" \
+  FACTER_descriptor_file="$descriptor_file" \
   puppet apply \
+  --debug \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
   "manifests/${event}-prepare.pp"
-FACTER_event=${event} \
-  FACTER_descriptor_file=$descriptor_file \
+FACTER_event="${event}" \
+  FACTER_descriptor_file="$descriptor_file" \
   puppet apply \
+  --debug \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
   "manifests/${event}.pp"
