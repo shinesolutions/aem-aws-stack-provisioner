@@ -8,7 +8,7 @@ class deploy_artifacts_prepare (
   } ->
   archive { "${path}/${descriptor_file}":
     ensure => present,
-    source => "s3://${::databucket}/${::stackprefix}/${descriptor_file}",
+    source => "s3://${::data_bucket}/${::stackprefix}/${descriptor_file}",
   }
 
 }
