@@ -2,24 +2,29 @@
 set -o nounset
 set -o errexit
 
-if [ "$#" -ne 5 ]; then
-  echo 'Usage: ./deploy-artifacts.sh <package_group> <package_name> <package_version> <package_replicate> <package_activate> <package_force>'
+if [ "$#" -ne 7 ]; then
+  echo 'Usage: ./deploy-artifact.sh <package_source> <package_group> <package_name> <package_version> <package_replicate> <package_activate> <package_force>'
   exit 1
 fi
 
-package_group=$1
-package_name=$2
-package_version=$3
+package_source=$1
+package_group=$2
+package_name=$3
+package_version=$4
+package_replicate=$5
+package_activate=$6
+package_force=$7
 event=deploy-artifact
 
 cd <%= $base_dir %>/aem-aws-stack-provisioner/
 FACTER_event="${event}" \
-  FACTER_package_group="$package_group" \
-  FACTER_package_name="$package_name" \
-  FACTER_package_version="$package_version" \
-  FACTER_package_replicate="$package_replicate" \
-  FACTER_package_activate="$package_activate" \
-  FACTER_package_force="$package_force" \
+  FACTER_package_source="${package_source}" \
+  FACTER_package_group="${package_group}" \
+  FACTER_package_name="${package_name}" \
+  FACTER_package_version="${package_version}" \
+  FACTER_package_replicate="${package_replicate}" \
+  FACTER_package_activate="${package_activate}" \
+  FACTER_package_force="${package_force}" \
   puppet apply \
   --debug \
   --modulepath modules \

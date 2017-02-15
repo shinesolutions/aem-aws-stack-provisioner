@@ -2,10 +2,10 @@
   "author-primary": {
     "packages": [
       {
+        "source": "s3://aem-stack-builder/library/aem-helloworld-content-0.0.1-SNAPSHOT.zip",
         "group": "shinesolutions",
         "name": "aem-helloworld-content",
         "version": "0.0.1-SNAPSHOT",
-        "source": "s3://aem-stack-builder/library/aem-helloworld-content-0.0.1-SNAPSHOT.zip",
         "replicate": true,
         "activate": false,
         "force": true
