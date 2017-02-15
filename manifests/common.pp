@@ -73,9 +73,9 @@ class common (
     group   => 'root',
     require => File["${base_dir}/aws-tools/"],
   }
-  file { "${base_dir}/aws-tools/wait_for_ec2tag.py":
+  file { "${base_dir}/aws-tools/wait_for_ec2tags.py":
     ensure  => present,
-    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws-tools/wait_for_ec2tag.py",
+    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws-tools/wait_for_ec2tags.py",
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
