@@ -13,15 +13,9 @@
     ]
   },
   "author-dispatcher": {
-    "assets": [
+    "artifacts": [
       {
-        "source": "https://gist.githubusercontent.com/craimbert/8c403df755b0f56ff60b/raw/d11e089bd6bef86e00ac8068a69b36741ef9bdd2/centos_default_httpd.conf",
-        "destination": "/tmp/httpd.conf",
-        "filename": "httpd.conf",
-        "group": "apache",
-        "owner": "apache",
-        "mode": "0644",
-        "exec_command": "/bin/echo complete"
+        "source": "https://gist.githubusercontent.com/craimbert/8c403df755b0f56ff60b/raw/d11e089bd6bef86e00ac8068a69b36741ef9bdd2/centos_default_httpd.conf"
       }
     ]
   },
