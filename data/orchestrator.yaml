@@ -1,6 +1,9 @@
 ---
-aem_orchestrator::jarfile_source: "s3://%{::databucket}/%{::stackprefix}/aem-orchestrator-0.9.0.jar"
+aem_orchestrator::jarfile_source: "s3://%{::data_bucket}/%{::stackprefix}/aem-orchestrator-%{::aem_orchestrator_version}.jar"
 aem_orchestrator::manage_installdir: true
+aem_orchestrator::application_properties::aws_client_use_proxy: "%{::proxy_enabled}"
+aem_orchestrator::application_properties::aws_client_proxy_host: "%{::proxy_host}"
+aem_orchestrator::application_properties::aws_client_proxy_port: "%{::proxy_port}"
 aem_orchestrator::application_properties::aws_sqs_queue_name: "%{::stackprefix}-aem-asg-event-queue"
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_author: "%{::stackprefix}-aem-author-stack"
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_author_dispatcher: "%{::stackprefix}-aem-author-dispatcher-stack"

@@ -8,8 +8,12 @@ delay = 5000
 
 tag_keys = {
   'author-dispatcher': ['Component', 'StackPrefix', 'AuthorHost'],
-  'publish-dispatcher': ['Component', 'StackPrefix', 'PairInstanceId', 'PublishHost'],
-  'publish': ['Component', 'StackPrefix', 'PairInstanceId', 'PublishDispatcherHost']
+  'author-primary': ['Component', 'StackPrefix'],
+  'author-standby': ['Component', 'StackPrefix'],
+  'chaos-monkey': ['Component', 'StackPrefix'],
+  'orchestrator': ['Component', 'StackPrefix'],
+  'publish': ['Component', 'StackPrefix', 'PairInstanceId', 'PublishDispatcherHost'],
+  'publish-dispatcher': ['Component', 'StackPrefix', 'PairInstanceId', 'PublishHost']
 }
 
 def get_instance_id():

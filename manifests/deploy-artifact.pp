@@ -1,10 +1,11 @@
 class deploy_artifact (
-  $package_group,
-  $package_name,
-  $package_version,
-  $package_replicate = false,
-  $package_activate = false,
-  $package_force = false,
+  $package_source = $::package_source,
+  $package_group = $::package_group,
+  $package_name = $::package_name,
+  $package_version = $::package_version,
+  $package_replicate = $::package_replicate,
+  $package_activate = $::package_activate,
+  $package_force = $::package_force,
   $path = '/tmp/shinesolutions/aem-aws-stack-provisioner/',
 ) {
 
@@ -13,7 +14,7 @@ class deploy_artifact (
   } ->
   archive { "${path}/${package_group}/${package_name}-${package_version}.zip":
     ensure => present,
-    source => "s3://${::databucket}/${::stackprefix}/deployment/${package_group}/${package_name}-${package_version}.zip",
+    source => "${package_source}",
   } ->
   aem_package { "Deploy package ${package_group}/${package_name}-${package_version}" :
     ensure    => present,

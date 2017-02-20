@@ -23,10 +23,11 @@ GIT
 
 GIT
   remote: https://github.com/shinesolutions/puppet-simianarmy
-  ref: master
-  sha: 9eb839593c500ffab86b9087c8926a5ff7a77f9f
+  ref: 0.2.0
+  sha: 7372a2fc0abbfe7a49f38b7f12d36123095e942c
   specs:
-    shinesolutions-simianarmy (0.1.0)
+    shinesolutions-simianarmy (0.2.0)
+      puppet-archive (~> 1.3.0)
 
 DEPENDENCIES
   puppet-archive (= 1.3.0)
