@@ -13,22 +13,19 @@
     ]
   },
   "author-dispatcher": {
-    "assets": [
-      {
-        "source": "https://gist.githubusercontent.com/craimbert/8c403df755b0f56ff60b/raw/d11e089bd6bef86e00ac8068a69b36741ef9bdd2/centos_default_httpd.conf",
-        "destination": "/tmp/httpd.conf",
-        "filename": "httpd.conf",
-        "group": "apache",
-        "owner": "apache",
-        "mode": "0644",
-        "exec_command": "/bin/echo complete"
-      }
-    ]
+    "asset": {
+      "name": "aem-author-dispatcher-config",
+      "source": "s3://aem-stack-builder/library/aem-author-dispatcher-config-0.9.0.zip"
+    }
   },
   "publish": {
     "packages": [
     ]
   },
   "publish-dispatcher": {
+    "asset": {
+      "name": "aem-publish-dispatcher-config",
+      "source": "s3://aem-stack-builder/library/aem-publish-dispatcher-config-0.9.0.zip"
+    }
   }
 }
