@@ -1,10 +1,10 @@
 class export_backup (
+  $tmp_dir,
   $package_group   = $::package_group,
   $package_name    = $::package_name,
   $package_version = $::package_version,
   $package_filter  = $::package_filter,
   $backup_path     = $::backup_path,
-  $tmp_dir,
 ) {
 
   file { "${tmp_dir}/${package_group}":

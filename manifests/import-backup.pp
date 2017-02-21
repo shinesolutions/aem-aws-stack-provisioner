@@ -1,9 +1,9 @@
 class import_backup (
+  $tmp_dir,
   $package_group   = $::package_group,
   $package_name    = $::package_name,
   $package_version = $::package_version,
   $backup_path     = $::backup_path,
-  $tmp_dir,
 ) {
 
   archive { "${tmp_dir}/${package_group}/${package_name}-${package_version}.zip":
