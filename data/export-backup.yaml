@@ -1,0 +1,2 @@
+---
+export_backup::tmp_dir: "%{hiera('common::tmp_dir')}"
