@@ -18,7 +18,7 @@ FACTER_event="${event}" \
   --debug \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
-  "manifests/download_descriptor.pp"
+  "manifests/download-descriptor.pp"
 
 FACTER_event="${event}" \
   FACTER_descriptor_file="${descriptor_file}" \
@@ -26,7 +26,7 @@ FACTER_event="${event}" \
   --debug \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
-  "manifests/download_artifacts.pp"
+  "manifests/download-artifacts.pp"
 
 FACTER_event="${event}" \
   FACTER_descriptor_file="${descriptor_file}" \
