@@ -44,6 +44,7 @@ class deploy_artifacts (
 
       file { "${tmp_dir}/packages":
         ensure   => absent,
+        force    => true,
         requires => Class['aem_resources::deploy_packages'],
       }
 
@@ -195,6 +196,7 @@ class deploy_dispatcher_artifacts (
 
   file { $path:
     ensure => absent,
+    force  => true,
   }
 
 }
