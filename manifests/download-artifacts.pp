@@ -1,12 +1,12 @@
 class download_artifacts (
+  $tmp_dir,
   $base_dir,
   $descriptor_file = $::descriptor_file,
-  $component       = $::component,
-  $path            = '/tmp/shinesolutions/aem-aws-stack-provisioner',
+  $component       = $::component
 ) {
 
   # load descriptor file
-  $descriptor_hash = loadjson("${path}/${descriptor_file}")
+  $descriptor_hash = loadjson("${tmp_dir}/${descriptor_file}")
   notify { "The descriptor_hash is: ${descriptor_hash}": }
 
   # extract component hash
@@ -15,7 +15,7 @@ class download_artifacts (
 
   if $component_hash {
 
-    file { $path:
+    file { $tmp_dir:
       ensure => directory,
       mode   => '0775',
     }
@@ -29,7 +29,7 @@ class download_artifacts (
       class { 'download_dispatcher_artifacts':
         base_dir  => $base_dir,
         artifacts => $artifacts,
-        path      => $path,
+        path      => "${tmp_dir}/artifacts",
       }
 
 
@@ -46,8 +46,8 @@ class download_artifacts (
     if $packages {
 
       class { 'download_packages':
-        packages => $packages,
-        path     => $path,
+        packages => $packages
+        path     => "${tmp_dir}/packages",
       }
 
     } else {
@@ -69,30 +69,29 @@ class download_artifacts (
 class download_dispatcher_artifacts (
   $base_dir,
   $artifacts,
-  $path = '/tmp/shinesolutions/aem-aws-stack-provisioner',
+  $path
 ) {
 
-  file { "${path}/artifacts":
-    ensure  => directory,
-    mode    => '0775',
-    require => File["${path}"],
+  file { $path:
+    ensure => directory,
+    mode   => '0775',
   }
 
   $artifacts.each | Integer $index, Hash $artifact| {
 
-    file { "${path}/artifacts/${artifact[name]}":
+    file { "${path}/${artifact[name]}":
       ensure  => directory,
       mode    => '0775',
-      require => File["${path}/artifacts"],
+      require => File[$path],
     }
 
-    archive { "${path}/artifacts/${artifact[name]}.zip":
+    archive { "${path}/${artifact[name]}.zip":
       ensure       => present,
       extract      => true,
-      extract_path => "${path}/artifacts/${artifact[name]}",
+      extract_path => "${path}/${artifact[name]}",
       source       => $artifact[source],
       cleanup      => true,
-      require      => File["${path}/artifacts/${artifact[name]}"],
+      require      => File["${path}/${artifact[name]}"],
       before       => Exec["/usr/bin/python ${base_dir}/aem-tools/generate-artifacts-json.py"]
     }
 
@@ -107,32 +106,31 @@ class download_dispatcher_artifacts (
 
 class download_packages (
   $packages,
-  $path = '/tmp/shinesolutions/aem-aws-stack-provisioner',
+  $path
 ) {
 
   # prepare the packages
-  file { "${path}/packages":
-    ensure  => directory,
-    mode    => '0775',
-    require => File[$path],
+  file { $path:
+    ensure => directory,
+    mode   => '0775',
   }
 
   $packages.each | Integer $index, Hash $package| {
 
     # TODO: validate the package values exist and populated
 
-    if !defined(File["${path}/packages/${package['group']}"]) {
-      file { "${path}/packages/${package['group']}":
+    if !defined(File["${path}/${package['group']}"]) {
+      file { "${path}/${package['group']}":
         ensure  => directory,
         mode    => '0775',
-        require => File["${path}/packages"],
+        require => File[$path],
       }
     }
 
-    archive { "${path}/packages/${package['group']}/${package['name']}-${package['version']}.zip":
+    archive { "${path}/${package['group']}/${package['name']}-${package['version']}.zip":
       ensure  => present,
       source  => $package[source],
-      require => File["${path}/packages/${package['group']}"],
+      require => File["${path}/${package['group']}"],
       before  => Class['aem_resources::deploy_packages'],
     }
 

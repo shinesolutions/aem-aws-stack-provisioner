@@ -1,7 +1,7 @@
 ---
-download_descriptor::path: "%{hiera('common::tmp_dir')}"
+download_descriptor::tmp_dir: "%{hiera('common::tmp_dir')}"
 
-download_artifacts::path: "%{hiera('common::tmp_dir')}"
+download_artifacts::tmp_dir: "%{hiera('common::tmp_dir')}"
 download_artifacts::base_dir: "%{hiera('common::base_dir')}"
 
-deploy_artifacts::path: "%{hiera('common::tmp_dir')}"
+deploy_artifacts::tmp_dir: "%{hiera('common::tmp_dir')}"
