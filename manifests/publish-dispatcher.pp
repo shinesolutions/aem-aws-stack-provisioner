@@ -32,6 +32,13 @@ class publish_dispatcher (
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
+  } ->
+  file { "${base_dir}/aem-tools/generate-artifacts-json.py":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/generate-artifacts-json.py.epp", { 'tmp_dir' => "${tmp_dir}" }),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
   }
 
 }
