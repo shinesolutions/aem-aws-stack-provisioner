@@ -10,6 +10,7 @@ fi
 package_group=$1
 package_name=$2
 package_filter=$3
+component=$(facter component)
 event=export-backup
 
 year=$(date +%Y)
@@ -22,7 +23,7 @@ cd <%= $base_dir %>/aem-aws-stack-provisioner/
 FACTER_event="${event}" \
   FACTER_package_group="${package_group}" \
   FACTER_package_name="${package_name}" \
-  FACTER_package_version="${year}${month}${date}" \
+  FACTER_package_version="${year}${month}${date}-${component}" \
   FACTER_package_filter="${package_filter}" \
   FACTER_backup_path="${year}/${month}" \
   puppet apply \
@@ -35,7 +36,7 @@ FACTER_event="${event}" \
 FACTER_event="${event}" \
   FACTER_package_group="${package_group}" \
   FACTER_package_name="${package_name}" \
-  FACTER_package_version="${year}${month}-latest" \
+  FACTER_package_version="${year}${month}-${component}-latest" \
   FACTER_package_filter="${package_filter}" \
   FACTER_backup_path="${year}/${month}" \
   puppet apply \
@@ -48,7 +49,7 @@ FACTER_event="${event}" \
 FACTER_event="${event}" \
   FACTER_package_group="${package_group}" \
   FACTER_package_name="${package_name}" \
-  FACTER_package_version="${year}-latest" \
+  FACTER_package_version="${year}-${component}-latest" \
   FACTER_package_filter="${package_filter}" \
   FACTER_backup_path="${year}" \
   puppet apply \
