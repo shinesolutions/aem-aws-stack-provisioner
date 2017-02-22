@@ -2,15 +2,43 @@
 set -o nounset
 set -o errexit
 
-if [ "$#" -ne 0 ]; then
-  echo 'Usage: ./import-backup.sh'
+if [ "$#" -ne 3 ]; then
+  echo 'Usage: ./import-backup.sh <package_group> <package_name> <package_datestamp>'
   exit 1
 fi
 
+package_group=$1
+package_name=$2
+package_datestamp=$3
 event=import-backup
 
+len=${#package_datestamp}
+if [[ "$len" == 4 ]]
+then
+  year=$package_datestamp
+  package_version="${year}-latest"
+  backup_path="${year}"
+elif [[ "$len" == 6 ]]
+then
+  year=${package_datestamp:0:4}
+  month=${package_datestamp:4:2}
+  package_version="${year}${month}-latest"
+  backup_path="${year}/${month}"
+else
+  year=${package_datestamp:0:4}
+  month=${package_datestamp:4:2}
+  day=${package_datestamp:6:2}
+  package_version="${year}${month}${day}"
+  backup_path="${year}/${month}"
+fi
+
 cd <%= $base_dir %>/aem-aws-stack-provisioner/
+
 FACTER_event="${event}" \
+  FACTER_package_group="${package_group}" \
+  FACTER_package_name="${package_name}" \
+  FACTER_package_version="${package_version}" \
+  FACTER_backup_path="${backup_path}" \
   puppet apply \
   --debug \
   --modulepath modules \
