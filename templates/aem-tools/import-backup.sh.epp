@@ -2,43 +2,46 @@
 set -o nounset
 set -o errexit
 
-if [ "$#" -ne 3 ]; then
-  echo 'Usage: ./import-backup.sh <package_group> <package_name> <package_datestamp>'
+if [ "$#" -ne 4 ]; then
+  echo 'Usage: ./import-backup.sh <source_stack_prefix> <package_group> <package_name> <package_datestamp>'
   exit 1
 fi
 
-package_group=$1
-package_name=$2
-package_datestamp=$3
+source_stack_prefix=$1
+package_group=$2
+package_name=$3
+package_datestamp=$4
+component=$(facter component)
 event=import-backup
 
 len=${#package_datestamp}
 if [[ "$len" == 4 ]]
 then
   year=$package_datestamp
-  package_version="${year}-latest"
+  package_version="${year}-${component}-latest"
   backup_path="${year}"
 elif [[ "$len" == 6 ]]
 then
   year=${package_datestamp:0:4}
   month=${package_datestamp:4:2}
-  package_version="${year}${month}-latest"
+  package_version="${year}${month}-${component}-latest"
   backup_path="${year}/${month}"
 else
   year=${package_datestamp:0:4}
   month=${package_datestamp:4:2}
   day=${package_datestamp:6:2}
-  package_version="${year}${month}${day}"
+  package_version="${year}${month}${day}-${component}"
   backup_path="${year}/${month}"
 fi
 
 cd <%= $base_dir %>/aem-aws-stack-provisioner/
 
 FACTER_event="${event}" \
+  FACTER_source_stack_prefix="${source_stack_prefix}" \
+  FACTER_backup_path="${backup_path}" \
   FACTER_package_group="${package_group}" \
   FACTER_package_name="${package_name}" \
   FACTER_package_version="${package_version}" \
-  FACTER_backup_path="${backup_path}" \
   puppet apply \
   --debug \
   --modulepath modules \
