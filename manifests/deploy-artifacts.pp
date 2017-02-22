@@ -96,8 +96,7 @@ class deploy_dispatcher_artifacts (
 
           if $artifact_details_content['name'] == 'apache-conf-templates' {
 
-            $artifact_details_content['children'].each | Integer $apache_conf_template_index, Hash $apache_conf_template
-            | {
+            $artifact_details_content['children'].each | Integer $apache_conf_template_index, Hash $apache_conf_template| {
 
               file { regsubst("/etc/httpd/conf/${apache_conf_template[name]}", '.epp', '', 'G'):
                 ensure  => file,
@@ -119,7 +118,6 @@ class deploy_dispatcher_artifacts (
 
             $artifact_details_content['children'].each | Integer $virtual_host_template_index, Hash $virtual_host_template| {
 
-
               if $virtual_host_template[type] == 'directory' {
 
                 # create the directory in conf.d/
@@ -127,7 +125,7 @@ class deploy_dispatcher_artifacts (
                   ensure => directory,
                   owner  => 'root',
                   group  => 'root',
-                  mode   => '0644',
+                  mode   => '0755',
                 }
 
                 $virtual_host_template['children'].each | Integer $virtual_host_site_template_index, Hash $virtual_host_site_template| {
@@ -143,7 +141,6 @@ class deploy_dispatcher_artifacts (
                   }
 
                 }
-
 
               }
               elsif $virtual_host_template[type] == 'file' {
