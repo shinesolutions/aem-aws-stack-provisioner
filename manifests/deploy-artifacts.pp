@@ -14,11 +14,6 @@ class deploy_artifacts (
 
   if $component_hash {
 
-    file { $tmp_dir:
-      ensure => directory,
-      mode   => '0775',
-    }
-
     # extract the artifacts hash
     $artifacts = $component_hash['artifacts']
     notify { "The artifacts is: ${artifacts}": }
@@ -45,6 +40,11 @@ class deploy_artifacts (
       class { 'aem_resources::deploy_packages':
         packages => $packages,
         path     => "${tmp_dir}/packages",
+      }
+
+      file { "${tmp_dir}/packages":
+        ensure   => absent,
+        requires => Class['aem_resources::deploy_packages'],
       }
 
     } else {
@@ -75,7 +75,6 @@ class deploy_dispatcher_artifacts (
   $artifacts_array = $artifacts_content_hash['children']
   notify { "The artifacts_array is: ${artifacts_array}": }
 
-
   $artifacts.each | Integer $index, Hash $artifact| {
 
     $artifacts_array.each | Integer $artifact_details_index, Hash $artifact_details| {
@@ -105,6 +104,7 @@ class deploy_dispatcher_artifacts (
                 group   => 'root',
                 mode    => '0644',
                 notify  => Exec['graceful restart'],
+                before  => File[$path],
               }
 
             }
@@ -138,6 +138,7 @@ class deploy_dispatcher_artifacts (
                     mode    => '0644',
                     require => File["/etc/httpd/conf.d/${virtual_host_template[name]}"],
                     notify  => Exec['graceful restart'],
+                    before  => File[$path],
                   }
 
                 }
@@ -152,6 +153,7 @@ class deploy_dispatcher_artifacts (
                   group   => 'root',
                   mode    => '0644',
                   notify  => Exec['graceful restart'],
+                  before  => File[$path],
                 }
 
               }
@@ -173,6 +175,7 @@ class deploy_dispatcher_artifacts (
                 group   => 'root',
                 mode    => '0644',
                 notify  => Exec['graceful restart'],
+                before  => File[$path],
               }
 
             }
@@ -188,6 +191,10 @@ class deploy_dispatcher_artifacts (
     path        => '/usr/sbin',
     command     => 'apachectl -k graceful',
     refreshonly => true,
+  }
+
+  file { $path:
+    ensure => absent,
   }
 
 }
