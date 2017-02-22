@@ -27,6 +27,7 @@ class download_artifacts (
     if $artifacts {
 
       class { 'download_dispatcher_artifacts':
+        base_dir  => $base_dir,
         artifacts => $artifacts,
         path      => $path,
       }
@@ -66,6 +67,7 @@ class download_artifacts (
 
 
 class download_dispatcher_artifacts (
+  $base_dir,
   $artifacts,
   $path = '/tmp/shinesolutions/aem-aws-stack-provisioner',
 ) {
