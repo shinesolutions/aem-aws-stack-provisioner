@@ -44,7 +44,7 @@ class deploy_artifacts (
 
       class { 'aem_resources::deploy_packages':
         packages => $packages,
-        path     => "${path}/packages/",
+        path     => "${path}/packages",
       }
 
     } else {
