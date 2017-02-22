@@ -46,7 +46,7 @@ class download_artifacts (
     if $packages {
 
       class { 'download_packages':
-        packages => $packages
+        packages => $packages,
         path     => "${tmp_dir}/packages",
       }
 
