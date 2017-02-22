@@ -114,11 +114,11 @@ class deploy_dispatcher_artifacts (
 
           # if name virtual-hosts-templates
 
-          if $artifact_details_content[name] == 'virtual-hosts-templates' {
+          if $artifact_details_content['name'] == 'virtual-hosts-templates' {
 
             $artifact_details_content['children'].each | Integer $virtual_host_template_index, Hash $virtual_host_template| {
 
-              if $virtual_host_template[type] == 'directory' {
+              if $virtual_host_template['type'] == 'directory' {
 
                 # create the directory in conf.d/
                 file { "/etc/httpd/conf.d/${virtual_host_template[name]}":
@@ -143,7 +143,7 @@ class deploy_dispatcher_artifacts (
                 }
 
               }
-              elsif $virtual_host_template[type] == 'file' {
+              elsif $virtual_host_template['type'] == 'file' {
 
                 file { regsubst("/etc/httpd/conf.d/${virtual_host_template[name]}", '.epp', '', 'G'):
                   ensure  => file,
