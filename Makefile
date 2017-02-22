@@ -16,6 +16,7 @@ lint:
 		--no-documentation-check \
 		--no-only_variable_string-check \
 		--no-selector_inside_resource-check \
+		--no-variable_scope-check \
 		manifests/*.pp
 	shellcheck files/*/*.sh
 

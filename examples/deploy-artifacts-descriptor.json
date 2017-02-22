@@ -13,19 +13,19 @@
     ]
   },
   "author-dispatcher": {
-    "asset": {
-      "name": "aem-author-dispatcher-config",
-      "source": "s3://aem-stack-builder/library/aem-author-dispatcher-config-0.9.0.zip"
-    }
+    "artifacts": [
+    ]
   },
   "publish": {
     "packages": [
     ]
   },
   "publish-dispatcher": {
-    "asset": {
-      "name": "aem-publish-dispatcher-config",
-      "source": "s3://aem-stack-builder/library/aem-publish-dispatcher-config-0.9.0.zip"
-    }
+    "artifacts": [
+      {
+        "name": "aem-publish-dispatcher-config",
+        "source": "s3://aem-stack-builder/library/aem-publish-dispatcher-config-0.9.0.zip"
+      }
+    ]
   }
 }

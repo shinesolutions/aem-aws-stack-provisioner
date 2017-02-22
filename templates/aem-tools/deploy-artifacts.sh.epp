@@ -18,7 +18,15 @@ FACTER_event="${event}" \
   --debug \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
-  "manifests/${event}-prepare.pp"
+  "manifests/download_descriptor.pp"
+
+FACTER_event="${event}" \
+  FACTER_descriptor_file="${descriptor_file}" \
+  puppet apply \
+  --debug \
+  --modulepath modules \
+  --hiera_config conf/hiera.yaml \
+  "manifests/download_artifacts.pp"
 
 FACTER_event="${event}" \
   FACTER_descriptor_file="${descriptor_file}" \

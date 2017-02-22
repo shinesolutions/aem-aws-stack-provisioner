@@ -1,2 +1,7 @@
 ---
-aem_packages::path: /tmp/aem_packages
+download_descriptor::path: "%{hiera('common::tmp_dir')}"
+
+download_artifacts::path: "%{hiera('common::tmp_dir')}"
+download_artifacts::base_dir: "%{hiera('common::base_dir')}"
+
+deploy_artifacts::path: "%{hiera('common::tmp_dir')}"

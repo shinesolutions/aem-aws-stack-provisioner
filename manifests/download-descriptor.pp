@@ -1,4 +1,4 @@
-class deploy_artifacts_prepare (
+class download_descriptor (
   $descriptor_file = $::descriptor_file,
   $path            = '/tmp/shinesolutions/aem-aws-stack-provisioner/',
 ) {
@@ -13,4 +13,4 @@ class deploy_artifacts_prepare (
 
 }
 
-include deploy_artifacts_prepare
+include download_descriptor
