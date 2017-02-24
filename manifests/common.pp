@@ -73,6 +73,14 @@ class common (
     group   => 'root',
     require => File["${base_dir}/aws-tools/"],
   }
+  file { "${base_dir}/aws-tools/snapshot_backup.py":
+    ensure  => present,
+    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws-tools/snapshot_backup.py",
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    require => File["${base_dir}/aws-tools/"],
+  }
   file { "${base_dir}/aws-tools/wait_for_ec2tags.py":
     ensure  => present,
     source  => "${base_dir}/aem-aws-stack-provisioner/files/aws-tools/wait_for_ec2tags.py",
