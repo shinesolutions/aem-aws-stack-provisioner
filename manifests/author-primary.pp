@@ -80,6 +80,15 @@ class author_primary (
     owner   => 'root',
     group   => 'root',
   }
+
+  cron { 'export-backups':
+    command => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json",
+    user    => 'root',
+    hour    => 2,
+    minute  => 0,
+    require => File["${base_dir}/aem-tools/export-backups.sh"],
+  }
+
 }
 
 include author_primary
