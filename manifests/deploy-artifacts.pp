@@ -42,8 +42,8 @@ class deploy_artifacts (
         path     => "${tmp_dir}/packages",
       } ->
       file { "${tmp_dir}/packages":
-        ensure   => absent,
-        force    => true,
+        ensure => absent,
+        force  => true,
       }
 
     } else {
