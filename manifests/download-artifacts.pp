@@ -130,7 +130,6 @@ class download_packages (
       ensure  => present,
       source  => $package[source],
       require => File["${path}/${package['group']}"],
-      before  => Class['aem_resources::deploy_packages'],
     }
 
   }
