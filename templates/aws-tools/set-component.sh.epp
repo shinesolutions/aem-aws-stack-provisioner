@@ -1,9 +1,20 @@
-#! /bin/sh
+#!/usr/bin/env bash
+set -o nounset
+set -o errexit
+
 # Set Component EC2 tag on the current instance, and then update Facter facts.
+
+if [ "$#" -ne 1 ]; then
+  echo 'Usage: ./set-component.sh <component>'
+  exit 1
+fi
 
 component=$1
 
-instance_id=`curl --silent http://169.254.169.254/latest/meta-data/instance-id`
+data_bucket=$(facter data_bucket)
+stack_prefix=$(facter stackprefix)
+
+instance_id=$(curl --silent http://169.254.169.254/latest/meta-data/instance-id)
 aws ec2 create-tags --tags Key=Component,Value=${component} --resources ${instance_id}
 
-<%= $base_dir %>/aws-tools/set-facts.sh
+<%= $base_dir %>/aws-tools/set-facts.sh "${data_bucket}" "${stack_prefix}"

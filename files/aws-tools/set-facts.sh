@@ -1,8 +1,16 @@
-#! /bin/sh
+#!/usr/bin/env bash
+set -o nounset
+set -o errexit
+
 # Set AWS resource values as Facter facts. These facts will be used in subsequent
 # provisioning Puppet manifests.
 
-data_bucket_name=$1
+if [ "$#" -ne 2 ]; then
+  echo 'Usage: ./set-facts.sh <data_bucket> <stack_prefix>'
+  exit 1
+fi
+
+data_bucket=$1
 stack_prefix=$2
 
 # Set EC2 instance tags as Facter facts.
@@ -15,9 +23,9 @@ instance_id=$(curl --silent http://169.254.169.254/latest/meta-data/instance-id)
 aws ec2 describe-tags --filters "Name=resource-id,Values=${instance_id}" --query 'Tags[*].[Key,Value]' --output text | awk -F $'\t' '{print $1"="$2}' | grep -v -E '^(Name)=' > /opt/puppetlabs/facter/facts.d/ec2-tags.txt
 
 # Set S3 bucket name as Facter fact.
-if [ ! -z "${data_bucket_name}" ]; then
-  echo "data_bucket=${data_bucket_name}" > /opt/puppetlabs/facter/facts.d/s3-buckets.txt
+if [ ! -z "${data_bucket}" ]; then
+  echo "data_bucket=${data_bucket}" > /opt/puppetlabs/facter/facts.d/s3-buckets.txt
 fi
 
 # Set stack Facter facts.
-aws s3 cp "s3://${data_bucket_name}/${stack_prefix}/stack-facts.txt" /opt/puppetlabs/facter/facts.d/stack-facts.txt
+aws s3 cp "s3://${data_bucket}/${stack_prefix}/stack-facts.txt" /opt/puppetlabs/facter/facts.d/stack-facts.txt

@@ -8,8 +8,8 @@ class promote_author_standby_to_primary (
     path => ['/usr/bin', '/usr/sbin'],
   } ->
   exec { 'set-component.sh author-primary':
-    cwd  => '/tmp',
-    path => ['/opt/shinesolutions/aws-tools'],
+    cwd  => "${tmp_dir}",
+    path => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
   } ->
   class { 'aem_resources::author_primary_set_config':
     crx_quickstart_dir => '/opt/aem/author/crx-quickstart',
@@ -19,7 +19,10 @@ class promote_author_standby_to_primary (
     enable => true,
   } ->
   aem_aem { 'Wait until login page is ready':
-    ensure => login_page_is_ready,
+    ensure                     => login_page_is_ready,
+    retries_max_tries          => 30,
+    retries_base_sleep_seconds => 5,
+    retries_max_sleep_seconds  => 5,
   }
 
   cron { 'daily-export-backups':

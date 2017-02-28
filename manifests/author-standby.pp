@@ -4,6 +4,7 @@ class author_standby (
   $crx_quickstart_dir,
   $author_protocol,
   $author_port,
+  $aem_repo_device,
 ) {
 
   class { 'aem_resources::puppet_aem_resources_set_config':
