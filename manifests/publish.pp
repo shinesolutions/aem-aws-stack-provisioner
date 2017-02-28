@@ -93,10 +93,10 @@ class publish (
   file { "${base_dir}/aem-tools/live-snapshot-backup.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/live-snapshot-backup.sh.epp", {
-      'base_dir' => "${base_dir}",
+      'base_dir'        => "${base_dir}",
       'aem_repo_device' => "${aem_repo_device}",
-      'component' => "${::component}",
-      'stack_prefix' => "${::stackprefix}",
+      'component'       => "${::component}",
+      'stack_prefix'    => "${::stackprefix}",
     }),
     mode    => '0775',
     owner   => 'root',
