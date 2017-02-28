@@ -50,13 +50,6 @@ class author_standby (
     owner   => 'root',
     group   => 'root',
   } ->
-  file { "${base_dir}/aem-tools/export-backups.sh":
-    ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/export-backups.sh.epp", { 'base_dir' => "${base_dir}" }),
-    mode    => '0775',
-    owner   => 'root',
-    group   => 'root',
-  } ->
   file { "${base_dir}/aem-tools/import-backup.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/import-backup.sh.epp", { 'base_dir' => "${base_dir}" }),
@@ -72,12 +65,25 @@ class author_standby (
     group   => 'root',
   }
 
-  cron { 'export-backups':
-    command => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json",
-    user    => 'root',
-    hour    => 2,
-    minute  => 0,
-    require => File["${base_dir}/aem-tools/export-backups.sh"],
+  file { "${base_dir}/aem-tools/export-backups.sh":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/export-backups.sh.epp", { 'base_dir' => "${base_dir}" }),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+  }
+
+  file { "${base_dir}/aem-tools/live-snapshot-backup.sh":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/live-snapshot-backup.sh.epp", {
+      'base_dir'        => "${base_dir}",
+      'aem_repo_device' => "${aem_repo_device}",
+      'component'       => "${::component}",
+      'stack_prefix'    => "${::stackprefix}",
+    }),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
   }
 
 }

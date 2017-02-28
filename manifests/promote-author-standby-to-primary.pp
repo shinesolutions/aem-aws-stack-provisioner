@@ -1,4 +1,5 @@
 class promote_author_standby_to_primary (
+  $base_dir,
   $tmp_dir,
 ) {
 
@@ -19,6 +20,20 @@ class promote_author_standby_to_primary (
   } ->
   aem_aem { 'Wait until login page is ready':
     ensure => login_page_is_ready,
+  }
+
+  cron { 'daily-export-backups':
+    command => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json",
+    user    => 'root',
+    hour    => 2,
+    minute  => 0,
+  }
+
+  cron { 'hourly-live-snapshot-backup':
+    command => "${base_dir}/aem-tools/live-snapshot-backup.sh",
+    user    => 'root',
+    hour    => '*',
+    minute  => 0,
   }
 
 }

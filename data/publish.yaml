@@ -4,3 +4,4 @@ publish::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
 
 publish::publish_protocol: http
 publish::publish_port: 4503
+publish::aem_repo_device: /dev/sdb

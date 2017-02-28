@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -o nounset
+set -o errexit
+
+# Take a snapshot backup of a live (up and running) AEM instance's repository.
+# The purpose of this backup is to speed up subsequent snapshots, whether
+# that's live, offline, or recovery (e.g. Orchestrator-triggered).
+
+instance_id=$(facter ec2_metadata.instance-id)
+
+<%= $base_dir %>/aws-tools/snapshot_backup.py \
+  --snapshot-description "Live AEM snapshot from <%= $component %> instance ${instance_id}" \
+  --tag "Component=<%= $component %>" \
+  --tag "StackPrefix=<%= $stack_prefix %>" \
+  --tag "SnapshotType=live" \
+  <%= $aem_repo_device %>

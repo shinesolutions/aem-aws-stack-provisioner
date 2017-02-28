@@ -5,3 +5,4 @@ author_standby::crx_quickstart_dir: /opt/aem/author/crx-quickstart
 
 author_standby::author_protocol: http
 author_standby::author_port: 4502
+author_standby::aem_repo_device: /dev/sdb
