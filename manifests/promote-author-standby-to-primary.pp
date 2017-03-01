@@ -25,6 +25,14 @@ class promote_author_standby_to_primary (
     retries_max_sleep_seconds  => 5,
   }
 
+  cron { 'weekly-offline-compaction':
+    command => "${base_dir}/aem-tools/offline-compaction.sh",
+    user    => 'root',
+    weekday => 2,
+    hour    => 3,
+    minute  => 0,
+  }
+
   cron { 'daily-export-backups':
     command => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json",
     user    => 'root',

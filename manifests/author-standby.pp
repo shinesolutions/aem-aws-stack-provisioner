@@ -1,5 +1,6 @@
 class author_standby (
   $base_dir,
+  $tmp_dir,
   $puppet_conf_dir,
   $crx_quickstart_dir,
   $author_protocol,
@@ -61,6 +62,22 @@ class author_standby (
   file { "${base_dir}/aem-tools/promote-author-standby-to-primary.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/promote-author-standby-to-primary.sh.epp", { 'base_dir' => "${base_dir}" }),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+  }
+
+  archive { "${base_dir}/aem-tools/oak-run-${::oak_run_version}.jar":
+    ensure => present,
+    source => "s3://${::data_bucket}/${::stackprefix}/oak-run-${::oak_run_version}.jar",
+  } ->
+  file { "${base_dir}/aem-tools/offline-compaction.sh":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-compaction.sh.epp", {
+      'base_dir'           => "${base_dir}",
+      'oak_run_version'    => "${::oak_run_version}",
+      'crx_quickstart_dir' => '/opt/aem/author/crx-quickstart/',
+    }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',

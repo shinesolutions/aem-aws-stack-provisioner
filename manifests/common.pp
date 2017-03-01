@@ -60,7 +60,7 @@ class common (
   file { "${base_dir}/aws-tools/set-component.sh":
     ensure  => file,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aws-tools/set-component.sh.epp", {
-      'base_dir'         => "${base_dir}",
+      'base_dir' => "${base_dir}",
     }),
     mode    => '0775',
     owner   => 'root',
@@ -78,6 +78,14 @@ class common (
   file { "${base_dir}/aws-tools/snapshot_backup.py":
     ensure  => present,
     source  => "${base_dir}/aem-aws-stack-provisioner/files/aws-tools/snapshot_backup.py",
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    require => File["${base_dir}/aws-tools/"],
+  }
+  file { "${base_dir}/aws-tools/snapshot_attach.py":
+    ensure  => present,
+    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws-tools/snapshot_attach.py",
     mode    => '0775',
     owner   => 'root',
     group   => 'root',

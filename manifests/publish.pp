@@ -1,5 +1,6 @@
 class publish (
   $base_dir,
+  $tmp_dir,
   $puppet_conf_dir,
   $publish_protocol,
   $publish_port,
@@ -73,6 +74,29 @@ class publish (
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
+  }
+
+  archive { "${base_dir}/aem-tools/oak-run-${::oak_run_version}.jar":
+    ensure => present,
+    source => "s3://${::data_bucket}/${::stackprefix}/oak-run-${::oak_run_version}.jar",
+  } ->
+  file { "${base_dir}/aem-tools/offline-compaction.sh":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-compaction.sh.epp", {
+      'base_dir'           => "${base_dir}",
+      'oak_run_version'    => "${::oak_run_version}",
+      'crx_quickstart_dir' => '/opt/aem/publish/crx-quickstart/',
+    }),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+  } ->
+  cron { 'weekly-offline-compaction':
+    command => "${base_dir}/aem-tools/offline-compaction.sh",
+    user    => 'root',
+    weekday => 2,
+    hour    => 3,
+    minute  => 0,
   }
 
   file { "${base_dir}/aem-tools/export-backups.sh":

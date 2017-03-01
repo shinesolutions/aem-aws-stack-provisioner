@@ -9,7 +9,7 @@ set -o errexit
 instance_id=$(facter ec2_metadata.instance-id)
 
 <%= $base_dir %>/aws-tools/snapshot_backup.py \
-  --snapshot-description "Live AEM snapshot from <%= $component %> instance ${instance_id}" \
+  --snapshot-description "Live AEM snapshot of <%= $component %> instance ${instance_id}" \
   --tag "Component=<%= $component %>" \
   --tag "StackPrefix=<%= $stack_prefix %>" \
   --tag "SnapshotType=live" \
