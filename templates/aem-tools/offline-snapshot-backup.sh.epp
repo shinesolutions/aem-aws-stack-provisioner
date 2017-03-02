@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -o nounset
+set -o errexit
+
+# Take a snapshot backup of an offline (stopped) AEM instance's repository.
+# The purpose of this backup is to eliminate/reduce the probability of
+# getting a corrupted repository.
+
+instance_id=$(facter ec2_metadata.instance-id)
+
+<%= $base_dir %>/aws-tools/snapshot_backup.py \
+  --snapshot-description "Offline AEM snapshot of <%= $component %> instance ${instance_id}" \
+  --tag "Component=<%= $component %>" \
+  --tag "StackPrefix=<%= $stack_prefix %>" \
+  --tag "SnapshotType=offline" \
+  <%= $aem_repo_device %>
