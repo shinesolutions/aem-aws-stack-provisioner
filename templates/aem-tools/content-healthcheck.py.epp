@@ -39,7 +39,7 @@ def getInstanceTag(tagKey):
 def downloadFileFromS3():
     bucket_key = '<%= $stack_prefix %>/content-healthcheck-descriptor.json'
     s3 = boto3.client('s3')
-    s3.download_file(<%= $data_bucket %>, bucket_key, local_path)
+    s3.download_file('<%= $data_bucket %>', bucket_key, local_path)
 
 # Loops through the descriptor file in search of all the content paths
 def traverseDescriptor(instances):
