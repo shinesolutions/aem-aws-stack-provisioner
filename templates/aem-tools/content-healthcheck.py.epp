@@ -1,0 +1,94 @@
+#!/usr/bin/env python
+import urllib, json, requests, urllib3, boto3, sys, argparse
+
+local_path = '<%= $tmp_dir %>/content-healthcheck-descriptor.json'
+region = 'ap-southeast-2'
+
+# Get arguments for protocol and port number.
+# If these are not passed, http and 4503 will be used by default.
+parser = argparse.ArgumentParser(description='Process the protocol and port number.')
+parser.add_argument('protocol', nargs='?', type=str, default='http', help='a protocol of type http or https.', choices=['https', 'http'])
+parser.add_argument('port', nargs='?', type=str, default='4503', help='a port number. e.g. 4503')
+args = parser.parse_args()
+
+def main():
+    downloadFileFromS3();
+    response = urllib.urlopen(local_path)
+    resp_str = json.loads(response.read())
+    traverseDescriptor(resp_str)
+
+# Retrive the instance id from metadata
+def getInstanceId():
+    response = requests.get('http://169.254.169.254/latest/meta-data/instance-id')
+    instanceId = response.text
+    return str(instanceId)
+
+# Retrives an instance tag
+# The Key is given as a parameter and the value is returned
+def getInstanceTag(tagKey):
+    instanceId = getInstanceId()
+    ec2 = boto3.resource('ec2')
+    ec2instance = ec2.Instance(instanceId)
+    tagValue = ''
+    for tags in ec2instance.tags:
+        if tags["Key"] == tagKey:
+            tagValue = tags["Value"]
+    return tagValue
+
+# Downloads descriptor file from an s3 bucket into a local tmp folder
+def downloadFileFromS3():
+    bucket_key = '<%= $stack_prefix %>/content-healthcheck-descriptor.json'
+    s3 = boto3.client('s3')
+    s3.download_file(<%= $data_bucket %>, bucket_key, local_path)
+
+# Loops through the descriptor file in search of all the content paths
+def traverseDescriptor(instances):
+    for packages in instances["publish-dispatcher"]["packages"]:
+        for content in packages["content"]:
+            global endpoint
+            endpoint = content
+            submitRequest(content)
+
+# Submits the request to the given content path
+# If there is an error, it will count as an unhealthy metric
+def submitRequest(path):
+    publishHost = getInstanceTag('PublishHost')
+    url = args.protocol + '://' + publishHost + ':' + args.port + path
+    try:
+        r = requests.get(url, verify=False, timeout=30)
+        processResponse(r)
+    except requests.exceptions.RequestException as e:
+        print 'The content path ' + publishHost + ' is unreachable. Error: ' + str(e)
+        sendToCloudwatch(0)
+        sys.exit(1)
+
+# If the response status code is 200 it will send a healthy status.
+# Anything different from a 200 will result in unhealthy status.
+def processResponse(response):
+    print response.status_code
+    if response.status_code == requests.codes.ok:
+        sendToCloudwatch(1)
+    else:
+        sendToCloudwatch(0)
+
+# Sends cutom metric to cloudwatch with the following dimensions:
+# InstanceId which is the distpacher Id, PairInstanceId which is the publisher Id, and the Endpoint which is the actual content path
+# Prints the status of the the current content path
+def sendToCloudwatch(status):
+    dispatcherId = getInstanceId()
+    publisherId = getInstanceTag('PairInstanceId')
+    cw = boto3.client('cloudwatch', region_name=region)
+    namespace = getInstanceTag('aws:cloudformation:stack-name')
+    name = 'contentHealthCheck'
+    dimensions = [{'Name': 'InstanceId','Value': dispatcherId},{'Name': 'PairInstanceId','Value': publisherId},{'Name': 'Endpoint','Value': endpoint}]
+    metricData = { 'MetricName': name, 'Dimensions': dimensions, 'Value': status, 'Unit': 'Count' }
+    cw_response = cw.put_metric_data(Namespace=namespace, MetricData=[ metricData ])
+
+    message = 'The content path ' + endpoint + ' in the publisher instance ' + publisherId + ' is '
+    if status == 1:
+        print message + 'healthy.'
+    else:
+        print message + 'unhealthy.'
+
+if __name__ == "__main__":
+    main()
