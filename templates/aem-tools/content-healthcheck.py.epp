@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import urllib, json, requests, urllib3, boto3, sys, argparse
+from botocore.exceptions import ClientError
 
 local_path = '<%= $tmp_dir %>/content-healthcheck-descriptor.json'
 session = boto3.session.Session()
@@ -29,18 +30,26 @@ def get_instance_id():
 def get_instance_tag(tag_key):
     instance_id = get_instance_id()
     ec2 = boto3.resource('ec2')
-    ec2_instance = ec2.Instance(instance_id)
-    tag_value = ''
-    for tags in ec2_instance.tags:
-        if tags["Key"] == tag_key:
-            tag_value = tags["Value"]
-    return tag_value
+    try:
+        ec2_instance = ec2.Instance(instance_id)
+        tag_value = ''
+        for tags in ec2_instance.tags:
+            if tags["Key"] == tag_key:
+                tag_value = tags["Value"]
+        return tag_value
+    except ClientError as e:
+        print 'The ec2 instance' + instance_id + ' is unreachable. Error: ' + str(e)
+        sys.exit(1)
 
 # Downloads descriptor file from an s3 bucket into a local tmp folder
 def download_file_from_s3():
     bucket_key = '<%= $stack_prefix %>/content-healthcheck-descriptor.json'
     s3 = boto3.client('s3')
-    s3.download_file('<%= $data_bucket %>', bucket_key, local_path)
+    try:
+        s3.download_file('<%= $data_bucket %>', bucket_key, local_path)
+    except ClientError as e:
+        print 'The data bucket path ' + bucket_key + ' is unreachable. Error: ' + str(e)
+        sys.exit(1)
 
 # Loops through the descriptor file in search of all the content paths
 def traverse_descriptor(instances):
@@ -83,13 +92,16 @@ def send_to_cloudwatch(status):
     name = 'contentHealthCheck'
     dimensions = [{'Name': 'InstanceId','Value': dispatcher_id},{'Name': 'PairInstanceId','Value': publisher_id},{'Name': 'Endpoint','Value': endpoint}]
     metric_data = { 'MetricName': name, 'Dimensions': dimensions, 'Value': status, 'Unit': 'Count' }
-    cw_response = cw.put_metric_data(Namespace=namespace, MetricData=[ metric_data ])
-
-    message = 'The content path ' + endpoint + ' in the publisher instance ' + publisher_id + ' is '
-    if status == 1:
-        print message + 'healthy.'
-    else:
-        print message + 'unhealthy.'
+    try:
+        cw_response = cw.put_metric_data(Namespace=namespace, MetricData=[ metric_data ])
+        message = 'The content path ' + endpoint + ' in the publisher instance ' + publisher_id + ' is '
+        if status == 1:
+            print message + 'healthy.'
+        else:
+            print message + 'unhealthy.'
+    except ClientError as e:
+        print 'The cloudwatch instance is unreachable. Error: ' + str(e)
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
