@@ -48,7 +48,7 @@ def download_file_from_s3():
     try:
         s3.download_file('<%= $data_bucket %>', bucket_key, local_path)
     except ClientError as e:
-        print 'The data bucket path ' + bucket_key + ' is unreachable. Error: ' + str(e)
+        print 'The data bucket path ' + bucket_key + ' is unreachable. The descriptor file may be missing. Error: ' + str(e)
         sys.exit(1)
 
 # Loops through the descriptor file in search of all the content paths
