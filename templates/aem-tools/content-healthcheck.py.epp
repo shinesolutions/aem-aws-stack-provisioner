@@ -2,7 +2,8 @@
 import urllib, json, requests, urllib3, boto3, sys, argparse
 
 local_path = '<%= $tmp_dir %>/content-healthcheck-descriptor.json'
-region = '<%= $region %>'
+session = boto3.session.Session()
+region = session.region_name
 
 # Get arguments for protocol and port number.
 # If these are not passed, http and 4503 will be used by default.
