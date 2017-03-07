@@ -1,7 +1,5 @@
 class orchestrator (
-  $base_dir,
-  $env_path,
-  $https_proxy
+  $base_dir
 ) {
   Archive {
     checksum_verify => false,
@@ -37,7 +35,7 @@ class orchestrator (
     user        => 'root',
     hour        => 1,
     minute      => 0,
-    environment => ["PATH=${env_path}", "https_proxy=${https_proxy}"],
+    environment => ["PATH=${::cron_env_path}", "https_proxy=${::cron_https_proxy}"],
   }
 
 }

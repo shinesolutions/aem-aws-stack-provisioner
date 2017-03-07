@@ -23,6 +23,3 @@ aem_orchestrator::application_properties::aem_protocol_publish: http
 aem_orchestrator::application_properties::aem_port_publish: 4503
 aem_orchestrator::application_properties::aem_protocol_publish_dispatcher: http
 aem_orchestrator::application_properties::aem_port_publish_dispatcher: 80
-
-aem_orchestrator::env_path: "%{hiera('common::env_path')}"
-aem_orchestrator::https_proxy: "%{hiera('common::https_proxy')}"

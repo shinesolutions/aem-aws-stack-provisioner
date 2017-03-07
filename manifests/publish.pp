@@ -4,9 +4,7 @@ class publish (
   $puppet_conf_dir,
   $publish_protocol,
   $publish_port,
-  $aem_repo_device,
-  $env_path,
-  $https_proxy
+  $aem_repo_device
 ) {
 
   class { 'aem_resources::puppet_aem_resources_set_config':
@@ -113,7 +111,7 @@ class publish (
     user        => 'root',
     hour        => 2,
     minute      => 0,
-    environment => ["PATH=${env_path}", "https_proxy=${https_proxy}"],
+    environment => ["PATH=${::cron_env_path}", "https_proxy=${::cron_https_proxy}"],
     require     => File["${base_dir}/aem-tools/export-backups.sh"],
   }
 
@@ -134,7 +132,7 @@ class publish (
     user        => 'root',
     hour        => '*',
     minute      => 0,
-    environment => ["PATH=${env_path}", "https_proxy=${https_proxy}"],
+    environment => ["PATH=${::cron_env_path}", "https_proxy=${::cron_https_proxy}"],
   }
 
   file { "${base_dir}/aem-tools/offline-snapshot-backup.sh":

@@ -7,6 +7,3 @@ publish_dispatcher::docroot_dir: /var/www/html/
 
 publish_dispatcher::base_dir: "%{hiera('common::base_dir')}"
 publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
-
-publish_dispatcher::env_path: "%{hiera('common::env_path')}"
-publish_dispatcher::https_proxy: "%{hiera('common::https_proxy')}"
