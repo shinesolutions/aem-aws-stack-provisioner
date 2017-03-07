@@ -31,7 +31,7 @@ class orchestrator (
     group   => 'root',
   } ->
   cron { 'nightly-stack-offline-snapshot':
-    command => "${base_dir}/aem-tools/stack-offline-snapshot.sh",
+    command => "${base_dir}/aem-tools/stack-offline-snapshot.sh >>/var/log/stack-offline-snapshot.log 2>&1",
     user    => 'root',
     hour    => 1,
     minute  => 0,
