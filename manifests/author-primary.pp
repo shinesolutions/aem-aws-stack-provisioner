@@ -78,7 +78,7 @@ class author_primary (
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-compaction.sh.epp", {
       'base_dir'           => "${base_dir}",
       'oak_run_version'    => "${::oak_run_version}",
-      'crx_quickstart_dir' => '/opt/aem/author/crx-quickstart/',
+      'crx_quickstart_dir' => '/opt/aem/author/crx-quickstart',
     }),
     mode    => '0775',
     owner   => 'root',
@@ -100,10 +100,11 @@ class author_primary (
     group   => 'root',
   } ->
   cron { 'daily-export-backups':
-    command => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json",
-    user    => 'root',
-    hour    => 2,
-    minute  => 0,
+    command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json",
+    user        => 'root',
+    hour        => 2,
+    minute      => 0,
+    environment => 'PATH=/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin',
   }
 
   file { "${base_dir}/aem-tools/live-snapshot-backup.sh":
@@ -119,10 +120,11 @@ class author_primary (
     group   => 'root',
   } ->
   cron { 'hourly-live-snapshot-backup':
-    command => "${base_dir}/aem-tools/live-snapshot-backup.sh",
-    user    => 'root',
-    hour    => '*',
-    minute  => 0,
+    command     => "${base_dir}/aem-tools/live-snapshot-backup.sh",
+    user        => 'root',
+    hour        => '*',
+    minute      => 0,
+    environment => 'PATH=/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin',
   }
 
   file { "${base_dir}/aem-tools/offline-snapshot-backup.sh":

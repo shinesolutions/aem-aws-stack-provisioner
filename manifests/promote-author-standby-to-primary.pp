@@ -34,17 +34,19 @@ class promote_author_standby_to_primary (
   }
 
   cron { 'daily-export-backups':
-    command => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json",
-    user    => 'root',
-    hour    => 2,
-    minute  => 0,
+    command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json",
+    user        => 'root',
+    hour        => 2,
+    minute      => 0,
+    environment => 'PATH=/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin',
   }
 
   cron { 'hourly-live-snapshot-backup':
-    command => "${base_dir}/aem-tools/live-snapshot-backup.sh",
-    user    => 'root',
-    hour    => '*',
-    minute  => 0,
+    command     => "${base_dir}/aem-tools/live-snapshot-backup.sh",
+    user        => 'root',
+    hour        => '*',
+    minute      => 0,
+    environment => 'PATH=/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin',
   }
 
 }
