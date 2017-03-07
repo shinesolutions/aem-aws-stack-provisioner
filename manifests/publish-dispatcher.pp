@@ -41,6 +41,23 @@ class publish_dispatcher (
     group   => 'root',
   }
 
+  file { "${base_dir}/aem-tools/content-healthcheck.py":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/content-healthcheck.py.epp", {
+      'tmp_dir'      => "${tmp_dir}",
+      'stack_prefix' => "${::stackprefix}",
+      'data_bucket'  => "${::data_bucket}",
+    }),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+  } ->
+  cron { 'every-minute-content-healthcheck':
+    command => "${base_dir}/aem-tools/content-healthcheck.py",
+    user    => 'root',
+    minute  => '*',
+  }
+
 }
 
 include publish_dispatcher
