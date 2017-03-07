@@ -1,6 +1,24 @@
 #!/usr/bin/env python
-import urllib, json, requests, urllib3, boto3, sys, argparse
+import urllib, json, requests, urllib3, boto3, sys, argparse, logging, socket
 from botocore.exceptions import ClientError
+
+try:
+    import coloredlogs
+    coloredlogs.install(
+        isatty = True,
+        show_name = False,
+        show_severity = False,
+        level = logging.NOTSET,
+        severity_to_style = { 'DEBUG': {'color': 'blue'}},
+    )
+except:
+    logging.basicConfig(
+        stream = sys.stdout,
+        format = '%(asctime)s ' + socket.gethostname() + ' %(levelname)-8s %(message)s',
+        datefmt = "%Y-%m-%d %H:%M:%S",
+        level = logging.NOTSET,
+    )
+log = logging.getLogger(__name__)
 
 local_path = '<%= $tmp_dir %>/content-healthcheck-descriptor.json'
 session = boto3.session.Session()
@@ -23,6 +41,7 @@ def main():
 def get_instance_id():
     response = requests.get('http://169.254.169.254/latest/meta-data/instance-id')
     instance_id = response.text
+    log.debug('The instance ID %s was retrived.', instance_id)
     return str(instance_id)
 
 # Retrives an instance tag
@@ -38,23 +57,25 @@ def get_instance_tag(tag_key):
                 tag_value = tags["Value"]
         return tag_value
     except ClientError as e:
-        print 'The ec2 instance' + instance_id + ' is unreachable. Error: ' + str(e)
+        log.debug('The ec2 instance %s is unreachable. Error: %s', instance_id, str(e))
         sys.exit(1)
 
 # Downloads descriptor file from an s3 bucket into a local tmp folder
 def download_file_from_s3():
+    bucket_name = '<%= $data_bucket %>'
     bucket_key = '<%= $stack_prefix %>/content-healthcheck-descriptor.json'
     s3 = boto3.client('s3')
     try:
-        s3.download_file('<%= $data_bucket %>', bucket_key, local_path)
+        s3.download_file(bucket_name, bucket_key, local_path)
+        log.debug('The file %s from bucket %s was succesfully downloaded to %s.', bucket_key, bucket_name, local_path)
     except ClientError as e:
         # If a client error is thrown, then check that it was a 404 error.
         # If it was a 404 error, then the bucket does not exist.
         error_code = int(e.response['Error']['Code'])
         if error_code == 404:
-            print 'The descriptor file ' + bucket_key + ' is missing. Error: ' + str(e)
+            log.debug('The descriptor file %s from bucket %s is missing. Error: %s', bucket_key, bucket_name, str(e))
         else:
-            print 'The data bucket path ' + bucket_key + ' is unreachable. Error: ' + str(e)
+            log.debug('The data bucket %s path %s is unreachable. Error: %s', bucket_name, bucket_key, str(e))
         sys.exit(1)
 
 # Loops through the descriptor file in search of all the content paths
@@ -72,16 +93,17 @@ def submit_request(path):
     url = args.protocol + '://' + publish_host + ':' + args.port + path
     try:
         r = requests.get(url, verify=False, timeout=30)
+        log.debug('A request was made to the following publish endpoint: %s', url)
         process_response(r)
     except requests.exceptions.RequestException as e:
-        print 'The content path ' + publish_host + ' is unreachable. Error: ' + str(e)
+        log.debug('The content path %s is unreachable. Error: %s', publish_host, str(e))
         send_to_cloudwatch(0)
         sys.exit(1)
 
 # If the response status code is 200 it will send a healthy status.
 # Anything different from a 200 will result in unhealthy status.
 def process_response(response):
-    print response.status_code
+    log.info('Response code: %s', response.status_code)
     if response.status_code == requests.codes.ok:
         send_to_cloudwatch(1)
     else:
@@ -102,11 +124,11 @@ def send_to_cloudwatch(status):
         cw_response = cw.put_metric_data(Namespace=namespace, MetricData=[ metric_data ])
         message = 'The content path ' + endpoint + ' in the publisher instance ' + publisher_id + ' is '
         if status == 1:
-            print message + 'healthy.'
+            log.info('%s healthy.', message)
         else:
-            print message + 'unhealthy.'
+            log.info('%s unhealthy.', message)
     except ClientError as e:
-        print 'The cloudwatch instance is unreachable. Error: ' + str(e)
+        log.debug('The cloudwatch instance is unreachable. Error: %s', str(e))
         sys.exit(1)
 
 if __name__ == "__main__":
