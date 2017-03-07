@@ -6,6 +6,8 @@ class author_primary (
   $author_protocol,
   $author_port,
   $aem_repo_device,
+  $env_path,
+  $https_proxy
 ) {
 
   class { 'aem_resources::puppet_aem_resources_set_config':
@@ -104,7 +106,7 @@ class author_primary (
     user        => 'root',
     hour        => 2,
     minute      => 0,
-    environment => 'PATH=/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin',
+    environment => ["PATH=${env_path}", "https_proxy=${https_proxy}"],
   }
 
   file { "${base_dir}/aem-tools/live-snapshot-backup.sh":
@@ -124,7 +126,7 @@ class author_primary (
     user        => 'root',
     hour        => '*',
     minute      => 0,
-    environment => 'PATH=/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin',
+    environment => ["PATH=${env_path}", "https_proxy=${https_proxy}"],
   }
 
   file { "${base_dir}/aem-tools/offline-snapshot-backup.sh":

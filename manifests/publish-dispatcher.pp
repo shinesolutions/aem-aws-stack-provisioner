@@ -5,6 +5,8 @@ class publish_dispatcher (
   $httpd_conf_dir,
   $docroot_dir,
   $publish_port,
+  $env_path,
+  $https_proxy
 ) {
 
   class { 'aem_resources::publish_dispatcher_set_config':
@@ -53,9 +55,10 @@ class publish_dispatcher (
     group   => 'root',
   } ->
   cron { 'every-minute-content-healthcheck':
-    command => "${base_dir}/aem-tools/content-healthcheck.py",
-    user    => 'root',
-    minute  => '*',
+    command     => "${base_dir}/aem-tools/content-healthcheck.py",
+    user        => 'root',
+    minute      => '*',
+    environment => ["PATH=${env_path}", "https_proxy=${https_proxy}"],
   }
 
 }

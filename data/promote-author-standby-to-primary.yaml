@@ -1,3 +1,6 @@
 ---
 promote_author_standby_to_primary::base_dir: "%{hiera('common::base_dir')}"
 promote_author_standby_to_primary::tmp_dir: "%{hiera('common::tmp_dir')}"
+
+promote_author_standby_to_primary::env_path: "%{hiera('common::env_path')}"
+promote_author_standby_to_primary::https_proxy: "%{hiera('common::https_proxy')}"

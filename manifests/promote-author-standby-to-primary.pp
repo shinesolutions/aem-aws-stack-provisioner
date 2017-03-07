@@ -1,6 +1,8 @@
 class promote_author_standby_to_primary (
   $base_dir,
   $tmp_dir,
+  $env_path,
+  $https_proxy
 ) {
 
   exec { 'service aem-aem stop':
@@ -38,7 +40,7 @@ class promote_author_standby_to_primary (
     user        => 'root',
     hour        => 2,
     minute      => 0,
-    environment => 'PATH=/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin',
+    environment => ["PATH=${env_path}", "https_proxy=${https_proxy}"],
   }
 
   cron { 'hourly-live-snapshot-backup':
@@ -46,7 +48,7 @@ class promote_author_standby_to_primary (
     user        => 'root',
     hour        => '*',
     minute      => 0,
-    environment => 'PATH=/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin',
+    environment => ["PATH=${env_path}", "https_proxy=${https_proxy}"],
   }
 
 }

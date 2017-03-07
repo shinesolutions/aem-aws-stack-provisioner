@@ -7,3 +7,6 @@ author_primary::crx_quickstart_dir: /opt/aem/author/crx-quickstart
 author_primary::author_protocol: http
 author_primary::author_port: 4502
 author_primary::aem_repo_device: /dev/sdb
+
+author_primary::env_path: "%{hiera('common::env_path')}"
+author_primary::https_proxy: "%{hiera('common::https_proxy')}"
