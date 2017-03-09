@@ -10,6 +10,7 @@ instance_id=$(facter ec2_metadata.instance-id)
 
 <%= $base_dir %>/aws-tools/snapshot_backup.py \
   --snapshot-description "Offline AEM snapshot of <%= $component %> instance ${instance_id}" \
+  --tag "Name=AEM <%= $component %> Snapshot ${instance_id}" \
   --tag "Component=<%= $component %>" \
   --tag "StackPrefix=<%= $stack_prefix %>" \
   --tag "SnapshotType=offline" \
