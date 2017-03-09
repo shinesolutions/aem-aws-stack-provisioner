@@ -19,7 +19,7 @@ class publish_dispatcher (
     path => ['/sbin'],
   } ->
   # TODO: see https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/6
-  exec { 'deploy-artifacts.sh deploy-artifacts-descriptor.json':
+  exec { "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json":
     cwd         => "${tmp_dir}",
     path        => ["${base_dir}/aem-tools", '/usr/bin', '/opt/puppetlabs/bin'],
     environment => ["https_proxy=${::cron_https_proxy}"],
