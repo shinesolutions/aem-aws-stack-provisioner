@@ -19,11 +19,12 @@ class author_dispatcher (
     path => ['/sbin'],
   } ->
   # TODO: see https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/6
-  exec { "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json":
-    cwd         => "${tmp_dir}",
+  exec { 'deploy-artifacts.sh deploy-artifacts-descriptor.json':
     path        => ["${base_dir}/aem-tools", '/usr/bin', '/opt/puppetlabs/bin'],
     environment => ["https_proxy=${::cron_https_proxy}"],
-    unless      => "[[ $(aws s3 ls s3://${::data_bucket}/${::stackprefix}/deploy-artifacts-descriptor.json | wc -l) = '0' ]]",
+    cwd         => "${tmp_dir}",
+    command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>/var/log/deploy-artifacts.log 2>&1",
+    onlyif      => "test `aws s3 ls s3://${::data_bucket}/${::stackprefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
     require     => File["${base_dir}/aem-tools/deploy-artifacts.sh"],
   }
 
