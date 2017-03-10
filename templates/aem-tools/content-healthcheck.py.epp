@@ -81,7 +81,12 @@ def download_file_from_s3():
             log.error('The data bucket %s path %s is unreachable. Error: %s', bucket_name, bucket_key, str(e))
         sys.exit(1)
 
+
+# TODO: This function could be vastly improved
 # Loops through the descriptor file in search of all the content paths
+# If the healthy response of the content path is of type HTML,
+# then do a search of the JS, CSS and PNG links inside it
+# else just send a cloudwatch healthy respnse without scanning for those resources
 def traverse_descriptor(instances):
     for packages in instances["publish-dispatcher"]["packages"]:
         for content in packages["content"]:
@@ -89,10 +94,13 @@ def traverse_descriptor(instances):
             endpoint = content
             response = submit_request(content)
             if process_response(response):
-                if get_links_health(response):
-                    send_to_cloudwatch(1)
+                if response.headers['Content-Type'].split(';')[0] == 'text/html':
+                    if get_links_health(response):
+                        send_to_cloudwatch(1)
+                    else:
+                        send_to_cloudwatch(0)
                 else:
-                    send_to_cloudwatch(0)
+                    send_to_cloudwatch(1)
             else:
                 send_to_cloudwatch(0)
 
@@ -119,6 +127,7 @@ def process_response(response):
     else:
         return False
 
+# TODO: This could probably be done in a better way using a library such as htmlparser; will need to research
 # Parses the content of the page looking for css, js and png links
 # Gets successful or failed response from check_random_resource
 def get_links_health(response):
