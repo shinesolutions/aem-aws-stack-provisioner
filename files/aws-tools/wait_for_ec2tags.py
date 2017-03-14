@@ -12,7 +12,7 @@ tag_keys = {
   'author-standby': ['Component', 'StackPrefix'],
   'chaos-monkey': ['Component', 'StackPrefix'],
   'orchestrator': ['Component', 'StackPrefix'],
-  'publish': ['Component', 'StackPrefix', 'PairInstanceId', 'PublishDispatcherHost'],
+  'publish': ['Component', 'StackPrefix', 'PairInstanceId', 'PublishDispatcherHost', 'SnapshotId'],
   'publish-dispatcher': ['Component', 'StackPrefix', 'PairInstanceId', 'PublishHost']
 }
 
