@@ -66,7 +66,7 @@ class publish_dispatcher (
     command     => "${base_dir}/aem-tools/content-healthcheck.py",
     user        => 'root',
     minute      => '*',
-    environment => ["PATH=${::cron_env_path}", "https_proxy=${::cron_https_proxy}"],
+    environment => ['PATH=${::cron_env_path}', 'https_proxy=${::cron_https_proxy}'],
   }
 
 }
