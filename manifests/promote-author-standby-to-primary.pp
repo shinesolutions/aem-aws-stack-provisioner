@@ -38,7 +38,7 @@ class promote_author_standby_to_primary (
     user        => 'root',
     hour        => 2,
     minute      => 0,
-    environment => ['PATH=${::cron_env_path}', 'https_proxy=${::cron_https_proxy}'],
+    environment => ["PATH=${::cron_env_path}", "https_proxy=\"${::cron_https_proxy}\""],
   }
 
   cron { 'hourly-live-snapshot-backup':
@@ -46,7 +46,7 @@ class promote_author_standby_to_primary (
     user        => 'root',
     hour        => '*',
     minute      => 0,
-    environment => ['PATH=${::cron_env_path}', 'https_proxy=${::cron_https_proxy}'],
+    environment => ["PATH=${::cron_env_path}", "https_proxy=\"${::cron_https_proxy}\""],
   }
 
 }
