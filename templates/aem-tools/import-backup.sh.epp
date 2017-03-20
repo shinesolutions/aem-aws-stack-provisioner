@@ -12,6 +12,10 @@ package_group=$2
 package_name=$3
 package_datestamp=$4
 component=$(facter component)
+data_bucket=$(facter data_bucket)
+stack_prefix=$(facter stackprefix)
+aem_username=importer
+aem_password=$(aws s3 cp s3://$data_bucket/$stack_prefix/system-users-credentials.json - | jq --raw-output .$aem_username)
 event=import-backup
 
 len=${#package_datestamp}
@@ -36,7 +40,9 @@ fi
 
 cd <%= $base_dir %>/aem-aws-stack-provisioner/
 
-FACTER_event="${event}" \
+aem_username="${aem_username}" \
+  aem_password="${aem_password}" \
+  FACTER_event="${event}" \
   FACTER_source_stack_prefix="${source_stack_prefix}" \
   FACTER_backup_path="${backup_path}" \
   FACTER_package_group="${package_group}" \
