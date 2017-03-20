@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import urllib, json, requests, urllib3, boto3, sys, argparse, logging, socket, re
+import urllib, json, requests, urllib3, boto3, sys, argparse, logging, socket, re, random
 from botocore.exceptions import ClientError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
