@@ -160,15 +160,14 @@ def check_random_resource(resource_list, resource_type):
     return process_response(submit_request((resource_list[0])))
 
 # Sends cutom metric to cloudwatch with the following dimensions:
-# instance_id which is the distpacher Id, PairInstanceId which is the publisher Id, and the Endpoint which is the actual content path
+# PairInstanceId which is the publisher Id
 # Prints the status of the the current content path
 def send_to_cloudwatch(status):
-    dispatcher_id = get_instance_id()
     publisher_id = get_instance_tag('PairInstanceId')
     cw = boto3.client('cloudwatch', region_name=region)
     namespace = get_instance_tag('aws:cloudformation:stack-name')
     name = 'contentHealthCheck'
-    dimensions = [{'Name': 'InstanceId','Value': dispatcher_id},{'Name': 'PairInstanceId','Value': publisher_id},{'Name': 'Endpoint','Value': endpoint}]
+    dimensions = [{'Name': 'PairInstanceId','Value': publisher_id}]
     metric_data = { 'MetricName': name, 'Dimensions': dimensions, 'Value': status, 'Unit': 'Count' }
     try:
         cw_response = cw.put_metric_data(Namespace=namespace, MetricData=[ metric_data ])
