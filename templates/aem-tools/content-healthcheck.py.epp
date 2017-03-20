@@ -163,7 +163,6 @@ def check_random_resource(resource_list, resource_type):
 # PairInstanceId which is the publisher Id
 # Prints the status of the the current content path
 def send_to_cloudwatch(status):
-    dispatcher_id = get_instance_id()
     publisher_id = get_instance_tag('PairInstanceId')
     cw = boto3.client('cloudwatch', region_name=region)
     namespace = get_instance_tag('aws:cloudformation:stack-name')
