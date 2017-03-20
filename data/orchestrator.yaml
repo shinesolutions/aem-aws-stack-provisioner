@@ -3,6 +3,7 @@ orchestrator::base_dir: "%{hiera('common::base_dir')}"
 
 aem_orchestrator::jarfile_source: "s3://%{::data_bucket}/%{::stackprefix}/aem-orchestrator-%{::aem_orchestrator_version}.jar"
 aem_orchestrator::manage_installdir: true
+aem_orchestrator::application_properties::aws.sns.topicName: "%{::stackprefix}-aem-asg-event-topic"
 aem_orchestrator::application_properties::aws_client_use_proxy: "%{::proxy_enabled}"
 aem_orchestrator::application_properties::aws_client_proxy_host: "%{::proxy_host}"
 aem_orchestrator::application_properties::aws_client_proxy_port: "%{::proxy_port}"
