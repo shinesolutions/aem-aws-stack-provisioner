@@ -37,7 +37,11 @@ args = parser.parse_args()
 def main():
     download_file_from_s3();
     response = urllib.urlopen(local_path)
-    resp_str = json.loads(response.read())
+    try:
+        resp_str = json.loads(response.read())
+    except ValueError as e:
+        log.error('The descriptor file in path %s is empty. Error: %s', local_path, str(e))
+        sys.exit(1)
     traverse_descriptor(resp_str)
 
 # Retrive the instance id from metadata
@@ -90,19 +94,23 @@ def download_file_from_s3():
 def traverse_descriptor(instances):
     for packages in instances["publish-dispatcher"]["packages"]:
         for content in packages["content"]:
-            global endpoint
-            endpoint = content
-            response = submit_request(content)
-            if process_response(response):
-                if response.headers['Content-Type'].split(';')[0] == 'text/html':
-                    if get_links_health(response):
-                        send_to_cloudwatch(1)
+            if content:
+                global endpoint
+                endpoint = content
+                response = submit_request(content)
+                if process_response(response):
+                    if response.headers['Content-Type'].split(';')[0] == 'text/html':
+                        if get_links_health(response):
+                            send_to_cloudwatch(1)
+                        else:
+                            send_to_cloudwatch(0)
                     else:
-                        send_to_cloudwatch(0)
+                        send_to_cloudwatch(1)
                 else:
-                    send_to_cloudwatch(1)
+                    send_to_cloudwatch(0)
             else:
-                send_to_cloudwatch(0)
+                log.error('The content node provideded is emtpy.')
+
 
 # Submits the request to the given content path and returns the response
 # If there is an error, it will count as an unhealthy metric
