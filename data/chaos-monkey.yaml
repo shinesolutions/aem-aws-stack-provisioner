@@ -1,4 +1,3 @@
-```
 ---
 
 # simianarmy.properties
@@ -57,7 +56,7 @@ simianarmy::chaos_properties::simianarmy_chaos_mandatory_termination_window_in_d
 # Set the source email that sends the termination notification
 # simianarmy.chaos.notification.sourceEmail = foo@bar.com
 
-
+# TODO: janitor and conformity still to be implemented
 # janitor.properties
 # https://github.com/Netflix/SimianArmy/wiki/Janitor-Settings
 
@@ -156,7 +155,3 @@ simianarmy::chaos_properties::simianarmy_chaos_mandatory_termination_window_in_d
 #simianarmy::conformity_properties::simianarmy_conformity_rule_instance_is_healthy_in_eureka_enabled: true
 #simianarmy::conformity_properties::simianarmy_conformity_rule_instance_too_old_enabled: true
 #simianarmy::conformity_properties::simianarmy_conformity_rule_instance_too_old_instance_age_threshold: 180
-
-
-
-```
