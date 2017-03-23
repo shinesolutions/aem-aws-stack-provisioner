@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import urllib, json, requests, urllib3, boto3, sys, argparse, logging, socket, re
+import urllib, json, requests, urllib3, boto3, sys, argparse, logging, socket, re, random
 from botocore.exceptions import ClientError
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
@@ -37,7 +37,11 @@ args = parser.parse_args()
 def main():
     download_file_from_s3();
     response = urllib.urlopen(local_path)
-    resp_str = json.loads(response.read())
+    try:
+        resp_str = json.loads(response.read())
+    except ValueError as e:
+        log.error('The descriptor file in path %s is empty. Error: %s', local_path, str(e))
+        sys.exit(1)
     traverse_descriptor(resp_str)
 
 # Retrive the instance id from metadata
@@ -90,19 +94,23 @@ def download_file_from_s3():
 def traverse_descriptor(instances):
     for packages in instances["publish-dispatcher"]["packages"]:
         for content in packages["content"]:
-            global endpoint
-            endpoint = content
-            response = submit_request(content)
-            if process_response(response):
-                if response.headers['Content-Type'].split(';')[0] == 'text/html':
-                    if get_links_health(response):
-                        send_to_cloudwatch(1)
+            if content:
+                global endpoint
+                endpoint = content
+                response = submit_request(content)
+                if process_response(response):
+                    if response.headers['Content-Type'].split(';')[0] == 'text/html':
+                        if get_links_health(response):
+                            send_to_cloudwatch(1)
+                        else:
+                            send_to_cloudwatch(0)
                     else:
-                        send_to_cloudwatch(0)
+                        send_to_cloudwatch(1)
                 else:
-                    send_to_cloudwatch(1)
+                    send_to_cloudwatch(0)
             else:
-                send_to_cloudwatch(0)
+                log.error('The content node provideded is emtpy.')
+
 
 # Submits the request to the given content path and returns the response
 # If there is an error, it will count as an unhealthy metric
@@ -160,15 +168,14 @@ def check_random_resource(resource_list, resource_type):
     return process_response(submit_request((resource_list[0])))
 
 # Sends cutom metric to cloudwatch with the following dimensions:
-# instance_id which is the distpacher Id, PairInstanceId which is the publisher Id, and the Endpoint which is the actual content path
+# PairInstanceId which is the publisher Id
 # Prints the status of the the current content path
 def send_to_cloudwatch(status):
-    dispatcher_id = get_instance_id()
     publisher_id = get_instance_tag('PairInstanceId')
     cw = boto3.client('cloudwatch', region_name=region)
     namespace = get_instance_tag('aws:cloudformation:stack-name')
     name = 'contentHealthCheck'
-    dimensions = [{'Name': 'InstanceId','Value': dispatcher_id},{'Name': 'PairInstanceId','Value': publisher_id},{'Name': 'Endpoint','Value': endpoint}]
+    dimensions = [{'Name': 'PairInstanceId','Value': publisher_id}]
     metric_data = { 'MetricName': name, 'Dimensions': dimensions, 'Value': status, 'Unit': 'Count' }
     try:
         cw_response = cw.put_metric_data(Namespace=namespace, MetricData=[ metric_data ])

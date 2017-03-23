@@ -5,8 +5,11 @@ class author_primary (
   $crx_quickstart_dir,
   $author_protocol,
   $author_port,
-  $aem_repo_device
+  $aem_repo_device,
+  $credentials_file,
 ) {
+
+  $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
 
   class { 'aem_resources::puppet_aem_resources_set_config':
     conf_dir => "${puppet_conf_dir}",
@@ -27,6 +30,13 @@ class author_primary (
     retries_max_tries          => 60,
     retries_base_sleep_seconds => 5,
     retries_max_sleep_seconds  => 5,
+  } ->
+  class { 'aem_resources::create_system_users':
+    orchestrator_password => $credentials_hash['orchestrator'],
+    replicator_password   => $credentials_hash['replicator'],
+    deployer_password     => $credentials_hash['deployer'],
+    exporter_password     => $credentials_hash['exporter'],
+    importer_password     => $credentials_hash['importer'],
   } ->
   aem_bundle { 'Stop webdav bundle':
     ensure => stopped,

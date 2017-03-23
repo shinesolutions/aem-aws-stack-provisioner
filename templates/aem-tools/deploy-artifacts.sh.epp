@@ -8,6 +8,10 @@ if [ "$#" -ne 1 ]; then
 fi
 
 descriptor_file=$1
+data_bucket=$(facter data_bucket)
+stack_prefix=$(facter stackprefix)
+aem_username=deployer
+aem_password=$(aws s3 cp s3://$data_bucket/$stack_prefix/system-users-credentials.json - | jq --raw-output .$aem_username)
 event=deploy-artifacts
 
 cd <%= $base_dir %>/aem-aws-stack-provisioner/
@@ -28,7 +32,9 @@ FACTER_event="${event}" \
   --hiera_config conf/hiera.yaml \
   "manifests/download-artifacts.pp"
 
-FACTER_event="${event}" \
+aem_username="${aem_username}" \
+  aem_password="${aem_password}" \
+  FACTER_event="${event}" \
   FACTER_descriptor_file="${descriptor_file}" \
   puppet apply \
   --debug \

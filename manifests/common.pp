@@ -5,6 +5,7 @@ class common (
   $aws_region,
   $user,
   $group,
+  $credentials_file,
 ){
 
   file { "${tmp_base_dir}":
@@ -100,6 +101,13 @@ class common (
     require => File["${base_dir}/aws-tools/"],
   }
 
+  # Download credentials file from S3 to temp directory, these credentials will
+  # used for component provisioning and will be cleaned up at the end of stack
+  # initialisation.
+  archive { "${tmp_dir}/${credentials_file}":
+    ensure => present,
+    source => "s3://${::data_bucket_name}/${::stack_prefix}/${credentials_file}",
+  }
 }
 
 include common

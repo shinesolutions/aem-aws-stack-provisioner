@@ -14,10 +14,16 @@ package_version=$4
 package_replicate=$5
 package_activate=$6
 package_force=$7
+data_bucket=$(facter data_bucket)
+stack_prefix=$(facter stackprefix)
+aem_username=deployer
+aem_password=$(aws s3 cp s3://$data_bucket/$stack_prefix/system-users-credentials.json - | jq --raw-output .$aem_username)
 event=deploy-artifact
 
 cd <%= $base_dir %>/aem-aws-stack-provisioner/
-FACTER_event="${event}" \
+aem_username="${aem_username}" \
+  aem_password="${aem_password}" \
+  FACTER_event="${event}" \
   FACTER_package_source="${package_source}" \
   FACTER_package_group="${package_group}" \
   FACTER_package_name="${package_name}" \

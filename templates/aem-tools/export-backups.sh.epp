@@ -9,6 +9,10 @@ fi
 
 descriptor_file=$1
 component=$(facter component)
+data_bucket=$(facter data_bucket)
+stack_prefix=$(facter stackprefix)
+aem_username=exporter
+aem_password=$(aws s3 cp s3://$data_bucket/$stack_prefix/system-users-credentials.json - | jq --raw-output .$aem_username)
 event=export-backups
 
 year=$(date +%Y)
@@ -17,7 +21,9 @@ date=$(date +%d)
 
 cd <%= $base_dir %>/aem-aws-stack-provisioner/
 
-FACTER_event="${event}" \
+aem_username="${aem_username}" \
+  aem_password="${aem_password}" \
+  FACTER_event="${event}" \
   FACTER_descriptor_file="${descriptor_file}" \
   puppet apply \
   --debug \
@@ -25,7 +31,9 @@ FACTER_event="${event}" \
   --hiera_config conf/hiera.yaml \
   "manifests/download-descriptor.pp"
 
-FACTER_event="${event}" \
+aem_username="${aem_username}" \
+  aem_password="${aem_password}" \
+  FACTER_event="${event}" \
   FACTER_descriptor_file="${descriptor_file}" \
   FACTER_package_version="${year}${month}${date}-${component}" \
   FACTER_backup_path="${year}/${month}" \
@@ -35,7 +43,9 @@ FACTER_event="${event}" \
   --hiera_config conf/hiera.yaml \
   "manifests/${event}.pp"
 
-FACTER_event="${event}" \
+aem_username="${aem_username}" \
+  aem_password="${aem_password}" \
+  FACTER_event="${event}" \
   FACTER_descriptor_file="${descriptor_file}" \
   FACTER_package_version="${year}${month}-${component}-latest" \
   FACTER_backup_path="${year}/${month}" \
@@ -45,7 +55,9 @@ FACTER_event="${event}" \
   --hiera_config conf/hiera.yaml \
   "manifests/${event}.pp"
 
-FACTER_event="${event}" \
+aem_username="${aem_username}" \
+  aem_password="${aem_password}" \
+  FACTER_event="${event}" \
   FACTER_descriptor_file="${descriptor_file}" \
   FACTER_package_version="${year}-${component}-latest" \
   FACTER_backup_path="${year}" \
