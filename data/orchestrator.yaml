@@ -13,7 +13,7 @@ aem_orchestrator::application_properties::aws_cloudformation_stack_name_author_d
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_publish: "%{::stackprefix}-aem-publish-stack"
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_publish_dispatcher: "%{::stackprefix}-aem-publish-dispatcher-stack"
 aem_orchestrator::application_properties::aem_credentials_s3_use: true
-aem_orchestrator::application_properties::aem_credentials_s3_file_uri: "s3://aem-stack-builder/%{::stackprefix}/system-users-credentials.json"
+aem_orchestrator::application_properties::aem_credentials_s3_file_uri: "s3://%{::data_bucket}/%{::stackprefix}/system-users-credentials.json"
 aem_orchestrator::application_properties::aem_client_api_debug: true
 
 aem_orchestrator::application_properties::aem_protocol_author: http
