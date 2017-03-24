@@ -5,7 +5,7 @@
         "group": "shinesolutions",
         "name": "aem-helloworld-content",
         "content": [
-          "/content/helloworld"
+          "/content/helloworld.html"
         ]
       }
     ]

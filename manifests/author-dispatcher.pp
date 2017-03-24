@@ -25,7 +25,7 @@ class author_dispatcher (
     cwd         => "${tmp_dir}",
     command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>/var/log/deploy-artifacts.log 2>&1",
     onlyif      => "test `aws s3 ls s3://${::data_bucket}/${::stackprefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
-    require     => File["${base_dir}/aem-tools/deploy-artifacts.sh"],
+    require     => [ File["${base_dir}/aem-tools/deploy-artifacts.sh"], File["${base_dir}/aem-tools/generate-artifacts-json.py"] ],
   }
 
   # Set up AEM tools
