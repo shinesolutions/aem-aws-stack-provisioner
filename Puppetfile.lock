@@ -3,12 +3,13 @@ FORGE
   specs:
     puppet-archive (1.3.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
-    puppetlabs-stdlib (4.15.0)
+    puppetlabs-java_ks (1.5.0)
+    puppetlabs-stdlib (4.16.0)
 
 GIT
   remote: https://github.com/shinesolutions/puppet-aem-orchestrator
   ref: master
-  sha: 55a04d32caecc1ae8dd1d2621025e04f459ccac3
+  sha: 7f4b6194ff21ab349fd6bbb7547e8388f69dbd0a
   specs:
     shinesolutions-aem_orchestrator (0.9.4)
       puppet-archive (~> 1.3.0)
@@ -16,9 +17,10 @@ GIT
 GIT
   remote: https://github.com/shinesolutions/puppet-aem-resources
   ref: master
-  sha: bcb40bf1498c6d41283cff41b1dbdfd239227179
+  sha: 2422fd92652133b5875307d128e11ea1cac6a1f8
   specs:
     shinesolutions-aem_resources (0.9.3)
+      puppetlabs-java_ks (>= 1.5.0)
       puppetlabs-stdlib (>= 4.14.0)
 
 GIT
@@ -31,6 +33,7 @@ GIT
 
 DEPENDENCIES
   puppet-archive (= 1.3.0)
+  puppetlabs-java_ks (= 1.5.0)
   shinesolutions-aem_orchestrator (>= 0)
   shinesolutions-aem_resources (>= 0)
   shinesolutions-simianarmy (>= 0)

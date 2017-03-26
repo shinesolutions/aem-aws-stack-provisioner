@@ -11,6 +11,16 @@ class author_primary (
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
 
+  file { "${crx_quickstart_dir}/install/":
+    ensure => directory,
+    mode   => '0775',
+    owner  => 'aem',
+    group  => 'aem',
+  } ->
+  archive { "${crx_quickstart_dir}/install/aem-password-reset-content-${::aem_password_reset_version}.zip":
+    ensure => present,
+    source => "s3://${::data_bucket}/${::stackprefix}/aem-password-reset-content-${::aem_password_reset_version}.zip",
+  } ->
   class { 'aem_resources::puppet_aem_resources_set_config':
     conf_dir => "${puppet_conf_dir}",
     protocol => "${author_protocol}",
@@ -38,9 +48,51 @@ class author_primary (
     exporter_password     => $credentials_hash['exporter'],
     importer_password     => $credentials_hash['importer'],
   } ->
+  archive { "${tmp_dir}/aem.cert":
+    ensure => present,
+    source => "s3://${::data_bucket}/${::stackprefix}/aem.cert",
+  } ->
+  archive { "${tmp_dir}/aem.key":
+    ensure => present,
+    source => "s3://${::data_bucket}/${::stackprefix}/aem.key",
+  } ->
+  file { "${crx_quickstart_dir}/ssl/":
+    ensure => directory,
+    mode   => '0775',
+    owner  => 'aem',
+    group  => 'aem',
+  } ->
+  class { 'aem_resources::author_publish_enable_ssl':
+    run_mode                => 'author',
+    port                    => 5433,
+    ssl_dir                 => "${crx_quickstart_dir}/ssl",
+    owner                   => 'aem',
+    group                   => 'aem',
+    keystore_cert           => "${tmp_dir}/aem.cert",
+    keystore_password       => 'somekeystorepassword',
+    keystore_key_alias      => 'cqse',
+    keystore_private_key    => "${tmp_dir}/aem.key",
+    keystore_trustcacerts   => true,
+    truststore_cert         => "${tmp_dir}/aem.cert",
+    truststore_password     => 'sometruststorepassword',
+    truststore_trustcacerts => true,
+  }
+
   aem_bundle { 'Stop webdav bundle':
     ensure => stopped,
     name   => 'org.apache.sling.jcr.webdav',
+  }
+
+  aem_user { 'Change admin password':
+    ensure       => password_changed,
+    name         => 'admin',
+    path         => '/home/users/d',
+    old_password => 'admin',
+    new_password => $credentials_hash['admin']
+  }
+
+  file { "${crx_quickstart_dir}/install/aem-password-reset-content-${::aem_password_reset_version}.zip":
+    ensure => absent,
   }
 
   # Set up AEM tools

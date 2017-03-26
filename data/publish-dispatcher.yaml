@@ -1,5 +1,6 @@
 ---
-publish_dispatcher::publish_port: 4503
+publish_dispatcher::publish_port: 5433
+publish_dispatcher::publish_secure: 1
 
 publish_dispatcher::dispatcher_conf_dir: /etc/httpd/conf.modules.d/
 publish_dispatcher::httpd_conf_dir: /etc/httpd/conf.d/
