@@ -56,14 +56,14 @@ class publish (
     force         => true,
   } ->
   aem_outbox_replication_agent { 'Create outbox replication agent':
-    ensure        => present,
-    name          => 'outbox',
-    run_mode      => 'publish',
-    title         => "Outbox replication agent for publish-dispatcher ${::pairinstanceid}",
-    description   => "Outbox replication agent for publish-dispatcher ${::pairinstanceid}",
-    user_id       => 'replicator',
-    log_level     => 'info',
-    force         => true,
+    ensure      => present,
+    name        => 'outbox',
+    run_mode    => 'publish',
+    title       => "Outbox replication agent for publish-dispatcher ${::pairinstanceid}",
+    description => "Outbox replication agent for publish-dispatcher ${::pairinstanceid}",
+    user_id     => 'replicator',
+    log_level   => 'info',
+    force       => true,
   } ->
   archive { "${tmp_dir}/aem.cert":
     ensure => present,
