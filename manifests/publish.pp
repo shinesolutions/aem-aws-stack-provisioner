@@ -89,7 +89,6 @@ class publish (
     keystore_password       => 'somekeystorepassword',
     keystore_key_alias      => 'cqse',
     keystore_private_key    => "${tmp_dir}/aem.key",
-    keystore_key_password   => 'somekeystorekeypassword',
     keystore_trustcacerts   => true,
     truststore_cert         => "${tmp_dir}/aem.cert",
     truststore_password     => 'sometruststorepassword',
