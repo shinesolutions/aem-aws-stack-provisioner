@@ -24,6 +24,11 @@ class author_standby (
     enable => true,
   }
 
+  class { '::collectd':
+    service_ensure => 'running',
+    service_enable => true,
+  }
+
   # Set up AEM tools
   file { "${base_dir}/aem-tools/":
     ensure => directory,
