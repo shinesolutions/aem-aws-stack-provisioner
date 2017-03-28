@@ -24,9 +24,9 @@ class author_standby (
     enable => true,
   }
 
-  class { '::collectd':
-    service_ensure => 'running',
-    service_enable => true,
+  service { 'collectd':
+    ensure => 'running',
+    enable => true,
   }
 
   # Set up AEM tools
