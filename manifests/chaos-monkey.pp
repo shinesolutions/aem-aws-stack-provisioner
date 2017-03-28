@@ -4,39 +4,34 @@ class chaos_monkey (
 
   include simianarmy
 
-  simianarmy::chaos_properties::asg { $::OrchestratorASG:
+  simianarmy::chaos_properties::asg { $::orchestratorasg:
     enabled                  => true,
     probability              => 0.5,
     max_terminations_per_day => 1.0,
-    owner_email              => 'owner@domain.com',
   }
   # Chaos Monkey
-  simianarmy::chaos_properties::asg { $::aws_autoscaling_groupName:
+  simianarmy::chaos_properties::asg { $facts['aws:autoscaling:groupname']:
     enabled                  => true,
     probability              => 0.5,
     max_terminations_per_day => 1.0,
-    owner_email              => 'owner@domain.com',
   }
   # Publish
-  simianarmy::chaos_properties::asg { $::PublisherASG:
+  simianarmy::chaos_properties::asg { $::publisherasg:
     enabled                  => true,
     probability              => 0.5,
     max_terminations_per_day => 1.0,
-    owner_email              => 'owner@domain.com',
   }
   # Publish-dispatcher
-  simianarmy::chaos_properties::asg { $::PublisherDispatcherASG:
+  simianarmy::chaos_properties::asg { $::publisherdispatcherasg:
     enabled                  => true,
     probability              => 0.5,
     max_terminations_per_day => 1.0,
-    owner_email              => 'owner@domain.com',
   }
   # Author-Dispatcher
-  simianarmy::chaos_properties::asg { $::AuthorDispatcherASG:
+  simianarmy::chaos_properties::asg { $::authordispatcherasg:
     enabled                  => true,
     probability              => 0.5,
     max_terminations_per_day => 1.0,
-    owner_email              => 'owner@domain.com',
   }
 
 }
