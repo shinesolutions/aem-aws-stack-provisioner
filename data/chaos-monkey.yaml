@@ -15,6 +15,7 @@ simianarmy::simianarmy_properties::simianarmy_scheduler_threads: '1'
 simianarmy::client_properties::simianarmy_client_aws_region: "%{hiera('common::aws_region')}"
 simianarmy::client_properties::simianarmy_client_aws_proxyHost: "%{::proxy_host}"
 simianarmy::client_properties::simianarmy_client_aws_proxyPort: "%{::proxy_port}"
+simianarmy::client_properties::simianarmy_recorder_sdb_domain: "SIMIAN_ARMY_%{::stack_prefix}"
 
 # chaos.properties
 # https://github.com/Netflix/SimianArmy/wiki/Chaos-Settings
@@ -27,6 +28,7 @@ simianarmy::chaos_properties::simianarmy_chaos_mandatory_termination_default_pro
 simianarmy::chaos_properties::simianarmy_chaos_mandatory_termination_enabled: 'false'
 simianarmy::chaos_properties::simianarmy_chaos_mandatory_termination_window_in_days: '32'
 
+simianarmy::chaos_properties::simianarmy_chaos_terminate_on_demand.enabled: 'true'
 
 # enable a specific ASG
 #simianarmy.chaos.ASG.ASG_ORCHESTRATOR.enabled = true
