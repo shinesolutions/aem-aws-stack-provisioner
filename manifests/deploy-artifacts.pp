@@ -40,8 +40,7 @@ class deploy_artifacts (
       class { 'aem_resources::deploy_packages':
         packages => $packages,
         path     => "${tmp_dir}/packages",
-      } ->
-      file { "${tmp_dir}/packages":
+      } -> file { "${tmp_dir}/packages":
         ensure => absent,
         force  => true,
       }
