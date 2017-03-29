@@ -14,12 +14,10 @@ class author_standby (
     host     => 'localhost',
     port     => "${author_port}",
     debug    => true,
-  } ->
-  class { 'aem_resources::author_standby_set_config':
+  } -> class { 'aem_resources::author_standby_set_config':
     crx_quickstart_dir => "${crx_quickstart_dir}",
     primary_host       => "${::authorprimaryhost}",
-  } ->
-  service { 'aem-aem':
+  } -> service { 'aem-aem':
     ensure => 'running',
     enable => true,
   }
@@ -35,36 +33,31 @@ class author_standby (
     mode   => '0775',
     owner  => 'root',
     group  => 'root',
-  } ->
-  file { "${base_dir}/aem-tools/deploy-artifact.sh":
+  } -> file { "${base_dir}/aem-tools/deploy-artifact.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/deploy-artifact.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } ->
-  file { "${base_dir}/aem-tools/deploy-artifacts.sh":
+  } -> file { "${base_dir}/aem-tools/deploy-artifacts.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/deploy-artifacts.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } ->
-  file { "${base_dir}/aem-tools/export-backup.sh":
+  } -> file { "${base_dir}/aem-tools/export-backup.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/export-backup.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } ->
-  file { "${base_dir}/aem-tools/import-backup.sh":
+  } -> file { "${base_dir}/aem-tools/import-backup.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/import-backup.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } ->
-  file { "${base_dir}/aem-tools/promote-author-standby-to-primary.sh":
+  } -> file { "${base_dir}/aem-tools/promote-author-standby-to-primary.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/promote-author-standby-to-primary.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
@@ -75,8 +68,7 @@ class author_standby (
   archive { "${base_dir}/aem-tools/oak-run-${::oak_run_version}.jar":
     ensure => present,
     source => "s3://${::data_bucket}/${::stackprefix}/oak-run-${::oak_run_version}.jar",
-  } ->
-  file { "${base_dir}/aem-tools/offline-compaction.sh":
+  } -> file { "${base_dir}/aem-tools/offline-compaction.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-compaction.sh.epp", {
       'base_dir'           => "${base_dir}",

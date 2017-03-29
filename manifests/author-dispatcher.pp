@@ -42,13 +42,10 @@ class author_dispatcher (
     author_host         => "${::authorhost}",
     author_port         => "${author_port}",
     author_secure       => "${author_secure}",
-  } ->
-  exec { 'httpd -k graceful':
+  } -> exec { 'httpd -k graceful':
     cwd  => "${tmp_dir}",
     path => ['/sbin'],
-  } ->
-  # TODO: see https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/6
-  exec { 'deploy-artifacts.sh deploy-artifacts-descriptor.json':
+  } -> exec { 'deploy-artifacts.sh deploy-artifacts-descriptor.json':
     path        => ["${base_dir}/aem-tools", '/usr/bin', '/opt/puppetlabs/bin'],
     environment => ["https_proxy=\"${::cron_https_proxy}\""],
     cwd         => "${tmp_dir}",
@@ -63,21 +60,20 @@ class author_dispatcher (
     mode   => '0775',
     owner  => 'root',
     group  => 'root',
-  } ->
-  file { "${base_dir}/aem-tools/deploy-artifacts.sh":
+  } -> file { "${base_dir}/aem-tools/deploy-artifacts.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/deploy-artifacts.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } ->
-  file { "${base_dir}/aem-tools/generate-artifacts-json.py":
+  } -> file { "${base_dir}/aem-tools/generate-artifacts-json.py":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/generate-artifacts-json.py.epp", { 'tmp_dir' => "${tmp_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
   }
+
 }
 
 include author_dispatcher

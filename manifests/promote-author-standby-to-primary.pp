@@ -6,19 +6,15 @@ class promote_author_standby_to_primary (
   exec { 'service aem-aem stop':
     cwd  => "${tmp_dir}",
     path => ['/usr/bin', '/usr/sbin'],
-  } ->
-  exec { 'set-component.sh author-primary':
+  } -> exec { 'set-component.sh author-primary':
     cwd  => "${tmp_dir}",
     path => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
-  } ->
-  class { 'aem_resources::author_primary_set_config':
+  } -> class { 'aem_resources::author_primary_set_config':
     crx_quickstart_dir => '/opt/aem/author/crx-quickstart',
-  } ->
-  service { 'aem-aem':
+  } -> service { 'aem-aem':
     ensure => 'running',
     enable => true,
-  } ->
-  aem_aem { 'Wait until login page is ready':
+  } -> aem_aem { 'Wait until login page is ready':
     ensure                     => login_page_is_ready,
     retries_max_tries          => 30,
     retries_base_sleep_seconds => 5,

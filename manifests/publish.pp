@@ -15,36 +15,30 @@ class publish (
     mode   => '0775',
     owner  => 'aem',
     group  => 'aem',
-  } ->
-  archive { "${crx_quickstart_dir}/install/aem-password-reset-content-${::aem_password_reset_version}.zip":
+  } -> archive { "${crx_quickstart_dir}/install/aem-password-reset-content-${::aem_password_reset_version}.zip":
     ensure => present,
     source => "s3://${::data_bucket}/${::stackprefix}/aem-password-reset-content-${::aem_password_reset_version}.zip",
-  } ->
-  class { 'aem_resources::puppet_aem_resources_set_config':
+  } -> class { 'aem_resources::puppet_aem_resources_set_config':
     conf_dir => "${puppet_conf_dir}",
     protocol => "${publish_protocol}",
     host     => 'localhost',
     port     => "${publish_port}",
     debug    => true,
-  } ->
-  service { 'aem-aem':
+  } -> service { 'aem-aem':
     ensure => 'running',
     enable => true,
-  } ->
-  aem_aem { 'Wait until login page is ready':
+  } -> aem_aem { 'Wait until login page is ready':
     ensure                     => login_page_is_ready,
     retries_max_tries          => 60,
     retries_base_sleep_seconds => 5,
     retries_max_sleep_seconds  => 5,
-  } ->
-  class { 'aem_resources::create_system_users':
+  } -> class { 'aem_resources::create_system_users':
     orchestrator_password => $credentials_hash['orchestrator'],
     replicator_password   => $credentials_hash['replicator'],
     deployer_password     => $credentials_hash['deployer'],
     exporter_password     => $credentials_hash['exporter'],
     importer_password     => $credentials_hash['importer'],
-  } ->
-  aem_flush_agent { 'Create flush agent':
+  } -> aem_flush_agent { 'Create flush agent':
     ensure        => present,
     name          => "flushAgent-${::pairinstanceid}",
     run_mode      => 'publish',
@@ -54,8 +48,7 @@ class publish (
     log_level     => 'info',
     retry_delay   => 60000,
     force         => true,
-  } ->
-  aem_outbox_replication_agent { 'Create outbox replication agent':
+  } -> aem_outbox_replication_agent { 'Create outbox replication agent':
     ensure      => present,
     name        => 'outbox',
     run_mode    => 'publish',
@@ -64,22 +57,18 @@ class publish (
     user_id     => 'replicator',
     log_level   => 'info',
     force       => true,
-  } ->
-  archive { "${tmp_dir}/aem.cert":
+  } -> archive { "${tmp_dir}/aem.cert":
     ensure => present,
     source => "s3://${::data_bucket}/${::stackprefix}/aem.cert",
-  } ->
-  archive { "${tmp_dir}/aem.key":
+  } -> archive { "${tmp_dir}/aem.key":
     ensure => present,
     source => "s3://${::data_bucket}/${::stackprefix}/aem.key",
-  } ->
-  file { "${crx_quickstart_dir}/ssl/":
+  } -> file { "${crx_quickstart_dir}/ssl/":
     ensure => directory,
     mode   => '0775',
     owner  => 'aem',
     group  => 'aem',
-  } ->
-  class { 'aem_resources::author_publish_enable_ssl':
+  } -> class { 'aem_resources::author_publish_enable_ssl':
     run_mode                => 'publish',
     port                    => 5433,
     ssl_dir                 => "${crx_quickstart_dir}/ssl",
@@ -118,29 +107,25 @@ class publish (
     mode   => '0775',
     owner  => 'root',
     group  => 'root',
-  } ->
-  file { "${base_dir}/aem-tools/deploy-artifact.sh":
+  } -> file { "${base_dir}/aem-tools/deploy-artifact.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/deploy-artifact.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } ->
-  file { "${base_dir}/aem-tools/deploy-artifacts.sh":
+  } -> file { "${base_dir}/aem-tools/deploy-artifacts.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/deploy-artifacts.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } ->
-  file { "${base_dir}/aem-tools/export-backup.sh":
+  } -> file { "${base_dir}/aem-tools/export-backup.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/export-backup.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } ->
-  file { "${base_dir}/aem-tools/import-backup.sh":
+  } -> file { "${base_dir}/aem-tools/import-backup.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/import-backup.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
@@ -151,8 +136,7 @@ class publish (
   archive { "${base_dir}/aem-tools/oak-run-${::oak_run_version}.jar":
     ensure => present,
     source => "s3://${::data_bucket}/${::stackprefix}/oak-run-${::oak_run_version}.jar",
-  } ->
-  file { "${base_dir}/aem-tools/offline-compaction.sh":
+  } -> file { "${base_dir}/aem-tools/offline-compaction.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-compaction.sh.epp", {
       'base_dir'           => "${base_dir}",
@@ -162,8 +146,7 @@ class publish (
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } ->
-  cron { 'weekly-offline-compaction':
+  } -> cron { 'weekly-offline-compaction':
     command => "${base_dir}/aem-tools/offline-compaction.sh >>/var/log/offline-compaction.log 2>&1",
     user    => 'root',
     weekday => 2,
@@ -177,8 +160,7 @@ class publish (
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } ->
-  cron { 'daily-export-backups':
+  } -> cron { 'daily-export-backups':
     command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>/var/log/export-backups.log 2>&1",
     user        => 'root',
     hour        => 2,
@@ -198,8 +180,7 @@ class publish (
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } ->
-  cron { 'hourly-live-snapshot-backup':
+  } -> cron { 'hourly-live-snapshot-backup':
     command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>/var/log/live-snapshot-backup.log 2>&1",
     user        => 'root',
     hour        => '*',

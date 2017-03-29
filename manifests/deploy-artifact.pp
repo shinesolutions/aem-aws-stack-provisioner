@@ -11,12 +11,10 @@ class deploy_artifact (
 
   file { "${path}/${package_group}/${package_name}-${package_version}.zip":
     ensure => absent,
-  } ->
-  archive { "${path}/${package_group}/${package_name}-${package_version}.zip":
+  } -> archive { "${path}/${package_group}/${package_name}-${package_version}.zip":
     ensure => present,
     source => "${package_source}",
-  } ->
-  aem_package { "Deploy package ${package_group}/${package_name}-${package_version}" :
+  } -> aem_package { "Deploy package ${package_group}/${package_name}-${package_version}":
     ensure    => present,
     name      => $package_name,
     group     => $package_group,
