@@ -20,10 +20,10 @@ simianarmy::client_properties::simianarmy_client_aws_proxyPort: "%{::proxy_port}
 # https://github.com/Netflix/SimianArmy/wiki/Chaos-Settings
 simianarmy::chaos_properties::simianarmy_chaos_enabled: 'true'
 simianarmy::chaos_properties::simianarmy_chaos_asg_enabled: 'false'
-simianarmy::chaos_properties::simianarmy_chaos_asg_max_terminations_per_day: '3.0'
+simianarmy::chaos_properties::simianarmy_chaos_asg_max_terminations_per_day: '1.0'
 simianarmy::chaos_properties::simianarmy_chaos_leashed: 'false'
-simianarmy::chaos_properties::simianarmy_chaos_asg_probability: '120.0'
-simianarmy::chaos_properties::simianarmy_chaos_mandatory_termination_default_probability: '0.5'
+simianarmy::chaos_properties::simianarmy_chaos_asg_probability: '1.0'
+simianarmy::chaos_properties::simianarmy_chaos_mandatory_termination_default_probability: '1.0'
 simianarmy::chaos_properties::simianarmy_chaos_mandatory_termination_enabled: 'false'
 simianarmy::chaos_properties::simianarmy_chaos_mandatory_termination_window_in_days: '32'
 
