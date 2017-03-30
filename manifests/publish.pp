@@ -2,6 +2,7 @@ class publish (
   $base_dir,
   $tmp_dir,
   $puppet_conf_dir,
+  $crx_quickstart_dir,
   $publish_protocol,
   $publish_port,
   $aem_repo_device,
@@ -32,6 +33,9 @@ class publish (
     retries_max_tries          => 60,
     retries_base_sleep_seconds => 5,
     retries_max_sleep_seconds  => 5,
+  } -> aem_bundle_alias { 'Start webdav bundle':
+    ensure => started,
+    name   => 'org.apache.sling.jcr.webdav',
   } -> class { 'aem_resources::create_system_users':
     orchestrator_password => $credentials_hash['orchestrator'],
     replicator_password   => $credentials_hash['replicator'],
@@ -57,39 +61,10 @@ class publish (
     user_id     => 'replicator',
     log_level   => 'info',
     force       => true,
-  } -> archive { "${tmp_dir}/aem.cert":
-    ensure => present,
-    source => "s3://${::data_bucket}/${::stackprefix}/aem.cert",
-  } -> archive { "${tmp_dir}/aem.key":
-    ensure => present,
-    source => "s3://${::data_bucket}/${::stackprefix}/aem.key",
-  } -> file { "${crx_quickstart_dir}/ssl/":
-    ensure => directory,
-    mode   => '0775',
-    owner  => 'aem',
-    group  => 'aem',
-  } -> class { 'aem_resources::author_publish_enable_ssl':
-    run_mode                => 'publish',
-    port                    => 5433,
-    ssl_dir                 => "${crx_quickstart_dir}/ssl",
-    owner                   => 'aem',
-    group                   => 'aem',
-    keystore_cert           => "${tmp_dir}/aem.cert",
-    keystore_password       => 'somekeystorepassword',
-    keystore_key_alias      => 'cqse',
-    keystore_private_key    => "${tmp_dir}/aem.key",
-    keystore_trustcacerts   => true,
-    truststore_cert         => "${tmp_dir}/aem.cert",
-    truststore_password     => 'sometruststorepassword',
-    truststore_trustcacerts => true,
-  }
-
-  aem_bundle { 'Stop webdav bundle':
+  } -> aem_bundle { 'Stop webdav bundle':
     ensure => stopped,
     name   => 'org.apache.sling.jcr.webdav',
-  }
-
-  aem_user { 'Change admin password':
+  } -> aem_user { 'Change admin password':
     ensure       => password_changed,
     name         => 'admin',
     path         => '/home/users/d',
