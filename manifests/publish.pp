@@ -36,6 +36,11 @@ class publish (
   } -> aem_bundle_alias { 'Start webdav bundle':
     ensure => started,
     name   => 'org.apache.sling.jcr.webdav',
+  } -> aem_package { 'Remove password reset package':
+    ensure  => absent,
+    name    => 'aem-password-reset-content',
+    group   => 'shinesolutions',
+    version => $::aem_password_reset_version,
   } -> class { 'aem_resources::create_system_users':
     orchestrator_password => $credentials_hash['orchestrator'],
     replicator_password   => $credentials_hash['replicator'],
