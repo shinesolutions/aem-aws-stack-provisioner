@@ -5,6 +5,7 @@ publish_dispatcher::publish_secure: 1
 publish_dispatcher::dispatcher_conf_dir: /etc/httpd/conf.modules.d/
 publish_dispatcher::httpd_conf_dir: /etc/httpd/conf.d/
 publish_dispatcher::docroot_dir: /var/www/html/
+publish_dispatcher::ssl_cert: /etc/ssl/aem.unified-dispatcher.cert
 
 publish_dispatcher::base_dir: "%{hiera('common::base_dir')}"
 publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"

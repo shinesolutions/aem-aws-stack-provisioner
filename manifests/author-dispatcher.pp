@@ -4,41 +4,16 @@ class author_dispatcher (
   $dispatcher_conf_dir,
   $httpd_conf_dir,
   $docroot_dir,
+  $ssl_cert,
   $author_port,
   $author_secure,
 ) {
-
-  # Prepare AEM unified dispatcher certificate
-  archive { "${tmp_dir}/aem.cert":
-    ensure => present,
-    source => "s3://${::data_bucket}/${::stackprefix}/aem.cert",
-  }
-  archive { "${tmp_dir}/aem.key":
-    ensure => present,
-    source => "s3://${::data_bucket}/${::stackprefix}/aem.key",
-  }
-  file { '/etc/httpd/aem.disp-cert':
-    ensure => absent,
-  }
-  exec { "cat ${tmp_dir}/aem.key >> /etc/httpd/aem.disp-cert":
-    cwd  => "${tmp_dir}",
-    path => ['/usr/bin'],
-  }
-  exec { "cat ${tmp_dir}/aem.cert >> /etc/httpd/aem.disp-cert":
-    cwd  => "${tmp_dir}",
-    path => ['/usr/bin'],
-  }
-  file { "${tmp_dir}/aem.cert":
-    ensure => absent,
-  }
-  file { "${tmp_dir}/aem.key":
-    ensure => absent,
-  }
 
   class { 'aem_resources::author_dispatcher_set_config':
     dispatcher_conf_dir => "${dispatcher_conf_dir}",
     httpd_conf_dir      => "${httpd_conf_dir}",
     docroot_dir         => "${docroot_dir}",
+    ssl_cert            => $ssl_cert,
     author_host         => "${::authorhost}",
     author_port         => "${author_port}",
     author_secure       => "${author_secure}",
