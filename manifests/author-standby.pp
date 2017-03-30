@@ -36,9 +36,35 @@ class author_standby (
     notify => Service['collectd'],
   }
 
-  service { 'collectd':
-    ensure => 'running',
-    enable => true,
+  collectd::plugin::genericjmx::mbean {
+    'standby-status':
+      object_name     => 'org.apache.jackrabbit.oak:*,name=Status,type=*Standby*',
+      instance_prefix => 'standby-status',
+      values          => [
+        {
+          instance_prefix => 'seconds_since_last_success',
+          mbean_type      => 'delay',
+          table           => false,
+          attribute       => 'SecondsSinceLastSuccess',
+        }
+      ];
+  }
+
+  file_line { 'seconds_since_last_success standby status':
+    ensure => present,
+    line   => 'GenericJMX-standby-status-delay-seconds_since_last_success',
+    path   => '/opt/collectd-cloudwatch/src/cloudwatch/config/whitelist.conf',
+  }
+
+  collectd::plugin::genericjmx::connection { 'aem':
+    host        => $::fqdn,
+    service_url => 'service:jmx:rmi:///jndi/rmi://localhost:8463/jmxrmi',
+    collect     => [ 'standby-status' ],
+  }
+
+  class { '::collectd':
+    service_ensure => running,
+    service_enable => true,
   }
 
   # Set up AEM tools
