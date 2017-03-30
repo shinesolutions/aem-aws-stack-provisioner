@@ -2,6 +2,7 @@
 publish::base_dir: "%{hiera('common::base_dir')}"
 publish::tmp_dir: "%{hiera('common::tmp_dir')}"
 publish::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
+publish::crx_quickstart_dir: /opt/aem/publish/crx-quickstart
 
 publish::publish_protocol: http
 publish::publish_port: 4503

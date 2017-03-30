@@ -99,7 +99,7 @@ class author_primary (
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-compaction.sh.epp", {
       'base_dir'           => "${base_dir}",
       'oak_run_version'    => "${::oak_run_version}",
-      'crx_quickstart_dir' => '/opt/aem/author/crx-quickstart',
+      'crx_quickstart_dir' => $crx_quickstart_dir,
     }),
     mode    => '0775',
     owner   => 'root',
