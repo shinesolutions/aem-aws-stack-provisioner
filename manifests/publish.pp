@@ -11,7 +11,11 @@ class publish (
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
 
-  file { "${crx_quickstart_dir}/install/":
+  exec { "Attach volume from snapshot ID ${snapshotid}":
+    cwd     => "${tmp_dir}",
+    path    => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
+    command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --snapshot-id ${::snapshotid} -vvvv",
+  } -> file { "${crx_quickstart_dir}/install/":
     ensure => directory,
     mode   => '0775',
     owner  => 'aem',
