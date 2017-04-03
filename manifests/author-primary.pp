@@ -32,7 +32,7 @@ class author_primary (
     enable => true,
   } -> aem_aem { 'Wait until login page is ready':
     ensure                     => login_page_is_ready,
-    retries_max_tries          => 60,
+    retries_max_tries          => 120,
     retries_base_sleep_seconds => 5,
     retries_max_sleep_seconds  => 5,
   } -> aem_bundle_alias { 'Start webdav bundle':
