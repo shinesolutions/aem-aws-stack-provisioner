@@ -35,24 +35,21 @@ class author_primary (
     retries_max_tries          => 60,
     retries_base_sleep_seconds => 5,
     retries_max_sleep_seconds  => 5,
-  } -> aem_bundle_alias { 'Start webdav bundle':
-    ensure => started,
+  } -> aem_bundle { 'Stop webdav bundle':
+    ensure => stopped,
     name   => 'org.apache.sling.jcr.webdav',
   } -> aem_package { 'Remove password reset package':
     ensure  => absent,
     name    => 'aem-password-reset-content',
     group   => 'shinesolutions',
     version => $::aem_password_reset_version,
-  } -> class { 'aem_resources::create_system_users':
-    orchestrator_password => $credentials_hash['orchestrator'],
-    replicator_password   => $credentials_hash['replicator'],
-    deployer_password     => $credentials_hash['deployer'],
-    exporter_password     => $credentials_hash['exporter'],
-    importer_password     => $credentials_hash['importer'],
-  } -> aem_bundle { 'Stop webdav bundle':
-    ensure => stopped,
-    name   => 'org.apache.sling.jcr.webdav',
-  } -> aem_user { 'Change admin password':
+  } -> class { 'aem_resources::change_system_users_password':
+    orchestrator_new_password => $credentials_hash['orchestrator'],
+    replicator_new_password   => $credentials_hash['replicator'],
+    deployer_new_password     => $credentials_hash['deployer'],
+    exporter_new_password     => $credentials_hash['exporter'],
+    importer_new_password     => $credentials_hash['importer'],
+  } -> aem_user { 'Set admin password for current stack':
     ensure       => password_changed,
     name         => 'admin',
     path         => '/home/users/d',
