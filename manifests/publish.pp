@@ -7,15 +7,21 @@ class publish (
   $publish_port,
   $aem_repo_device,
   $credentials_file,
+  $snapshotid = $::snapshotid,
 ) {
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
 
-  exec { "Attach volume from snapshot ID ${snapshotid}":
-    cwd     => "${tmp_dir}",
-    path    => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
-    command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --snapshot-id ${::snapshotid} -vvvv",
-  } -> file { "${crx_quickstart_dir}/install/":
+  if $snapshotid != undef and $snapshotid != '' {
+    exec { "Attach volume from snapshot ID ${snapshotid}":
+      cwd     => '/opt/shinesolutions/aws-tools/',
+      path    => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
+      command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --snapshot-id ${snapshotid} -vvvv",
+      before  => Service['aem-aem'],
+    }
+  }
+
+  file { "${crx_quickstart_dir}/install/":
     ensure => directory,
     mode   => '0775',
     owner  => 'aem',
@@ -184,7 +190,6 @@ class publish (
     owner   => 'root',
     group   => 'root',
   }
-
 }
 
 include publish
