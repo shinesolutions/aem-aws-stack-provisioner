@@ -1,0 +1,151 @@
+#!/usr/bin/env python
+import sys, os, logging, argparse, socket, textwrap
+import boto3
+
+__version__='0.1'
+try:
+    import coloredlogs
+    coloredlogs.install(
+        isatty = True,
+        show_name = False,
+        show_severity = False,
+        level = logging.NOTSET,
+        severity_to_style = { 'DEBUG': {'color': 'blue'}},
+    )
+except:
+    logging.basicConfig(
+        stream = sys.stdout,
+        format = '%(asctime)s ' + socket.gethostname() + ' %(levelname)-8s %(message)s',
+        datefmt = "%Y-%m-%d %H:%M:%S",
+        level = logging.NOTSET,
+    )
+log = logging.getLogger(__name__)
+
+def clamp(low, x, high):
+    return low if x < low else high if x > high else x
+
+def unwrap(txt):
+    return ' '.join(textwrap.wrap(textwrap.dedent(txt).strip()))
+
+def set_logging_level(quiet, verbose):
+    level_adj = (quiet - verbose) * 10
+    new_level = clamp(logging.NOTSET, logging.WARNING + level_adj, logging.CRITICAL)
+    for handler in getattr(logging.getLogger(), 'handlers', []):
+        handler.setLevel(new_level)
+        log.debug('Set %s handler level to %d', handler.__class__.__name__, new_level)
+
+def parse_args():
+    p = argparse.ArgumentParser(
+        description=unwrap("""
+            Update the target of a Route53 ALIAS resource record set.
+        """),
+    )
+    p.add_argument(
+        '--rrset-name',
+        metavar  = 'DNS_NAME',
+        required = True,
+        help     = unwrap("""
+            The Route53 ALIAS resource records set that will be updated.
+        """)
+    )
+    p.add_argument(
+        '--rrset-hosted-zone-id',
+        metavar = 'ZONE_ID',
+        help    = unwrap("""
+            The Id of the Route53 Hosted Zone that contains the resource record
+            set to be updated."
+        """),
+    )
+    p.add_argument(
+        '--target-name',
+        metavar = 'DNS_NAME',
+        help    = unwrap("""
+            The DNS name of the target resource resource set.
+        """),
+    )
+    p.add_argument(
+        '--target-hosted-zone-id',
+        metavar = 'ZONE_ID',
+        help    = unwrap("""
+            The Id of the Route53 Hosted Zone that contains the target resource
+            record."
+        """),
+    ),
+    p.add_argument(
+        '--record-type',
+        metavar = 'v4|v6|both',
+        choices = ('v4', 'v6', 'both'),
+        help    = unwrap("""
+            The type records that should be updated.
+        """),
+    ),
+
+    p.add_argument(
+        '--verbose', '-v',
+        action  = 'count',
+        default = 0,
+        help    = 'Be more verbose.',
+    )
+    p.add_argument(
+        '--quiet', '-q',
+        action  = 'count',
+        default = 0,
+        help    = 'Be less verbose.',
+    )
+    p.add_argument(
+        '--version', '-V',
+        action  = 'version',
+        version = '%(prog)s {0}'.format(__version__),
+        help    = 'Show version information and exit.',
+    )
+
+    args = p.parse_args()
+    return args
+
+def route53_upsert(rrset_name, target_name, target_zone_id, rrset_type, evaluate_target_health = False):
+    return {
+        'Action': 'UPSERT',
+        'ResourceRecordSet': {
+            'Name': rrset_name,
+            'Type': rrset_type,
+            'AliasTarget': {
+                'DNSName': target_name,
+                'HostedZoneId': target_zone_id,
+                'EvaluateTargetHealth': evaluate_target_health,
+            },
+        },
+    }
+
+def upsert_alias(alias_name, alias_zone_id, target_name, target_zone_id, ipv4_enabled, ipv6_enabled):
+    route53 = boto3.client('route53')
+    changes = []
+    if ipv4_enabled:
+        changes.append(route53_upsert(alias_name, target_name, target_zone_id, rrset_type = 'A'))
+    if ipv6_enabled:
+        changes.append(route53_upsert(alias_name, target_name, target_zone_id, rrset_type = 'AAAA'))
+
+    upsert = route53.change_resource_record_sets(
+        HostedZoneId = alias_zone_id,
+        ChangeBatch = {
+            'Changes': changes,
+        },
+    )
+    return upsert
+
+if __name__ == '__main__':
+    log = logging.getLogger(os.path.basename(sys.argv[0]))
+    args = parse_args()
+    set_logging_level(args.quiet, args.verbose)
+    log.debug('Args: %r', args)
+
+    ipv4_enabled = True if args.record_type in ('v4', 'both') else False
+    ipv6_enabled = True if args.record_type in ('v6', 'both') else False
+
+    upsert = upsert_alias(
+        args.rrset_name,
+        args.rrset_hosted_zone_id,
+        args.target_name,
+        args.target_hosted_zone_id,
+        ipv4_enabled,
+        ipv6_enabled,
+    )
