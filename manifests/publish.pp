@@ -82,9 +82,7 @@ class publish (
     path         => '/home/users/d',
     old_password => 'admin',
     new_password => $credentials_hash['admin']
-  }
-
-  file { "${crx_quickstart_dir}/install/aem-password-reset-content-${::aem_password_reset_version}.zip":
+  } -> file { "${crx_quickstart_dir}/install/aem-password-reset-content-${::aem_password_reset_version}.zip":
     ensure => absent,
   }
 
