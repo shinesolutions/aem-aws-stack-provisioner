@@ -39,7 +39,7 @@ class author_standby (
   collectd::plugin::genericjmx::mbean {
     'standby-status':
       object_name     => 'org.apache.jackrabbit.oak:*,name=Status,type=*Standby*',
-      instance_prefix => 'standby-status',
+      instance_prefix => "${::stackprefix}-standby-status",
       values          => [
         {
           instance_prefix => 'seconds_since_last_success',
@@ -52,7 +52,7 @@ class author_standby (
 
   file_line { 'seconds_since_last_success standby status':
     ensure => present,
-    line   => 'GenericJMX-standby-status-delay-seconds_since_last_success',
+    line   => "GenericJMX-${::stackprefix}-standby-status-delay-seconds_since_last_success",
     path   => '/opt/collectd-cloudwatch/src/cloudwatch/config/whitelist.conf',
   }
 
