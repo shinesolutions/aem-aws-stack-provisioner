@@ -26,3 +26,7 @@ aem_orchestrator::application_properties::aem_protocol_publish_dispatcher: 'http
 aem_orchestrator::application_properties::aem_port_publish_dispatcher: '80'
 
 aem_orchestrator::application_properties::aem_reverse_replication_enable: 'true'
+
+aem_orchestrator::application_properties::aem_flush_log_level: 'info'
+aem_orchestrator::application_properties::aem_replication_log_level: 'info'
+aem_orchestrator::application_properties::aem_reverse_replication_log_level: 'error'
