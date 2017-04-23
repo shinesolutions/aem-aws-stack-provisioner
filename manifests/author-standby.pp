@@ -46,7 +46,7 @@ class author_standby (
           mbean_type      => 'delay',
           table           => false,
           attribute       => 'SecondsSinceLastSuccess',
-        }
+        },
       ];
   }
 
