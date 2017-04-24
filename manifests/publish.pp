@@ -121,16 +121,20 @@ class publish (
   archive { "${base_dir}/aem-tools/oak-run-${::oak_run_version}.jar":
     ensure => present,
     source => "s3://${::data_bucket}/${::stackprefix}/oak-run-${::oak_run_version}.jar",
-  } -> file { "${base_dir}/aem-tools/offline-compaction.sh":
+  }
+  -> file { "${base_dir}/aem-tools/offline-compaction.sh":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-compaction.sh.epp", {
-      'base_dir'           => "${base_dir}",
-      'oak_run_version'    => "${::oak_run_version}",
-      'crx_quickstart_dir' => $crx_quickstart_dir,
-    }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-compaction.sh.epp",
+      {
+        'base_dir'           => "${base_dir}",
+        'oak_run_version'    => "${::oak_run_version}",
+        'crx_quickstart_dir' => $crx_quickstart_dir,
+      }
+    ),
   } -> cron { 'weekly-offline-compaction':
     command => "${base_dir}/aem-tools/offline-compaction.sh >>/var/log/offline-compaction.log 2>&1",
     user    => 'root',
@@ -156,15 +160,18 @@ class publish (
 
   file { "${base_dir}/aem-tools/live-snapshot-backup.sh":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/live-snapshot-backup.sh.epp", {
-      'base_dir'        => "${base_dir}",
-      'aem_repo_device' => "${aem_repo_device}",
-      'component'       => "${::component}",
-      'stack_prefix'    => "${::stackprefix}",
-    }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/live-snapshot-backup.sh.epp",
+      {
+        'base_dir'        => "${base_dir}",
+        'aem_repo_device' => "${aem_repo_device}",
+        'component'       => "${::component}",
+        'stack_prefix'    => "${::stackprefix}",
+      }
+    ),
   } -> cron { 'hourly-live-snapshot-backup':
     command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>/var/log/live-snapshot-backup.log 2>&1",
     user        => 'root',
@@ -175,15 +182,18 @@ class publish (
 
   file { "${base_dir}/aem-tools/offline-snapshot-backup.sh":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-snapshot-backup.sh.epp", {
-      'base_dir'        => "${base_dir}",
-      'aem_repo_device' => "${aem_repo_device}",
-      'component'       => "${::component}",
-      'stack_prefix'    => "${::stackprefix}",
-    }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-snapshot-backup.sh.epp",
+      {
+        'base_dir'        => "${base_dir}",
+        'aem_repo_device' => "${aem_repo_device}",
+        'component'       => "${::component}",
+        'stack_prefix'    => "${::stackprefix}",
+      }
+    ),
   }
 }
 
