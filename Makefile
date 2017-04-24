@@ -5,7 +5,7 @@ ci: clean package
 clean:
 	rm -rf .librarian .tmp Puppetfile.lock modules stage
 
-Puppetfile.lock: Puppetfile
+Puppetfile.lock: Puppetfile tools
 	librarian-puppet install --path modules --verbose
 
 lint: tools
