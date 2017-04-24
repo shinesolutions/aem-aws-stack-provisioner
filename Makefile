@@ -1,26 +1,31 @@
 version ?= 0.9.0
 
-ci: clean tools lint deps package
-
-deps:
-	librarian-puppet install --path modules --verbose
+ci: clean package
 
 clean:
 	rm -rf .librarian .tmp Puppetfile.lock modules stage
 
-lint:
+Puppetfile.lock: Puppetfile
+	librarian-puppet install --path modules --verbose
+
+lint: tools
 	puppet-lint \
 		--fail-on-warnings \
 		--no-140chars-check \
 		--no-autoloader_layout-check \
 		--no-documentation-check \
+		--no-parameter_documentation-check \
 		--no-only_variable_string-check \
 		--no-selector_inside_resource-check \
 		--no-variable_scope-check \
+		--no-top_scope_facts-check \
+		--no-relative_classname_inclusion-check \
+		--no-legacy_facts-check \
+		--log-format "%{path} (%{check}) L%{line} %{message}" \
 		manifests/*.pp
 	shellcheck files/*/*.sh
 
-package:
+package: Puppetfile.lock lint
 	rm -rf stage
 	mkdir -p stage
 	tar \
