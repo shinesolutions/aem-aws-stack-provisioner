@@ -22,7 +22,7 @@ class publish_dispatcher (
     path => ['/sbin'],
   } -> exec { 'deploy-artifacts.sh deploy-artifacts-descriptor.json':
     path        => ["${base_dir}/aem-tools", '/usr/bin', '/opt/puppetlabs/bin'],
-    environment => ["https_proxy=\"${::cron_https_proxy}\""],
+    environment => ["https_proxy=${::cron_https_proxy}"],
     cwd         => "${tmp_dir}",
     command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>/var/log/deploy-artifacts.log 2>&1",
     onlyif      => "test `aws s3 ls s3://${::data_bucket}/${::stackprefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",

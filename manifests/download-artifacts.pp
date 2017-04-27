@@ -119,11 +119,18 @@ class download_packages (
     # TODO: validate the package values exist and populated
 
     if !defined(File["${path}/${package['group']}"]) {
-      file { "${path}/${package['group']}":
-        ensure  => directory,
-        mode    => '0775',
+
+      exec { "Create ${path}/${package['group']}":
+        creates => "${path}/${package['group']}",
+        command => "mkdir -p ${path}/${package['group']}",
+        cwd     => $path,
+        path    => ['/usr/bin', '/usr/sbin'],
         require => File[$path],
+      } -> file { "${path}/${package['group']}":
+        ensure => directory,
+        mode   => '0775',
       }
+
     }
 
     archive { "${path}/${package['group']}/${package['name']}-${package['version']}.zip":
