@@ -7,6 +7,7 @@ class publish_dispatcher (
   $ssl_cert,
   $publish_port,
   $publish_secure,
+  $exec_path,
 ) {
 
   class { 'aem_resources::publish_dispatcher_set_config':
@@ -19,7 +20,7 @@ class publish_dispatcher (
     publish_port        => "${publish_port}",
   } -> exec { 'httpd -k graceful':
     cwd  => "${tmp_dir}",
-    path => ['/sbin'],
+    path => $exec_path,
   } -> exec { 'deploy-artifacts.sh deploy-artifacts-descriptor.json':
     path        => ["${base_dir}/aem-tools", '/usr/bin', '/opt/puppetlabs/bin'],
     environment => ["https_proxy=\"${::cron_https_proxy}\""],
