@@ -11,22 +11,28 @@ FORGE
     puppet-yum (0.10.0)
       puppetlabs-concat (< 3.0.0, >= 1.2.5)
       puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
-    puppetlabs-apt (2.4.0)
-      puppetlabs-stdlib (< 5.0.0, >= 4.13.0)
+    puppetlabs-apt (4.0.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.16.0)
     puppetlabs-concat (2.2.1)
       puppetlabs-stdlib (< 5.0.0, >= 4.2.0)
     puppetlabs-java_ks (1.5.0)
     puppetlabs-stdlib (4.16.0)
-    shinesolutions-aem_orchestrator (1.0.0)
-      puppet-archive (~> 1.3.0)
     shinesolutions-simianarmy (1.0.0)
       puppet-archive (~> 1.3.0)
       puppetlabs-stdlib (~> 4.0)
 
 GIT
+  remote: https://github.com/shinesolutions/puppet-aem-orchestrator
+  ref: master
+  sha: 103114de66acc427be756da946d0e2600936081f
+  specs:
+    shinesolutions-aem_orchestrator (1.0.0)
+      puppet-archive (~> 1.3.0)
+
+GIT
   remote: https://github.com/shinesolutions/puppet-aem-resources
   ref: master
-  sha: 04586ab746f369f53e48899e6420c71991a1222a
+  sha: 4a6847a97db9f758719710e11b38a44033d31be4
   specs:
     shinesolutions-aem_resources (0.9.4)
       puppetlabs-stdlib (>= 4.14.0)
@@ -35,7 +41,7 @@ DEPENDENCIES
   puppet-archive (= 1.3.0)
   puppet-collectd (= 5.3.0)
   puppetlabs-java_ks (= 1.5.0)
-  shinesolutions-aem_orchestrator (= 1.0.0)
+  shinesolutions-aem_orchestrator (>= 0)
   shinesolutions-aem_resources (>= 0)
   shinesolutions-simianarmy (= 1.0.0)
 

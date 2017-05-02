@@ -27,7 +27,7 @@ class orchestrator (
     command     => "cd ${base_dir}/aem-tools && ./stack-offline-snapshot.sh >>/var/log/stack-offline-snapshot.log 2>&1",
     user        => 'root',
     hour        => 1,
-    minute      => 0,
+    minute      => 15,
     environment => ["PATH=${::cron_env_path}", "https_proxy=\"${::cron_https_proxy}\""],
   }
 
