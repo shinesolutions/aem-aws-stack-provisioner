@@ -27,6 +27,11 @@ class author_primary (
     debug    => true,
   } -> class { 'aem_resources::author_primary_set_config':
     crx_quickstart_dir => "${crx_quickstart_dir}",
+  } -> file { "${crx_quickstart_dir}/repository/index/":
+    ensure  => absent,
+    recurse => true,
+    purge   => true,
+    force   => true,
   } -> service { 'aem-aem':
     ensure => 'running',
     enable => true,

@@ -17,7 +17,7 @@ class publish (
       cwd     => '/opt/shinesolutions/aws-tools/',
       path    => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
       command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --snapshot-id ${snapshotid} -vvvv",
-      before  => Service['aem-aem'],
+      before  => File["${crx_quickstart_dir}/repository/index/"],
     }
   }
 
@@ -35,6 +35,11 @@ class publish (
     host     => 'localhost',
     port     => "${publish_port}",
     debug    => true,
+  } -> file { "${crx_quickstart_dir}/repository/index/":
+    ensure  => absent,
+    recurse => true,
+    purge   => true,
+    force   => true,
   } -> service { 'aem-aem':
     ensure => 'running',
     enable => true,

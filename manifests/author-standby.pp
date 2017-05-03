@@ -17,6 +17,11 @@ class author_standby (
   } -> class { 'aem_resources::author_standby_set_config':
     crx_quickstart_dir => "${crx_quickstart_dir}",
     primary_host       => "${::authorprimaryhost}",
+  } -> file { "${crx_quickstart_dir}/repository/index/":
+    ensure  => absent,
+    recurse => true,
+    purge   => true,
+    force   => true,
   } -> service { 'aem-aem':
     ensure => 'running',
     enable => true,
