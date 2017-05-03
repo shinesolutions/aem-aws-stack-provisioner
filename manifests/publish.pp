@@ -51,6 +51,9 @@ class publish (
   } -> aem_bundle { 'Stop webdav bundle':
     ensure => stopped,
     name   => 'org.apache.sling.jcr.webdav',
+  } -> aem_bundle { 'Stop davex bundle':
+    ensure => stopped,
+    name   => 'org.apache.sling.jcr.davex',
   } -> aem_package { 'Remove password reset package':
     ensure  => absent,
     name    => 'aem-password-reset-content',
