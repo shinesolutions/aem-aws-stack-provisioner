@@ -1,15 +1,21 @@
 version ?= 0.9.0
 
-ci: clean tools lint deps package
-
-deps:
-	librarian-puppet install --path modules --verbose
+ci: clean package
 
 clean:
-	rm -rf .librarian .tmp Puppetfile.lock modules stage
+	rm -rf .librarian .tmp Puppetfile.lock Gemfile.lock modules stage
 
-lint:
-	puppet-lint \
+Puppetfile.lock: Puppetfile Gemfile.lock
+	bundle exec librarian-puppet install --path modules --verbose
+
+Gemfile.lock: Gemfile
+	bundle install
+
+validate: Gemfile.lock
+	bundle exec puppet parser validate manifests/*
+
+lint: validate Gemfile.lock
+	bundle exec puppet-lint \
 		--fail-on-warnings \
 		--no-140chars-check \
 		--no-autoloader_layout-check \
@@ -17,10 +23,11 @@ lint:
 		--no-only_variable_string-check \
 		--no-selector_inside_resource-check \
 		--no-variable_scope-check \
+		--log-format "%{path} (%{check}) L%{line} %{message}" \
 		manifests/*.pp
 	shellcheck files/*/*.sh
 
-package:
+package: Puppetfile.lock lint
 	rm -rf stage
 	mkdir -p stage
 	tar \
@@ -34,7 +41,4 @@ package:
 		stage/aem-aws-stack-provisioner-$(version).tar ./
 	gzip stage/aem-aws-stack-provisioner-$(version).tar
 
-tools:
-	gem install puppet puppet-lint librarian-puppet
-
-.PHONY: ci clean deps lint package tools
+.PHONY: ci clean lint package validate

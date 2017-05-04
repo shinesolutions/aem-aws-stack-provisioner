@@ -1,4 +1,12 @@
 ---
+exec_path:
+  - /bin
+  - /usr/bin
+  - /usr/local/bin
+  - /sbin
+  - /usr/sbin
+  - /usr/local/sbin
+
 common::base_dir: /opt/shinesolutions
 common::aws_region: ap-southeast-2
 
@@ -9,3 +17,6 @@ common::tmp_base_dir: /tmp/shinesolutions
 common::tmp_dir: /tmp/shinesolutions/aem-aws-stack-provisioner
 common::puppet_conf_dir: /etc/puppetlabs/puppet/
 common::credentials_file: system-users-credentials.json
+
+author_dispatcher::exec_path: "%{alias('exec_path')}"
+publish_dispatcher::exec_path: "%{alias('exec_path')}"

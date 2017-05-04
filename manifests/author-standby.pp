@@ -14,15 +14,18 @@ class author_standby (
     host     => 'localhost',
     port     => "${author_port}",
     debug    => true,
-  } -> class { 'aem_resources::author_standby_set_config':
+  }
+  -> class { 'aem_resources::author_standby_set_config':
     crx_quickstart_dir => "${crx_quickstart_dir}",
     primary_host       => "${::authorprimaryhost}",
-  } -> file { "${crx_quickstart_dir}/repository/index/":
+  }
+  -> file { "${crx_quickstart_dir}/repository/index/":
     ensure  => absent,
     recurse => true,
     purge   => true,
     force   => true,
-  } -> service { 'aem-aem':
+  }
+  -> service { 'aem-aem':
     ensure => 'running',
     enable => true,
   }
@@ -51,7 +54,7 @@ class author_standby (
           mbean_type      => 'delay',
           table           => false,
           attribute       => 'SecondsSinceLastSuccess',
-        }
+        },
       ];
   }
 
@@ -78,31 +81,36 @@ class author_standby (
     mode   => '0775',
     owner  => 'root',
     group  => 'root',
-  } -> file { "${base_dir}/aem-tools/deploy-artifact.sh":
+  }
+  -> file { "${base_dir}/aem-tools/deploy-artifact.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/deploy-artifact.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } -> file { "${base_dir}/aem-tools/deploy-artifacts.sh":
+  }
+  -> file { "${base_dir}/aem-tools/deploy-artifacts.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/deploy-artifacts.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } -> file { "${base_dir}/aem-tools/export-backup.sh":
+  }
+  -> file { "${base_dir}/aem-tools/export-backup.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/export-backup.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } -> file { "${base_dir}/aem-tools/import-backup.sh":
+  }
+  -> file { "${base_dir}/aem-tools/import-backup.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/import-backup.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } -> file { "${base_dir}/aem-tools/promote-author-standby-to-primary.sh":
+  }
+  -> file { "${base_dir}/aem-tools/promote-author-standby-to-primary.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/promote-author-standby-to-primary.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
@@ -113,16 +121,20 @@ class author_standby (
   archive { "${base_dir}/aem-tools/oak-run-${::oak_run_version}.jar":
     ensure => present,
     source => "s3://${::data_bucket}/${::stackprefix}/oak-run-${::oak_run_version}.jar",
-  } -> file { "${base_dir}/aem-tools/offline-compaction.sh":
+  }
+  -> file { "${base_dir}/aem-tools/offline-compaction.sh":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-compaction.sh.epp", {
-      'base_dir'           => "${base_dir}",
-      'oak_run_version'    => "${::oak_run_version}",
-      'crx_quickstart_dir' => '/opt/aem/author/crx-quickstart',
-    }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-compaction.sh.epp",
+      {
+        'base_dir'           => "${base_dir}",
+        'oak_run_version'    => "${::oak_run_version}",
+        'crx_quickstart_dir' => '/opt/aem/author/crx-quickstart',
+      }
+    ),
   }
 
   file { "${base_dir}/aem-tools/export-backups.sh":
@@ -135,28 +147,34 @@ class author_standby (
 
   file { "${base_dir}/aem-tools/live-snapshot-backup.sh":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/live-snapshot-backup.sh.epp", {
-      'base_dir'        => "${base_dir}",
-      'aem_repo_device' => "${aem_repo_device}",
-      'component'       => "${::component}",
-      'stack_prefix'    => "${::stackprefix}",
-    }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/live-snapshot-backup.sh.epp",
+      {
+        'base_dir'        => "${base_dir}",
+        'aem_repo_device' => "${aem_repo_device}",
+        'component'       => "${::component}",
+        'stack_prefix'    => "${::stackprefix}",
+      }
+    ),
   }
 
   file { "${base_dir}/aem-tools/offline-snapshot-backup.sh":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-snapshot-backup.sh.epp", {
-      'base_dir'        => "${base_dir}",
-      'aem_repo_device' => "${aem_repo_device}",
-      'component'       => "${::component}",
-      'stack_prefix'    => "${::stackprefix}",
-    }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-snapshot-backup.sh.epp",
+      {
+        'base_dir'        => "${base_dir}",
+        'aem_repo_device' => "${aem_repo_device}",
+        'component'       => "${::component}",
+        'stack_prefix'    => "${::stackprefix}",
+      }
+    ),
   }
 
 }

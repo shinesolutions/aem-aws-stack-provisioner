@@ -7,6 +7,7 @@ class publish_dispatcher (
   $ssl_cert,
   $publish_port,
   $publish_secure,
+  $exec_path,
 ) {
 
   class { 'aem_resources::publish_dispatcher_set_config':
@@ -19,7 +20,7 @@ class publish_dispatcher (
     publish_port        => "${publish_port}",
   } -> exec { 'httpd -k graceful':
     cwd  => "${tmp_dir}",
-    path => ['/sbin'],
+    path => $exec_path,
   } -> exec { 'deploy-artifacts.sh deploy-artifacts-descriptor.json':
     path        => ["${base_dir}/aem-tools", '/usr/bin', '/opt/puppetlabs/bin'],
     environment => ["https_proxy=${::cron_https_proxy}"],
@@ -51,14 +52,17 @@ class publish_dispatcher (
 
   file { "${base_dir}/aem-tools/content-healthcheck.py":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/content-healthcheck.py.epp", {
-      'tmp_dir'      => "${tmp_dir}",
-      'stack_prefix' => "${::stackprefix}",
-      'data_bucket'  => "${::data_bucket}",
-    }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/content-healthcheck.py.epp",
+      {
+        'tmp_dir'      => "${tmp_dir}",
+        'stack_prefix' => "${::stackprefix}",
+        'data_bucket'  => "${::data_bucket}",
+      }
+    ),
   } -> cron { 'every-minute-content-healthcheck':
     command     => "${base_dir}/aem-tools/content-healthcheck.py",
     user        => 'root',

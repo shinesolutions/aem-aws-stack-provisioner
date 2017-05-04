@@ -3,6 +3,7 @@
 :yaml:
   :datadir: /opt/shinesolutions/aem-aws-stack-provisioner/data
 :hierarchy:
+  - local
   - "%{::event}"
   - "%{::component}"
   - common

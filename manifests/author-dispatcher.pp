@@ -7,6 +7,7 @@ class author_dispatcher (
   $ssl_cert,
   $author_port,
   $author_secure,
+  $exec_path,
 ) {
 
   class { 'aem_resources::author_dispatcher_set_config':
@@ -19,7 +20,7 @@ class author_dispatcher (
     author_secure       => "${author_secure}",
   } -> exec { 'httpd -k graceful':
     cwd  => "${tmp_dir}",
-    path => ['/sbin'],
+    path => $exec_path,
   } -> exec { 'deploy-artifacts.sh deploy-artifacts-descriptor.json':
     path        => ["${base_dir}/aem-tools", '/usr/bin', '/opt/puppetlabs/bin'],
     environment => ["https_proxy=${::cron_https_proxy}"],

@@ -91,7 +91,7 @@ class download_dispatcher_artifacts (
       extract_path => "${path}/${artifact[name]}",
       source       => $artifact[source],
       require      => File["${path}/${artifact[name]}"],
-      before       => Exec["/usr/bin/python ${base_dir}/aem-tools/generate-artifacts-json.py"]
+      before       => Exec["/usr/bin/python ${base_dir}/aem-tools/generate-artifacts-json.py"],
     }
 
   }
