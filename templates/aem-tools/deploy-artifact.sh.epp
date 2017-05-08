@@ -14,8 +14,8 @@ package_version=$4
 package_replicate=$5
 package_activate=$6
 package_force=$7
-data_bucket=$(facter data_bucket)
-stack_prefix=$(facter stackprefix)
+data_bucket=$(/opt/puppetlabs/bin/facter data_bucket)
+stack_prefix=$(/opt/puppetlabs/bin/facter stackprefix)
 aem_username=deployer
 aem_password=$(aws s3 cp s3://$data_bucket/$stack_prefix/system-users-credentials.json - | jq --raw-output .$aem_username)
 event=deploy-artifact
@@ -31,7 +31,7 @@ aem_username="${aem_username}" \
   FACTER_package_replicate="${package_replicate}" \
   FACTER_package_activate="${package_activate}" \
   FACTER_package_force="${package_force}" \
-  puppet apply \
+  /opt/puppetlabs/bin/puppet apply \
   --debug \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
