@@ -18,5 +18,7 @@ common::tmp_dir: /tmp/shinesolutions/aem-aws-stack-provisioner
 common::puppet_conf_dir: /etc/puppetlabs/puppet/
 common::credentials_file: system-users-credentials.json
 
+author::exec_path: "%{alias('exec_path')}"
+publish::exec_path: "%{alias('exec_path')}"
 author_dispatcher::exec_path: "%{alias('exec_path')}"
 publish_dispatcher::exec_path: "%{alias('exec_path')}"

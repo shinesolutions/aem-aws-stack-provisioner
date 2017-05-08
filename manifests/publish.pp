@@ -7,6 +7,7 @@ class publish (
   $publish_port,
   $aem_repo_device,
   $credentials_file,
+  $exec_path,
   $snapshotid = $::snapshotid,
 ) {
 
@@ -14,9 +15,8 @@ class publish (
 
   if $snapshotid != undef and $snapshotid != '' {
     exec { "Attach volume from snapshot ID ${snapshotid}":
-      cwd     => '/opt/shinesolutions/aws-tools/',
-      path    => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
-      command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --snapshot-id ${snapshotid} -vvvv",
+      command => "/opt/shinesolutions/aws-tools/snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --snapshot-id ${snapshotid} -vvvv",
+      path    => $exec_path,
       before  => File["${crx_quickstart_dir}/repository/index/"],
     }
   }
