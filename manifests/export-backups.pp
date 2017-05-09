@@ -52,18 +52,28 @@ class export_backup_packages (
 
   $packages.each | Integer $index, Hash $package| {
 
-    file { "${tmp_dir}/${package[group]}":
-      ensure => directory,
-      mode   => '0775',
-      owner  => 'root',
-      group  => 'root',
-    } -> aem_package { 'Create and download backup file':
+    if !defined(File["${tmp_dir}/${package[group]}"]) {
+
+      exec { "Create ${tmp_dir}/${package[group]}":
+        creates => "${tmp_dir}/${package[group]}",
+        command => "mkdir -p ${tmp_dir}/${package[group]}",
+        cwd     => $tmp_dir,
+        path    => ['/usr/bin', '/usr/sbin'],
+      } -> file { "${tmp_dir}/${package['group']}":
+        ensure => directory,
+        mode   => '0775',
+      }
+
+    }
+
+    aem_package { "Create and download backup file for package: ${package[name]}":
       ensure  => archived,
       name    => "${package[name]}",
       version => "${package_version}",
       group   => "${package[group]}",
       path    => "${tmp_dir}/${package[group]}",
       filter  => $package[filter],
+      require => File["${tmp_dir}/${package['group']}"],
     } -> exec { "aws s3 cp ${tmp_dir}/${package[group]}/${package[name]}-${package_version}.zip s3://${::data_bucket}/backup/${::stackprefix}/${package[group]}/${backup_path}/${package[name]}-${package_version}.zip":
       cwd  => $tmp_dir,
       path => ['/bin'],
