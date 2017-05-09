@@ -68,7 +68,7 @@ class publish (
     run_mode      => 'publish',
     title         => "Flush agent for publish-dispatcher ${::pairinstanceid}",
     description   => "Flush agent for publish-dispatcher ${::pairinstanceid}",
-    dest_base_url => "http://${::publishdispatcherhost}:80",
+    dest_base_url => "https://${::publishdispatcherhost}:443",
     log_level     => 'info',
     retry_delay   => 60000,
     force         => true,
