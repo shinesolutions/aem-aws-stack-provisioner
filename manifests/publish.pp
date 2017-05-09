@@ -139,12 +139,6 @@ class publish (
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } -> cron { 'weekly-offline-compaction':
-    command => "${base_dir}/aem-tools/offline-compaction.sh >>/var/log/offline-compaction.log 2>&1",
-    user    => 'root',
-    weekday => 2,
-    hour    => 3,
-    minute  => 0,
   }
 
   file { "${base_dir}/aem-tools/export-backups.sh":
