@@ -11,7 +11,12 @@
           },
           {
             "root": "/content/helloworld",
-            "rules": []
+            "rules": [
+              {
+                "modifier": "exclude",
+                "pattern": ".*.\\d*\\.\\d*\\.(png|jpeg|gif)"
+              }
+            ]
           },
           {
             "root": "/etc/designs/helloworld",
@@ -33,7 +38,12 @@
           },
           {
             "root": "/content/helloworld",
-            "rules": []
+            "rules": [
+              {
+                "modifier": "exclude",
+                "pattern": ".*.\\d*\\.\\d*\\.(png|jpeg|gif)"
+              }
+            ]
           },
           {
             "root": "/etc/designs/helloworld",
