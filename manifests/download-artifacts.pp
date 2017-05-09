@@ -124,7 +124,7 @@ class download_packages (
         creates => "${path}/${package['group']}",
         command => "mkdir -p ${path}/${package['group']}",
         cwd     => $path,
-        path    => ['/usr/bin', '/usr/sbin'],
+        path    => ['/usr/bin', '/usr/sbin', '/bin/'],
         require => File[$path],
       } -> file { "${path}/${package['group']}":
         ensure => directory,
