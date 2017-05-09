@@ -46,6 +46,9 @@ class author_primary (
   } -> aem_bundle { 'Stop davex bundle':
     ensure => stopped,
     name   => 'org.apache.sling.jcr.davex',
+  } -> aem_aem { 'Remove all agents':
+    ensure   => all_agents_removed,
+    run_mode => 'author',
   } -> aem_package { 'Remove password reset package':
     ensure  => absent,
     name    => 'aem-password-reset-content',
