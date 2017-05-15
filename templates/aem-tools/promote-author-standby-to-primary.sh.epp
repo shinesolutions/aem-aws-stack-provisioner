@@ -12,7 +12,6 @@ event=promote-author-standby-to-primary
 cd <%= $base_dir %>/aem-aws-stack-provisioner/
 FACTER_event="${event}" \
   puppet apply \
-  --debug \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
   "manifests/${event}.pp"

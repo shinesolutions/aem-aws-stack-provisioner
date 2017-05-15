@@ -32,7 +32,6 @@ aem_username="${aem_username}" \
   FACTER_package_activate="${package_activate}" \
   FACTER_package_force="${package_force}" \
   puppet apply \
-  --debug \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
   "manifests/${event}.pp"
