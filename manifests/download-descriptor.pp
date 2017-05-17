@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class download_descriptor (
   $tmp_dir,
   $descriptor_file = $::descriptor_file

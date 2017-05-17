@@ -16,7 +16,7 @@ FORGE
     puppetlabs-concat (2.2.1)
       puppetlabs-stdlib (< 5.0.0, >= 4.2.0)
     puppetlabs-java_ks (1.5.0)
-    puppetlabs-stdlib (4.16.0)
+    puppetlabs-stdlib (4.17.0)
     shinesolutions-simianarmy (1.0.0)
       puppet-archive (~> 1.3.0)
       puppetlabs-stdlib (~> 4.0)
@@ -32,9 +32,9 @@ GIT
 GIT
   remote: https://github.com/shinesolutions/puppet-aem-resources
   ref: master
-  sha: 0bf62ce5e6bf82753bf573dd80741c2b3a538b49
+  sha: 5e9b19d2d02eb481376de728a1505ee2f0532e32
   specs:
-    shinesolutions-aem_resources (0.9.5)
+    shinesolutions-aem_resources (1.0.0)
       puppetlabs-stdlib (>= 4.14.0)
 
 DEPENDENCIES

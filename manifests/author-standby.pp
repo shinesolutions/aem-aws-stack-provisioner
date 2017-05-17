@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class author_standby (
   $base_dir,
   $tmp_dir,
@@ -6,7 +10,20 @@ class author_standby (
   $author_protocol,
   $author_port,
   $aem_repo_device,
+  $delete_repository_index = false,
 ) {
+
+  if $delete_repository_index {
+
+    file { "${crx_quickstart_dir}/repository/index/":
+      ensure  => absent,
+      recurse => true,
+      purge   => true,
+      force   => true,
+      before  => Service['aem-aem'],
+    }
+
+  }
 
   class { 'aem_resources::puppet_aem_resources_set_config':
     conf_dir => "${puppet_conf_dir}",
@@ -17,11 +34,6 @@ class author_standby (
   } -> class { 'aem_resources::author_standby_set_config':
     crx_quickstart_dir => "${crx_quickstart_dir}",
     primary_host       => "${::authorprimaryhost}",
-  } -> file { "${crx_quickstart_dir}/repository/index/":
-    ensure  => absent,
-    recurse => true,
-    purge   => true,
-    force   => true,
   } -> service { 'aem-aem':
     ensure => 'running',
     enable => true,

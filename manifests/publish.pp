@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class publish (
   $base_dir,
   $tmp_dir,
@@ -8,17 +12,45 @@ class publish (
   $aem_repo_device,
   $credentials_file,
   $snapshotid = $::snapshotid,
+  $delete_repository_index = false,
 ) {
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
 
   if $snapshotid != undef and $snapshotid != '' {
-    exec { "Attach volume from snapshot ID ${snapshotid}":
-      cwd     => '/opt/shinesolutions/aws-tools/',
-      path    => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
-      command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --snapshot-id ${snapshotid} -vvvv",
-      before  => File["${crx_quickstart_dir}/repository/index/"],
+
+    if $delete_repository_index {
+
+      exec { "Attach volume from snapshot ID ${snapshotid}":
+        cwd     => '/opt/shinesolutions/aws-tools/',
+        path    => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
+        command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --snapshot-id ${snapshotid} -vvvv",
+        before  => File["${crx_quickstart_dir}/repository/index/"],
+      }
+
+    } else {
+
+      exec { "Attach volume from snapshot ID ${snapshotid}":
+        cwd     => '/opt/shinesolutions/aws-tools/',
+        path    => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
+        command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --snapshot-id ${snapshotid} -vvvv",
+        before  => Service['aem-aem'],
+      }
+
     }
+
+  }
+
+  if $delete_repository_index {
+
+    file { "${crx_quickstart_dir}/repository/index/":
+      ensure  => absent,
+      recurse => true,
+      purge   => true,
+      force   => true,
+      before  => Service['aem-aem'],
+    }
+
   }
 
   file { "${crx_quickstart_dir}/install/":
@@ -35,11 +67,6 @@ class publish (
     host     => 'localhost',
     port     => "${publish_port}",
     debug    => true,
-  } -> file { "${crx_quickstart_dir}/repository/index/":
-    ensure  => absent,
-    recurse => true,
-    purge   => true,
-    force   => true,
   } -> service { 'aem-aem':
     ensure => 'running',
     enable => true,
@@ -151,7 +178,7 @@ class publish (
     owner   => 'root',
     group   => 'root',
   } -> cron { 'daily-export-backups':
-    command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>/var/log/export-backups.log 2>&1",
+    command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >/var/log/export-backups.log 2>&1",
     user        => 'root',
     hour        => 2,
     minute      => 0,
@@ -171,7 +198,7 @@ class publish (
     owner   => 'root',
     group   => 'root',
   } -> cron { 'hourly-live-snapshot-backup':
-    command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>/var/log/live-snapshot-backup.log 2>&1",
+    command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >/var/log/live-snapshot-backup.log 2>&1",
     user        => 'root',
     hour        => '*',
     minute      => 0,

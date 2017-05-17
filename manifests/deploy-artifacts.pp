@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class deploy_artifacts (
   $tmp_dir,
   $descriptor_file = $::descriptor_file,
