@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class publish (
   $base_dir,
   $tmp_dir,
