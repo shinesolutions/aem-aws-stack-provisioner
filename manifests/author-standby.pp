@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class author_standby (
   $base_dir,
   $tmp_dir,

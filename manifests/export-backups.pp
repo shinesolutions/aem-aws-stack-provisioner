@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class export_backups (
   $tmp_dir,
   $descriptor_file = $::descriptor_file,
