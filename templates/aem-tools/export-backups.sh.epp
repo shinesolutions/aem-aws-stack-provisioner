@@ -26,7 +26,6 @@ aem_username="${aem_username}" \
   FACTER_event="${event}" \
   FACTER_descriptor_file="${descriptor_file}" \
   puppet apply \
-  --debug \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
   "manifests/download-descriptor.pp"
@@ -38,7 +37,6 @@ aem_username="${aem_username}" \
   FACTER_package_version="${year}${month}${date}-${component}" \
   FACTER_backup_path="${year}/${month}" \
   puppet apply \
-  --debug \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
   "manifests/${event}.pp"
@@ -50,7 +48,6 @@ aem_username="${aem_username}" \
   FACTER_package_version="${year}${month}-${component}-latest" \
   FACTER_backup_path="${year}/${month}" \
   puppet apply \
-  --debug \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
   "manifests/${event}.pp"
@@ -62,7 +59,6 @@ aem_username="${aem_username}" \
   FACTER_package_version="${year}-${component}-latest" \
   FACTER_backup_path="${year}" \
   puppet apply \
-  --debug \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
   "manifests/${event}.pp"

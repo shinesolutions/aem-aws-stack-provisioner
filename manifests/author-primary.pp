@@ -124,7 +124,7 @@ class author_primary (
     owner   => 'root',
     group   => 'root',
   } -> cron { 'daily-export-backups':
-    command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>/var/log/export-backups.log 2>&1",
+    command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >/var/log/export-backups.log 2>&1",
     user        => 'root',
     hour        => 2,
     minute      => 0,
@@ -143,7 +143,7 @@ class author_primary (
     owner   => 'root',
     group   => 'root',
   } -> cron { 'hourly-live-snapshot-backup':
-    command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>/var/log/live-snapshot-backup.log 2>&1",
+    command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >/var/log/live-snapshot-backup.log 2>&1",
     user        => 'root',
     hour        => '*',
     minute      => 0,
