@@ -11,9 +11,22 @@ class author_primary (
   $author_port,
   $aem_repo_device,
   $credentials_file,
+  $delete_reopository_index = false,
 ) {
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
+
+  if $delete_reopository_index {
+
+    file { "${crx_quickstart_dir}/repository/index/":
+      ensure  => absent,
+      recurse => true,
+      purge   => true,
+      force   => true,
+      before  => Service['aem-aem'],
+    }
+
+  }
 
   file { "${crx_quickstart_dir}/install/":
     ensure => directory,
@@ -31,11 +44,6 @@ class author_primary (
     debug    => true,
   } -> class { 'aem_resources::author_primary_set_config':
     crx_quickstart_dir => "${crx_quickstart_dir}",
-  } -> file { "${crx_quickstart_dir}/repository/index/":
-    ensure  => absent,
-    recurse => true,
-    purge   => true,
-    force   => true,
   } -> service { 'aem-aem':
     ensure => 'running',
     enable => true,
