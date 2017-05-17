@@ -12,21 +12,36 @@ class publish (
   $aem_repo_device,
   $credentials_file,
   $snapshotid = $::snapshotid,
-  $delete_reopository_index = false,
+  $delete_repository_index = false,
 ) {
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
 
   if $snapshotid != undef and $snapshotid != '' {
-    exec { "Attach volume from snapshot ID ${snapshotid}":
-      cwd     => '/opt/shinesolutions/aws-tools/',
-      path    => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
-      command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --snapshot-id ${snapshotid} -vvvv",
-      before  => File["${crx_quickstart_dir}/repository/index/"],
+
+    if $delete_repository_index {
+
+      exec { "Attach volume from snapshot ID ${snapshotid}":
+        cwd     => '/opt/shinesolutions/aws-tools/',
+        path    => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
+        command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --snapshot-id ${snapshotid} -vvvv",
+        before  => File["${crx_quickstart_dir}/repository/index/"],
+      }
+
+    } else {
+
+      exec { "Attach volume from snapshot ID ${snapshotid}":
+        cwd     => '/opt/shinesolutions/aws-tools/',
+        path    => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
+        command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --snapshot-id ${snapshotid} -vvvv",
+        before  => Service['aem-aem'],
+      }
+
     }
+
   }
 
-  if $delete_reopository_index {
+  if $delete_repository_index {
 
     file { "${crx_quickstart_dir}/repository/index/":
       ensure  => absent,

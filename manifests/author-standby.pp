@@ -10,10 +10,10 @@ class author_standby (
   $author_protocol,
   $author_port,
   $aem_repo_device,
-  $delete_reopository_index = false,
+  $delete_repository_index = false,
 ) {
 
-  if $delete_reopository_index {
+  if $delete_repository_index {
 
     file { "${crx_quickstart_dir}/repository/index/":
       ensure  => absent,

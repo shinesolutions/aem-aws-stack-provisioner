@@ -11,12 +11,12 @@ class author_primary (
   $author_port,
   $aem_repo_device,
   $credentials_file,
-  $delete_reopository_index = false,
+  $delete_repository_index = false,
 ) {
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
 
-  if $delete_reopository_index {
+  if $delete_repository_index {
 
     file { "${crx_quickstart_dir}/repository/index/":
       ensure  => absent,
