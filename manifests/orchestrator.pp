@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class orchestrator (
   $base_dir
 ) {
@@ -24,7 +28,7 @@ class orchestrator (
     owner   => 'root',
     group   => 'root',
   } -> cron { 'nightly-stack-offline-snapshot':
-    command     => "cd ${base_dir}/aem-tools && ./stack-offline-snapshot.sh >>/var/log/stack-offline-snapshot.log 2>&1",
+    command     => "cd ${base_dir}/aem-tools && ./stack-offline-snapshot.sh >/var/log/stack-offline-snapshot.log 2>&1",
     user        => 'root',
     hour        => 1,
     minute      => 15,

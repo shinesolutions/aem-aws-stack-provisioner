@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class deploy_artifact (
   $package_source    = $::package_source,
   $package_group     = $::package_group,

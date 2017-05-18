@@ -30,3 +30,5 @@ aem_orchestrator::application_properties::aem_reverse_replication_enable: 'true'
 aem_orchestrator::application_properties::aem_flush_log_level: 'info'
 aem_orchestrator::application_properties::aem_replication_log_level: 'info'
 aem_orchestrator::application_properties::aem_reverse_replication_log_level: 'error'
+
+aem_orchestrator::application_properties::startup_wait_for_author_elb_max_attempts: '150'

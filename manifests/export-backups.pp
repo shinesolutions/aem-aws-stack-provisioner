@@ -1,9 +1,25 @@
+File {
+  backup => false,
+}
+
 class export_backups (
   $tmp_dir,
   $descriptor_file = $::descriptor_file,
   $component       = $::component,
   $package_version = $::package_version,
 ) {
+
+  # configure logrotate for export-backups.log file see daily-export-backups cron job in author-primary and publish manifest
+  file { '/var/log/export-backups':
+    ensure => 'directory',
+  }  -> logrotate::rule { 'export-backups':
+    path         => '/var/log/export-backups.log',
+    rotate       => 5,
+    size         => '200M',
+    dateext      => true,
+    rotate_every => 'day',
+    olddir       => '/var/log/export-backups',
+  }
 
   # load descriptor file
   $descriptor_hash = loadjson("${tmp_dir}/${descriptor_file}")
