@@ -66,7 +66,7 @@ class publish (
     protocol => "${publish_protocol}",
     host     => 'localhost',
     port     => "${publish_port}",
-    debug    => true,
+    debug    => false,
   } -> service { 'aem-aem':
     ensure => 'running',
     enable => true,

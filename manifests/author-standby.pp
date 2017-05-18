@@ -30,7 +30,7 @@ class author_standby (
     protocol => "${author_protocol}",
     host     => 'localhost',
     port     => "${author_port}",
-    debug    => true,
+    debug    => false,
   } -> class { 'aem_resources::author_standby_set_config':
     crx_quickstart_dir => "${crx_quickstart_dir}",
     primary_host       => "${::authorprimaryhost}",
