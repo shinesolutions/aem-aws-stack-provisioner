@@ -3,7 +3,7 @@ import boto3, requests, sys
 from retrying import retry
 
 component = sys.argv[1]
-max_retries = 120
+max_retries = 150
 delay = 5000
 
 tag_keys = {
