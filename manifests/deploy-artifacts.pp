@@ -73,6 +73,11 @@ class deploy_dispatcher_artifacts (
   $artifacts_array = $artifacts_content_hash['children']
   notify { "The artifacts_array is: ${artifacts_array}": }
 
+  # find out the config path
+  $class_name = regsubst($facts['component'], '-', '_', 'G')
+  $dispatcher_conf_dir = lookup("${class_name}::dispatcher_conf_dir", String, 'first')
+  notify{"Using dispatcher_config: ${dispatcher_conf_dir}":}
+
   $artifacts.each | Integer $index, Hash $artifact| {
 
     $artifacts_array.each | Integer $artifact_details_index, Hash $artifact_details| {
@@ -97,7 +102,7 @@ class deploy_dispatcher_artifacts (
 
               file { regsubst("/etc/httpd/conf/${apache_conf_template[name]}", '.epp', '', 'G'):
                 ensure  => file,
-                content => epp("${path}/${artifact[name]}/apache-conf-templates/${apache_conf_template[name]}"),
+                content => epp("${path}/${artifact[name]}/apache-conf-templates/${apache_conf_template[name]}", {'conf_dir' => $dispatcher_conf_dir}),
                 owner   => 'root',
                 group   => 'root',
                 mode    => '0644',
@@ -109,10 +114,22 @@ class deploy_dispatcher_artifacts (
 
           }
 
-
           # if name virtual-hosts-templates
 
           if $artifact_details_content['name'] == 'virtual-hosts-templates' {
+
+            # remove the initial 1-puppet-aem-resources.conf and the
+            # 15-default.conf in Amazon Distro.
+            $defult_files = [
+              "${dispatcher_conf_dir}/15-default.conf",
+              "${dispatcher_conf_dir}/1-puppet-aem-resources.conf"
+            ]
+            $default_files.each |Integer $index, String $default_file | {
+              file { $default_file:
+                ensure => absent,
+                before => Exec['graceful restart'],
+              }
+            }
 
             $artifact_details_content['children'].each | Integer $virtual_host_template_index, Hash $virtual_host_template| {
 
@@ -166,9 +183,9 @@ class deploy_dispatcher_artifacts (
 
             $artifact_details_content['children'].each | Integer $dispatcher_conf_template_index, Hash $dispatcher_conf_template| {
 
-              file { regsubst("/etc/httpd/conf.modules.d/${dispatcher_conf_template[name]}", '.epp', '', 'G'):
+              file { regsubst("${dispatcher_conf_dir}/${dispatcher_conf_template[name]}", '.epp', '', 'G'):
                 ensure  => file,
-                content => epp("${path}/${artifact[name]}/dispatcher-conf-templates/${dispatcher_conf_template[name]}"),
+                content => epp("${path}/${artifact[name]}/dispatcher-conf-templates/${dispatcher_conf_template[name]}", {conf_dir => $dispatcher_conf_dir}),
                 owner   => 'root',
                 group   => 'root',
                 mode    => '0644',
