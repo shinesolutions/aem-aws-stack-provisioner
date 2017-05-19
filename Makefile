@@ -37,6 +37,7 @@ package: Puppetfile.lock lint
 		--exclude='stage*' \
 		--exclude='.idea*' \
 		--exclude='.DS_Store*' \
+		--exclude='examples'
 		-cvf \
 		stage/aem-aws-stack-provisioner-$(version).tar ./
 	gzip stage/aem-aws-stack-provisioner-$(version).tar
