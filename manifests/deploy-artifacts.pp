@@ -120,7 +120,7 @@ class deploy_dispatcher_artifacts (
 
             # remove the initial 1-puppet-aem-resources.conf and the
             # 15-default.conf in Amazon Distro.
-            $defult_files = [
+            $default_files = [
               "${dispatcher_conf_dir}/15-default.conf",
               "${dispatcher_conf_dir}/1-puppet-aem-resources.conf"
             ]
