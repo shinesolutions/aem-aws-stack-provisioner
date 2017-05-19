@@ -51,7 +51,20 @@ class author_dispatcher (
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
+  } -> file { "${base_dir}/aem-tools/enter-standby.sh":
+    ensure => present,
+    source => "${base_dir}/aem-aws-stack-provisioner/files/aem-tools/enter-standby.sh",
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  } -> file { "${base_dir}/aem-tools/exit-standby.sh":
+    ensure => present,
+    source => "${base_dir}/aem-aws-stack-provisioner/files/aem-tools/exit-standby.sh",
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
   }
+
 
 }
 
