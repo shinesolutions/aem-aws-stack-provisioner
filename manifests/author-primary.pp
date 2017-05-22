@@ -78,6 +78,81 @@ class author_primary (
     ensure => absent,
   }
 
+  file_line { 'Set the collectd cloudwatch proxy_server_name':
+    path   => '/opt/collectd-cloudwatch/src/cloudwatch/config/plugin.conf',
+    line   => "proxy_server_name = \"${::proxy_protocol}://${::proxy_host}\"",
+    match  => '^#proxy_server_name =.*$',
+    notify => Service['collectd'],
+  }
+
+  file_line { 'Set the collectd cloudwatch proxy_server_port':
+    path   => '/opt/collectd-cloudwatch/src/cloudwatch/config/plugin.conf',
+    line   => "proxy_server_port = \"${::proxy_port}\"",
+    match  => '^#proxy_server_port =.*$',
+    notify => Service['collectd'],
+  }
+
+  collectd::plugin::genericjmx::mbean {
+    'garbage_collector':
+      object_name     => 'java.lang:type=GarbageCollector,*',
+      instance_prefix => 'gc-',
+      instance_from   => 'name',
+      values          => [
+        {
+          'type'    => 'invocations',
+          table     => false,
+          attribute => 'CollectionCount',
+        },
+        {
+          'type'          => 'total_time_in_ms',
+          instance_prefix => 'collection_time',
+          table           => false,
+          attribute       => 'CollectionTime',
+        },
+      ];
+    'memory-heap':
+      object_name     => 'java.lang:type=Memory',
+      instance_prefix => 'memory-heap',
+      values          => [
+        {
+          'type'    => 'jmx_memory',
+          table     => true,
+          attribute => 'HeapMemoryUsage',
+        },
+      ];
+    'memory-nonheap':
+      object_name     => 'java.lang:type=Memory',
+      instance_prefix => 'memory-nonheap',
+      values          => [
+        {
+          'type'    => 'jmx_memory',
+          table     => true,
+          attribute => 'NonHeapMemoryUsage',
+        },
+      ];
+    'memory-permgen':
+      object_name     => 'java.lang:type=MemoryPool,name=*Perm Gen',
+      instance_prefix => 'memory-permgen',
+      values          => [
+        {
+          'type'    => 'jmx_memory',
+          table     => true,
+          attribute => 'Usage',
+        },
+      ];
+  }
+
+  collectd::plugin::genericjmx::connection { 'aem':
+    host        => $::fqdn,
+    service_url => 'service:jmx:rmi:///jndi/rmi://localhost:8463/jmxrmi',
+    collect     => [ 'standby-status' ],
+  }
+
+  class { '::collectd':
+    service_ensure => running,
+    service_enable => true,
+  }
+
   # Set up AEM tools
   file { "${base_dir}/aem-tools/":
     ensure => directory,
