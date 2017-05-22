@@ -7,6 +7,12 @@ class common (
   $group,
   $credentials_file,
 ) {
+  # Ensure we have a working FQDN <=> IP mapping.
+  host { $facts['fqdn']:
+    ensure       => present,
+    ip           => $facts['ipaddress'],
+    host_aliases => $facts['hostname'],
+  }
 
   file { "${tmp_base_dir}":
     ensure => directory,
