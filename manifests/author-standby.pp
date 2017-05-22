@@ -179,7 +179,7 @@ class author_standby (
       {
         'base_dir'           => "${base_dir}",
         'oak_run_version'    => "${::oak_run_version}",
-        'crx_quickstart_dir' => '/opt/aem/author/crx-quickstart',
+        'crx_quickstart_dir' => $crx_quickstart_dir,
       }
     ),
   }
