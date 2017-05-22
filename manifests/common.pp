@@ -6,12 +6,17 @@ class common (
   $user,
   $group,
   $credentials_file,
+  $extra_packages = [],
 ) {
   # Ensure we have a working FQDN <=> IP mapping.
   host { $facts['fqdn']:
     ensure       => present,
     ip           => $facts['ipaddress'],
     host_aliases => $facts['hostname'],
+  }
+
+  package { $extra_packages:
+    ensure => present,
   }
 
   file { "${tmp_base_dir}":
