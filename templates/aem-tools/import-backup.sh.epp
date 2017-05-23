@@ -38,6 +38,21 @@ else
   backup_path="${year}/${month}"
 fi
 
+# translate puppet exit code to follow convention
+translate_exit_code() {
+
+  exit_code="$1"
+  if [ "$exit_code" -eq 0 ] || [ "$exit_code" -eq 2 ]; then
+    exit_code=0
+  else
+    exit "$exit_code"
+  fi
+
+  return "$exit_code"
+}
+
+set +o errexit
+
 cd <%= $base_dir %>/aem-aws-stack-provisioner/
 
 aem_username="${aem_username}" \
@@ -50,6 +65,9 @@ aem_username="${aem_username}" \
   FACTER_package_version="${package_version}" \
   /opt/puppetlabs/bin/puppet apply \
   --debug \
+  --detailed-exitcodes \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
   "manifests/${event}.pp"
+
+translate_exit_code "$?"
