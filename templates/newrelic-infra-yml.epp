@@ -1,0 +1,7 @@
+license_key: <%= $common::newrelic_license_key %>
+<% if $facts[proxy_enabled] { -%>
+proxy: <%= $facts[proxy_protocol] %>://<%= $facts[proxy_host] %>:<%= $facts[proxy_port] %>
+<% } -%>
+<% if has_key($facts, 'ec2_metadata') { -%>
+display_name: <%= $facts[ec2_metadata][instance-id] %>
+<% } -%>

@@ -7,7 +7,20 @@ class common (
   $group,
   $credentials_file,
   $extra_packages = [],
+  $newrelic_license_key = '',
+  $template_dir = undef,
+  $files_dir = undef,
 ) {
+  $template_dir_final = pick(
+    $template_dir,
+    "${base_dir}/aem-aws-stack-provisioner/templates"
+  )
+
+  $file_dir_final = pick(
+    $file_dir,
+    "${base_dir}/aem-aws-stack-provisioner/files"
+  )
+
   # Ensure we have a working FQDN <=> IP mapping.
   host { $facts['fqdn']:
     ensure       => present,
@@ -39,7 +52,7 @@ class common (
     group  => 'root',
   } -> file { '/root/.aws/credentials':
     ensure  => file,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aws/credentials.epp", { 'region' => "${aws_region}" }),
+    content => epp("${template_dir_final}/aws/credentials.epp", { 'region' => "${aws_region}" }),
     mode    => '0664',
     owner   => 'root',
     group   => 'root',
@@ -53,7 +66,7 @@ class common (
     group  => "${group}",
   } -> file { "/home/${user}/.aws/credentials":
     ensure  => file,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aws/credentials.epp", { 'region' => "${aws_region}" }),
+    content => epp("${template_dir_final}/aws/credentials.epp", { 'region' => "${aws_region}" }),
     mode    => '0664',
     owner   => "${user}",
     group   => "${group}",
@@ -69,7 +82,7 @@ class common (
 
   file { "${base_dir}/aws-tools/set-component.sh":
     ensure  => file,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aws-tools/set-component.sh.epp", {'base_dir' => "${base_dir}",}),
+    content => epp("${template_dir_final}/aem-aws-stack-provisioner/templates/aws-tools/set-component.sh.epp", {'base_dir' => "${base_dir}",}),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
@@ -78,7 +91,7 @@ class common (
 
   file { "${base_dir}/aws-tools/set-facts.sh":
     ensure  => present,
-    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws-tools/set-facts.sh",
+    source  => "${file_dir_final}/aws-tools/set-facts.sh",
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
@@ -87,7 +100,7 @@ class common (
 
   file { "${base_dir}/aws-tools/snapshot_backup.py":
     ensure  => present,
-    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws-tools/snapshot_backup.py",
+    source  => "${file_dir_final}/aws-tools/snapshot_backup.py",
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
@@ -96,7 +109,7 @@ class common (
 
   file { "${base_dir}/aws-tools/snapshot_attach.py":
     ensure  => present,
-    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws-tools/snapshot_attach.py",
+    source  => "${file_dir_final}/aws-tools/snapshot_attach.py",
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
@@ -105,7 +118,7 @@ class common (
 
   file { "${base_dir}/aws-tools/wait_for_ec2tags.py":
     ensure  => present,
-    source  => "${base_dir}/aem-aws-stack-provisioner/files/aws-tools/wait_for_ec2tags.py",
+    source  => "${file_dir_final}/aws-tools/wait_for_ec2tags.py",
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
@@ -120,6 +133,18 @@ class common (
     source => "s3://${::data_bucket_name}/${::stack_prefix}/${credentials_file}",
   }
 
+  if $newrelic_license_key != '' {
+    file { '/etc/newrelic-infra.yml':
+      ensure  => file,
+      content => epp("${template_dir_final}/newrelic-infra-yml.epp"),
+      mode    => '0600',
+      owner   => 'root',
+      group   => 'root',
+    }
+    package { 'newrelic-infra':
+      ensure => present,
+    }
+  }
 }
 
 include common

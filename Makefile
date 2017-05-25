@@ -12,7 +12,8 @@ Gemfile.lock: Gemfile
 	bundle install
 
 validate: Gemfile.lock
-	bundle exec puppet parser validate manifests/*
+	bundle exec puppet parser validate manifests/*.pp
+	bundle exec puppet epp validate templates/*.epp templates/**/*.epp
 
 lint: validate Gemfile.lock
 	bundle exec puppet-lint \
