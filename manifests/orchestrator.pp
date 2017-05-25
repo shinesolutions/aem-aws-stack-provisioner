@@ -15,12 +15,16 @@ class orchestrator (
     mode   => '0775',
     owner  => 'root',
     group  => 'root',
-  } -> file { "${base_dir}/aem-tools/stack-offline-snapshot-message.json":
+  }
+
+  # daily (except sunday) offline-snapshot
+  file { "${base_dir}/aem-tools/stack-offline-snapshot-message.json":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-snapshot-message.json.epp", { 'stack_prefix' => "${::stackprefix}"}),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
+    require => File["${base_dir}/aem-tools/"],
   } -> file { "${base_dir}/aem-tools/stack-offline-snapshot.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-snapshot.sh.epp", { 'sns_topic_arn' => "${::stack_manager_sns_topic_arn}",}),
@@ -32,6 +36,30 @@ class orchestrator (
     user        => 'root',
     hour        => 1,
     minute      => 15,
+    weekday     => [1-6],
+    environment => ["PATH=${::cron_env_path}", "https_proxy=\"${::cron_https_proxy}\""],
+  }
+
+  # weekly offline-compaction-snapshot
+  file { "${base_dir}/aem-tools/stack-offline-compaction-snapshot-message.json":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-compaction-snapshot-message.json.epp", { 'stack_prefix' => "${::stackprefix}"}),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    require => File["${base_dir}/aem-tools/"],
+  } -> file { "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-compaction-snapshot.sh.epp", { 'sns_topic_arn' => "${::stack_manager_sns_topic_arn}",}),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+  } -> cron { 'weekly-stack-offline-compaction-snapshot':
+    command     => "cd ${base_dir}/aem-tools && ./stack-offline-compaction-snapshot.sh >/var/log/stack-offline-compaction-snapshot.log 2>&1",
+    user        => 'root',
+    hour        => 6,
+    minute      => 15,
+    weekday     => 0,
     environment => ["PATH=${::cron_env_path}", "https_proxy=\"${::cron_https_proxy}\""],
   }
 
