@@ -82,7 +82,7 @@ class common (
 
   file { "${base_dir}/aws-tools/set-component.sh":
     ensure  => file,
-    content => epp("${template_dir_final}/aem-aws-stack-provisioner/templates/aws-tools/set-component.sh.epp", {'base_dir' => "${base_dir}",}),
+    content => epp("${template_dir_final}/aws-tools/set-component.sh.epp", {'base_dir' => "${base_dir}",}),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
