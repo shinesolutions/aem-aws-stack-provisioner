@@ -36,7 +36,7 @@ class orchestrator (
     user        => 'root',
     hour        => 1,
     minute      => 15,
-    weekday     => [1-6],
+    weekday     => '1-6',
     environment => ["PATH=${::cron_env_path}", "https_proxy=\"${::cron_https_proxy}\""],
   }
 
