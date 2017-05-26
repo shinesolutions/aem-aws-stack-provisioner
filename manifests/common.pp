@@ -9,7 +9,7 @@ class common (
   $extra_packages = [],
   $newrelic_license_key = '',
   $template_dir = undef,
-  $files_dir = undef,
+  $file_dir = undef,
 ) {
   $template_dir_final = pick(
     $template_dir,
