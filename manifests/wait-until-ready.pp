@@ -2,8 +2,7 @@ File {
   backup => false,
 }
 
-class wait_until_ready (
-) {
+class wait_until_ready {
 
   aem_aem { 'Wait until login page is ready':
     ensure                     => login_page_is_ready,
