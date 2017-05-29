@@ -40,13 +40,13 @@ class orchestrator (
 
   if $enable_weekly_offline_compaction_snapshot {
 
-    # Monday to Saturday
+    # Tuesday to Sunday
     cron { 'nightly-stack-offline-snapshot':
       command     => "cd ${base_dir}/aem-tools && ./stack-offline-snapshot.sh >/var/log/stack-offline-snapshot.log 2>&1",
       user        => 'root',
       hour        => $offline_snapshot_hour,
       minute      => $offline_snapshot_minute,
-      weekday     => '1-6',
+      weekday     => '2-7',
       environment => ["PATH=${::cron_env_path}", "https_proxy=\"${::cron_https_proxy}\""],
       require     => File["${base_dir}/aem-tools/stack-offline-snapshot.sh"],
     }
@@ -54,13 +54,13 @@ class orchestrator (
   }
   else {
 
-    # Sunday to Saturday
+    # Monday to Sunday
     cron { 'nightly-stack-offline-snapshot':
       command     => "cd ${base_dir}/aem-tools && ./stack-offline-snapshot.sh >/var/log/stack-offline-snapshot.log 2>&1",
       user        => 'root',
       hour        => $offline_snapshot_hour,
       minute      => $offline_snapshot_minute,
-      weekday     => '0-6',
+      weekday     => '1-7',
       environment => ["PATH=${::cron_env_path}", "https_proxy=\"${::cron_https_proxy}\""],
       require     => File["${base_dir}/aem-tools/stack-offline-snapshot.sh"],
     }
@@ -85,14 +85,14 @@ class orchestrator (
 
   if $enable_weekly_offline_compaction_snapshot {
 
-    # Sunday only
+    # Monday only
 
     cron { 'weekly-stack-offline-compaction-snapshot':
       command     => "cd ${base_dir}/aem-tools && ./stack-offline-compaction-snapshot.sh >/var/log/stack-offline-compaction-snapshot.log 2>&1",
       user        => 'root',
       hour        => $offline_snapshot_hour,
       minute      => $offline_snapshot_minute,
-      weekday     => 0,
+      weekday     => 1,
       environment => ["PATH=${::cron_env_path}", "https_proxy=\"${::cron_https_proxy}\""],
       require     => File["${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh"],
     }
