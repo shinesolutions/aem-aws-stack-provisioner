@@ -7,10 +7,7 @@ if [ "$#" -ne 0 ]; then
   exit 1
 fi
 
-
-service=crx-quickstart
-
-if (( $(ps -ef | grep -v grep | grep $service | wc -l) > 0 )); then
+if (( $(ps -ef | grep -v grep | grep jar | grep crx-quickstart | wc -l) > 0 )); then
 
   echo “AEM is running!!! Compaction hangs when AEM is running. Exiting”
   exit 1
