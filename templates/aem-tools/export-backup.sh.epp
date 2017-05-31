@@ -2,14 +2,15 @@
 set -o nounset
 set -o errexit
 
-if [ "$#" -ne 3 ]; then
+if [ "$#" -lt 3 ]; then
   echo 'Usage: ./export-backup.sh <package_group> <package_name> <package_filter>'
   exit 1
 fi
 
 package_group=$1
 package_name=$2
-package_filter=$3
+shift 2
+package_filter="$*"
 component=$(/opt/puppetlabs/bin/facter component)
 data_bucket=$(/opt/puppetlabs/bin/facter data_bucket)
 stack_prefix=$(/opt/puppetlabs/bin/facter stackprefix)
@@ -49,7 +50,7 @@ export FACTER_package_filter="${package_filter}"
 
 
 FACTER_package_version="${year}${month}${date}-${component}" \
-  FACTER_backup_path="${year}/${month}"
+  FACTER_backup_path="${year}/${month}" \
   /opt/puppetlabs/bin/puppet apply \
   --debug \
   --detailed-exitcodes \
