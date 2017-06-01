@@ -15,6 +15,9 @@ data_bucket=$(facter data_bucket)
 stack_prefix=$(facter stackprefix)
 aem_username=exporter
 aem_password=$(aws s3 cp s3://$data_bucket/$stack_prefix/system-users-credentials.json - | jq --raw-output .$aem_username)
+# backup export timeout is set to 15 minutes in order to handle large AEM packages
+# 2-3Gb packages tend to take 5 minutes to build within AEM
+aem_timeout=900
 event=export-backup
 
 year=$(date +%Y)
@@ -26,6 +29,7 @@ cd <%= $base_dir %>/aem-aws-stack-provisioner/
 # backup latest package for the day
 aem_username="${aem_username}" \
   aem_password="${aem_password}" \
+  aem_timeout="${aem_timeout}" \
   FACTER_event="${event}" \
   FACTER_package_group="${package_group}" \
   FACTER_package_name="${package_name}" \
@@ -40,6 +44,7 @@ aem_username="${aem_username}" \
 # backup latest package for the month
 aem_username="${aem_username}" \
   aem_password="${aem_password}" \
+  aem_timeout="${aem_timeout}" \
   FACTER_event="${event}" \
   FACTER_package_group="${package_group}" \
   FACTER_package_name="${package_name}" \
@@ -54,6 +59,7 @@ aem_username="${aem_username}" \
 # backup latest package for the year
 aem_username="${aem_username}" \
   aem_password="${aem_password}" \
+  aem_timeout="${aem_timeout}" \
   FACTER_event="${event}" \
   FACTER_package_group="${package_group}" \
   FACTER_package_name="${package_name}" \
