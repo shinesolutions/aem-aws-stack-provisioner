@@ -4,7 +4,7 @@ set -o errexit
 
 instance_id=$(curl --silent http://169.254.169.254/latest/meta-data/instance-id)
 
-lifecycle_state=$(aws autoscaling describe-auto-scaling-instances --instance-ids ${instance_id} --no-paginate --query AutoScalingInstances[].LifecycleState --output text)
+lifecycle_state=$(aws autoscaling describe-auto-scaling-instances --instance-ids "${instance_id}" --query AutoScalingInstances[].LifecycleState --output text)
 
 if [ "$lifecycle_state" = "InService" ]
 then

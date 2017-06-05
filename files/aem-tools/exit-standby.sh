@@ -4,7 +4,7 @@ set -o errexit
 
 instance_id=$(curl --silent http://169.254.169.254/latest/meta-data/instance-id)
 
-lifecycle_state=$(aws autoscaling describe-auto-scaling-instances --instance-ids ${instance_id} --no-paginate --query AutoScalingInstances[].LifecycleState --output text)
+lifecycle_state=$(aws autoscaling describe-auto-scaling-instances --instance-ids "${instance_id}" --query AutoScalingInstances[].LifecycleState --output text)
 
 if [ "$lifecycle_state" = "Standby" ]
 then
@@ -15,6 +15,6 @@ then
 
 else
 
-    echo  "Instance is in ${lifecycle_state} State. Can not Exit Standby."
+    echo "Instance is in ${lifecycle_state} State. Can not Exit Standby."
 
 fi
