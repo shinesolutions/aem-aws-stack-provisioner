@@ -14,7 +14,7 @@ interval=$2
 oak_exited=0
 for (( index=1; index <"$repeats"; index_++ )); do
   echo "checking oak run process: $index run"
-  count=$(ps -ef | grep -v grep | grep java | grep oak-run | wc -l)
+  count=$(pgrep -f oak-run | wc -l )
   if [ "$count" -eq 0 ]; then
     oak_exited=1
     break

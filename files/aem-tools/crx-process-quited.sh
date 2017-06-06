@@ -14,7 +14,7 @@ interval="$2"
 crx_exited=0
 for (( index=1; index <"$repeats"; index_++ )); do
   echo "checking crx run process: $index run"
-  count=$(ps -ef | grep -v grep | grep jar | grep crx-quickstart | wc -l)
+  count=$(pgrep -f crx-quickstart|wc -l)
   if [ "$count" -eq 0 ]; then
     crx_exited=1
     break
