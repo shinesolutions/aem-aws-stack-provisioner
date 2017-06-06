@@ -197,14 +197,14 @@ class author_primary (
   }
   -> file {"${base_dir}/aem-tools/crx-process-quited.sh":
     ensure => present,
-    source => "file://${base_dir}/files/aem-tools/crx-process-quited.sh",
+    source => "file://${base_dir}/aem-aws-stack-provisioner/files/aem-tools/crx-process-quited.sh",
     mode   => '0775',
     owner  => 'root',
     group  => 'root',
   }
   -> file {"${base_dir}/aem-tools/oak-run-process-quited.sh":
     ensure => present,
-    source => "file://${base_dir}/files/aem-tools/oak-run-process-quited.sh",
+    source => "file://${base_dir}/aem-aws-stack-provisioner/files/aem-tools/oak-run-process-quited.sh",
     mode   => '0775',
     owner  => 'root',
     group  => 'root',
