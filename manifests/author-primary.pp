@@ -195,6 +195,20 @@ class author_primary (
     owner   => 'root',
     group   => 'root',
   }
+  -> file {"${base_dir}/aem-tools/crx-process-quited.sh":
+    ensure => present,
+    source => "file://${base_dir}/files/aem-tools/crx-process-quited.sh",
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  }
+  -> file {"${base_dir}/aem-tools/oak-run-process-quited.sh":
+    ensure => present,
+    source => "file://${base_dir}/files/aem-tools/oak-run-process-quited.sh",
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  }
 
   archive { "${base_dir}/aem-tools/oak-run-${::oak_run_version}.jar":
     ensure => present,
