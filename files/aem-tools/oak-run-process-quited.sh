@@ -12,9 +12,10 @@ repeats=$1
 interval=$2
 
 oak_exited=0
-for (( index=1; index <"$repeats"; index_++ )); do
+for (( index=1; index <"$repeats"; index++ )); do
   echo "checking oak run process: $index run"
-  count=$(pgrep -f oak-run | wc -l )
+  #shellcheck disable=SC2009
+  count=$(ps -ef | grep -v grep | grep java | grep -c oak-run)
   if [ "$count" -eq 0 ]; then
     oak_exited=1
     break

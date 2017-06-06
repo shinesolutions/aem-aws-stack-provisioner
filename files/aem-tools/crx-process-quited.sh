@@ -12,9 +12,10 @@ repeats="$1"
 interval="$2"
 
 crx_exited=0
-for (( index=1; index <"$repeats"; index_++ )); do
+for (( index=1; index <"$repeats"; index++ )); do
   echo "checking crx run process: $index run"
-  count=$(pgrep -f crx-quickstart|wc -l)
+  #shellcheck disable=SC2009
+  count=$(ps -ef | grep -v grep | grep jar | grep -c crx-quickstart)
   if [ "$count" -eq 0 ]; then
     crx_exited=1
     break
