@@ -146,7 +146,13 @@ class publish (
     owner  => 'root',
     group  => 'root',
   }
-
+  -> file { "${base_dir}/aem-tools/enable-crxde.sh":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/enable-crxde.sh.epp", { 'base_dir' => "${base_dir}" }),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+  }
 
   archive { "${base_dir}/aem-tools/oak-run-${::oak_run_version}.jar":
     ensure => present,
