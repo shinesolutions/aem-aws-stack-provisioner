@@ -21,7 +21,7 @@ class export_backup (
     filter  => $package_filter,
   } -> exec { "aws s3 cp ${tmp_dir}/${package_group}/${package_name}-${package_version}.zip s3://${::data_bucket}/backup/${::stackprefix}/${package_group}/${backup_path}/${package_name}-${package_version}.zip":
     cwd  => $tmp_dir,
-    path => ['/bin'],
+    path => ['/bin', '/usr/local/bin', '/usr/bin'],
   } -> file { "${tmp_dir}/${package_group}/${package_name}-${package_version}.zip":
     ensure => absent,
   }
