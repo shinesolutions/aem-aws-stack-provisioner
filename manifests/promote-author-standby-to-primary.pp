@@ -6,6 +6,9 @@ class promote_author_standby_to_primary (
   exec { 'service aem-aem stop':
     cwd  => "${tmp_dir}",
     path => ['/usr/bin', '/usr/sbin', '/sbin'],
+  } -> exec { 'crx-process-quited.sh 24 5':
+    cwd  => "${tmp_dir}",
+    path => ["${base_dir}/aem-tools", '/usr/bin', '/opt/puppetlabs/bin/', '/bin'],
   } -> exec { 'set-component.sh author-primary':
     cwd  => "${tmp_dir}",
     path => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/', '/bin'],
