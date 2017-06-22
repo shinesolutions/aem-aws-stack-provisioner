@@ -6,5 +6,5 @@ mod 'puppetlabs/java_ks', '1.5.0'
 mod 'shinesolutions/aem_orchestrator', :git => 'https://github.com/shinesolutions/puppet-aem-orchestrator'
 mod 'shinesolutions/aem_resources',
     :git => 'https://github.com/shinesolutions/puppet-aem-resources',
-    :ref => 'dev'
+    :ref => 'e9832f55'
 mod 'shinesolutions/simianarmy', '1.0.0'
