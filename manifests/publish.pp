@@ -34,7 +34,7 @@ class publish (
       exec { "Attach volume from snapshot ID ${snapshotid}":
         cwd     => '/opt/shinesolutions/aws-tools/',
         path    => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
-        command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --snapshot-id ${snapshotid} -vvvv",
+        command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --volume-type ${vol_type} --snapshot-id ${snapshotid} -vvvv",
         before  => Service['aem-aem'],
       }
 
