@@ -125,6 +125,21 @@ class common (
     require => File["${base_dir}/aws-tools/"],
   }
 
+  # set up common tools
+  file {"${base_dir}/common-tools":
+    ensure => directory,
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  }
+  -> file {"${base_dir}/common-tools/run-adhoc-puppet.sh":
+    ensure => present,
+    source => "file://${base_dir}/aem-aws-stack-provisioner/files/aem-tools/run-adhoc-puppet.sh",
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  }
+
   # Download credentials file from S3 to temp directory, these credentials will
   # used for component provisioning and will be cleaned up at the end of stack
   # initialisation.
