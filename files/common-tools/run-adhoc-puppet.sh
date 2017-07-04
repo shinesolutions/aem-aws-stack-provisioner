@@ -37,7 +37,7 @@ translate_puppet_exit_code() {
 
 
 # execute the main.pp within the tar
-cd /tmp/adhoc_puppet_file
+cd /tmp/aem-adhoc-puppet
 puppet apply \
   --detailed-exitcodes \
   --logdest /tmp/adhoc_puppet_run.log \
@@ -45,4 +45,4 @@ puppet apply \
   --hiera_config hiera.yaml \
   main.pp
 
-  translate_puppet_exit_code "$?"
+translate_puppet_exit_code "$?"
