@@ -134,7 +134,7 @@ class common (
   }
   -> file {"${base_dir}/common-tools/run-adhoc-puppet.sh":
     ensure => present,
-    source => "file://${base_dir}/aem-aws-stack-provisioner/files/aem-tools/run-adhoc-puppet.sh",
+    source => "file://${base_dir}/aem-aws-stack-provisioner/files/common-tools/run-adhoc-puppet.sh",
     mode   => '0775',
     owner  => 'root',
     group  => 'root',

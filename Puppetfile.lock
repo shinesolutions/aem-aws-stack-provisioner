@@ -11,12 +11,12 @@ FORGE
     puppet-yum (0.10.0)
       puppetlabs-concat (< 3.0.0, >= 1.2.5)
       puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
-    puppetlabs-apt (4.0.0)
+    puppetlabs-apt (4.1.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.16.0)
     puppetlabs-concat (2.2.1)
       puppetlabs-stdlib (< 5.0.0, >= 4.2.0)
     puppetlabs-java_ks (1.5.0)
-    puppetlabs-stdlib (4.17.0)
+    puppetlabs-stdlib (4.17.1)
     shinesolutions-simianarmy (1.0.0)
       puppet-archive (~> 1.3.0)
       puppetlabs-stdlib (~> 4.0)
@@ -31,11 +31,11 @@ GIT
 
 GIT
   remote: https://github.com/shinesolutions/puppet-aem-resources
-  ref: dev
-  sha: d9b9c085faafc7d13e8eeeb4934ebe2b5c953b3e
+  ref: 1.1.1
+  sha: f2c75abc24f577fa6d2513b6d6e1b390eab9cb5c
   specs:
-    shinesolutions-aem_resources (0.9.5)
-      puppetlabs-stdlib (>= 4.14.0)
+    shinesolutions-aem_resources (1.1.1)
+      puppetlabs-stdlib (< 5.0.0, >= 4.14.0)
 
 DEPENDENCIES
   puppet-archive (= 1.3.0)
