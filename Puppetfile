@@ -7,4 +7,6 @@ mod 'shinesolutions/aem_orchestrator', :git => 'https://github.com/shinesolution
 mod 'shinesolutions/aem_resources',
     :git => 'https://github.com/shinesolutions/puppet-aem-resources',
     :ref => '1.1.1'
-mod 'shinesolutions/simianarmy', '1.0.0'
+mod 'shinesolutions/simianarmy',
+    :git => 'https://github.com/shinesolutions/puppet-simianarmy',
+    :ref => 'dev'
