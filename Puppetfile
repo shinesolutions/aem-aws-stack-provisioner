@@ -9,4 +9,3 @@ mod 'shinesolutions/aem_resources',
     :ref => 'dev'
 mod 'shinesolutions/simianarmy',
     :git => 'https://github.com/shinesolutions/puppet-simianarmy',
-    :ref => 'dev'
