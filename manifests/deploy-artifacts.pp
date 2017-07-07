@@ -2,7 +2,15 @@ class deploy_artifacts (
   $tmp_dir,
   $descriptor_file = $::descriptor_file,
   $component       = $::component,
+  $retries_max_tries          = 60,
+  $retries_base_sleep_seconds = 5,
+  $retries_max_sleep_seconds  = 5,
 ) {
+  Aem_aem {
+    retries_max_tries          => $retries_max_tries,
+    retries_base_sleep_seconds => $retries_base_sleep_seconds,
+    retries_max_sleep_seconds  => $retries_max_sleep_seconds,
+  }
 
   # load descriptor file
   $descriptor_hash = loadjson("${tmp_dir}/${descriptor_file}")
