@@ -7,4 +7,5 @@ publish::crx_quickstart_dir: /opt/aem/publish/crx-quickstart
 publish::publish_protocol: http
 publish::publish_port: 4503
 publish::aem_repo_device: /dev/sdb
+publish::vol_type: gp2
 publish::credentials_file: "%{hiera('common::credentials_file')}"
