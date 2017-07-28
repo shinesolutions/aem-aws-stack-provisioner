@@ -1,3 +1,6 @@
+### 1.1.2
+*
+
 ### 1.1.1
 * Check instance is in correct state before entering or exiting standby
 
