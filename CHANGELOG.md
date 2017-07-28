@@ -1,5 +1,5 @@
 ### 1.1.2
-*
+* Allow configurable volume type when attaching snapshot on publish instance
 
 ### 1.1.1
 * Check instance is in correct state before entering or exiting standby
