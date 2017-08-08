@@ -1,4 +1,4 @@
-version ?= 1.1.2
+version ?= 2.0.0b
 
 ci: clean package
 
