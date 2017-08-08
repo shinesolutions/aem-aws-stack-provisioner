@@ -29,9 +29,8 @@ class publish (
       $attach_volume_before = Service['aem-aem']
     }
     exec { "Attach volume from snapshot ID ${snapshotid}":
-      cwd     => '/opt/shinesolutions/aws-tools/',
+      command => "/opt/shinesolutions/aws-tools/snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --volume-type ${vol_type} --snapshot-id ${snapshotid} -vvvv",
       path    => $exec_path,
-      command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --volume-type ${vol_type} --snapshot-id ${snapshotid} -vvvv",
       before  => $attach_volume_before,
     }
   }
