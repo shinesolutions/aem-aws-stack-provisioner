@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class export_backup (
   $tmp_dir,
   $backup_path     = $::backup_path,

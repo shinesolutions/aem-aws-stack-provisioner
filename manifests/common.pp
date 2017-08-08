@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class common (
   $base_dir,
   $tmp_base_dir,

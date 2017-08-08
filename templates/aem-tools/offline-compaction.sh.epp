@@ -7,8 +7,21 @@ if [ "$#" -ne 0 ]; then
   exit 1
 fi
 
-java -jar <%= $base_dir %>/aem-tools/oak-run-<%= $oak_run_version %>.jar checkpoints "<%= $crx_quickstart_dir %>/repository/segmentstore"
-sleep 2
-java -jar <%= $base_dir %>/aem-tools/oak-run-<%= $oak_run_version %>.jar checkpoints "<%= $crx_quickstart_dir %>/repository/segmentstore" rm-unreferenced
-sleep 2
-java -jar <%= $base_dir %>/aem-tools/oak-run-<%= $oak_run_version %>.jar compact "<%= $crx_quickstart_dir %>/repository/segmentstore"
+if (( $(ps -ef | grep -v grep | grep jar | grep crx-quickstart | wc -l) > 0 )); then
+
+  echo “AEM is running!!! Compaction hangs when AEM is running. Exiting”
+  exit 1
+
+else
+
+  echo "Compaction Started: $(date)"
+
+  sudo -H -u aem bash -c 'java -jar <%= $base_dir %>/aem-tools/oak-run-<%= $oak_run_version %>.jar checkpoints "<%= $crx_quickstart_dir %>/repository/segmentstore"'
+  sleep 2
+  sudo -H -u aem bash -c 'java -jar <%= $base_dir %>/aem-tools/oak-run-<%= $oak_run_version %>.jar checkpoints "<%= $crx_quickstart_dir %>/repository/segmentstore" rm-unreferenced'
+  sleep 2
+  sudo -H -u aem bash -c 'java -jar <%= $base_dir %>/aem-tools/oak-run-<%= $oak_run_version %>.jar compact "<%= $crx_quickstart_dir %>/repository/segmentstore"'
+
+  echo "Compaction Ended: $(date)"
+
+fi

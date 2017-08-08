@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class promote_author_standby_to_primary (
   $base_dir,
   $tmp_dir

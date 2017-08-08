@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class import_backup (
   $tmp_dir,
   $source_stack_prefix = $::source_stack_prefix,

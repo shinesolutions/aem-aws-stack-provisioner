@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class author_primary (
   $base_dir,
   $tmp_dir,
@@ -11,9 +15,23 @@ class author_primary (
   $enable_offline_compaction_cron,
   $enable_daily_export_cron,
   $enable_hourly_live_snapshot_cron,
+
+  $delete_repository_index = false,
 ) {
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
+
+  if $delete_repository_index {
+
+    file { "${crx_quickstart_dir}/repository/index/":
+      ensure  => absent,
+      recurse => true,
+      purge   => true,
+      force   => true,
+      before  => Service['aem-aem'],
+    }
+
+  }
 
   file { "${crx_quickstart_dir}/install/":
     ensure => directory,
@@ -30,18 +48,10 @@ class author_primary (
     protocol => "${author_protocol}",
     host     => 'localhost',
     port     => "${author_port}",
-    debug    => true,
-  }
-  -> class { 'aem_resources::author_primary_set_config':
+    debug    => false,
+  } -> class { 'aem_resources::author_primary_set_config':
     crx_quickstart_dir => "${crx_quickstart_dir}",
-  }
-  -> file { "${crx_quickstart_dir}/repository/index/":
-    ensure  => absent,
-    recurse => true,
-    purge   => true,
-    force   => true,
-  }
-  -> service { 'aem-aem':
+  } -> service { 'aem-aem':
     ensure => 'running',
     enable => true,
   }
@@ -54,9 +64,14 @@ class author_primary (
   -> aem_bundle { 'Stop webdav bundle':
     ensure => stopped,
     name   => 'org.apache.sling.jcr.webdav',
-  } -> aem_bundle { 'Stop davex bundle':
+  }
+  -> aem_bundle { 'Stop davex bundle':
     ensure => stopped,
     name   => 'org.apache.sling.jcr.davex',
+  }
+  -> aem_aem { 'Remove all agents':
+    ensure   => all_agents_removed,
+    run_mode => 'author',
   }
   -> aem_package { 'Remove password reset package':
     ensure  => absent,

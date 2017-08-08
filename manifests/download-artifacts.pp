@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class download_artifacts (
   $tmp_dir,
   $base_dir,

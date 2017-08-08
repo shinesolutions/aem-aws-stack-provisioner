@@ -1,3 +1,7 @@
+File {
+  backup => false,
+}
+
 class publish (
   $base_dir,
   $tmp_dir,
@@ -6,21 +10,50 @@ class publish (
   $publish_protocol,
   $publish_port,
   $aem_repo_device,
+  $vol_type,
   $credentials_file,
   $exec_path,
   $enable_offline_compaction_cron,
   $enable_daily_export_cron,
   $enable_hourly_live_snapshot_cron,
   $snapshotid = $::snapshotid,
+  $delete_repository_index = false,
 ) {
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
 
   if $snapshotid != undef and $snapshotid != '' {
-    exec { "Attach volume from snapshot ID ${snapshotid}":
-      command => "/opt/shinesolutions/aws-tools/snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --snapshot-id ${snapshotid} -vvvv",
-      path    => $exec_path,
-      before  => File["${crx_quickstart_dir}/repository/index/"],
+
+    if $delete_repository_index {
+
+      exec { "Attach volume from snapshot ID ${snapshotid}":
+        cwd     => '/opt/shinesolutions/aws-tools/',
+        path    => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
+        command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --volume-type ${vol_type} --snapshot-id ${snapshotid} -vvvv",
+        before  => File["${crx_quickstart_dir}/repository/index/"],
+      }
+
+    } else {
+
+      exec { "Attach volume from snapshot ID ${snapshotid}":
+        cwd     => '/opt/shinesolutions/aws-tools/',
+        path    => ["${base_dir}/aws-tools", '/usr/bin', '/opt/puppetlabs/bin/'],
+        command => "./snapshot_attach.py --device /dev/sdb --device-alias /dev/xvdb --volume-type ${vol_type} --snapshot-id ${snapshotid} -vvvv",
+        before  => Service['aem-aem'],
+      }
+
+    }
+
+  }
+
+  if $delete_repository_index {
+
+    file { "${crx_quickstart_dir}/repository/index/":
+      ensure  => absent,
+      recurse => true,
+      purge   => true,
+      force   => true,
+      before  => Service['aem-aem'],
     }
   }
 
@@ -37,12 +70,7 @@ class publish (
     protocol => "${publish_protocol}",
     host     => 'localhost',
     port     => "${publish_port}",
-    debug    => true,
-  } -> file { "${crx_quickstart_dir}/repository/index/":
-    ensure  => absent,
-    recurse => true,
-    purge   => true,
-    force   => true,
+    debug    => false,
   } -> service { 'aem-aem':
     ensure => 'running',
     enable => true,
@@ -57,6 +85,9 @@ class publish (
   } -> aem_bundle { 'Stop davex bundle':
     ensure => stopped,
     name   => 'org.apache.sling.jcr.davex',
+  } -> aem_aem { 'Remove all agents':
+    ensure   => all_agents_removed,
+    run_mode => 'publish',
   } -> aem_package { 'Remove password reset package':
     ensure  => absent,
     name    => 'aem-password-reset-content',
@@ -68,7 +99,7 @@ class publish (
     run_mode      => 'publish',
     title         => "Flush agent for publish-dispatcher ${::pairinstanceid}",
     description   => "Flush agent for publish-dispatcher ${::pairinstanceid}",
-    dest_base_url => "http://${::publishdispatcherhost}:80",
+    dest_base_url => "https://${::publishdispatcherhost}:443",
     log_level     => 'info',
     retry_delay   => 60000,
     force         => true,
@@ -124,6 +155,12 @@ class publish (
   } -> file { "${base_dir}/aem-tools/import-backup.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/import-backup.sh.epp", { 'base_dir' => "${base_dir}" }),
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+  } -> file { "${base_dir}/aem-tools/wait-until-ready.sh":
+    ensure  => present,
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/wait-until-ready.sh.epp", { 'base_dir' => "${base_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
@@ -246,6 +283,7 @@ class publish (
       }
     ),
   }
+
 }
 
 include publish
