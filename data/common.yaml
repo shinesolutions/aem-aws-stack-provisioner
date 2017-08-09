@@ -6,6 +6,10 @@ exec_path:
   - /sbin
   - /usr/sbin
   - /usr/local/sbin
+  - /opt/puppetlabs/bin
+  - "%{hiera('common::base_dir')}/aem-tools"
+  - "%{hiera('common::base_dir')}/aws-tools"
+  - "%{hiera('common::base_dir')}/common-tools"
 
 common::base_dir: /opt/shinesolutions
 common::aws_region: ap-southeast-2
