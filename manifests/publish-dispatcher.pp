@@ -26,7 +26,7 @@ class publish_dispatcher (
     cwd  => "${tmp_dir}",
     path => $exec_path,
   } -> exec { 'deploy-artifacts.sh deploy-artifacts-descriptor.json':
-    path        => ["${base_dir}/aem-tools", '/usr/bin', '/opt/puppetlabs/bin'],
+    path        => $exec_path,
     environment => ["https_proxy=${::cron_https_proxy}"],
     cwd         => "${tmp_dir}",
     command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>/var/log/deploy-artifacts.log 2>&1",
