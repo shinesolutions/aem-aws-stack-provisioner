@@ -111,7 +111,6 @@ class download_packages (
   $packages,
   $path
 ) {
-
   # prepare the packages
   file { $path:
     ensure => directory,
@@ -119,11 +118,8 @@ class download_packages (
   }
 
   $packages.each | Integer $index, Hash $package| {
-
     # TODO: validate the package values exist and populated
-
     if !defined(File["${path}/${package['group']}"]) {
-
       exec { "Create ${path}/${package['group']}":
         creates => "${path}/${package['group']}",
         command => "mkdir -p ${path}/${package['group']}",
@@ -134,17 +130,32 @@ class download_packages (
         ensure => directory,
         mode   => '0775',
       }
+    }
 
+    if $package['force'] {
+      # This is not _guaranteed_ to never match, but
+      # the chance of matching is very, very low.
+      $checksum = '00000000000000000000000000000000'
+      $checksum_type = 'md5'
+    } elsif $package['checksum'] {
+      $checksum      = $package['checksum']
+      $checksum_type = pick(
+        $package['checksum_type'],
+        'md5',
+      )
+    } else {
+      $checksum      = undef
+      $checksum_type = undef
     }
 
     archive { "${path}/${package['group']}/${package['name']}-${package['version']}.zip":
-      ensure  => present,
-      source  => $package[source],
-      require => File["${path}/${package['group']}"],
+      ensure        => present,
+      source        => $package[source],
+      checksum      => $checksum,
+      checksum_type => $checksum_type,
+      require       => File["${path}/${package['group']}"],
     }
-
   }
-
 }
 
 include download_artifacts
