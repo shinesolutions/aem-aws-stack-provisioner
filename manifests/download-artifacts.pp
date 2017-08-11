@@ -137,23 +137,27 @@ class download_packages (
       # the chance of matching is very, very low.
       $checksum = '00000000000000000000000000000000'
       $checksum_type = 'md5'
+      $checksum_verify = false
     } elsif $package['checksum'] {
       $checksum      = $package['checksum']
       $checksum_type = pick(
         $package['checksum_type'],
         'md5',
       )
+      $checksum_verify = true
     } else {
-      $checksum      = undef
-      $checksum_type = undef
+      $checksum        = undef
+      $checksum_type   = undef
+      $checksum_verify = true
     }
 
     archive { "${path}/${package['group']}/${package['name']}-${package['version']}.zip":
-      ensure        => present,
-      source        => $package[source],
-      checksum      => $checksum,
-      checksum_type => $checksum_type,
-      require       => File["${path}/${package['group']}"],
+      ensure          => present,
+      source          => $package[source],
+      checksum        => $checksum,
+      checksum_type   => $checksum_type,
+      checksum_verify => $checksum_verify,
+      require         => File["${path}/${package['group']}"],
     }
   }
 }
