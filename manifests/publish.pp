@@ -16,6 +16,11 @@ class publish (
   $enable_offline_compaction_cron,
   $enable_daily_export_cron,
   $enable_hourly_live_snapshot_cron,
+
+  $login_ready_max_tries,
+  $login_ready_base_sleep_seconds,
+  $login_ready_max_sleep_seconds,
+
   $snapshotid = $::snapshotid,
   $delete_repository_index = false,
 ) {
@@ -64,9 +69,9 @@ class publish (
     enable => true,
   } -> aem_aem { 'Wait until login page is ready':
     ensure                     => login_page_is_ready,
-    retries_max_tries          => 60,
-    retries_base_sleep_seconds => 5,
-    retries_max_sleep_seconds  => 5,
+    retries_max_tries          => $login_ready_max_tries,
+    retries_base_sleep_seconds => $login_ready_base_sleep_seconds,
+    retries_max_sleep_seconds  => $login_ready_max_sleep_seconds,
   } -> aem_bundle { 'Stop webdav bundle':
     ensure => stopped,
     name   => 'org.apache.sling.jcr.webdav',

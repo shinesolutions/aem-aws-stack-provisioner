@@ -34,3 +34,7 @@ author_primary::enable_hourly_live_snapshot_cron: false
 publish::enable_offline_compaction_cron: false
 publish::enable_daily_export_cron: false
 publish::enable_hourly_live_snapshot_cron: false
+
+publish::login_ready_max_tries: 60
+publish::login_ready_base_sleep_seconds: 5
+publish::login_ready_max_sleep_seconds: 5
