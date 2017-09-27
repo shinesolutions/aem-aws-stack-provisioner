@@ -9,11 +9,15 @@ class author_publish_dispatcher (
 
   notify { 'It works!': }
 
-  #include author_primary
-
-  #class { 'author_primary':
-  #  author_port     => '4502',
+  # config_mytest (For testing only, remove when done)
+  #include aem_curator::config_mytest
+  #class { 'aem_curator::config_mytest':
   #}
+
+  #include aem_curator::config_author_primary
+  include aem_curator::config_publish
+  #include aem_curator::config_publish_dispatcher
+
 
 }
 
