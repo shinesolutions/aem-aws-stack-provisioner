@@ -1,6 +1,9 @@
 version ?= 2.0.0b
 
-ci: clean package
+ci: deps clean package
+
+deps:
+	r10k puppetfile install --moduledir modules
 
 clean:
 	rm -rf .librarian .tmp Puppetfile.lock Gemfile.lock modules stage
@@ -43,4 +46,4 @@ package: Puppetfile.lock lint
 		stage/aem-aws-stack-provisioner-$(version).tar ./
 	gzip stage/aem-aws-stack-provisioner-$(version).tar
 
-.PHONY: ci clean lint package validate
+.PHONY: ci clean deps lint package validate
