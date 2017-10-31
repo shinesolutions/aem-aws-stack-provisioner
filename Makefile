@@ -1,15 +1,12 @@
 version ?= 2.0.0b
 
-ci: deps clean package
-
-deps:
-	r10k puppetfile install --moduledir modules
+ci: clean lint package
 
 clean:
-	rm -rf .librarian .tmp Puppetfile.lock Gemfile.lock modules stage
+	rm -rf .tmp Puppetfile.lock Gemfile.lock modules stage
 
 Puppetfile.lock: Puppetfile Gemfile.lock
-	bundle exec librarian-puppet install --path modules --verbose
+	bundle exec r10k puppetfile install --verbose --moduledir modules
 
 Gemfile.lock: Gemfile
 	bundle install
@@ -36,7 +33,6 @@ package: Puppetfile.lock lint
 	mkdir -p stage
 	tar \
 		--exclude='.git*' \
-		--exclude='.librarian*' \
 		--exclude='.tmp*' \
 		--exclude='stage*' \
 		--exclude='.idea*' \
