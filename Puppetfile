@@ -6,7 +6,7 @@ mod 'puppetlabs/java_ks', '1.5.0'
 mod 'puppetlabs/stdlib', '4.21.0'
 mod 'shinesolutions/aem_orchestrator', '1.1.0'
 mod 'shinesolutions/aem_resources', '2.0.0'
-mod 'shinesolutions/aem_curator', '0.9.1'
+mod 'shinesolutions/aem_curator', '0.9.2'
 mod 'shinesolutions/simianarmy', '1.1.0'
 
 mod 'yo61-logrotate', '1.4.0'
