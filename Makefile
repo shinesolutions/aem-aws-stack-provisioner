@@ -5,6 +5,8 @@ ci: clean lint package
 clean:
 	rm -rf .tmp Puppetfile.lock Gemfile.lock modules stage
 
+deps: Gemfile.lock Puppetfile.lock
+
 Puppetfile.lock: Puppetfile Gemfile.lock
 	bundle exec r10k puppetfile install --verbose --moduledir modules
 
