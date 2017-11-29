@@ -1,4 +1,4 @@
-version ?= 2.0.0b
+version ?= 2.1.0
 
 ci: clean lint package
 

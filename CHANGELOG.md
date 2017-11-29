@@ -1,3 +1,6 @@
+### 2.1.0
+*
+
 ### 2.0.0
 * Migrate provisioning code from manifests to puppet-aem-curator module
 * Add provisioning for AuthorPublishDispatcher component
