@@ -49,7 +49,7 @@ class deploy_artifacts (
 
     if $packages {
 
-      class { 'aem_resources::deploy_packages':
+      aem_resources::deploy_packages { 'Deploy packages':
         packages => $packages,
         path     => "${tmp_dir}/packages",
       }

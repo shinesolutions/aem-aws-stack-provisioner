@@ -151,7 +151,7 @@ class download_packages (
       $checksum_verify = true
     }
 
-    archive { "${path}/${package['group']}/${package['name']}-${package['version']}.zip":
+    archive { "${path}/${package['aem_id']}/${package['group']}/${package['name']}-${package['version']}.zip":
       ensure          => present,
       source          => $package[source],
       checksum        => $checksum,

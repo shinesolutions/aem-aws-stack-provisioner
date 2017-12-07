@@ -30,7 +30,7 @@ lint: validate Gemfile.lock
 		manifests/*.pp
 	shellcheck files/*/*.sh
 
-package: Puppetfile.lock lint
+package:
 	rm -rf stage
 	mkdir -p stage
 	tar \
