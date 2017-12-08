@@ -10,6 +10,8 @@ class author_publish_dispatcher (
   $publish_protocol,
   $publish_port,
 
+  $enable_deploy_on_init,
+
   $aem_id_author_primary = 'author-primary',
 ) {
 
@@ -38,6 +40,32 @@ class author_publish_dispatcher (
     retry_delay        => 60000,
     force              => true,
     aem_id             => $aem_id_author_primary,
+  } -> class { 'deploy_on_init':
+    aem_id                => $aem_id_author_primary,
+    base_dir              => $base_dir,
+    tmp_dir               => $tmp_dir,
+    exec_path             => $exec_path,
+    enable_deploy_on_init => $enable_deploy_on_init,
+  }
+
+}
+
+class deploy_on_init (
+  $aem_id,
+  $base_dir,
+  $tmp_dir,
+  $exec_path             = ['/bin', '/usr/local/bin', '/usr/bin'],
+  $enable_deploy_on_init = false,
+) {
+
+  if $enable_deploy_on_init == true {
+    exec { 'Deploy Author and Publish AEM packages and Dispatcher artifacts':
+      path        => $exec_path,
+      environment => ["https_proxy=${::cron_https_proxy}"],
+      cwd         => $tmp_dir,
+      command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>/var/log/deploy-artifacts.log 2>&1",
+      onlyif      => "test `aws s3 ls s3://${::data_bucket}/${::stackprefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
+    }
   }
 
 }

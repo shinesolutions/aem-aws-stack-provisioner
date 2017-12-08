@@ -1,5 +1,6 @@
 ### 2.1.0
 * Add multi AEM instances support to artifact download and deploy #45
+* Rename aem-tools script generate-artifacts-json.py to generate-artifacts-descriptor.py
 
 ### 2.0.0
 * Migrate provisioning code from manifests to puppet-aem-curator module

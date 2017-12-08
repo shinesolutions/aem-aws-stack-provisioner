@@ -31,7 +31,7 @@ class publish_dispatcher (
     cwd         => "${tmp_dir}",
     command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>/var/log/deploy-artifacts.log 2>&1",
     onlyif      => "test `aws s3 ls s3://${::data_bucket}/${::stackprefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
-    require     => [ File["${base_dir}/aem-tools/deploy-artifacts.sh"], File["${base_dir}/aem-tools/generate-artifacts-json.py"] ],
+    require     => [ File["${base_dir}/aem-tools/deploy-artifacts.sh"], File["${base_dir}/aem-tools/generate-artifacts-descriptor.py"] ],
   }
 
   # Set up AEM tools
@@ -46,9 +46,9 @@ class publish_dispatcher (
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } -> file { "${base_dir}/aem-tools/generate-artifacts-json.py":
+  } -> file { "${base_dir}/aem-tools/generate-artifacts-descriptor.py":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/generate-artifacts-json.py.epp", { 'tmp_dir' => "${tmp_dir}" }),
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/generate-artifacts-descriptor.py.epp", { 'tmp_dir' => "${tmp_dir}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
