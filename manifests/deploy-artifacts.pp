@@ -178,10 +178,10 @@ class deploy_dispatcher_artifacts (
           # Process static aem_password_reset_version
           if $artifact_details_content[name] == 'static-assets' {
             file { 'Copy static assets':
-               path    => $static_assets_dir,
-               source  => "${path}/${artifact[name]}/static-assets",
-               recurse => true,
-               notify  => Exec['graceful restart'],
+              path    => $static_assets_dir,
+              source  => "${path}/${artifact[name]}/static-assets",
+              recurse => true,
+              notify  => Exec['graceful restart'],
             }
           }
 
