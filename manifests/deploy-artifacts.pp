@@ -181,6 +181,7 @@ class deploy_dispatcher_artifacts (
                path    => $static_assets_dir,
                source  => "${path}/${artifact[name]}/static-assets",
                recurse => true,
+               notify  => Exec['graceful restart'],
             }
           }
 
