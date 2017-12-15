@@ -3,6 +3,7 @@
 * Rename aem-tools script generate-artifacts-json.py to generate-artifacts-descriptor.py
 * Add static-assets deployment as part of AEM Dispatcher artifacts #47
 * Rename artifacts deployment log to puppet-deploy-artifacts.log
+* Replace Serverspec with InSpec for testing
 
 ### 2.0.0
 * Migrate provisioning code from manifests to puppet-aem-curator module
