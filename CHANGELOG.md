@@ -9,6 +9,7 @@
 * Migrate provisioning code from manifests to puppet-aem-curator module
 * Add provisioning for AuthorPublishDispatcher component
 * Lock down Puppet dependencies version
+* TODO
 
 ### 1.1.2
 * Allow configurable volume type when attaching snapshot on publish instance
