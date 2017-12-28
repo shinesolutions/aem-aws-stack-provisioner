@@ -1,11 +1,21 @@
 ---
-publish::base_dir: "%{hiera('common::base_dir')}"
-publish::tmp_dir: "%{hiera('common::tmp_dir')}"
-publish::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
-publish::crx_quickstart_dir: /opt/aem/publish/crx-quickstart
-
-publish::publish_protocol: http
-publish::publish_port: 4503
-publish::aem_repo_device: /dev/sdb
-publish::vol_type: gp2
-publish::credentials_file: "%{hiera('common::credentials_file')}"
+aem_curator::config_publish::base_dir: "%{hiera('common::base_dir')}"
+aem_curator::config_publish::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::config_publish::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
+aem_curator::config_publish::crx_quickstart_dir: /opt/aem/publish/crx-quickstart
+aem_curator::config_publish::publish_protocol: http
+aem_curator::config_publish::publish_port: 4503
+aem_curator::config_publish::aem_repo_device: /dev/sdb
+aem_curator::config_publish::vol_type: gp2
+aem_curator::config_publish::credentials_file: "%{hiera('common::credentials_file')}"
+aem_curator::config_publish::enable_deploy_flag: false
+aem_curator::config_publish::login_ready_max_tries: 60
+aem_curator::config_publish::login_ready_base_sleep_seconds: 5
+aem_curator::config_publish::login_ready_max_sleep_seconds: 5
+# aem_curator::config_publish::publishdispatcherhost: localhost
+# aem_curator::config_publish::pairinstanceid: localhost
+aem_curator::config_publish::enable_offline_compaction_cron: false
+aem_curator::config_publish::enable_daily_export_cron: false
+aem_curator::config_publish::enable_hourly_live_snapshot_cron: false
+aem_curator::config_publish::enable_crxde: false
+aem_curator::config_publish::enable_default_passwords: false

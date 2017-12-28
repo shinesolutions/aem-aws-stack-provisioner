@@ -42,3 +42,12 @@ publish::enable_hourly_live_snapshot_cron: false
 publish::login_ready_max_tries: 60
 publish::login_ready_base_sleep_seconds: 5
 publish::login_ready_max_sleep_seconds: 5
+
+# AEM Tools
+aem_curator::config_aem_tools::base_dir: "%{hiera('common::base_dir')}"
+aem_curator::config_aem_tools::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::config_aem_tools::crx_quickstart_dir: /opt/aem/author/crx-quickstart #TODO: need two values to handle Author/Publish instances
+aem_curator::config_aem_tools::aem_repo_device: /dev/sdb
+aem_curator::config_aem_tools::enable_offline_compaction_cron: false
+aem_curator::config_aem_tools::enable_daily_export_cron: false
+aem_curator::config_aem_tools::enable_hourly_live_snapshot_cron: false

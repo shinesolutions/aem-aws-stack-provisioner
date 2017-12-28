@@ -1,12 +1,12 @@
 ---
+aem_curator::config_author_dispatcher::base_dir: "%{hiera('common::base_dir')}"
+aem_curator::config_author_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::config_author_dispatcher::dispatcher_conf_dir: /etc/httpd/conf.modules.d/
+aem_curator::config_author_dispatcher::httpd_conf_dir: /etc/httpd/conf.d/
+aem_curator::config_author_dispatcher::docroot_dir: /var/www/html/
+aem_curator::config_author_dispatcher::ssl_cert: /etc/ssl/aem.unified-dispatcher.cert
+aem_curator::config_author_dispatcher::author_host: localhost
 # Author ELB is listening on port 80/443 due to AEM using X-Forwarded-Port to construct location header
-author_dispatcher::author_port: 443
-author_dispatcher::author_secure: 1
-
-author_dispatcher::dispatcher_conf_dir: /etc/httpd/conf.modules.d/
-author_dispatcher::httpd_conf_dir: /etc/httpd/conf.d/
-author_dispatcher::docroot_dir: /var/www/html/
-author_dispatcher::ssl_cert: /etc/ssl/aem.unified-dispatcher.cert
-
-author_dispatcher::base_dir: "%{hiera('common::base_dir')}"
-author_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::config_author_dispatcher::author_port: 443
+aem_curator::config_author_dispatcher::author_secure: 1
+aem_curator::config_author_dispatcher::enable_deploy_flag: false
