@@ -1,5 +1,5 @@
 ### 2.2.0
-* Modify author-primary, publish, author-dispatcher, and publish-dispatcher to use aem_curator for provisioning
+* Modify author-primary, author-standby, publish, author-dispatcher, and publish-dispatcher to use aem_curator for provisioning
 
 ### 2.1.0
 * Add multi AEM instances support to artifact download and deploy #45
