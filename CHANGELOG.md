@@ -1,3 +1,6 @@
+### 2.3.0
+*
+
 ### 2.2.0
 * Modify author-primary, author-standby, publish, author-dispatcher, and publish-dispatcher to use aem_curator for provisioning
 
