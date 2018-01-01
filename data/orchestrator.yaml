@@ -1,7 +1,8 @@
 ---
 orchestrator::base_dir: "%{hiera('common::base_dir')}"
+orchestrator::aem_orchestrator_version: 1.0.0
 
-aem_orchestrator::jarfile_source: "s3://%{::data_bucket}/%{::stackprefix}/aem-orchestrator-%{::aem_orchestrator_version}.jar"
+aem_orchestrator::jarfile_source: "s3://%{::data_bucket}/%{::stackprefix}/aem-orchestrator-%{hiera('orchestrator::aem_orchestrator_version')}.jar"
 aem_orchestrator::manage_installdir: true
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_messaging: "%{::stackprefix}-aem-messaging-stack"
 aem_orchestrator::application_properties::aws_client_use_proxy: "%{::proxy_enabled}"
