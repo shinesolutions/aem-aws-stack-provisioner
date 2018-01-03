@@ -1,3 +1,6 @@
+### 2.2.2
+*
+
 ### 2.2.1
 * Localise global fact aem_orchestrator_version 
 
