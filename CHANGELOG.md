@@ -1,5 +1,5 @@
 ### 2.2.2
-*
+* Migrate all AEM Tools files and templates from aem-aws-stack-provisioner to aem_curator
 
 ### 2.2.1
 * Localise global fact aem_orchestrator_version 
