@@ -1,11 +1,12 @@
 ---
-aem_curator::config_author_standby::base_dir: "%{hiera('common::base_dir')}"
+author_standby::base_dir: "%{hiera('common::base_dir')}"
+author_standby::aem_repo_device: /dev/sdb
+
 aem_curator::config_author_standby::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_author_standby::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
 aem_curator::config_author_standby::crx_quickstart_dir: /opt/aem/author/crx-quickstart
 aem_curator::config_author_standby::author_protocol: http
 aem_curator::config_author_standby::author_port: 4502
-aem_curator::config_author_standby::aem_repo_device: /dev/sdb
 aem_curator::config_author_standby::credentials_file: "%{hiera('common::credentials_file')}"
 aem_curator::config_author_standby::enable_deploy_flag: false
 aem_curator::config_author_standby::enable_offline_compaction_cron: false

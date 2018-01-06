@@ -5,7 +5,7 @@
 simianarmy::simianarmy_properties::simianarmy_calendar_close_hour: '15'
 simianarmy::simianarmy_properties::simianarmy_calendar_open_hour: '9'
 simianarmy::simianarmy_properties::simianarmy_calendar_timezone: 'Australia/Sydney'
-simianarmy::simianarmy_properties::simianarmy_recorder_sdb_domain: "SIMIAN_ARMY_%{::stackprefix}"
+simianarmy::simianarmy_properties::simianarmy_recorder_sdb_domain: "SIMIAN_ARMY_%{::stack_prefix}"
 simianarmy::simianarmy_properties::simianarmy_scheduler_frequency: '5'
 simianarmy::simianarmy_properties::simianarmy_scheduler_frequency_unit: 'MINUTES'
 simianarmy::simianarmy_properties::simianarmy_scheduler_threads: '1'

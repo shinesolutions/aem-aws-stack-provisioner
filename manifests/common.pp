@@ -10,10 +10,12 @@ class common (
   $user,
   $group,
   $credentials_file,
-  $extra_packages = [],
+  $extra_packages       = [],
   $newrelic_license_key = '',
-  $template_dir = undef,
-  $file_dir = undef,
+  $template_dir         = undef,
+  $file_dir             = undef,
+  $stack_prefix         = $::stack_prefix,
+  $data_bucket_name     = $::data_bucket_name,
 ) {
   $template_dir_final = pick(
     $template_dir,
@@ -149,7 +151,7 @@ class common (
   # initialisation.
   archive { "${tmp_dir}/${credentials_file}":
     ensure => present,
-    source => "s3://${::data_bucket_name}/${::stack_prefix}/${credentials_file}",
+    source => "s3://${data_bucket_name}/${stack_prefix}/${credentials_file}",
   }
 
   if $newrelic_license_key != '' {

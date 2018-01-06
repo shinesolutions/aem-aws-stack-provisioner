@@ -9,11 +9,12 @@ class import_backup (
   $package_group       = $::package_group,
   $package_name        = $::package_name,
   $package_version     = $::package_version,
+  $data_bucket_name    = $::data_bucket_name,
 ) {
 
   archive { "${tmp_dir}/${package_group}/${package_name}-${package_version}.zip":
     ensure => present,
-    source => "s3://${::data_bucket}/backup/${source_stack_prefix}/${package_group}/${backup_path}/${package_name}-${package_version}.zip",
+    source => "s3://${data_bucket_name}/backup/${source_stack_prefix}/${package_group}/${backup_path}/${package_name}-${package_version}.zip",
   } -> aem_package { 'Upload and install backup file':
     ensure  => present,
     name    => $package_name,

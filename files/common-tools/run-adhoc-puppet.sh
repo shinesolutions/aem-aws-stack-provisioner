@@ -13,13 +13,13 @@ if [ -d /tmp/aem-adhoc-puppet ]; then
 fi
 
 
-data_bucket=$(/opt/puppetlabs/bin/facter data_bucket)
+data_bucket_name=$(/opt/puppetlabs/bin/facter data_bucket_name)
 stack_prefix=$(/opt/puppetlabs/bin/facter stackprefix)
 adhoc_puppet_file="$1"
 
 # download the adhoc puppet tar files
 mkdir -p /tmp/aem-adhoc-puppet
-aws s3 cp s3://"$data_bucket"/"$stack_prefix"/"$adhoc_puppet_file" /tmp
+aws s3 cp s3://"$data_bucket_name"/"$stack_prefix"/"$adhoc_puppet_file" /tmp
 tar xvf /tmp/"$adhoc_puppet_file" -C /tmp/aem-adhoc-puppet && rm -f /tmp/"$adhoc_puppet_file"
 
 # translate puppet exit code to follow convention

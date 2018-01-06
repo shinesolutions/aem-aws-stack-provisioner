@@ -11,10 +11,10 @@ fi
 
 component=$1
 
-data_bucket=$(facter data_bucket)
-stack_prefix=$(facter stackprefix)
+data_bucket_name=$(facter data_bucket_name)
+stack_prefix=$(facter stack_prefix)
 
 instance_id=$(curl --silent http://169.254.169.254/latest/meta-data/instance-id)
 aws ec2 create-tags --tags Key=Component,Value=${component} --resources ${instance_id}
 
-<%= $base_dir %>/aws-tools/set-facts.sh "${data_bucket}" "${stack_prefix}"
+<%= $base_dir %>/aws-tools/set-facts.sh "${data_bucket_name}" "${stack_prefix}"

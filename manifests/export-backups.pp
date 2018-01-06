@@ -4,9 +4,11 @@ File {
 
 class export_backups (
   $tmp_dir,
-  $descriptor_file = $::descriptor_file,
-  $component       = $::component,
-  $package_version = $::package_version,
+  $descriptor_file  = $::descriptor_file,
+  $component        = $::component,
+  $package_version  = $::package_version,
+  $stack_prefix     = $::stack_prefix,
+  $data_bucket_name = $::data_bucket_name,
 ) {
 
   # configure logrotate for export-backups.log file see daily-export-backups cron job in author-primary and publish manifest
@@ -90,7 +92,7 @@ class export_backup_packages (
       path    => "${tmp_dir}/${package[group]}",
       filter  => $package[filter],
       require => File["${tmp_dir}/${package['group']}"],
-    } -> exec { "aws s3 cp ${tmp_dir}/${package[group]}/${package[name]}-${package_version}.zip s3://${::data_bucket}/backup/${::stackprefix}/${package[group]}/${backup_path}/${package[name]}-${package_version}.zip":
+    } -> exec { "aws s3 cp ${tmp_dir}/${package[group]}/${package[name]}-${package_version}.zip s3://${data_bucket_name}/backup/${stack_prefix}/${package[group]}/${backup_path}/${package[name]}-${package_version}.zip":
       cwd  => $tmp_dir,
       path => ['/bin'],
     } -> file { "${tmp_dir}/${package[group]}/${package[name]}-${package_version}.zip":

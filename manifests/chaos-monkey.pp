@@ -3,7 +3,10 @@ File {
 }
 
 class chaos_monkey (
-
+  $orchestrator_asg       = $::orchestratorasg,
+  $publish_asg            = $::publisherasg,
+  $publish_dispatcher_asg = $::publisherdispatcherasg,
+  $author_dispatcher_asg  = $::authordispatcherasg,
 ) {
 
   include simianarmy
@@ -20,19 +23,19 @@ class chaos_monkey (
     max_terminations_per_day => '1.0',
   }
   # Publish
-  simianarmy::chaos_properties::asg { $::publisherasg:
+  simianarmy::chaos_properties::asg { $publish_asg:
     enabled                  => true,
     probability              => '1.0',
     max_terminations_per_day => '1.0',
   }
   # Publish-dispatcher
-  simianarmy::chaos_properties::asg { $::publisherdispatcherasg:
+  simianarmy::chaos_properties::asg { $publish_dispatcher_asg:
     enabled                  => true,
     probability              => '1.0',
     max_terminations_per_day => '1.0',
   }
   # Author-Dispatcher
-  simianarmy::chaos_properties::asg { $::authordispatcherasg:
+  simianarmy::chaos_properties::asg { $author_dispatcher_asg:
     enabled                  => true,
     probability              => '1.0',
     max_terminations_per_day => '1.0',

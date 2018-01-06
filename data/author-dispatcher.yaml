@@ -1,4 +1,6 @@
 ---
+author_dispatcher::base_dir: "%{hiera('common::base_dir')}"
+
 aem_curator::config_author_dispatcher::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_author_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_author_dispatcher::dispatcher_conf_dir: /etc/httpd/conf.modules.d/
