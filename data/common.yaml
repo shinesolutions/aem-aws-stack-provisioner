@@ -44,6 +44,9 @@ publish::login_ready_base_sleep_seconds: 5
 publish::login_ready_max_sleep_seconds: 5
 
 # AEM Tools
+aem_curator::config_aem_tools::oak_run_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/oak-run-%{hiera('aem_curator::config_aem_tools::oak_run_version')}.jar"
+aem_curator::config_aem_tools::oak_run_version: '1.4.15'
+aem_curator::config_aem_tools::aem_password_retrieval_command: "aws s3 cp s3://%{::data_bucket_name}/%{::stack_prefix}/system-users-credentials.json - | jq --raw-output .$aem_username"
 aem_curator::config_aem_tools::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_aem_tools::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_aem_tools::crx_quickstart_dir: /opt/aem/author/crx-quickstart #TODO: need two values to handle Author/Publish instances
