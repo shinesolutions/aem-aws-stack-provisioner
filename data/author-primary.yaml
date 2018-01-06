@@ -3,6 +3,10 @@ author_primary::base_dir: "%{hiera('common::base_dir')}"
 author_primary::aem_repo_devices:
   - /dev/sdb
 
+aem_curator::enable_crxde::aem_instances:
+  - run_mode: author
+    aem_id: author
+
 aem_curator::config_author_primary::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_author_primary::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_author_primary::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"

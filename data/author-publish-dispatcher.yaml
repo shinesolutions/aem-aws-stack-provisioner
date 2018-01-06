@@ -10,6 +10,12 @@ author_publish_dispatcher::aem_repo_devices:
   - /dev/sdb
   - /dev/sdc
 
+aem_curator::enable_crxde::aem_instances:
+  - run_mode: author
+    aem_id: author
+  - run_mode: publish
+    aem_id: publish
+
 # AEM Author
 aem_curator::config_author_primary::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_author_primary::tmp_dir: "%{hiera('common::tmp_dir')}"

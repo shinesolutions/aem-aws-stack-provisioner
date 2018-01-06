@@ -3,6 +3,10 @@ publish::base_dir: "%{hiera('common::base_dir')}"
 publish::aem_repo_devices:
   - /dev/sdb
 
+aem_curator::enable_crxde::aem_instances:
+  - run_mode: publish
+    aem_id: publish
+
 aem_curator::config_publish::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_publish::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
 aem_curator::config_publish::crx_quickstart_dir: /opt/aem/publish/crx-quickstart
