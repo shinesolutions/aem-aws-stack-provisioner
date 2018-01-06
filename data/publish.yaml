@@ -1,6 +1,7 @@
 ---
 publish::base_dir: "%{hiera('common::base_dir')}"
-publish::aem_repo_device: /dev/sdb
+publish::aem_repo_devices:
+  - /dev/sdb
 
 aem_curator::config_publish::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_publish::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"

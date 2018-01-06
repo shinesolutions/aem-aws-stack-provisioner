@@ -4,7 +4,7 @@ File {
 
 class publish (
   $base_dir,
-  $aem_repo_device,
+  $aem_repo_devices,
   $publish_dispatcher_id   = $::pairinstanceid,
   $publish_dispatcher_host = $::publishdispatcherhost,
   $stack_prefix            = $::stack_prefix,
@@ -31,10 +31,10 @@ class publish (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/live-snapshot-backup.sh.epp",
       {
-        'base_dir'        => $base_dir,
-        'aem_repo_device' => $aem_repo_device,
-        'component'       => $component,
-        'stack_prefix'    => $stack_prefix,
+        'base_dir'         => $base_dir,
+        'aem_repo_devices' => $aem_repo_devices,
+        'component'        => $component,
+        'stack_prefix'     => $stack_prefix,
       }
     ),
   }
@@ -61,10 +61,10 @@ class publish (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-snapshot-backup.sh.epp",
       {
-        'base_dir'        => $base_dir,
-        'aem_repo_device' => $aem_repo_device,
-        'component'       => $component,
-        'stack_prefix'    => $stack_prefix,
+        'base_dir'         => $base_dir,
+        'aem_repo_devices' => $aem_repo_devices,
+        'component'        => $component,
+        'stack_prefix'     => $stack_prefix,
       }
     ),
   }

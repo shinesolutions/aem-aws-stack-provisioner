@@ -12,6 +12,11 @@ class author_publish_dispatcher (
 
   $enable_deploy_on_init,
 
+  $aem_repo_devices,
+  $component             = $::component,
+  $stack_prefix          = $::stack_prefix,
+  $env_path              = $::cron_env_path,
+  $https_proxy           = $::cron_https_proxy,
   $aem_id_author_primary = 'author-primary',
 ) {
 
@@ -48,6 +53,55 @@ class author_publish_dispatcher (
     enable_deploy_on_init => $enable_deploy_on_init,
   }
 
+  ##############################################################################
+  # Live snapshot backup
+  ##############################################################################
+
+  file { "${base_dir}/aem-tools/live-snapshot-backup.sh":
+    ensure  => present,
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/live-snapshot-backup.sh.epp",
+      {
+        'base_dir'         => $base_dir,
+        'aem_repo_devices' => $aem_repo_devices,
+        'component'        => $component,
+        'stack_prefix'     => $stack_prefix,
+      }
+    ),
+  }
+
+  if $enable_hourly_live_snapshot_cron {
+    cron { 'hourly-live-snapshot-backup':
+      command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>/var/log/live-snapshot-backup.log 2>&1",
+      user        => 'root',
+      hour        => '*',
+      minute      => 0,
+      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
+    }
+  }
+
+  ##############################################################################
+  # Offline snapshot backup
+  ##############################################################################
+
+  file { "${base_dir}/aem-tools/offline-snapshot-backup.sh":
+    ensure  => present,
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-snapshot-backup.sh.epp",
+      {
+        'base_dir'         => $base_dir,
+        'aem_repo_devices' => $aem_repo_devices,
+        'component'        => $component,
+        'stack_prefix'     => $stack_prefix,
+      }
+    ),
+  }
 }
 
 class deploy_on_init (

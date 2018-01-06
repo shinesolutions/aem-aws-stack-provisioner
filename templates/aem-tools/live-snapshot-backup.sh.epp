@@ -13,18 +13,22 @@ else
   # The purpose of this backup is to speed up subsequent snapshots, whether
   # that's live, offline, or orchestration (e.g. Orchestrator-triggered).
 
-  echo "Snapshot Started: $(date)"
-
   instance_id=$(facter ec2_metadata.instance-id)
 
-  <%= $base_dir %>/aws-tools/snapshot_backup.py \
-    --snapshot-description "Live AEM snapshot of <%= $component %> instance ${instance_id}" \
-    --tag "Name=AEM <%= $component %> Snapshot ${instance_id}" \
-    --tag "Component=<%= $component %>" \
-    --tag "StackPrefix=<%= $stack_prefix %>" \
-    --tag "SnapshotType=live" \
-    <%= $aem_repo_device %>
+  <% $aem_repo_devices.each |$aem_repo_device| { -%>
 
-  echo "Snapshot Ended: $(date)"
+    echo "<%= $aem_repo_device %> Snapshot Started: $(date)"
+
+    <%= $base_dir %>/aws-tools/snapshot_backup.py \
+      --snapshot-description "Live AEM snapshot of <%= $component %> instance ${instance_id}" \
+      --tag "Name=AEM <%= $component %> Snapshot ${instance_id}" \
+      --tag "Component=<%= $component %>" \
+      --tag "StackPrefix=<%= $stack_prefix %>" \
+      --tag "SnapshotType=live" \
+      <%= $aem_repo_device %>
+
+    echo "<%= $aem_repo_device %> Snapshot Ended: $(date)"
+
+  <% } -%>
 
 fi

@@ -6,6 +6,9 @@ author_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
 author_publish_dispatcher::credentials_file: "%{hiera('common::credentials_file')}"
 author_publish_dispatcher::publish_protocol: http
 author_publish_dispatcher::publish_port: 4503
+author_publish_dispatcher::aem_repo_devices:
+  - /dev/sdb
+  - /dev/sdc
 
 # AEM Author
 aem_curator::config_author_primary::base_dir: "%{hiera('common::base_dir')}"
@@ -14,7 +17,6 @@ aem_curator::config_author_primary::puppet_conf_dir: "%{hiera('common::puppet_co
 aem_curator::config_author_primary::crx_quickstart_dir: /opt/aem/author/crx-quickstart
 aem_curator::config_author_primary::author_protocol: http
 aem_curator::config_author_primary::author_port: 4502
-aem_curator::config_author_primary::aem_repo_device: /dev/sdb
 aem_curator::config_author_primary::credentials_file: "%{hiera('common::credentials_file')}"
 aem_curator::config_author_primary::enable_deploy_flag: false
 aem_curator::config_author_primary::enable_offline_compaction_cron: false
@@ -30,7 +32,6 @@ aem_curator::config_publish::puppet_conf_dir: "%{hiera('common::puppet_conf_dir'
 aem_curator::config_publish::crx_quickstart_dir: /opt/aem/publish/crx-quickstart
 aem_curator::config_publish::publish_protocol: http
 aem_curator::config_publish::publish_port: 4503
-aem_curator::config_publish::aem_repo_device: /dev/sdb
 aem_curator::config_publish::vol_type: gp2
 aem_curator::config_publish::credentials_file: "%{hiera('common::credentials_file')}"
 aem_curator::config_publish::enable_deploy_flag: false

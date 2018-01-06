@@ -4,7 +4,7 @@ File {
 
 class author_primary (
   $base_dir,
-  $aem_repo_device,
+  $aem_repo_devices,
   $component    = $::component,
   $stack_prefix = $::stack_prefix,
   $env_path     = $::cron_env_path,
@@ -27,10 +27,10 @@ class author_primary (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/live-snapshot-backup.sh.epp",
       {
-        'base_dir'        => $base_dir,
-        'aem_repo_device' => $aem_repo_device,
-        'component'       => $component,
-        'stack_prefix'    => $stack_prefix,
+        'base_dir'         => $base_dir,
+        'aem_repo_devices' => $aem_repo_devices,
+        'component'        => $component,
+        'stack_prefix'     => $stack_prefix,
       }
     ),
   }
@@ -57,10 +57,10 @@ class author_primary (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-snapshot-backup.sh.epp",
       {
-        'base_dir'        => $base_dir,
-        'aem_repo_device' => $aem_repo_device,
-        'component'       => $component,
-        'stack_prefix'    => $stack_prefix,
+        'base_dir'         => $base_dir,
+        'aem_repo_devices' => $aem_repo_devices,
+        'component'        => $component,
+        'stack_prefix'     => $stack_prefix,
       }
     ),
   }

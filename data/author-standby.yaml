@@ -1,6 +1,7 @@
 ---
 author_standby::base_dir: "%{hiera('common::base_dir')}"
-author_standby::aem_repo_device: /dev/sdb
+author_standby::aem_repo_devices:
+  - /dev/sdb
 
 aem_curator::config_author_standby::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_author_standby::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"

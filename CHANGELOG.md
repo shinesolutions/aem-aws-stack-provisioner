@@ -1,8 +1,9 @@
 ### 2.2.2
 * Migrate all AEM Tools files and templates from aem-aws-stack-provisioner to aem_curator
+* Add multi devices support to live and offline snapshots
 
 ### 2.2.1
-* Localise global fact aem_orchestrator_version 
+* Localise global fact aem_orchestrator_version
 
 ### 2.2.0
 * Modify author-primary, author-standby, publish, author-dispatcher, and publish-dispatcher to use aem_curator for provisioning
