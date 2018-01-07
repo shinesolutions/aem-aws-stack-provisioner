@@ -12,6 +12,7 @@ class author_primary (
 ) {
 
   class { 'aem_curator::config_aem_tools':
+  } -> class { 'aem_curator::config_aem_deployer':
   } -> class { 'aem_curator::config_author_primary':
   }
 

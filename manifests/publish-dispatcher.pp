@@ -12,7 +12,12 @@ class publish_dispatcher (
   $https_proxy    = $::cron_https_proxy,
 ) {
 
-  class { 'aem_curator::config_aem_tools':
+  file { "${base_dir}/aem-tools/":
+    ensure => directory,
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  } -> class { 'aem_curator::config_aem_deployer':
   } -> class { 'aem_curator::config_publish_dispatcher':
     allowed_client => $allowed_client,
     publish_host   => $publish_host,

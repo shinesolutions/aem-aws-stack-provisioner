@@ -3,9 +3,14 @@ author_primary::base_dir: "%{hiera('common::base_dir')}"
 author_primary::aem_repo_devices:
   - /dev/sdb
 
-aem_curator::enable_crxde::aem_instances:
+aem_curator::action_enable_crxde::aem_instances:
   - run_mode: author
     aem_id: author
+aem_curator::action_promote_author_standby_to_primary::base_dir: "%{hiera('common::base_dir')}"
+aem_curator::action_promote_author_standby_to_primary::tmp_dir: "%{hiera('common::tmp_dir')}"
+
+aem_curator::config_aem_tools::crx_quickstart_dirs:
+  - /opt/aem/author/crx-quickstart
 
 aem_curator::config_author_primary::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_author_primary::tmp_dir: "%{hiera('common::tmp_dir')}"

@@ -13,6 +13,7 @@ class author_standby (
 ) {
 
   class { 'aem_curator::config_aem_tools':
+  } -> class { 'aem_curator::config_aem_deployer':
   } -> class { 'aem_curator::config_author_standby':
     author_primary_host => $author_primary_host,
   }

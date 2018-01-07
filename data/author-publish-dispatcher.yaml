@@ -10,17 +10,20 @@ author_publish_dispatcher::aem_repo_devices:
   - /dev/sdb
   - /dev/sdc
 
-aem_curator::enable_crxde::aem_instances:
+aem_curator::action_enable_crxde::aem_instances:
   - run_mode: author
     aem_id: author
   - run_mode: publish
     aem_id: publish
 
+aem_curator::config_aem_tools::crx_quickstart_dirs:
+  - /opt/aem/author/crx-quickstart
+  - /opt/aem/publish/crx-quickstart
+
 # AEM Author
 aem_curator::config_author_primary::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_author_primary::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_author_primary::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
-aem_curator::config_author_primary::crx_quickstart_dir: /opt/aem/author/crx-quickstart
 aem_curator::config_author_primary::author_protocol: http
 aem_curator::config_author_primary::author_port: 4502
 aem_curator::config_author_primary::credentials_file: "%{hiera('common::credentials_file')}"
@@ -35,7 +38,6 @@ aem_curator::config_author_primary::enable_default_passwords: false
 aem_curator::config_publish::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_publish::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_publish::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
-aem_curator::config_publish::crx_quickstart_dir: /opt/aem/publish/crx-quickstart
 aem_curator::config_publish::publish_protocol: http
 aem_curator::config_publish::publish_port: 4503
 aem_curator::config_publish::vol_type: gp2

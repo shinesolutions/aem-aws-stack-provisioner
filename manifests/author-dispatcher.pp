@@ -7,7 +7,12 @@ class author_dispatcher (
   $author_host = $::authorhost,
 ) {
 
-  class { 'aem_curator::config_aem_tools':
+  file { "${base_dir}/aem-tools/":
+    ensure => directory,
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  } -> class { 'aem_curator::config_aem_deployer':
   } -> class { 'aem_curator::config_author_dispatcher':
     author_host => $author_host,
   }
