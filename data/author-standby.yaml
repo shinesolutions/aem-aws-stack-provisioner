@@ -9,8 +9,9 @@ aem_curator::action_enable_crxde::aem_instances:
 aem_curator::action_promote_author_standby_to_primary::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::action_promote_author_standby_to_primary::tmp_dir: "%{hiera('common::tmp_dir')}"
 
-aem_curator::config_aem_tools::crx_quickstart_dirs:
-  - /opt/aem/author/crx-quickstart
+aem_curator::config_aem_tools::aem_instances:
+  - crx_quickstart_dir: /opt/aem/author/crx-quickstart
+    user: aem-author
 
 aem_curator::config_author_standby::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_author_standby::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"

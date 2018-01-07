@@ -16,9 +16,11 @@ aem_curator::action_enable_crxde::aem_instances:
   - run_mode: publish
     aem_id: publish
 
-aem_curator::config_aem_tools::crx_quickstart_dirs:
-  - /opt/aem/author/crx-quickstart
-  - /opt/aem/publish/crx-quickstart
+aem_curator::config_aem_tools::aem_instances:
+  - crx_quickstart_dir: /opt/aem/author/crx-quickstart
+    user: aem-author
+  - crx_quickstart_dir: /opt/aem/publish/crx-quickstart
+    user: aem-publish
 
 # AEM Author
 aem_curator::config_author_primary::base_dir: "%{hiera('common::base_dir')}"
