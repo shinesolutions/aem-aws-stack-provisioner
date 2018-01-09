@@ -22,8 +22,6 @@ aem_curator::config_publish::enable_deploy_flag: false
 aem_curator::config_publish::login_ready_max_tries: 60
 aem_curator::config_publish::login_ready_base_sleep_seconds: 5
 aem_curator::config_publish::login_ready_max_sleep_seconds: 5
-# aem_curator::config_publish::publishdispatcherhost: localhost
-# aem_curator::config_publish::pairinstanceid: localhost
 aem_curator::config_publish::enable_offline_compaction_cron: false
 aem_curator::config_publish::enable_daily_export_cron: false
 aem_curator::config_publish::enable_hourly_live_snapshot_cron: false
