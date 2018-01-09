@@ -1,3 +1,6 @@
+### 2.4.0
+*
+
 ### 2.3.0
 * Migrate all AEM Tools files and templates from aem-aws-stack-provisioner to aem_curator
 * Add multi devices support to live and offline snapshots
