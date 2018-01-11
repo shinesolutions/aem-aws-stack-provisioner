@@ -1,5 +1,5 @@
 ### 2.4.0
-*
+* Migrate artifacts deployment tools from aem-aws-stack-provisioner to aem_curator
 
 ### 2.3.0
 * Migrate all AEM Tools files and templates from aem-aws-stack-provisioner to aem_curator

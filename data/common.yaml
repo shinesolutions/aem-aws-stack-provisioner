@@ -58,3 +58,13 @@ aem_curator::config_aem_tools::enable_hourly_live_snapshot_cron: false
 aem_curator::config_aem_deployer::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_aem_deployer::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_aem_deployer::aem_password_retrieval_command: "aws s3 cp s3://%{::data_bucket_name}/%{::stack_prefix}/system-users-credentials.json - | jq --raw-output .$aem_username"
+
+# Deploy artifacts
+aem_curator::action_download_descriptor::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_download_artifacts::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_download_artifacts::base_dir: "%{hiera('common::base_dir')}"
+aem_curator::action_deploy_artifacts::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_deploy_artifacts::apache_conf_dir: /etc/httpd/conf
+aem_curator::action_deploy_artifacts::dispatcher_conf_dir: /etc/httpd/conf.d
+aem_curator::action_deploy_artifacts::static_assets_dir: /var/www/html
+aem_curator::action_deploy_artifacts::virtual_hosts_dir: /etc/httpd/conf.d
