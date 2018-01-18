@@ -15,6 +15,7 @@ aem_curator::config_aem_tools::aem_instances:
 
 aem_curator::config_author_standby::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_author_standby::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
+aem_curator::config_author_standby::crx_quickstart_dir: /opt/aem/author/crx-quickstart
 aem_curator::config_author_standby::author_protocol: http
 aem_curator::config_author_standby::author_port: 4502
 aem_curator::config_author_standby::credentials_file: "%{hiera('common::credentials_file')}"
