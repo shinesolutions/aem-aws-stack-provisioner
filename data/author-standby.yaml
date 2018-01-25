@@ -6,6 +6,9 @@ author_standby::aem_repo_devices:
 aem_curator::action_enable_crxde::aem_instances:
   - run_mode: author
     aem_id: author
+aem_curator::action_disable_crxde::aem_instances:
+  - run_mode: author
+    aem_id: author
 aem_curator::action_promote_author_standby_to_primary::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::action_promote_author_standby_to_primary::tmp_dir: "%{hiera('common::tmp_dir')}"
 

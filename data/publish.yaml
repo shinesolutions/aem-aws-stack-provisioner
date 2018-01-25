@@ -7,6 +7,10 @@ aem_curator::enable_crxde::aem_instances:
   - run_mode: publish
     aem_id: publish
 
+aem_curator::disable_crxde::aem_instances:
+  - run_mode: publish
+    aem_id: publish
+
 aem_curator::config_aem_tools::aem_instances:
   - crx_quickstart_dir: /opt/aem/publish/crx-quickstart
     user: aem-publish
