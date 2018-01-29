@@ -6,6 +6,7 @@
 * Add multi devices support to live and offline snapshots
 * Add multi AEM repository support to offline compaction
 * Add multi AEM support to enable CRXDE
+* Add support to disable CRXDE
 
 ### 2.2.1
 * Localise global fact aem_orchestrator_version
