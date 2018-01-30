@@ -1,3 +1,6 @@
+### 2.4.1
+*
+
 ### 2.4.0
 * Migrate artifacts deployment tools from aem-aws-stack-provisioner to aem_curator
 * Fix incorrect publish hieradata for action_enable_crxde
