@@ -68,3 +68,8 @@ aem_curator::action_deploy_artifacts::apache_conf_dir: /etc/httpd/conf
 aem_curator::action_deploy_artifacts::dispatcher_conf_dir: /etc/httpd/conf.d
 aem_curator::action_deploy_artifacts::static_assets_dir: /var/www/html
 aem_curator::action_deploy_artifacts::virtual_hosts_dir: /etc/httpd/conf.d
+
+# AEM Author Primary and Standby configuration and promotion
+aem_curator::config_author_primary::aem_version: '6.2'
+aem_curator::config_author_standby::aem_version: '6.2'
+aem_curator::action_promote_author_standby_to_primary::aem_version: '6.2'
