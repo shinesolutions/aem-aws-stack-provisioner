@@ -30,7 +30,7 @@ lint: validate Gemfile.lock
 		manifests/*.pp
 	shellcheck files/*/*.sh
 
-package: #deps
+package: deps
 	rm -rf stage
 	mkdir -p stage
 	tar \
