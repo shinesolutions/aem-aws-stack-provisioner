@@ -14,6 +14,11 @@ aem_curator::disable_crxde::aem_instances:
 aem_curator::config_aem_tools::aem_instances:
   - crx_quickstart_dir: /opt/aem/publish/crx-quickstart
     user: aem-publish
+aem_curator::config_collectd::aem_instances:
+  - aem_id: publish
+    jmxremote_port: "%{hiera('aem_curator::config_publish::jmxremote_port')}"
+    instance_prefixes:
+      - memory-heap
 
 aem_curator::config_publish::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_publish::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"

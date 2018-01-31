@@ -25,12 +25,9 @@ class author_publish_dispatcher (
   class { 'aem_curator::config_aem_tools':
   } -> class { 'aem_curator::config_aem_deployer':
   } -> class { 'aem_curator::config_author_primary':
-  }
-  -> class { 'aem_curator::config_publish':
-  }
-  -> class { 'aem_curator::config_publish_dispatcher':
-  }
-  -> aem_replication_agent { 'Create replication agent':
+  } -> class { 'aem_curator::config_publish':
+  } -> class { 'aem_curator::config_publish_dispatcher':
+  } -> aem_replication_agent { 'Create replication agent':
     ensure             => present,
     aem_username       => 'admin',
     aem_password       => $credentials_hash['admin'],
@@ -51,6 +48,7 @@ class author_publish_dispatcher (
     tmp_dir               => $tmp_dir,
     exec_path             => $exec_path,
     enable_deploy_on_init => $enable_deploy_on_init,
+  } -> class { 'aem_curator::config_collectd':
   }
 
   ##############################################################################

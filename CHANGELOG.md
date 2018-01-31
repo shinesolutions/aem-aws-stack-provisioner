@@ -1,5 +1,5 @@
 ### 2.4.1
-*
+* Configure Collectd on author-primary, author-standby, publish, and author-publish-dispatcher components
 
 ### 2.4.0
 * Migrate artifacts deployment tools from aem-aws-stack-provisioner to aem_curator

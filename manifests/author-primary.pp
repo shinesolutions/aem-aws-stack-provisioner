@@ -5,15 +5,16 @@ File {
 class author_primary (
   $base_dir,
   $aem_repo_devices,
-  $component    = $::component,
-  $stack_prefix = $::stack_prefix,
-  $env_path     = $::cron_env_path,
-  $https_proxy  = $::cron_https_proxy,
+  $component      = $::component,
+  $stack_prefix   = $::stack_prefix,
+  $env_path       = $::cron_env_path,
+  $https_proxy    = $::cron_https_proxy,
 ) {
 
   class { 'aem_curator::config_aem_tools':
   } -> class { 'aem_curator::config_aem_deployer':
   } -> class { 'aem_curator::config_author_primary':
+  } -> class { 'aem_curator::config_collectd':
   }
 
   ##############################################################################
@@ -65,6 +66,7 @@ class author_primary (
       }
     ),
   }
+
 }
 
 include author_primary

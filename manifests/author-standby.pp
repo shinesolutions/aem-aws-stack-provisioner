@@ -16,6 +16,7 @@ class author_standby (
   } -> class { 'aem_curator::config_aem_deployer':
   } -> class { 'aem_curator::config_author_standby':
     author_primary_host => $author_primary_host,
+  } -> class { 'aem_curator::config_collectd':
   }
 
   ##############################################################################
@@ -66,6 +67,33 @@ class author_standby (
         'stack_prefix'     => $stack_prefix,
       }
     ),
+  }
+
+  ##############################################################################
+  # Collectd
+  ##############################################################################
+
+  class { 'aem_curator::config_collectd':
+    proxy_protocol => $proxy_protocol,
+    proxy_host     => $proxy_host,
+    proxy_port     => $proxy_port,
+  }
+
+  file_line { 'seconds_since_last_success standby status':
+    ensure => present,
+    line   => "GenericJMX-${stack_prefix}-standby-status-delay-seconds_since_last_success",
+    path   => '/opt/collectd-cloudwatch/src/cloudwatch/config/whitelist.conf',
+  }
+
+  collectd::plugin::genericjmx::connection { 'aem':
+    host        => $::fqdn,
+    service_url => "service:jmx:rmi:///jndi/rmi://localhost:${jmxremote_port}/jmxrmi",
+    collect     => [ 'standby-status' ],
+  }
+
+  class { '::collectd':
+    service_ensure => running,
+    service_enable => true,
   }
 }
 

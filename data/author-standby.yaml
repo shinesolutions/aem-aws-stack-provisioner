@@ -15,6 +15,11 @@ aem_curator::action_promote_author_standby_to_primary::tmp_dir: "%{hiera('common
 aem_curator::config_aem_tools::aem_instances:
   - crx_quickstart_dir: /opt/aem/author/crx-quickstart
     user: aem-author
+aem_curator::config_collectd::aem_instances:
+  - aem_id: author
+    jmxremote_port: "%{hiera('aem_curator::config_author_standby::jmxremote_port')}"
+    instance_prefixes:
+      - standby-status
 
 aem_curator::config_author_standby::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_author_standby::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"

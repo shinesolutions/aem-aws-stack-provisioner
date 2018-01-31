@@ -18,6 +18,7 @@ class publish (
   } -> class { 'aem_curator::config_publish':
     publish_dispatcher_id   => $publish_dispatcher_id,
     publish_dispatcher_host => $publish_dispatcher_host,
+  } -> class { 'aem_curator::config_collectd':
   }
 
   ##############################################################################
@@ -87,6 +88,7 @@ class publish (
     owner  => 'root',
     group  => 'root',
   }
+
 }
 
 include publish
