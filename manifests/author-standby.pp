@@ -10,6 +10,7 @@ class author_standby (
   $stack_prefix        = $::stack_prefix,
   $env_path            = $::cron_env_path,
   $https_proxy         = $::cron_https_proxy,
+  $ec2_id              = $::ec2_metadata['instance-id'],
 ) {
 
   class { 'aem_curator::config_aem_tools':
@@ -17,6 +18,8 @@ class author_standby (
   } -> class { 'aem_curator::config_author_standby':
     author_primary_host => $author_primary_host,
   } -> class { 'aem_curator::config_collectd':
+    component       => $component,
+    collectd_prefix => "$stack_prefix-$component-$ec2_id"
   }
 
   ##############################################################################
