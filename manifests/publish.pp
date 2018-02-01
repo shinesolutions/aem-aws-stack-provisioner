@@ -21,7 +21,7 @@ class publish (
     publish_dispatcher_host => $publish_dispatcher_host,
   } -> class { 'aem_curator::config_collectd':
     component       => $component,
-    collectd_prefix => "$stack_prefix-$component-$ec2_id"
+    collectd_prefix => "${stack_prefix}-${component}-${ec2_id}"
   }
 
   ##############################################################################

@@ -17,7 +17,7 @@ class author_primary (
   } -> class { 'aem_curator::config_author_primary':
   } -> class { 'aem_curator::config_collectd':
     component       => $component,
-    collectd_prefix => "$stack_prefix-$component-$ec2_id"
+    collectd_prefix => "${stack_prefix}-${component}-${ec2_id}"
   }
 
   ##############################################################################
