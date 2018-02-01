@@ -18,6 +18,7 @@ class author_publish_dispatcher (
   $env_path              = $::cron_env_path,
   $https_proxy           = $::cron_https_proxy,
   $aem_id_author_primary = 'author-primary',
+  $ec2_id                = $::ec2_metadata['instance-id'],
 ) {
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
@@ -49,6 +50,8 @@ class author_publish_dispatcher (
     exec_path             => $exec_path,
     enable_deploy_on_init => $enable_deploy_on_init,
   } -> class { 'aem_curator::config_collectd':
+    component       => $component,
+    collectd_prefix => "$stack_prefix-$component-$ec2_id"
   }
 
   ##############################################################################
