@@ -5,9 +5,9 @@ orchestrator::aem_orchestrator_version: 1.0.0
 aem_orchestrator::jarfile_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/aem-orchestrator-%{hiera('orchestrator::aem_orchestrator_version')}.jar"
 aem_orchestrator::manage_installdir: true
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_messaging: "%{::stack_prefix}-aem-messaging-stack"
-aem_orchestrator::application_properties::aws_client_use_proxy: "%{::proxy_enabled}"
-aem_orchestrator::application_properties::aws_client_proxy_host: "%{::proxy_host}"
-aem_orchestrator::application_properties::aws_client_proxy_port: "%{::proxy_port}"
+aem_orchestrator::application_properties::aws_client_use_proxy: "%{hiera('common::proxy_enabled')}"
+aem_orchestrator::application_properties::aws_client_proxy_host: "%{hiera('common::proxy_host')}"
+aem_orchestrator::application_properties::aws_client_proxy_port: "%{hiera('common::proxy_port')}"
 aem_orchestrator::application_properties::aws_sqs_queue_name: "%{::stack_prefix}-aem-asg-event-queue"
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_author: "%{::stack_prefix}-aem-author-stack"
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_author_dispatcher: "%{::stack_prefix}-aem-author-dispatcher-stack"
