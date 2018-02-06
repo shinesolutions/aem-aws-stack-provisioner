@@ -1,5 +1,5 @@
 ### 2.4.2
-*
+* Upgrade Puppet SimianArmy to 1.1.1 to handle empty proxy configuration
 
 ### 2.4.1
 * Configure Collectd on author-primary, author-standby, publish, and author-publish-dispatcher components
