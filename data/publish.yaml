@@ -1,4 +1,5 @@
 ---
+publish::aem_id: "publish"
 publish::base_dir: "%{hiera('common::base_dir')}"
 publish::aem_repo_devices:
   - /dev/sdb

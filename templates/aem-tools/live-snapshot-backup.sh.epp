@@ -26,6 +26,7 @@ else
       --tag "StackPrefix=<%= $stack_prefix %>" \
       --tag "SnapshotType=live" \
       --tag "BlockDevice=<%= $aem_repo_device %>" \
+      --tag "AEMID=<%= $aem_id %>" \
       <%= $aem_repo_device %>
 
     echo "<%= $aem_repo_device %> Snapshot Ended: $(date)"

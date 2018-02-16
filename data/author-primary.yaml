@@ -1,4 +1,5 @@
 ---
+author_primary::aem_id: "author"
 author_primary::base_dir: "%{hiera('common::base_dir')}"
 author_primary::aem_repo_devices:
   - /dev/sdb

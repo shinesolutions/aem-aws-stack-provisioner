@@ -12,6 +12,7 @@ class author_publish_dispatcher (
 
   $enable_deploy_on_init,
 
+  $aem_id,
   $aem_repo_devices,
   $component             = $::component,
   $stack_prefix          = $::stack_prefix,
@@ -70,6 +71,7 @@ class author_publish_dispatcher (
         'aem_repo_devices' => $aem_repo_devices,
         'component'        => $component,
         'stack_prefix'     => $stack_prefix,
+        'aem_id'           => $aem_id,
       }
     ),
   }
@@ -100,6 +102,7 @@ class author_publish_dispatcher (
         'aem_repo_devices' => $aem_repo_devices,
         'component'        => $component,
         'stack_prefix'     => $stack_prefix,
+        'aem_id'           => $aem_id,
       }
     ),
   }
