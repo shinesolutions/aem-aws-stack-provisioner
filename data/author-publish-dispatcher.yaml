@@ -16,6 +16,19 @@ aem_curator::action_enable_crxde::aem_instances:
   - run_mode: publish
     aem_id: publish
 
+aem_curator::action_disable_crxde::aem_instances:
+  - run_mode: author
+    aem_id: author
+  - run_mode: publish
+    aem_id: publish
+
+aem_curator::action_export_backup::tmp_dir: "%{hiera('common::tmp_dir')}"
+
+aem_curator::action_export_backups::export_backups::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_export_backups::download_descriptor::tmp_dir: "%{hiera('common::tmp_dir')}"
+
+aem_curator::action_import_backup::tmp_dir: "%{hiera('common::tmp_dir')}"
+
 aem_curator::config_aem_tools::aem_instances:
   - crx_quickstart_dir: /opt/aem/author/crx-quickstart
     user: aem-author
