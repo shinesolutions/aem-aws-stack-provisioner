@@ -25,7 +25,6 @@ else
       --tag "Component=<%= $component %>" \
       --tag "StackPrefix=<%= $stack_prefix %>" \
       --tag "SnapshotType=offline" \
-      --tag "BlockDevice=<%= $aem_repo_device %>" \
       <%= $aem_repo_device %>
 
     echo "<%= $aem_repo_device %> Snapshot Ended: $(date)"
