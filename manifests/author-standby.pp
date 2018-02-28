@@ -4,6 +4,7 @@ File {
 
 class author_standby (
   $base_dir,
+  $aem_id,
   $aem_repo_devices,
   $author_primary_host = $::authorprimaryhost,
   $component           = $::component,
@@ -38,6 +39,7 @@ class author_standby (
         'aem_repo_devices' => $aem_repo_devices,
         'component'        => $component,
         'stack_prefix'     => $stack_prefix,
+        'aem_id'           => $aem_id,
       }
     ),
   }
@@ -68,6 +70,7 @@ class author_standby (
         'aem_repo_devices' => $aem_repo_devices,
         'component'        => $component,
         'stack_prefix'     => $stack_prefix,
+        'aem_id'           => $aem_id,
       }
     ),
   }

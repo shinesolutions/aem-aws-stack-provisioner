@@ -4,6 +4,7 @@ File {
 
 class publish (
   $base_dir,
+  $aem_id,
   $aem_repo_devices,
   $publish_dispatcher_id   = $::pairinstanceid,
   $publish_dispatcher_host = $::publishdispatcherhost,
@@ -40,6 +41,7 @@ class publish (
         'aem_repo_devices' => $aem_repo_devices,
         'component'        => $component,
         'stack_prefix'     => $stack_prefix,
+        'aem_id'           => $aem_id,
       }
     ),
   }
@@ -70,6 +72,7 @@ class publish (
         'aem_repo_devices' => $aem_repo_devices,
         'component'        => $component,
         'stack_prefix'     => $stack_prefix,
+        'aem_id'           => $aem_id,
       }
     ),
   }

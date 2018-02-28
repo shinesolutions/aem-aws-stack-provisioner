@@ -4,6 +4,7 @@ File {
 
 class author_primary (
   $base_dir,
+  $aem_id,
   $aem_repo_devices,
   $component      = $::component,
   $stack_prefix   = $::stack_prefix,
@@ -36,6 +37,7 @@ class author_primary (
         'aem_repo_devices' => $aem_repo_devices,
         'component'        => $component,
         'stack_prefix'     => $stack_prefix,
+        'aem_id'           => $aem_id,
       }
     ),
   }
@@ -66,6 +68,7 @@ class author_primary (
         'aem_repo_devices' => $aem_repo_devices,
         'component'        => $component,
         'stack_prefix'     => $stack_prefix,
+        'aem_id'           => $aem_id,
       }
     ),
   }

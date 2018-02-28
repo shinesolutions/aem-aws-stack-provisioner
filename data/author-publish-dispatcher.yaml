@@ -1,6 +1,7 @@
 ---
 
 # AEM Author Publish Dispatcher
+author_publish_dispatcher::aem_id: "author-publish-dispatcher"
 author_publish_dispatcher::base_dir: "%{hiera('common::base_dir')}"
 author_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
 author_publish_dispatcher::credentials_file: "%{hiera('common::credentials_file')}"
