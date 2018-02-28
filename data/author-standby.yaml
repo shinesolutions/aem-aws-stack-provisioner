@@ -19,6 +19,9 @@ aem_curator::action_import_backup::tmp_dir: "%{hiera('common::tmp_dir')}"
 
 aem_curator::action_promote_author_standby_to_primary::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::action_promote_author_standby_to_primary::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_promote_author_standby_to_primary::enable_offline_compaction_cron: false
+aem_curator::action_promote_author_standby_to_primary::enable_daily_export_cron: false
+aem_curator::action_promote_author_standby_to_primary::enable_hourly_live_snapshot_cron: false
 
 aem_curator::config_aem_tools::aem_instances:
   - crx_quickstart_dir: /opt/aem/author/crx-quickstart
