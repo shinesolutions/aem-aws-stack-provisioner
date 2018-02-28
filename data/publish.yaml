@@ -1,7 +1,8 @@
 ---
 publish::base_dir: "%{hiera('common::base_dir')}"
 publish::aem_repo_devices:
-  - /dev/sdb
+  - device_name: /dev/sdb
+    aem_id: publish
 
 aem_curator::action_enable_crxde::aem_instances:
   - run_mode: publish

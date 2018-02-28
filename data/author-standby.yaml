@@ -1,7 +1,8 @@
 ---
 author_standby::base_dir: "%{hiera('common::base_dir')}"
 author_standby::aem_repo_devices:
-  - /dev/sdb
+  - device_name: /dev/sdb
+    aem_id: author
 
 aem_curator::action_enable_crxde::aem_instances:
   - run_mode: author

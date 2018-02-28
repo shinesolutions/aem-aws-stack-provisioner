@@ -7,8 +7,10 @@ author_publish_dispatcher::credentials_file: "%{hiera('common::credentials_file'
 author_publish_dispatcher::publish_protocol: http
 author_publish_dispatcher::publish_port: 4503
 author_publish_dispatcher::aem_repo_devices:
-  - /dev/sdb
-  - /dev/sdc
+  - device_name: /dev/sdb
+    aem_id: author
+  - device_name: /dev/sdc
+    aem_id: publish
 
 aem_curator::action_enable_crxde::aem_instances:
   - run_mode: author
