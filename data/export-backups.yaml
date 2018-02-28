@@ -1,3 +1,0 @@
----
-export_backups::tmp_dir: "%{hiera('common::tmp_dir')}"
-download_descriptor::tmp_dir: "%{hiera('common::tmp_dir')}"

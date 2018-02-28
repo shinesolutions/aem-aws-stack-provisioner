@@ -1,5 +1,5 @@
 ### 2.4.3
-*
+* Add support to promote author standby as primary instance
 
 ### 2.4.2
 * Upgrade Puppet SimianArmy to 1.1.1 to handle empty proxy configuration
