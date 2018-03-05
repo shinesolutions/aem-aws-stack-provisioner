@@ -14,8 +14,8 @@ class publish_dispatcher (
 ) {
 
   class { 'aem_curator::config_aem_tools_dispatcher':
-    docroot_dir    => $docroot_dir,
-    base_dir       => $base_dir,
+    docroot_dir => $docroot_dir,
+    base_dir    => $base_dir,
   } -> class { 'aem_curator::config_aem_deployer':
   } -> class { 'aem_curator::config_publish_dispatcher':
     allowed_client => $allowed_client,
