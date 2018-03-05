@@ -1,3 +1,6 @@
+### 2.4.4
+*
+
 ### 2.4.3
 * Add support to promote author standby as primary instance
 * Add AEM ID tag to AMIs produced by live and offline snapshot backups #58

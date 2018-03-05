@@ -1,4 +1,4 @@
-version ?= 2.4.3
+version ?= 2.4.4
 
 ci: clean lint package
 
@@ -44,4 +44,7 @@ package: deps
 		stage/aem-aws-stack-provisioner-$(version).tar ./
 	gzip stage/aem-aws-stack-provisioner-$(version).tar
 
-.PHONY: ci clean deps lint package validate
+tools:
+	gem install bundler
+
+.PHONY: ci clean deps lint package validate tools
