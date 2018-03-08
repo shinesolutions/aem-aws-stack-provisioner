@@ -25,6 +25,9 @@ class author_publish_dispatcher (
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
 
   class { 'aem_curator::config_aem_tools':
+  } -> class { 'aem_curator::config_aem_tools_dispatcher':
+    base_dir    => $base_dir,
+    docroot_dir => $docroot_dir,
   } -> class { 'aem_curator::config_aem_deployer':
   } -> class { 'aem_curator::config_author_primary':
   } -> class { 'aem_curator::config_publish':
