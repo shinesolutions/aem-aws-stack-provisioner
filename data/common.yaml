@@ -21,6 +21,7 @@ common::tmp_base_dir: /tmp/shinesolutions
 common::tmp_dir: /tmp/shinesolutions/aem-aws-stack-provisioner
 common::puppet_conf_dir: /etc/puppetlabs/puppet/
 common::credentials_file: system-users-credentials.json
+common::docroot_dir: /var/www/html/
 
 author::exec_path: "%{alias('exec_path')}"
 publish::exec_path: "%{alias('exec_path')}"

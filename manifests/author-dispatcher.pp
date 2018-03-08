@@ -4,16 +4,13 @@ File {
 
 class author_dispatcher (
   $base_dir,
-  $docroot_dir,
   $author_host = $::authorhost,
 ) {
 
   class { 'aem_curator::config_aem_tools_dispatcher':
-    docroot_dir    => $docroot_dir,
   } -> class { 'aem_curator::config_aem_deployer':
   } -> class { 'aem_curator::config_author_dispatcher':
     author_host => $author_host,
-    docroot_dir => $docroot_dir,
   }
 
   ##############################################################################
