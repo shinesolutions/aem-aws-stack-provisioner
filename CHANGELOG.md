@@ -1,3 +1,6 @@
+### 2.4.5
+*
+
 ### 2.4.4
 * Add flush dispatcher cache configuration
 
