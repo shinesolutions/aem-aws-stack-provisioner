@@ -18,6 +18,7 @@ class author_publish_dispatcher (
   $env_path              = $::cron_env_path,
   $https_proxy           = $::cron_https_proxy,
   $aem_id_author_primary = 'author-primary',
+  $docroot_dir           = lookup('common::docroot_dir'),
   $ec2_id                = $::ec2_metadata['instance-id'],
 ) {
 
@@ -28,6 +29,7 @@ class author_publish_dispatcher (
   } -> class { 'aem_curator::config_author_primary':
   } -> class { 'aem_curator::config_publish':
   } -> class { 'aem_curator::config_publish_dispatcher':
+    docroot_dir => $docroot_dir,
   } -> aem_replication_agent { 'Create replication agent':
     ensure             => present,
     aem_username       => 'admin',

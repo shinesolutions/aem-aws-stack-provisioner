@@ -5,6 +5,7 @@ File {
 class publish_dispatcher (
   $base_dir,
   $allowed_client = $::publish_dispatcher_allowed_client,
+  $docroot_dir    = lookup('common::docroot_dir'),
   $publish_host   = $::publishhost,
   $stack_prefix   = $::stack_prefix,
   $data_bucket    = $::data_bucket,
@@ -13,11 +14,12 @@ class publish_dispatcher (
 ) {
 
   class { 'aem_curator::config_aem_tools_dispatcher':
-    base_dir    => $base_dir,
+    docroot_dir => $docroot_dir,
   } -> class { 'aem_curator::config_aem_deployer':
   } -> class { 'aem_curator::config_publish_dispatcher':
     allowed_client => $allowed_client,
     publish_host   => $publish_host,
+    docroot_dir    => $docroot_dir,
   }
 
   file { "${base_dir}/aem-tools/content-healthcheck.py":
