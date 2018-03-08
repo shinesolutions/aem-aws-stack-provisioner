@@ -5,16 +5,15 @@ File {
 class author_dispatcher (
   $base_dir,
   $author_host = $::authorhost,
+  $docroot_dir = lookup('common::docroot_dir'),
 ) {
 
-  file { "${base_dir}/aem-tools/":
-    ensure => directory,
-    mode   => '0775',
-    owner  => 'root',
-    group  => 'root',
+  class { 'aem_curator::config_aem_tools_dispatcher':
+    base_dir    => $base_dir,
   } -> class { 'aem_curator::config_aem_deployer':
   } -> class { 'aem_curator::config_author_dispatcher':
     author_host => $author_host,
+    docroot_dir => $docroot_dir,
   }
 
   ##############################################################################

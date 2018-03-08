@@ -21,6 +21,7 @@ common::tmp_base_dir: /tmp/shinesolutions
 common::tmp_dir: /tmp/shinesolutions/aem-aws-stack-provisioner
 common::puppet_conf_dir: /etc/puppetlabs/puppet/
 common::credentials_file: system-users-credentials.json
+common::docroot_dir: /var/www/html/
 
 author::exec_path: "%{alias('exec_path')}"
 publish::exec_path: "%{alias('exec_path')}"
@@ -68,6 +69,9 @@ aem_curator::action_deploy_artifacts::apache_conf_dir: /etc/httpd/conf
 aem_curator::action_deploy_artifacts::dispatcher_conf_dir: /etc/httpd/conf.d
 aem_curator::action_deploy_artifacts::static_assets_dir: /var/www/html
 aem_curator::action_deploy_artifacts::virtual_hosts_dir: /etc/httpd/conf.d
+
+# AEM-Tool Flush-Dispatcher-cache
+aem_curator::action_flush_dispatcher_cache::docroot_dir: "%{hiera('common::docroot_dir')}"
 
 # AEM Author Primary and Standby configuration and promotion
 aem_curator::config_author_primary::aem_version: '6.2'
