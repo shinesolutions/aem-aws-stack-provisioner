@@ -1,5 +1,5 @@
 ### 2.4.4
-*
+* Add flush dispatcher cache configuration
 
 ### 2.4.3
 * Add support to promote author standby as primary instance
