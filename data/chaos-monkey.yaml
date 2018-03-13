@@ -1,5 +1,7 @@
 ---
 
+simianarmy::warfile_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/simianarmy-%{hiera('chaos_monkey::simian_army_version')}.war"
+
 # simianarmy.properties
 # https://github.com/Netflix/SimianArmy/wiki/Global-Settings
 simianarmy::simianarmy_properties::simianarmy_calendar_close_hour: '15'

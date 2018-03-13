@@ -1,5 +1,5 @@
 ### 2.4.5
-*
+* Add Simian Army warfile source
 
 ### 2.4.4
 * Add flush dispatcher cache configuration
