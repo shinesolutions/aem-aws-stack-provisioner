@@ -1,5 +1,5 @@
 ### 2.4.6
-*
+* Add AEM Tools directory creation to component manifests
 
 ### 2.4.5
 * Add Simian Army warfile source

@@ -12,7 +12,12 @@ class author_primary (
   $ec2_id         = $::ec2_metadata['instance-id'],
 ) {
 
-  class { 'aem_curator::config_aem_tools':
+  file { "${base_dir}/aem-tools/":
+    ensure => directory,
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  } -> class { 'aem_curator::config_aem_tools':
   } -> class { 'aem_curator::config_aem_deployer':
   } -> class { 'aem_curator::config_author_primary':
   } -> class { 'aem_curator::config_collectd':
