@@ -3,6 +3,7 @@
 # AEM Author Publish Dispatcher
 author_publish_dispatcher::base_dir: "%{hiera('common::base_dir')}"
 author_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
+author_publish_dispatcher::docroot_dir: "%{hiera('common::docroot_dir')}"
 author_publish_dispatcher::credentials_file: "%{hiera('common::credentials_file')}"
 author_publish_dispatcher::publish_protocol: http
 author_publish_dispatcher::publish_port: 4503

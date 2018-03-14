@@ -4,8 +4,8 @@ File {
 
 class publish_dispatcher (
   $base_dir,
+  $docroot_dir,
   $allowed_client = $::publish_dispatcher_allowed_client,
-  $docroot_dir    = lookup('common::docroot_dir'),
   $publish_host   = $::publishhost,
   $stack_prefix   = $::stack_prefix,
   $data_bucket    = $::data_bucket,

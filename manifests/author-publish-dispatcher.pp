@@ -5,7 +5,7 @@ File {
 class author_publish_dispatcher (
   $base_dir,
   $tmp_dir,
-
+  $docroot_dir,
   $credentials_file,
   $publish_protocol,
   $publish_port,
@@ -18,7 +18,6 @@ class author_publish_dispatcher (
   $env_path              = $::cron_env_path,
   $https_proxy           = $::cron_https_proxy,
   $aem_id_author_primary = 'author-primary',
-  $docroot_dir           = lookup('common::docroot_dir'),
   $ec2_id                = $::ec2_metadata['instance-id'],
 ) {
 

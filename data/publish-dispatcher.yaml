@@ -1,5 +1,6 @@
 ---
 publish_dispatcher::base_dir: "%{hiera('common::base_dir')}"
+publish_dispatcher::docroot_dir: "%{hiera('common::docroot_dir')}"
 
 aem_curator::config_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_publish_dispatcher::dispatcher_conf_dir: /etc/httpd/conf.modules.d/

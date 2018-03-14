@@ -4,8 +4,8 @@ File {
 
 class author_dispatcher (
   $base_dir,
+  $docroot_dir,
   $author_host = $::authorhost,
-  $docroot_dir = lookup('common::docroot_dir'),
 ) {
 
   file { "${base_dir}/aem-tools/":
