@@ -23,6 +23,18 @@ common::puppet_conf_dir: /etc/puppetlabs/puppet/
 common::credentials_file: system-users-credentials.json
 common::docroot_dir: /var/www/html/
 
+# Dispatcher configuration
+common::publish_host: localhost
+common::publish_port: 5433
+common::publish_secure: 1
+
+common::author_host: localhost
+common::author_port: 443
+common::author_secure: 1
+
+common::dispatcher_conf_dir: /etc/httpd/conf.d/
+common::httpd_conf_dir: /etc/httpd/conf.d/
+
 author::exec_path: "%{alias('exec_path')}"
 publish::exec_path: "%{alias('exec_path')}"
 author_dispatcher::exec_path: "%{alias('exec_path')}"
@@ -67,8 +79,14 @@ aem_curator::action_download_artifacts::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::action_download_artifacts::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::action_deploy_artifacts::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::action_deploy_artifacts::apache_conf_dir: /etc/httpd/conf
-aem_curator::action_deploy_artifacts::dispatcher_conf_dir: /etc/httpd/conf.d
-aem_curator::action_deploy_artifacts::static_assets_dir: /var/www/html
+aem_curator::action_deploy_artifacts::dispatcher_conf_dir: "%{hiera('common::dispatcher_conf_dir')}"
+aem_curator::action_deploy_artifacts::publish_host: "%{hiera('common::publish_host')}"
+aem_curator::action_deploy_artifacts::publish_port: "%{hiera('common::publish_port')}"
+aem_curator::action_deploy_artifacts::publish_secure: "%{hiera('common::publish_secure')}"
+aem_curator::action_deploy_artifacts::author_host: "%{hiera('common::author_host')}"
+aem_curator::action_deploy_artifacts::author_port: "%{hiera('common::author_port')}"
+aem_curator::action_deploy_artifacts::author_secure: "%{hiera('common::author_secure')}"
+aem_curator::action_deploy_artifacts::static_assets_dir: "%{hiera('common::docroot_dir')}"
 aem_curator::action_deploy_artifacts::virtual_hosts_dir: /etc/httpd/conf.d
 
 # AEM-Tool Flush-Dispatcher-cache
