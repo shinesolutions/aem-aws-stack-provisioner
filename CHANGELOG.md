@@ -1,3 +1,6 @@
+### 2.4.9
+*
+
 ### 2.4.8
 * Fix dispatchers broken provisioning due to missing template parameter
 
