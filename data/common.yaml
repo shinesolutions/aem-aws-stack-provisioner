@@ -33,7 +33,7 @@ common::author_port: 443
 common::author_secure: 1
 
 common::dispatcher_conf_dir: /etc/httpd/conf.d/
-common::httpd_conf_dir: /etc/httpd/conf.d/
+common::apache_conf_dir: /etc/httpd/conf
 
 author::exec_path: "%{alias('exec_path')}"
 publish::exec_path: "%{alias('exec_path')}"
@@ -78,13 +78,12 @@ aem_curator::action_download_descriptor::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::action_download_artifacts::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::action_download_artifacts::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::action_deploy_artifacts::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::action_deploy_artifacts::apache_conf_dir: /etc/httpd/conf
+aem_curator::action_deploy_artifacts::apache_conf_dir: "%{hiera('common::apache_conf_dir')}"
 aem_curator::action_deploy_artifacts::author_host: "%{hiera('common::author_host')}"
 aem_curator::action_deploy_artifacts::author_port: "%{hiera('common::author_port')}"
 aem_curator::action_deploy_artifacts::author_secure: "%{hiera('common::author_secure')}"
 aem_curator::action_deploy_artifacts::dispatcher_conf_dir: "%{hiera('common::dispatcher_conf_dir')}"
 aem_curator::action_deploy_artifacts::docroot_dir: "%{hiera('common::docroot_dir')}"
-aem_curator::action_deploy_artifacts::httpd_conf_dir: "%{hiera('common::httpd_conf_dir')}"
 aem_curator::action_deploy_artifacts::publish_host: "%{hiera('common::publish_host')}"
 aem_curator::action_deploy_artifacts::publish_port: "%{hiera('common::publish_port')}"
 aem_curator::action_deploy_artifacts::publish_secure: "%{hiera('common::publish_secure')}"
