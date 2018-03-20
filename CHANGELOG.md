@@ -1,5 +1,5 @@
 ### 2.4.7
-*
+* Clean up dispatcher template parameters in Hiera config
 
 ### 2.4.6
 * Add AEM Tools directory creation to component manifests
