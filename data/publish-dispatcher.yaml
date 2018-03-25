@@ -6,8 +6,7 @@ publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
 # Configure Publish Dispatcher
 aem_curator::config_publish_dispatcher::enable_deploy_flag: false
 aem_curator::config_publish_dispatcher::virtual_hosts_dir: "%{hiera('common::virtual_hosts_dir')}"
-aem_curator::config_publish_dispatcher::dispatcher_conf_dir: "%{hiera('common::apache_mod_dir')}"
-aem_curator::config_publish_dispatcher::publish_host: "%{hiera('common::publish_host')}"
+aem_curator::config_publish_dispatcher::dispatcher_conf_dir: "%{hiera('common::dispatcher_conf_dir')}"
 aem_curator::config_publish_dispatcher::publish_port: "%{hiera('common::publish_port')}"
 aem_curator::config_publish_dispatcher::publish_secure: "%{hiera('common::publish_secure')}"
 aem_curator::config_publish_dispatcher::ssl_cert: "%{hiera('common::ssl_cert')}"
