@@ -86,11 +86,11 @@ aem_curator::config_publish::aem_password_reset_source: "s3://%{::data_bucket_na
 aem_curator::config_publish::aem_password_reset_version: '1.0.2'
 
 # AEM Publish-Dispatcher
-aem_curator::config_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::config_publish_dispatcher::dispatcher_conf_dir: /etc/httpd/conf.modules.d/
-aem_curator::config_publish_dispatcher::httpd_conf_dir: /etc/httpd/conf.d/
-aem_curator::config_publish_dispatcher::ssl_cert: /etc/ssl/aem.unified-dispatcher.cert
-aem_curator::config_publish_dispatcher::publish_host: localhost
-aem_curator::config_publish_dispatcher::publish_port: 5433
-aem_curator::config_publish_dispatcher::publish_secure: 1
+aem_curator::config_publish_dispatcher::dispatcher_conf_dir: "%{hiera('common::apache_mod_dir')}"
 aem_curator::config_publish_dispatcher::enable_deploy_flag: false
+aem_curator::config_publish_dispatcher::publish_host: "%{hiera('common::publish_host')}"
+aem_curator::config_publish_dispatcher::publish_port: "%{hiera('common::publish_port')}"
+aem_curator::config_publish_dispatcher::publish_secure: "%{hiera('common::publish_secure')}"
+aem_curator::config_publish_dispatcher::ssl_cert: "%{hiera('common::ssl_cert')}"
+aem_curator::config_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::config_publish_dispatcher::virtual_hosts_dir: "%{hiera('common::apache_confd_dir')}"
