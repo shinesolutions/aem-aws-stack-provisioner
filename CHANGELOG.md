@@ -1,5 +1,5 @@
 ### 2.4.8
-*
+* Update hiera files
 
 ### 2.4.7
 * Clean up dispatcher template parameters in Hiera config
