@@ -7,7 +7,7 @@ aem_curator::config_author_dispatcher::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_author_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_author_dispatcher::virtual_hosts_dir: "%{hiera('common::virtual_hosts_dir')}"
 aem_curator::config_author_dispatcher::dispatcher_conf_dir: "%{hiera('common::dispatcher_conf_dir')}"
-aem_curator::config_author_dispatcher::ssl_cert: "%{hiera('common::ssl_cert')}"
+aem_curator::config_author_dispatcher::ssl_cert: "%{hiera('common::dispatcher_ssl_cert')}"
 # Author ELB is listening on port 80/443 due to AEM using X-Forwarded-Port to construct location header
 aem_curator::config_author_dispatcher::author_port: "%{hiera('common::author_port')}"
 aem_curator::config_author_dispatcher::author_secure: "%{hiera('common::author_secure')}"

@@ -91,6 +91,6 @@ aem_curator::config_publish_dispatcher::enable_deploy_flag: false
 aem_curator::config_publish_dispatcher::publish_host: "%{hiera('common::publish_host')}"
 aem_curator::config_publish_dispatcher::publish_port: "%{hiera('common::publish_port')}"
 aem_curator::config_publish_dispatcher::publish_secure: "%{hiera('common::publish_secure')}"
-aem_curator::config_publish_dispatcher::ssl_cert: "%{hiera('common::ssl_cert')}"
+aem_curator::config_publish_dispatcher::ssl_cert: "%{hiera('common::dispatcher_ssl_cert')}"
 aem_curator::config_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_publish_dispatcher::virtual_hosts_dir: "%{hiera('common::virtual_hosts_dir')}"
