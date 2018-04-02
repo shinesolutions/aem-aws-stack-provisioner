@@ -294,3 +294,4 @@ if __name__ == '__main__':
 
     snapshot.wait_until_completed()
     log.info('Snapshot %s complete.', snapshot.id)
+    print(snapshot.id)
