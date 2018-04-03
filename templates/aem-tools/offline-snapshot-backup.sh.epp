@@ -37,7 +37,7 @@ else
     cd "<%= $base_dir %>/aem-aws-stack-provisioner/modules/aem_curator/inspec/profiles/inspec-aem-aws"
     HOME=/root \
       aem_component="${component}" \
-      aem_snapshot_id="${snap_id}" \
+      snapshot_id="${snap_id}" \
       inspec exec . --controls aws-live-snapshot-exists
 
   <% } -%>
