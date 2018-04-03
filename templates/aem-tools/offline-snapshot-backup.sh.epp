@@ -40,7 +40,7 @@ else
       aem_component="${component}" \
       aem_stack_prefix="${stack_prefix}" \
       snapshot_id="${snap_id}" \
-      inspec exec . --controls aws-live-snapshot-exists
+      inspec exec . --controls aws-snapshot-exists
 
   <% } -%>
 fi
