@@ -16,6 +16,7 @@ else
   PATH=/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:$PATH
   instance_id=$(facter ec2_metadata.instance-id)
   component=$(/opt/puppetlabs/bin/facter component)
+  stack_prefix=$(/opt/puppetlabs/bin/facter stack_prefix)
   instance_id=$(facter ec2_metadata.instance-id)
 
   <% $aem_repo_devices.each | Integer $index, Hash $aem_repo_device | { -%>
@@ -37,6 +38,7 @@ else
     cd "<%= $base_dir %>/aem-aws-stack-provisioner/modules/aem_curator/inspec/profiles/inspec-aem-aws"
     HOME=/root \
       aem_component="${component}" \
+      aem_stack_prefix="${stack_prefix}" \
       snapshot_id="${snap_id}" \
       inspec exec . --controls aws-live-snapshot-exists
 
