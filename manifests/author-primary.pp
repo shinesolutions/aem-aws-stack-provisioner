@@ -75,6 +75,22 @@ class author_primary (
     ),
   }
 
+  ##############################################################################
+  # Promote Author Standby to Author Primary
+  ##############################################################################
+
+  file { "${base_dir}/aws-tools/promote-author-standby-to-primary.sh":
+    ensure  => file,
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aws-tools/promote-author-standby-to-primary.sh.epp",
+      {
+        'base_dir' => $base_dir,
+      }
+    ),
+  }
 }
 
 include author_primary
