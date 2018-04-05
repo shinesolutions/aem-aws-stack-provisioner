@@ -9,8 +9,12 @@ class author_publish_dispatcher (
   $credentials_file,
   $publish_protocol,
   $publish_port,
+  $aem_password_retrieval_command,
+  $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
 
+  $enable_daily_export_cron,
   $enable_deploy_on_init,
+  $enable_hourly_live_snapshot_cron,
 
   $aem_repo_devices,
   $component             = $::component,
@@ -29,6 +33,7 @@ class author_publish_dispatcher (
     owner  => 'root',
     group  => 'root',
   } -> class { 'aem_curator::config_aem_tools':
+    aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_tools_dispatcher':
   } -> class { 'aem_curator::config_aem_deployer':
   } -> class { 'aem_curator::config_author_primary':
@@ -60,6 +65,49 @@ class author_publish_dispatcher (
     component       => $component,
     collectd_prefix => "${stack_prefix}-${component}-${ec2_id}"
   }
+
+    ##############################################################################
+    # Export backups to S3
+    ##############################################################################
+
+    file { "${base_dir}/aem-tools/export-backup.sh":
+      ensure  => present,
+      content => epp(
+        'aem_curator/aem-tools/export-backup.sh.epp', {
+          'aem_tools_env_path'             => $aem_tools_env_path,
+          'base_dir'                       => $base_dir,
+          'aem_password_retrieval_command' => $aem_password_retrieval_command,
+        }
+      ),
+      mode    => '0775',
+      owner   => 'root',
+      group   => 'root',
+    }
+
+    file { "${base_dir}/aem-tools/export-backups.sh":
+      ensure  => present,
+      content => epp(
+        'aem_curator/aem-tools/export-backups.sh.epp', {
+          'aem_tools_env_path'             => $aem_tools_env_path,
+          'base_dir'                       => $base_dir,
+          'aem_password_retrieval_command' => $aem_password_retrieval_command,
+        }
+      ),
+      mode    => '0775',
+      owner   => 'root',
+      group   => 'root',
+    }
+
+    if $enable_daily_export_cron {
+      cron { 'daily-export-backups':
+        command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>/var/log/export-backups.log 2>&1",
+        user        => 'root',
+        hour        => 2,
+        minute      => 0,
+        environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
+        require     => File["${base_dir}/aem-tools/export-backups.sh"],
+      }
+    }
 
   ##############################################################################
   # Live snapshot backup

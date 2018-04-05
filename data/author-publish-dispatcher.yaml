@@ -13,6 +13,10 @@ author_publish_dispatcher::aem_repo_devices:
   - device_name: /dev/sdc
     aem_id: publish
 
+author_publish_dispatcher::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
+author_publish_dispatcher::enable_daily_export_cron: false
+author_publish_dispatcher::enable_hourly_live_snapshot_cron: false
+
 aem_curator::action_enable_crxde::aem_instances:
   - run_mode: author
     aem_id: author

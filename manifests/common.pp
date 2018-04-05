@@ -131,6 +131,15 @@ class common (
     require => File["${base_dir}/aws-tools/"],
   }
 
+  file {"${base_dir}/aem-tools/test":
+    ensure => directory,
+    source => "${file_dir_final}/test",
+    recurs => true,
+    mode   => '0775',
+    owner  => 'root',
+    group  => 'root',
+  }
+
   # set up common tools
   file {"${base_dir}/common-tools":
     ensure => directory,

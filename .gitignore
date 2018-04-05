@@ -6,3 +6,6 @@ stage
 .idea/
 Gemfile.lock
 Puppetfile.lock
+inspec.lock
+vendor/
+files/test
