@@ -1,29 +1,40 @@
 ---
+publish::aem_id: publish
 publish::base_dir: "%{hiera('common::base_dir')}"
+
 publish::aem_repo_devices:
   - device_name: /dev/sdb
-    aem_id: publish
+    aem_id: "%{hiera('publish::aem_id')}"
 
 aem_curator::action_enable_crxde::aem_instances:
   - run_mode: publish
-    aem_id: publish
+    aem_id: "%{hiera('publish::aem_id')}"
 
 aem_curator::action_disable_crxde::aem_instances:
   - run_mode: publish
-    aem_id: publish
+    aem_id: "%{hiera('publish::aem_id')}"
+
+aem_curator::action_deploy_artifacts::aem_id: "%{hiera('publish::aem_id')}"
+
+aem_curator::action_deploy_artifact::aem_id: "%{hiera('publish::aem_id')}"
+
+aem_curator::action_download_artifacts::aem_id: "%{hiera('publish::aem_id')}"
 
 aem_curator::action_export_backup::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_export_backup::aem_id: "%{hiera('publish::aem_id')}"
 
 aem_curator::action_export_backups::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::action_export_backups::download_descriptor::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_export_backups::aem_id: "%{hiera('publish::aem_id')}"
 
 aem_curator::action_import_backup::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_import_backup::aem_id: "%{hiera('publish::aem_id')}"
 
 aem_curator::config_aem_tools::aem_instances:
   - crx_quickstart_dir: /opt/aem/publish/crx-quickstart
     user: aem-publish
 aem_curator::config_collectd::aem_instances:
-  - aem_id: publish
+  - aem_id: "%{hiera('publish::aem_id')}"
     jmxremote_port: "%{hiera('aem_curator::config_publish::jmxremote_port')}"
     instance_prefixes:
       - memory-heap

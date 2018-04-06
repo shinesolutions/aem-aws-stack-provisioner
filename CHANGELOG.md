@@ -1,5 +1,5 @@
 ### 2.4.9
-*
+*  Fix AEM Package download and install due to missing template parameters
 
 ### 2.4.8
 * Fix dispatchers broken provisioning due to missing template parameter
