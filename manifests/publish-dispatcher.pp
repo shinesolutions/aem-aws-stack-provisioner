@@ -5,21 +5,19 @@ File {
 class publish_dispatcher (
   $base_dir,
   $docroot_dir,
-  $allowed_client = $::publish_dispatcher_allowed_client,
-  $publish_host   = $::publishhost,
-  $stack_prefix   = $::stack_prefix,
-  $data_bucket    = $::data_bucket,
-  $env_path       = $::cron_env_path,
-  $https_proxy    = $::cron_https_proxy,
+  $allowed_client     = $::publish_dispatcher_allowed_client,
+  $publish_host       = $::publishhost,
+  $stack_prefix       = $::stack_prefix,
+  $data_bucket        = $::data_bucket,
+  $env_path           = $::cron_env_path,
+  $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
+  $https_proxy        = $::cron_https_proxy,
 ) {
 
-  file { "${base_dir}/aem-tools/":
-    ensure => directory,
-    mode   => '0775',
-    owner  => 'root',
-    group  => 'root',
-  } class { 'aem_curator::config_aem_tools_dispatcher':
+  class { 'aem_curator::config_aem_tools_dispatcher':
+    aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':
+    aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_publish_dispatcher':
     allowed_client => $allowed_client,
     publish_host   => $publish_host,

@@ -5,6 +5,7 @@ File {
 class author_standby (
   $base_dir,
   $aem_repo_devices,
+  $enable_hourly_live_snapshot_cron,
   $author_primary_host = $::authorprimaryhost,
   $component           = $::component,
   $stack_prefix        = $::stack_prefix,
@@ -14,14 +15,10 @@ class author_standby (
   $ec2_id              = $::ec2_metadata['instance-id'],
 ) {
 
-  file { "${base_dir}/aem-tools/":
-    ensure => directory,
-    mode   => '0775',
-    owner  => 'root',
-    group  => 'root',
-  } -> class { 'aem_curator::config_aem_tools':
+  class { 'aem_curator::config_aem_tools':
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':
+    aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_author_standby':
     author_primary_host => $author_primary_host,
   } -> class { 'aem_curator::config_collectd':

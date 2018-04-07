@@ -6,15 +6,13 @@ class author_dispatcher (
   $base_dir,
   $docroot_dir,
   $author_host = $::authorhost,
+  $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
 ) {
 
-  file { "${base_dir}/aem-tools/":
-    ensure => directory,
-    mode   => '0775',
-    owner  => 'root',
-    group  => 'root',
-  } -> class { 'aem_curator::config_aem_tools_dispatcher':
+  class { 'aem_curator::config_aem_tools_dispatcher':
+    aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':
+    aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_author_dispatcher':
     author_host => $author_host,
     docroot_dir => $docroot_dir,

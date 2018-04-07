@@ -8,22 +8,18 @@ class author_primary (
   $aem_password_retrieval_command,
   $enable_daily_export_cron,
   $enable_hourly_live_snapshot_cron,
-  $component      = $::component,
-  $stack_prefix   = $::stack_prefix,
-  $env_path       = $::cron_env_path,
+  $component          = $::component,
+  $stack_prefix       = $::stack_prefix,
+  $env_path           = $::cron_env_path,
   $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
-  $https_proxy    = $::cron_https_proxy,
-  $ec2_id         = $::ec2_metadata['instance-id'],
+  $https_proxy        = $::cron_https_proxy,
+  $ec2_id             = $::ec2_metadata['instance-id'],
 ) {
 
-  file { "${base_dir}/aem-tools/":
-    ensure => directory,
-    mode   => '0775',
-    owner  => 'root',
-    group  => 'root',
-  } -> class { 'aem_curator::config_aem_tools':
+  class { 'aem_curator::config_aem_tools':
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':
+    aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_author_primary':
   } -> class { 'aem_curator::config_collectd':
     component       => $component,
@@ -36,30 +32,32 @@ class author_primary (
 
   file { "${base_dir}/aem-tools/export-backup.sh":
     ensure  => present,
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
     content => epp(
-      'aem_curator/aem-tools/export-backup.sh.epp', {
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/export-backup.sh.epp",
+      {
         'aem_tools_env_path'             => $aem_tools_env_path,
         'base_dir'                       => $base_dir,
         'aem_password_retrieval_command' => $aem_password_retrieval_command,
       }
     ),
-    mode    => '0775',
-    owner   => 'root',
-    group   => 'root',
   }
 
   file { "${base_dir}/aem-tools/export-backups.sh":
     ensure  => present,
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
     content => epp(
-      'aem_curator/aem-tools/export-backups.sh.epp', {
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/export-backups.sh.epp",
+      {
         'aem_tools_env_path'             => $aem_tools_env_path,
         'base_dir'                       => $base_dir,
         'aem_password_retrieval_command' => $aem_password_retrieval_command,
       }
     ),
-    mode    => '0775',
-    owner   => 'root',
-    group   => 'root',
   }
 
   if $enable_daily_export_cron {
@@ -71,7 +69,7 @@ class author_primary (
       environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
       require     => File["${base_dir}/aem-tools/export-backups.sh"],
     }
-  }
+    }
 
   ##############################################################################
   # Live snapshot backup
