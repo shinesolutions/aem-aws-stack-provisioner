@@ -5,6 +5,7 @@ File {
 class publish_dispatcher (
   $base_dir,
   $docroot_dir,
+  $tmp_dir,
   $allowed_client     = $::publish_dispatcher_allowed_client,
   $publish_host       = $::publishhost,
   $stack_prefix       = $::stack_prefix,
