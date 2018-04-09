@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -o nounset
+set -o errexit
+
+PATH=<%= $aem_tools_env_path %>
+stack_prefix=$(/opt/puppetlabs/bin/facter stack_prefix)
+component=$(/opt/puppetlabs/bin/facter component)
+
+if [ ${component} = 'author-publish-dispatcher' ]; then
+  echo "Testing if consolidated is ready using InSpec..."
+  cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+  HOME=/root \
+    aem_stack_prefix="${stack_prefix}" \
+    make test-ready-consolidated
+
+else
+  echo "Testing if Full Set is ready using InSpec..."
+  cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+  HOME=/root \
+    aem_stack_prefix="${stack_prefix}" \
+    make test-ready
+fi

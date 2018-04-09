@@ -1,5 +1,6 @@
 ### 2.4.9
 *  Fix AEM Package download and install due to missing template parameters
+*  Add readiness test for orchestrator
 
 ### 2.4.8
 * Fix dispatchers broken provisioning due to missing template parameter

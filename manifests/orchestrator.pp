@@ -4,12 +4,13 @@ File {
 
 class orchestrator (
   $base_dir,
-  $offline_snapshot_hour = 1,
-  $offline_snapshot_minute = 15,
+  $aem_tools_env_path                        = '$PATH:/opt/puppetlabs/puppet/bin',
+  $offline_snapshot_hour                     = 1,
+  $offline_snapshot_minute                   = 15,
   $enable_weekly_offline_compaction_snapshot = true,
-  $stack_prefix        = $::stack_prefix,
-  $env_path            = $::cron_env_path,
-  $https_proxy         = $::cron_https_proxy,
+  $stack_prefix                              = $::stack_prefix,
+  $env_path                                  = $::cron_env_path,
+  $https_proxy                               = $::cron_https_proxy,
 ) {
 
   Archive {
@@ -105,6 +106,25 @@ class orchestrator (
       require     => File["${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh"],
     }
   }
+
+  ##############################################################################
+  # AEM Readiness test
+  ##############################################################################
+
+  file { "${base_dir}/aem-tools/test-readiness.sh":
+    ensure  => present,
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/test-readiness.sh.epp",
+      {
+        'aem_tools_env_path' => $aem_tools_env_path,
+        'base_dir'           => $base_dir,
+      }
+      ),
+    }
+
 }
 
 include orchestrator
