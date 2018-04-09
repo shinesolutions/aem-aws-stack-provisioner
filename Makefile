@@ -5,8 +5,7 @@ ci: clean lint package
 clean:
 	rm -rf .tmp Puppetfile.lock Gemfile.lock modules stage vendor files/test
 
-deps:
-	Gemfile.lock Puppetfile.lock
+deps: Gemfile.lock Puppetfile.lock
 	inspec vendor --overwrite
 	mkdir -p files/test/inspec &&	mv vendor/*.tar.gz files/test/inspec/ && cd files/test/inspec && gunzip *.tar.gz && tar -xvf *.tar
 
