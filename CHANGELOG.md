@@ -1,5 +1,5 @@
 ### 2.4.10
-*
+* Add InSpec tests for aem-tools
 
 ### 2.4.9
 * Fix AEM Package download and install due to missing template parameters
