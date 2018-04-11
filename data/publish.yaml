@@ -6,6 +6,8 @@ publish::aem_repo_devices:
   - device_name: /dev/sdb
     aem_id: "%{hiera('publish::aem_id')}"
 
+publish::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
+
 aem_curator::action_enable_crxde::aem_instances:
   - run_mode: publish
     aem_id: "%{hiera('publish::aem_id')}"

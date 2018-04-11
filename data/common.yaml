@@ -37,6 +37,8 @@ common::dispatcher_conf_dir: /etc/httpd/conf.modules.d
 common::virtual_hosts_dir: /etc/httpd/conf.d
 common::dispatcher_ssl_cert: /etc/ssl/aem.unified-dispatcher.cert
 
+common::aem_password_retrieval_command: "aws s3 cp s3://%{::data_bucket_name}/%{::stack_prefix}/system-users-credentials.json - | jq --raw-output .$aem_username"
+
 author::exec_path: "%{alias('exec_path')}"
 publish::exec_path: "%{alias('exec_path')}"
 author_dispatcher::exec_path: "%{alias('exec_path')}"
@@ -61,19 +63,17 @@ publish::login_ready_max_sleep_seconds: 5
 # AEM Tools
 aem_curator::config_aem_tools::oak_run_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/oak-run-%{hiera('aem_curator::config_aem_tools::oak_run_version')}.jar"
 aem_curator::config_aem_tools::oak_run_version: '1.4.15'
-aem_curator::config_aem_tools::aem_password_retrieval_command: "aws s3 cp s3://%{::data_bucket_name}/%{::stack_prefix}/system-users-credentials.json - | jq --raw-output .$aem_username"
+aem_curator::config_aem_tools::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
 aem_curator::config_aem_tools::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_aem_tools::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_aem_tools::aem_repo_device: /dev/sdb
 aem_curator::config_aem_tools::enable_offline_compaction_cron: false
-aem_curator::config_aem_tools::enable_daily_export_cron: false
-aem_curator::config_aem_tools::enable_hourly_live_snapshot_cron: false
 aem_curator::config_aem_tools_dispatcher::base_dir: "%{hiera('common::base_dir')}"
 
 # AEM Deployer
 aem_curator::config_aem_deployer::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_aem_deployer::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::config_aem_deployer::aem_password_retrieval_command: "aws s3 cp s3://%{::data_bucket_name}/%{::stack_prefix}/system-users-credentials.json - | jq --raw-output .$aem_username"
+aem_curator::config_aem_deployer::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
 
 # Deploy artifacts
 aem_curator::action_download_descriptor::tmp_dir: "%{hiera('common::tmp_dir')}"

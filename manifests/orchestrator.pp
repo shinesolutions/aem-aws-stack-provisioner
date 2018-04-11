@@ -18,13 +18,6 @@ class orchestrator (
 
   include aem_orchestrator
 
-  file { "${base_dir}/aem-tools/":
-    ensure => directory,
-    mode   => '0775',
-    owner  => 'root',
-    group  => 'root',
-  }
-
   ##############################################################################
   # Stack offline snapshot without compaction
   ##############################################################################
@@ -82,7 +75,6 @@ class orchestrator (
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-    require => File["${base_dir}/aem-tools/"],
   } -> file { "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-compaction-snapshot.sh.epp", { 'sns_topic_arn' => "${::stack_manager_sns_topic_arn}",}),

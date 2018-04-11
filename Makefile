@@ -3,9 +3,11 @@ version ?= 2.4.9
 ci: clean lint package
 
 clean:
-	rm -rf .tmp Puppetfile.lock Gemfile.lock modules stage
+	rm -rf .tmp Puppetfile.lock Gemfile.lock modules stage vendor files/test
 
 deps: Gemfile.lock Puppetfile.lock
+	inspec vendor --overwrite
+	mkdir -p files/test/inspec &&	mv vendor/*.tar.gz files/test/inspec/ && cd files/test/inspec && gunzip *.tar.gz && tar -xvf *.tar
 
 Puppetfile.lock: Puppetfile Gemfile.lock
 	bundle exec r10k puppetfile install --verbose --moduledir modules
@@ -40,6 +42,7 @@ package: deps
 		--exclude='.idea*' \
 		--exclude='.DS_Store*' \
 		--exclude='examples' \
+		--exclude='*.tar' \
 		-cvf \
 		stage/aem-aws-stack-provisioner-$(version).tar ./
 	gzip stage/aem-aws-stack-provisioner-$(version).tar
