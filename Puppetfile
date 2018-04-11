@@ -9,7 +9,7 @@ mod 'puppet-yum', '0.10.0'
 mod 'puppetlabs-concat', '2.2.1'
 mod 'shinesolutions/aem_orchestrator', '1.1.0'
 mod 'shinesolutions/aem_resources', '2.2.3'
-mod 'shinesolutions/aem_curator', '0.9.19'
+mod 'shinesolutions/aem_curator', '0.9.20'
 mod 'shinesolutions/simianarmy', '1.1.1'
 
 mod 'yo61-logrotate', '1.4.0'
