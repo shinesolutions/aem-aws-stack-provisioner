@@ -1,5 +1,8 @@
 ### 2.4.9
-*  Fix AEM Package download and install due to missing template parameters
+* Fix AEM Package download and install due to missing template parameters
+* Rename promoted Author Primary (from Author Standby) for clarity #64
+* Add readiness test for AEM Full-Set architecture in Orchestrator component
+* Add export import backup(s) support, migrated from aem_curator
 
 ### 2.4.8
 * Fix dispatchers broken provisioning due to missing template parameter

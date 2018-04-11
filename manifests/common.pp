@@ -11,7 +11,6 @@ class common (
   $group,
   $credentials_file,
   $extra_packages       = [],
-  $newrelic_license_key = '',
   $template_dir         = undef,
   $file_dir             = undef,
   $stack_prefix         = $::stack_prefix,
@@ -166,19 +165,6 @@ class common (
   archive { "${tmp_dir}/${credentials_file}":
     ensure => present,
     source => "s3://${data_bucket_name}/${stack_prefix}/${credentials_file}",
-  }
-
-  if $newrelic_license_key != '' {
-    file { '/etc/newrelic-infra.yml':
-      ensure  => file,
-      content => epp("${template_dir_final}/newrelic-infra-yml.epp"),
-      mode    => '0600',
-      owner   => 'root',
-      group   => 'root',
-    }
-    package { 'newrelic-infra':
-      ensure => present,
-    }
   }
 }
 

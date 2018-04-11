@@ -1,26 +1,22 @@
 version ?= 2.4.9
 
-ci: clean lint package
+ci: clean deps lint validate package
 
 clean:
 	rm -rf .tmp Puppetfile.lock Gemfile.lock modules stage vendor files/test
 
 deps:
-	Gemfile.lock Puppetfile.lock
-	inspec vendor --overwrite
-	mkdir -p files/test/inspec &&	mv vendor/*.tar.gz files/test/inspec/ && cd files/test/inspec && gunzip *.tar.gz && tar -xvf *.tar
-
-Puppetfile.lock: Puppetfile Gemfile.lock
+	gem install bundler
+	bundle install --binstubs
 	bundle exec r10k puppetfile install --verbose --moduledir modules
+	inspec vendor --overwrite
+	mkdir -p files/test/inspec && mv vendor/*.tar.gz files/test/inspec/ && cd files/test/inspec && gunzip *.tar.gz && tar -xvf *.tar && rm *.tar
 
-Gemfile.lock: Gemfile
-	bundle install
-
-validate: Gemfile.lock
+validate:
 	bundle exec puppet parser validate manifests/*.pp
-	bundle exec puppet epp validate templates/*.epp templates/**/*.epp
+	bundle exec puppet epp validate templates/**/*.epp
 
-lint: validate Gemfile.lock
+lint:
 	bundle exec puppet-lint \
 		--fail-on-warnings \
 		--no-140chars-check \
