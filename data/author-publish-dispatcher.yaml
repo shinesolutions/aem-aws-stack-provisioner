@@ -42,8 +42,11 @@ aem_curator::action_import_backup::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_aem_tools::aem_instances:
   - crx_quickstart_dir: /opt/aem/author/crx-quickstart
     user: aem-author
+    aem_id: author
   - crx_quickstart_dir: /opt/aem/publish/crx-quickstart
     user: aem-publish
+    aem_id: publish
+
 aem_curator::config_collectd::aem_instances:
   - aem_id: author
     jmxremote_port: "%{hiera('aem_curator::config_author_primary::jmxremote_port')}"
