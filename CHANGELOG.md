@@ -1,3 +1,6 @@
+### 2.4.10
+*
+
 ### 2.4.9
 * Fix AEM Package download and install due to missing template parameters
 * Rename promoted Author Primary (from Author Standby) for clarity #64
