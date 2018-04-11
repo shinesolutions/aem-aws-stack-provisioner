@@ -7,16 +7,16 @@ stack_prefix=$(/opt/puppetlabs/bin/facter stack_prefix)
 component=$(/opt/puppetlabs/bin/facter component)
 
 if [ ${component} = 'author-publish-dispatcher' ]; then
-  echo "Testing if consolidated is ready using InSpec..."
+  echo "Testing if AEM Consolidated is ready using InSpec..."
   cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+  # TODO: not yet supported
   HOME=/root \
     aem_stack_prefix="${stack_prefix}" \
-    make test-ready-consolidated
-
+    make test-readiness-consolidated
 else
-  echo "Testing if Full Set is ready using InSpec..."
+  echo "Testing if AEM Full-Set is ready using InSpec..."
   cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
   HOME=/root \
     aem_stack_prefix="${stack_prefix}" \
-    make test-ready
+    make test-readiness
 fi
