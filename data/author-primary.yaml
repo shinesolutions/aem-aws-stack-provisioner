@@ -18,8 +18,6 @@ aem_curator::action_disable_crxde::aem_instances:
 
 aem_curator::action_deploy_artifacts::aem_id: "%{hiera('author_primary::aem_id')}"
 
-aem_curator::action_deploy_artifact::aem_id: "%{hiera('author_primary::aem_id')}"
-
 aem_curator::action_download_artifacts::aem_id: "%{hiera('author_primary::aem_id')}"
 
 aem_curator::action_export_backup::tmp_dir: "%{hiera('common::tmp_dir')}"
@@ -41,6 +39,8 @@ aem_curator::action_promote_author_standby_to_primary::enable_hourly_live_snapsh
 aem_curator::config_aem_tools::aem_instances:
   - crx_quickstart_dir: /opt/aem/author/crx-quickstart
     user: aem-author
+    aem_id: "%{hiera('author_primary::aem_id')}"
+
 aem_curator::config_collectd::aem_instances:
   - aem_id: "%{hiera('author_primary::aem_id')}"
     jmxremote_port: "%{hiera('aem_curator::config_author_primary::jmxremote_port')}"
