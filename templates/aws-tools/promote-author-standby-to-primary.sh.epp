@@ -9,12 +9,9 @@ if [ "$#" -ne 0 ]; then
   exit 1
 fi
 
-# translate puppet exit code to follow convention
-translate_exit_code() {
-
 data_bucket_name=$(facter data_bucket_name)
 stack_prefix=$(facter stack_prefix)
-component=$(facter compo)
+component=author-primary
 
 instance_id=$(curl --silent http://169.254.169.254/latest/meta-data/instance-id)
 aws ec2 create-tags --tags Key=Component,Value=${component} --resources ${instance_id}
