@@ -58,7 +58,8 @@ class author_publish_dispatcher (
     enable_deploy_on_init => $enable_deploy_on_init,
   } -> class { 'aem_curator::config_collectd':
     component       => $component,
-    collectd_prefix => "${stack_prefix}-${component}-${ec2_id}"
+    collectd_prefix => "${stack_prefix}-${component}",
+    ec2_id          => "${ec2_id}"
   }
 
   ##############################################################################
