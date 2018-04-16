@@ -1,5 +1,5 @@
 ### 2.4.12
-*
+* Fix Collectd CloudWatch regex matching
 
 ### 2.4.11
 * Fix Collectd CloudWatch dimension so alarms can identify the metrics that belong to an EC2 instance
