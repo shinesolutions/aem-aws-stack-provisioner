@@ -1,3 +1,6 @@
+### 2.4.13
+*
+
 ### 2.4.12
 * Fix Collectd CloudWatch regex matching
 
