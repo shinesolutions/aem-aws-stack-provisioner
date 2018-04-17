@@ -15,7 +15,7 @@ component=author-primary
 
 instance_id=$(curl --silent http://169.254.169.254/latest/meta-data/instance-id)
 aws ec2 create-tags --tags Key=Component,Value=${component} --resources ${instance_id}
-aws ec2 create-tags --tags Key=Name,Value="author-primary-promoted" --resources ${instance_id}
+aws ec2 create-tags --tags Key=Name,Value="AEM Author - Primary - Promoted from Standby" --resources ${instance_id}
 
 <%= $base_dir %>/aws-tools/set-facts.sh "${data_bucket_name}" "${stack_prefix}"
 
