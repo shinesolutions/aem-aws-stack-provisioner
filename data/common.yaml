@@ -22,6 +22,7 @@ common::tmp_dir: /tmp/shinesolutions/aem-aws-stack-provisioner
 common::puppet_conf_dir: /etc/puppetlabs/puppet/
 common::credentials_file: system-users-credentials.json
 common::docroot_dir: /var/www/html/
+common::httpd::log_dir: /var/log/httpd
 
 # Dispatcher configuration
 common::publish_host: localhost
@@ -87,6 +88,7 @@ aem_curator::action_deploy_artifacts::author_port: "%{hiera('common::author_port
 aem_curator::action_deploy_artifacts::author_secure: "%{hiera('common::author_secure')}"
 aem_curator::action_deploy_artifacts::dispatcher_conf_dir: "%{hiera('common::dispatcher_conf_dir')}"
 aem_curator::action_deploy_artifacts::docroot_dir: "%{hiera('common::docroot_dir')}"
+aem_curator::action_deploy_artifacts::log_dir: "%{hiera('common::httpd::log_dir')}"
 aem_curator::action_deploy_artifacts::publish_port: "%{hiera('common::publish_port')}"
 aem_curator::action_deploy_artifacts::publish_secure: "%{hiera('common::publish_secure')}"
 aem_curator::action_deploy_artifacts::ssl_cert: "%{hiera('common::dispatcher_ssl_cert')}"
