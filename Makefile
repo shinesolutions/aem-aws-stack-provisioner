@@ -1,4 +1,4 @@
-version ?= 2.4.13
+version ?= 2.4.14
 
 ci: clean deps lint validate package
 
