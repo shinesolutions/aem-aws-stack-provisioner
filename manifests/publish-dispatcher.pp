@@ -11,6 +11,7 @@ class publish_dispatcher (
   $stack_prefix       = $::stack_prefix,
   $data_bucket        = $::data_bucket,
   $env_path           = $::cron_env_path,
+  $exec_path          = ['/bin', '/usr/local/bin', '/usr/bin'],
   $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
   $https_proxy        = $::cron_https_proxy,
 ) {
@@ -23,7 +24,17 @@ class publish_dispatcher (
     allowed_client => $allowed_client,
     publish_host   => $publish_host,
     docroot_dir    => $docroot_dir,
+  } -> exec { 'Deploy Publish-Dispatcher artifacts':
+    path        => $exec_path,
+    environment => ["https_proxy=${https_proxy}"],
+    cwd         => $tmp_dir,
+    command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>/var/log/puppet-deploy-artifacts.log 2>&1",
+    onlyif      => "test `aws s3 ls s3://${data_bucket}/${stack_prefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
   }
+
+  ##############################################################################
+  # Content health check
+  ##############################################################################
 
   file { "${base_dir}/aem-tools/content-healthcheck.py":
     ensure  => present,
