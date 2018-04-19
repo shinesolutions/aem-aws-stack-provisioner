@@ -16,6 +16,10 @@ aem_curator::action_disable_crxde::aem_instances:
   - run_mode: author
     aem_id: "%{hiera('author_primary::aem_id')}"
 
+aem_curator::action_list_packages::aem_instances:
+  - run_mode: author
+    aem_id: "%{hiera('author_primary::aem_id')}"
+
 aem_curator::action_deploy_artifacts::aem_id: "%{hiera('author_primary::aem_id')}"
 
 aem_curator::action_download_artifacts::aem_id: "%{hiera('author_primary::aem_id')}"
