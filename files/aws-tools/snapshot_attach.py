@@ -313,9 +313,6 @@ class ec2_instance(object):
             log.info('Waiting for current volume to reach state "available"')
             waiter.wait( VolumeIds=(current_volume.id,) )
             self._orig_volume = current_volume
-            #remove original volume
-            current_volume.delete()
-            log.info('Current volume: %s will be deleted', current_volume)
             return current_volume
         log.info('Device %s not found in list of attached EBS volumes', devices[0])
         return
@@ -469,3 +466,6 @@ if __name__ == '__main__':
     if needs_format:
         instance.format(device, args.fs_type, args.fs_options, args.sudo)
     mount  = instance.mount(args.device, args.mount_point, args.sudo)
+    #remove original volume
+    current_volume.delete()
+    log.info('Old volume: %s will be deleted', current_volume)
