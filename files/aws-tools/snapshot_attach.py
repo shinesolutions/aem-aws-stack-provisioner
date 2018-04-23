@@ -313,6 +313,9 @@ class ec2_instance(object):
             log.info('Waiting for current volume to reach state "available"')
             waiter.wait( VolumeIds=(current_volume.id,) )
             self._orig_volume = current_volume
+            #remove original volume
+            current_volume.delete()
+            log.info('Current volume: %s will be deleted', current_volume)
             return current_volume
         log.info('Device %s not found in list of attached EBS volumes', devices[0])
         return
