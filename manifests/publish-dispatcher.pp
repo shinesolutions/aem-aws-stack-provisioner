@@ -6,14 +6,15 @@ class publish_dispatcher (
   $base_dir,
   $docroot_dir,
   $tmp_dir,
-  $allowed_client     = $::publish_dispatcher_allowed_client,
-  $publish_host       = $::publishhost,
-  $stack_prefix       = $::stack_prefix,
-  $data_bucket        = $::data_bucket,
-  $env_path           = $::cron_env_path,
-  $exec_path          = ['/bin', '/usr/local/bin', '/usr/bin'],
-  $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
-  $https_proxy        = $::cron_https_proxy,
+  $allowed_client             = $::publish_dispatcher_allowed_client,
+  $publish_host               = $::publishhost,
+  $stack_prefix               = $::stack_prefix,
+  $data_bucket                = $::data_bucket,
+  $env_path                   = $::cron_env_path,
+  $https_proxy                = $::cron_https_proxy,
+  $enable_content_healthcheck = true,
+  $exec_path                  = ['/bin', '/usr/local/bin', '/usr/bin'],
+  $aem_tools_env_path         = '$PATH:/opt/puppetlabs/puppet/bin',
 ) {
 
   class { 'aem_curator::config_aem_tools_dispatcher':
@@ -36,24 +37,26 @@ class publish_dispatcher (
   # Content health check
   ##############################################################################
 
-  file { "${base_dir}/aem-tools/content-healthcheck.py":
-    ensure  => present,
-    mode    => '0775',
-    owner   => 'root',
-    group   => 'root',
-    content => epp(
-      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/content-healthcheck.py.epp",
-      {
-        'tmp_dir'      => $tmp_dir,
-        'stack_prefix' => $stack_prefix,
-        'data_bucket'  => $data_bucket,
-      }
-    ),
-  } -> cron { 'every-minute-content-healthcheck':
-    command     => "${base_dir}/aem-tools/content-healthcheck.py",
-    user        => 'root',
-    minute      => '*',
-    environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
+  if $enable_content_healthcheck {
+    file { "${base_dir}/aem-tools/content-healthcheck.py":
+      ensure  => present,
+      mode    => '0775',
+      owner   => 'root',
+      group   => 'root',
+      content => epp(
+        "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/content-healthcheck.py.epp",
+        {
+          'tmp_dir'      => $tmp_dir,
+          'stack_prefix' => $stack_prefix,
+          'data_bucket'  => $data_bucket,
+        }
+      ),
+    } -> cron { 'every-minute-content-healthcheck':
+      command     => "${base_dir}/aem-tools/content-healthcheck.py",
+      user        => 'root',
+      minute      => '*',
+      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
+    }
   }
 
   ##############################################################################

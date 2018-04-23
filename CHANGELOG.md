@@ -1,5 +1,5 @@
 ### 2.4.14
-*
+* Add enable_content_healthcheck configuration on AEM Publish-Dispatcher
 
 ### 2.4.13
 * Rename promoted AEM Author instance name for consistency with default naming convention
