@@ -466,7 +466,6 @@ if __name__ == '__main__':
     if needs_format:
         instance.format(device, args.fs_type, args.fs_options, args.sudo)
     mount  = instance.mount(args.device, args.mount_point, args.sudo)
-    
-    #remove original volume
-    log.info('Old volume: %s will be deleted', current_volume)
-    current_volume.delete()
+
+    log.info('Deleting original volume: %s', orig_volume)
+    orig_volume.delete()
