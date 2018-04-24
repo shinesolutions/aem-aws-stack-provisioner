@@ -29,7 +29,7 @@ lint:
 		manifests/*.pp
 	shellcheck files/*/*.sh
 
-package: deps
+package:
 	rm -rf stage
 	mkdir -p stage
 	tar \
