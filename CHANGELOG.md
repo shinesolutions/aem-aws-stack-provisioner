@@ -1,3 +1,6 @@
+### 2.4.15
+*
+
 ### 2.4.14
 * Add enable_content_healthcheck configuration on AEM Publish-Dispatcher
 * Fix orphan volume following snapshot attachment #59
