@@ -1,5 +1,5 @@
 ### 2.4.15
-*
+* Fix list packages missing config for consolidated
 
 ### 2.4.14
 * Add enable_content_healthcheck configuration on AEM Publish-Dispatcher
