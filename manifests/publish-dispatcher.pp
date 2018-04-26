@@ -9,7 +9,7 @@ class publish_dispatcher (
   $allowed_client             = $::publish_dispatcher_allowed_client,
   $publish_host               = $::publishhost,
   $stack_prefix               = $::stack_prefix,
-  $data_bucket                = $::data_bucket,
+  $data_bucket_name           = $::data_bucket_name,
   $env_path                   = $::cron_env_path,
   $https_proxy                = $::cron_https_proxy,
   $enable_content_healthcheck = true,
@@ -30,7 +30,7 @@ class publish_dispatcher (
     environment => ["https_proxy=${https_proxy}"],
     cwd         => $tmp_dir,
     command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>/var/log/puppet-deploy-artifacts.log 2>&1",
-    onlyif      => "test `aws s3 ls s3://${data_bucket}/${stack_prefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
+    onlyif      => "test `aws s3 ls s3://${data_bucket_name}/${stack_prefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
   }
 
   ##############################################################################
@@ -46,9 +46,9 @@ class publish_dispatcher (
       content => epp(
         "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/content-healthcheck.py.epp",
         {
-          'tmp_dir'      => $tmp_dir,
-          'stack_prefix' => $stack_prefix,
-          'data_bucket'  => $data_bucket,
+          'tmp_dir'          => $tmp_dir,
+          'stack_prefix'     => $stack_prefix,
+          'data_bucket_name' => $data_bucket_name,
         }
       ),
     } -> cron { 'every-minute-content-healthcheck':

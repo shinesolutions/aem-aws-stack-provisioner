@@ -1,5 +1,6 @@
 ### 2.4.15
 * Fix list packages missing config for consolidated
+* Fix incorrect bucket variable on dispatcher artifacts deployment
 
 ### 2.4.14
 * Add enable_content_healthcheck configuration on AEM Publish-Dispatcher

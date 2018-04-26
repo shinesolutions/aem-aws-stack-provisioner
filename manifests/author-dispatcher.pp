@@ -7,7 +7,7 @@ class author_dispatcher (
   $docroot_dir,
   $author_host        = $::authorhost,
   $stack_prefix       = $::stack_prefix,
-  $data_bucket        = $::data_bucket,
+  $data_bucket_name   = $::data_bucket_name,
   $exec_path          = ['/bin', '/usr/local/bin', '/usr/bin'],
   $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
   $https_proxy        = $::cron_https_proxy,
@@ -25,7 +25,7 @@ class author_dispatcher (
     environment => ["https_proxy=${https_proxy}"],
     cwd         => $tmp_dir,
     command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>/var/log/puppet-deploy-artifacts.log 2>&1",
-    onlyif      => "test `aws s3 ls s3://${data_bucket}/${stack_prefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
+    onlyif      => "test `aws s3 ls s3://${data_bucket_name}/${stack_prefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
   }
 
   ##############################################################################
