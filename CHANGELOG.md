@@ -1,3 +1,6 @@
+### 2.4.16
+*
+
 ### 2.4.15
 * Fix list packages missing config for consolidated
 * Fix incorrect bucket variable on dispatcher artifacts deployment
