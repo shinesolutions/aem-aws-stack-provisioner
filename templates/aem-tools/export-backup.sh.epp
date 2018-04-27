@@ -12,16 +12,13 @@ PATH=<%= $aem_tools_env_path %>
 aem_id=$1
 package_group=$2
 package_name=$3
-shift 2
+shift 3
 package_filter="$*"
 component=$(facter component)
 stack_prefix=$(facter stack_prefix)
 aem_username=exporter
 aem_password=$(<%= $aem_password_retrieval_command %>)
-# backup export timeout is set to 15 minutes in order to handle large AEM packages
-# 2-3Gb packages tend to take 5 minutes to build within AEM
-aem_timeout=900
-event=export-backup
+data_bucket_name=$(facter data_bucket_name)
 
 year=$(date +%Y)
 month=$(date +%m)
@@ -48,7 +45,6 @@ cd "<%= $base_dir %>/aem-aws-stack-provisioner/"
 # backup latest package for the day
 export aem_username="${aem_username}"
 export aem_password="${aem_password}"
-export aem_timeout="${aem_timeout}"
 export aem_id="${aem_id}"
 export FACTER_event="${event}"
 export FACTER_package_group="${package_group}"
@@ -72,6 +68,7 @@ FACTER_aem_username="${aem_username}" \
   HOME=/root \
     aem_component=${component} \
     aem_stack_prefix="${stack_prefix}" \
+    aws_s3_bucket="${data_bucket_name}" \
     package_group="${package_group}" \
     package_name="${package_name}" \
     package_version="${year}${month}${date}-${component}" \
@@ -100,6 +97,7 @@ FACTER_aem_username="${aem_username}" \
   HOME=/root \
     aem_component=${component} \
     aem_stack_prefix="${stack_prefix}" \
+    aws_s3_bucket="${data_bucket_name}" \
     package_group="${package_group}" \
     package_name="${package_name}" \
     package_version="${year}${month}-${component}-latest" \
@@ -128,6 +126,7 @@ FACTER_aem_username="${aem_username}" \
   HOME=/root \
     aem_component="${component}" \
     aem_stack_prefix="${stack_prefix}" \
+    aws_s3_bucket="${data_bucket_name}" \
     package_group="${package_group}" \
     package_name="${package_name}" \
     package_version="${year}-${component}-latest" \
