@@ -1,5 +1,6 @@
 ### 2.4.16
-*
+* Fix Orchestrator InSpec test failure #70
+* Fix export backup script parameters
 
 ### 2.4.15
 * Fix list packages missing config for consolidated
