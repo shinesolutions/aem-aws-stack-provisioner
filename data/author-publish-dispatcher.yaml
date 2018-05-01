@@ -9,9 +9,12 @@ author_publish_dispatcher::publish_protocol: http
 author_publish_dispatcher::publish_port: 4503
 author_publish_dispatcher::aem_repo_devices:
   - device_name: /dev/sdb
+    device_alias: /dev/xvdb
     aem_id: author
   - device_name: /dev/sdc
+    device_alias: /dev/xvdc
     aem_id: publish
+author_publish_dispatcher::volume_type: gp2
 
 author_publish_dispatcher::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
 author_publish_dispatcher::enable_daily_export_cron: false
@@ -34,7 +37,7 @@ aem_curator::action_list_packages::aem_instances:
     aem_id: author
   - run_mode: publish
     aem_id: publish
-    
+
 aem_curator::action_deploy_artifacts::author_host: "%{hiera('common::author_host')}"
 aem_curator::action_deploy_artifacts::publish_host: "%{hiera('common::publish_host')}"
 
@@ -87,7 +90,6 @@ aem_curator::config_publish::puppet_conf_dir: "%{hiera('common::puppet_conf_dir'
 aem_curator::config_publish::crx_quickstart_dir: /opt/aem/publish/crx-quickstart
 aem_curator::config_publish::publish_protocol: http
 aem_curator::config_publish::publish_port: 4503
-aem_curator::config_publish::vol_type: gp2
 aem_curator::config_publish::credentials_file: "%{hiera('common::credentials_file')}"
 aem_curator::config_publish::enable_deploy_flag: false
 aem_curator::config_publish::login_ready_max_tries: 60

@@ -4,6 +4,7 @@ author_primary::base_dir: "%{hiera('common::base_dir')}"
 
 author_primary::aem_repo_devices:
   - device_name: /dev/sdb
+    device_alias: /dev/xvdb
     aem_id: "%{hiera('author_primary::aem_id')}"
 
 author_primary::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"

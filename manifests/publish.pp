@@ -8,6 +8,7 @@ class publish (
   $aem_password_retrieval_command,
   $enable_hourly_live_snapshot_cron,
   $enable_daily_export_cron,
+  $volume_type,
   $publish_dispatcher_id   = $::pairinstanceid,
   $publish_dispatcher_host = $::publishdispatcherhost,
   $stack_prefix            = $::stack_prefix,
@@ -16,7 +17,16 @@ class publish (
   $aem_tools_env_path      = '$PATH:/opt/puppetlabs/puppet/bin',
   $https_proxy             = $::cron_https_proxy,
   $ec2_id                  = $::ec2_metadata['instance-id'],
+  $snapshotid              = $::snapshotid,
 ) {
+
+  if $snapshotid != undef and $snapshotid != '' {
+    exec { "Attach volume from snapshot ID ${snapshotid}":
+      command => "${base_dir}/aws-tools/snapshot_attach.py --device ${aem_repo_devices[0][device_name]} --device-alias ${aem_repo_devices[0][device_alias]} --volume-type ${volume_type} --snapshot-id ${snapshotid} -vvvv",
+      path    => $exec_path,
+      before  => $attach_volume_before,
+    }
+  }
 
   class { 'aem_curator::config_aem_tools':
     aem_tools_env_path => $aem_tools_env_path

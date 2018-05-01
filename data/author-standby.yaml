@@ -4,6 +4,7 @@ author_standby::base_dir: "%{hiera('common::base_dir')}"
 
 author_standby::aem_repo_devices:
   - device_name: /dev/sdb
+    device_alias: /dev/xvdb
     aem_id: "%{hiera('author_standby::aem_id')}"
 
 aem_curator::action_enable_crxde::aem_instances:
