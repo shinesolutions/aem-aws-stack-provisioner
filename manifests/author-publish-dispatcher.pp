@@ -56,7 +56,7 @@ class author_publish_dispatcher (
     component       => $component,
     collectd_prefix => "${stack_prefix}-${component}",
     ec2_id          => $ec2_id
-  } -> class { 'aem_curator::config_aem_cronjobs':
+  } -> class { 'aem_curator::config_aem_scheduled_jobs':
   }
 
   ##############################################################################

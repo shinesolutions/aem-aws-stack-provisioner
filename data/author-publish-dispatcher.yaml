@@ -113,7 +113,7 @@ aem_curator::config_publish_dispatcher::ssl_cert: "%{hiera('common::dispatcher_s
 aem_curator::config_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_publish_dispatcher::virtual_hosts_dir: "%{hiera('common::virtual_hosts_dir')}"
 
-aem_curator::config_aem_cronjobs::cron_offline_compaction_enable: "%{hiera('publish::cron_offline_compaction_enable')}"
-aem_curator::config_aem_cronjobs::cron_offline_compaction_day: "%{hiera('publish::cron_offline_compaction_day')}"
-aem_curator::config_aem_cronjobs::cron_offline_compaction_hour: "%{hiera('publish::cron_offline_compaction_hour')}"
-aem_curator::config_aem_cronjobs::cron_offline_compaction_minute: "%{hiera('publish::cron_offline_compaction_minute')}"
+aem_curator::config_aem_scheduled_jobs::cron_offline_compaction_enable: "%{hiera('publish::cron_offline_compaction_enable')}"
+aem_curator::config_aem_scheduled_jobs::cron_offline_compaction_day: "%{hiera('publish::cron_offline_compaction_day')}"
+aem_curator::config_aem_scheduled_jobs::cron_offline_compaction_hour: "%{hiera('publish::cron_offline_compaction_hour')}"
+aem_curator::config_aem_scheduled_jobs::cron_offline_compaction_minute: "%{hiera('publish::cron_offline_compaction_minute')}"

@@ -57,7 +57,7 @@ publish::login_ready_base_sleep_seconds: 5
 publish::login_ready_max_sleep_seconds: 5
 
 # AEM Cronjobs
-aem_curator::config_aem_cronjobs::base_dir: "%{hiera('common::base_dir')}"
+aem_curator::config_aem_scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
 
 # AEM Tools
 aem_curator::config_aem_tools::oak_run_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/oak-run-%{hiera('aem_curator::config_aem_tools::oak_run_version')}.jar"
