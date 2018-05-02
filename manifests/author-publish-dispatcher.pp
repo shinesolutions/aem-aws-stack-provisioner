@@ -153,7 +153,7 @@ class deploy_on_init (
       onlyif      => "test `aws s3 ls s3://${::data_bucket_name}/${::stack_prefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
     }
   }
-  
+
 }
 
 include author_publish_dispatcher
