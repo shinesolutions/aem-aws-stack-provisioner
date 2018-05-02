@@ -467,5 +467,5 @@ if __name__ == '__main__':
         instance.format(device, args.fs_type, args.fs_options, args.sudo)
     mount  = instance.mount(args.device, args.mount_point, args.sudo)
 
-    # log.info('Deleting original volume: %s', orig_volume)
-    # orig_volume.delete()
+    log.info('Deleting original volume: %r', orig_volume)
+    orig_volume.delete()

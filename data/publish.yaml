@@ -4,7 +4,9 @@ publish::base_dir: "%{hiera('common::base_dir')}"
 
 publish::aem_repo_devices:
   - device_name: /dev/sdb
+    device_alias: /dev/xvdb
     aem_id: "%{hiera('publish::aem_id')}"
+publish::volume_type: gp2
 
 publish::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
 
@@ -59,7 +61,6 @@ aem_curator::config_publish::puppet_conf_dir: "%{hiera('common::puppet_conf_dir'
 aem_curator::config_publish::crx_quickstart_dir: /opt/aem/publish/crx-quickstart
 aem_curator::config_publish::publish_protocol: http
 aem_curator::config_publish::publish_port: 4503
-aem_curator::config_publish::vol_type: gp2
 aem_curator::config_publish::credentials_file: "%{hiera('common::credentials_file')}"
 aem_curator::config_publish::enable_deploy_flag: false
 aem_curator::config_publish::login_ready_max_tries: 60
