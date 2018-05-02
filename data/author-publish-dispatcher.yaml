@@ -16,14 +16,12 @@ author_publish_dispatcher::aem_repo_devices:
 author_publish_dispatcher::volume_type: gp2
 
 author_publish_dispatcher::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
-author_publish_dispatcher::enable_daily_export_cron: false
-author_publish_dispatcher::enable_hourly_live_snapshot_cron: false
 
-config_scheduled_jobs::cron_export_enable: "%{hiera('publish::cron_export_enable')}"
+config_scheduled_jobs::cron_export_enable: "%{alias('publish::cron_export_enable')}"
 config_scheduled_jobs::cron_export_hour: "%{hiera('publish::cron_export_hour')}"
 config_scheduled_jobs::cron_export_minute: "%{hiera('publish::cron_export_minute')}"
 config_scheduled_jobs::cron_export_weekday: "%{hiera('publish::cron_export_weekday')}"
-config_scheduled_jobs::cron_live_snapshot_enable: "%{hiera('publish::cron_live_snapshot_enable')}"
+config_scheduled_jobs::cron_live_snapshot_enable: "%{alias('publish::cron_live_snapshot_enable')}"
 config_scheduled_jobs::cron_live_snapshot_hour: "%{hiera('publish::cron_live_snapshot_hour')}"
 config_scheduled_jobs::cron_live_snapshot_minute: "%{hiera('publish::cron_live_snapshot_minute')}"
 config_scheduled_jobs::cron_live_snapshot_weekday: "%{hiera('publish::cron_live_snapshot_weekday')}"
@@ -115,7 +113,7 @@ aem_curator::config_publish_dispatcher::ssl_cert: "%{hiera('common::dispatcher_s
 aem_curator::config_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_publish_dispatcher::virtual_hosts_dir: "%{hiera('common::virtual_hosts_dir')}"
 
-aem_curator::config_aem_scheduled_jobs::cron_offline_compaction_enable: "%{hiera('publish::cron_offline_compaction_enable')}"
+aem_curator::config_aem_scheduled_jobs::cron_offline_compaction_enable: "%{alias('publish::cron_offline_compaction_enable')}"
 aem_curator::config_aem_scheduled_jobs::cron_offline_compaction_day: "%{hiera('publish::cron_offline_compaction_day')}"
 aem_curator::config_aem_scheduled_jobs::cron_offline_compaction_hour: "%{hiera('publish::cron_offline_compaction_hour')}"
 aem_curator::config_aem_scheduled_jobs::cron_offline_compaction_minute: "%{hiera('publish::cron_offline_compaction_minute')}"

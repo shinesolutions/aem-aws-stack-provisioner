@@ -7,7 +7,7 @@ author_standby::aem_repo_devices:
     device_alias: /dev/xvdb
     aem_id: "%{hiera('author_standby::aem_id')}"
 
-config_scheduled_jobs::cron_live_snapshot_enable: "%{hiera('author_standby::cron_live_snapshot_enable')}"
+config_scheduled_jobs::cron_live_snapshot_enable: "%{alias('author_standby::cron_live_snapshot_enable')}"
 config_scheduled_jobs::cron_live_snapshot_hour: "%{hiera('author_standby::cron_live_snapshot_hour')}"
 config_scheduled_jobs::cron_live_snapshot_minute: "%{hiera('author_standby::cron_live_snapshot_minute')}"
 config_scheduled_jobs::cron_live_snapshot_weekday: "%{hiera('author_standby::cron_live_snapshot_weekday')}"
