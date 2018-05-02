@@ -4,6 +4,7 @@ File {
 
 class publish (
   $base_dir,
+  $exec_path,
   $aem_repo_devices,
   $aem_password_retrieval_command,
   $enable_hourly_live_snapshot_cron,
@@ -24,7 +25,6 @@ class publish (
     exec { "Attach volume from snapshot ID ${snapshotid}":
       command => "${base_dir}/aws-tools/snapshot_attach.py --device ${aem_repo_devices[0][device_name]} --device-alias ${aem_repo_devices[0][device_alias]} --volume-type ${volume_type} --snapshot-id ${snapshotid} -vvvv",
       path    => $exec_path,
-      before  => $attach_volume_before,
     }
   }
 
