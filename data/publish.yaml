@@ -8,6 +8,15 @@ publish::aem_repo_devices:
 
 publish::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
 
+config_scheduled_jobs::cron_export_enable: "%{hiera('publish::cron_export_enable')}"
+config_scheduled_jobs::cron_export_hour: "%{hiera('publish::cron_export_hour')}"
+config_scheduled_jobs::cron_export_minute: "%{hiera('publish::cron_export_minute')}"
+config_scheduled_jobs::cron_export_weekday: "%{hiera('publish::cron_export_weekday')}"
+config_scheduled_jobs::cron_live_snapshot_enable: "%{hiera('publish::cron_live_snapshot_enable')}"
+config_scheduled_jobs::cron_live_snapshot_hour: "%{hiera('publish::cron_live_snapshot_hour')}"
+config_scheduled_jobs::cron_live_snapshot_minute: "%{hiera('publish::cron_live_snapshot_minute')}"
+config_scheduled_jobs::cron_live_snapshot_weekday: "%{hiera('publish::cron_live_snapshot_weekday')}"
+
 aem_curator::action_enable_crxde::aem_instances:
   - run_mode: publish
     aem_id: "%{hiera('publish::aem_id')}"
@@ -56,10 +65,12 @@ aem_curator::config_publish::enable_deploy_flag: false
 aem_curator::config_publish::login_ready_max_tries: 60
 aem_curator::config_publish::login_ready_base_sleep_seconds: 5
 aem_curator::config_publish::login_ready_max_sleep_seconds: 5
-aem_curator::config_publish::enable_offline_compaction_cron: false
-aem_curator::config_publish::enable_daily_export_cron: false
-aem_curator::config_publish::enable_hourly_live_snapshot_cron: false
 aem_curator::config_publish::enable_crxde: false
 aem_curator::config_publish::enable_default_passwords: false
 aem_curator::config_publish::aem_password_reset_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/aem-password-reset-content-%{hiera('aem_curator::config_publish::aem_password_reset_version')}.zip"
 aem_curator::config_publish::aem_password_reset_version: '1.0.2'
+
+aem_curator::config_aem_cronjobs::cron_offline_compaction_enable: "%{hiera('publish::cron_offline_compaction_enable')}"
+aem_curator::config_aem_cronjobs::cron_offline_compaction_day: "%{hiera('publish::cron_offline_compaction_day')}"
+aem_curator::config_aem_cronjobs::cron_offline_compaction_hour: "%{hiera('publish::cron_offline_compaction_hour')}"
+aem_curator::config_aem_cronjobs::cron_offline_compaction_minute: "%{hiera('publish::cron_offline_compaction_minute')}"
