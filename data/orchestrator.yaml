@@ -2,8 +2,8 @@
 orchestrator::base_dir: "%{hiera('common::base_dir')}"
 orchestrator::aem_orchestrator_version: 1.0.0
 
-config_scheduled_jobs::cron_offline_compaction_snapshot_enable: "%{hiera('aem_orchestrator::cron_offline_compaction_snapshot_enable')}"
-config_scheduled_jobs::cron_offline_snapshot_enable: "%{hiera('aem_orchestrator::cron_offline_snapshot_enable')}"
+config_scheduled_jobs::cron_offline_compaction_snapshot_enable: "%{alias('aem_orchestrator::cron_offline_compaction_snapshot_enable')}"
+config_scheduled_jobs::cron_offline_snapshot_enable: "%{alias('aem_orchestrator::cron_offline_snapshot_enable')}"
 config_scheduled_jobs::cron_offline_compaction_snapshot_hour: "%{hiera('aem_orchestrator::cron_offline_compaction_snapshot_hour')}"
 config_scheduled_jobs::cron_offline_compaction_snapshot_minute: "%{hiera('aem_orchestrator::cron_offline_compaction_snapshot_minute')}"
 config_scheduled_jobs::cron_offline_compaction_snapshot_weekday: "%{hiera('aem_orchestrator::cron_offline_compaction_snapshot_weekday')}"
