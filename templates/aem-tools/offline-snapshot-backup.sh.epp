@@ -2,6 +2,18 @@
 set -o nounset
 set -o errexit
 
+translate_exit_code() {
+
+  exit_code="$1"
+  if [ "$exit_code" -eq 0 ] ; then
+    exit_code=0
+  else
+    exit "$exit_code"
+  fi
+
+  return "$exit_code"
+}
+
 if (( $(ps -ef | grep -v grep | grep python | grep snapshot_backup | wc -l) > 0 )); then
 
   echo “snapshot_backup is running!!! Snapshots can hang when snapshoting the volume at the same time. Exiting”
@@ -32,6 +44,8 @@ else
                 --tag "AemId=<%= $aem_repo_device['aem_id'] %>" \
                 <%= $aem_repo_device['device_name'] %>)
 
+    translate_exit_code "$?"
+
     echo "<%= $aem_repo_device['device_name'] %> Snapshot Ended: $(date)"
 
     echo "Testing if taken livesnapshot exists using InSpec..."
@@ -41,6 +55,8 @@ else
       aem_stack_prefix="${stack_prefix}" \
       snapshot_id="${snap_id}" \
       inspec exec . --controls aws-snapshot-exists
+
+    translate_exit_code "$?"
 
   <% } -%>
 fi

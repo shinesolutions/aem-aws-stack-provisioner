@@ -64,17 +64,19 @@ FACTER_aem_username="${aem_username}" \
   --hiera_config conf/hiera.yaml \
   --execute "include aem_curator::action_export_backup"
 
-  echo "Testing package was exported using InSpec..."
-  cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
-  HOME=/root \
-    aem_component=${component} \
-    aem_stack_prefix="${stack_prefix}" \
-    aws_s3_bucket="${data_bucket_name}" \
-    package_group="${package_group}" \
-    package_name="${package_name}" \
-    package_version="${year}${month}${date}-${component}" \
-    backup_path="${year}/${month}" \
-    inspec exec . --controls aws-export-package-available
+translate_exit_code "$?"
+
+echo "Testing package was exported using InSpec..."
+cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+HOME=/root \
+  aem_component=${component} \
+  aem_stack_prefix="${stack_prefix}" \
+  aws_s3_bucket="${data_bucket_name}" \
+  package_group="${package_group}" \
+  package_name="${package_name}" \
+  package_version="${year}${month}${date}-${component}" \
+  backup_path="${year}/${month}" \
+  inspec exec . --controls aws-export-package-available
 
 translate_exit_code "$?"
 
@@ -93,17 +95,19 @@ FACTER_aem_username="${aem_username}" \
   --hiera_config conf/hiera.yaml \
   --execute "include aem_curator::action_export_backup"
 
-  echo "Testing package was exported using InSpec..."
-  cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
-  HOME=/root \
-    aem_component=${component} \
-    aem_stack_prefix="${stack_prefix}" \
-    aws_s3_bucket="${data_bucket_name}" \
-    package_group="${package_group}" \
-    package_name="${package_name}" \
-    package_version="${year}${month}-${component}-latest" \
-    backup_path="${year}/${month}" \
-    inspec exec . --controls aws-export-package-available
+translate_exit_code "$?"
+
+echo "Testing package was exported using InSpec..."
+cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+HOME=/root \
+  aem_component=${component} \
+  aem_stack_prefix="${stack_prefix}" \
+  aws_s3_bucket="${data_bucket_name}" \
+  package_group="${package_group}" \
+  package_name="${package_name}" \
+  package_version="${year}${month}-${component}-latest" \
+  backup_path="${year}/${month}" \
+  inspec exec . --controls aws-export-package-available
 
 translate_exit_code "$?"
 
@@ -122,16 +126,18 @@ FACTER_aem_username="${aem_username}" \
   --hiera_config conf/hiera.yaml \
   --execute "include aem_curator::action_export_backup"
 
-  echo "Testing package was exported using InSpec..."
-  cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
-  HOME=/root \
-    aem_component="${component}" \
-    aem_stack_prefix="${stack_prefix}" \
-    aws_s3_bucket="${data_bucket_name}" \
-    package_group="${package_group}" \
-    package_name="${package_name}" \
-    package_version="${year}-${component}-latest" \
-    backup_path="${year}" \
-    inspec exec . --controls aws-export-package-available
+translate_exit_code "$?"
+
+echo "Testing package was exported using InSpec..."
+cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+HOME=/root \
+  aem_component="${component}" \
+  aem_stack_prefix="${stack_prefix}" \
+  aws_s3_bucket="${data_bucket_name}" \
+  package_group="${package_group}" \
+  package_name="${package_name}" \
+  package_version="${year}-${component}-latest" \
+  backup_path="${year}" \
+  inspec exec . --controls aws-export-package-available
 
 translate_exit_code "$?"
