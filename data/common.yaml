@@ -40,8 +40,8 @@ common::dispatcher_ssl_cert: /etc/ssl/aem.unified-dispatcher.cert
 
 common::aem_password_retrieval_command: "aws s3 cp s3://%{::data_bucket_name}/%{::stack_prefix}/system-users-credentials.json - | jq --raw-output .$aem_username"
 
-# AEM AWS Cronjobs
-config_scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
+# AEM AWS scheduled jobs
+scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
 
 author::exec_path: "%{alias('exec_path')}"
 publish::exec_path: "%{alias('exec_path')}"
