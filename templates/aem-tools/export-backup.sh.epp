@@ -19,6 +19,7 @@ stack_prefix=$(facter stack_prefix)
 aem_username=exporter
 aem_password=$(<%= $aem_password_retrieval_command %>)
 data_bucket_name=$(facter data_bucket_name)
+event=export-backup
 
 year=$(date +%Y)
 month=$(date +%m)
