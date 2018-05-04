@@ -2,6 +2,8 @@
 * Fix Orchestrator InSpec test failure #70
 * Fix export backup script parameters
 * Clean up orphan volume when attaching new snapshot #59
+* Modify scheduled jobs configuration to be feature based instead of component based
+* Add missing Puppet exit code translation after each Puppet apply
 
 ### 2.4.15
 * Fix list packages missing config for consolidated
