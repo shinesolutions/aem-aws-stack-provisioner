@@ -164,7 +164,7 @@ class common (
   # initialisation.
   archive { "${tmp_dir}/${credentials_file}":
     ensure => present,
-    source => "s3://${data_bucket_name}/${stack_prefix}/${credentials_file}",
+    source => "s3://${data_bucket_name}/${stack_prefix}/${credentials_file}"
   }
 }
 

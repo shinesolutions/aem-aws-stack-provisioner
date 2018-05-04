@@ -9,6 +9,21 @@ if [ "$#" -ne 0 ]; then
   exit 1
 fi
 
+# translate puppet exit code to follow convention
+translate_exit_code() {
+
+  exit_code="$1"
+  if [ "$exit_code" -eq 0 ] || [ "$exit_code" -eq 2 ]; then
+    exit_code=0
+  else
+    exit "$exit_code"
+  fi
+
+  return "$exit_code"
+}
+
+set +o errexit
+
 data_bucket_name=$(facter data_bucket_name)
 stack_prefix=$(facter stack_prefix)
 component=author-primary
@@ -20,3 +35,14 @@ aws ec2 create-tags --tags Key=Name,Value="AEM Author - Primary - Promoted from 
 <%= $base_dir %>/aws-tools/set-facts.sh "${data_bucket_name}" "${stack_prefix}"
 
 <%= $base_dir %>/aem-tools/promote-author-standby-to-primary.sh
+
+cd <%= $base_dir %>/aem-aws-stack-provisioner/
+echo "Applying scheduled-job Puppet manifest for all components..."
+puppet apply \
+  --detailed-exitcodes \
+  --debug \
+  --modulepath modules \
+  --hiera_config conf/hiera.yaml \
+  manifests/scheduled-job.pp
+
+translate_exit_code "$?"

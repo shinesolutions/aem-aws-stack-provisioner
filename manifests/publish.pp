@@ -6,8 +6,6 @@ class publish (
   $base_dir,
   $aem_repo_devices,
   $aem_password_retrieval_command,
-  $enable_hourly_live_snapshot_cron,
-  $enable_daily_export_cron,
   $volume_type,
   $publish_dispatcher_id   = $::pairinstanceid,
   $publish_dispatcher_host = $::publishdispatcherhost,
@@ -38,7 +36,8 @@ class publish (
   } -> class { 'aem_curator::config_collectd':
     component       => $component,
     collectd_prefix => "${stack_prefix}-${component}",
-    ec2_id          => "${ec2_id}"
+    ec2_id          => $ec2_id
+  } -> class { 'aem_curator::config_aem_scheduled_jobs':
   }
 
   ##############################################################################
@@ -75,17 +74,6 @@ class publish (
     ),
   }
 
-  if $enable_daily_export_cron {
-    cron { 'daily-export-backups':
-      command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>/var/log/export-backups.log 2>&1",
-      user        => 'root',
-      hour        => 2,
-      minute      => 0,
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
-      require     => File["${base_dir}/aem-tools/export-backups.sh"],
-    }
-    }
-
   ##############################################################################
   # Live snapshot backup
   ##############################################################################
@@ -104,17 +92,7 @@ class publish (
         'component'          => $component,
         'stack_prefix'       => $stack_prefix,
       }
-    ),
-  }
-
-  if $enable_hourly_live_snapshot_cron {
-    cron { 'hourly-live-snapshot-backup':
-      command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>/var/log/live-snapshot-backup.log 2>&1",
-      user        => 'root',
-      hour        => '*',
-      minute      => 0,
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
-    }
+    )
   }
 
   ##############################################################################

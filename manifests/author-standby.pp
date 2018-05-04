@@ -5,14 +5,11 @@ File {
 class author_standby (
   $base_dir,
   $aem_repo_devices,
-  $enable_hourly_live_snapshot_cron,
-  $author_primary_host = $::authorprimaryhost,
-  $component           = $::component,
-  $stack_prefix        = $::stack_prefix,
-  $env_path            = $::cron_env_path,
-  $aem_tools_env_path  = '$PATH:/opt/puppetlabs/puppet/bin',
-  $https_proxy         = $::cron_https_proxy,
-  $ec2_id              = $::ec2_metadata['instance-id'],
+  $author_primary_host        = $::authorprimaryhost,
+  $component                  = $::component,
+  $stack_prefix               = $::stack_prefix,
+  $aem_tools_env_path         = '$PATH:/opt/puppetlabs/puppet/bin',
+  $ec2_id                     = $::ec2_metadata['instance-id'],
 ) {
 
   class { 'aem_curator::config_aem_tools':
@@ -46,16 +43,6 @@ class author_standby (
         'stack_prefix'       => $stack_prefix,
       }
     ),
-  }
-
-  if $enable_hourly_live_snapshot_cron {
-    cron { 'hourly-live-snapshot-backup':
-      command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>/var/log/live-snapshot-backup.log 2>&1",
-      user        => 'root',
-      hour        => '*',
-      minute      => 0,
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
-    }
   }
 
   ##############################################################################
@@ -95,6 +82,7 @@ class author_standby (
       }
     ),
   }
+
 }
 
 include author_standby

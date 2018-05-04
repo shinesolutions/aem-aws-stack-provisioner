@@ -40,6 +40,9 @@ common::dispatcher_ssl_cert: /etc/ssl/aem.unified-dispatcher.cert
 
 common::aem_password_retrieval_command: "aws s3 cp s3://%{::data_bucket_name}/%{::stack_prefix}/system-users-credentials.json - | jq --raw-output .$aem_username"
 
+# AEM AWS scheduled jobs
+scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
+
 author::exec_path: "%{alias('exec_path')}"
 publish::exec_path: "%{alias('exec_path')}"
 author_dispatcher::exec_path: "%{alias('exec_path')}"
@@ -49,19 +52,12 @@ aem_curator::config_publish::exec_path: "%{alias('exec_path')}"
 aem_curator::config_author_dispatcher::exec_path: "%{alias('exec_path')}"
 aem_curator::config_publish_dispatcher::exec_path: "%{alias('exec_path')}"
 
-author_primary::enable_offline_compaction_cron: false
-author_primary::enable_daily_export_cron: false
-author_primary::enable_hourly_live_snapshot_cron: false
-
-author_standby::enable_hourly_live_snapshot_cron: false
-
-publish::enable_offline_compaction_cron: false
-publish::enable_daily_export_cron: false
-publish::enable_hourly_live_snapshot_cron: false
-
 publish::login_ready_max_tries: 60
 publish::login_ready_base_sleep_seconds: 5
 publish::login_ready_max_sleep_seconds: 5
+
+# AEM Cronjobs
+aem_curator::config_aem_scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
 
 # AEM Tools
 aem_curator::config_aem_tools::oak_run_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/oak-run-%{hiera('aem_curator::config_aem_tools::oak_run_version')}.jar"
@@ -70,7 +66,6 @@ aem_curator::config_aem_tools::aem_password_retrieval_command: "%{hiera('common:
 aem_curator::config_aem_tools::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_aem_tools::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_aem_tools::aem_repo_device: /dev/sdb
-aem_curator::config_aem_tools::enable_offline_compaction_cron: false
 aem_curator::config_aem_tools_dispatcher::base_dir: "%{hiera('common::base_dir')}"
 
 # AEM Deployer

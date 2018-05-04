@@ -6,14 +6,10 @@ class author_primary (
   $base_dir,
   $aem_repo_devices,
   $aem_password_retrieval_command,
-  $enable_daily_export_cron,
-  $enable_hourly_live_snapshot_cron,
-  $component          = $::component,
-  $stack_prefix       = $::stack_prefix,
-  $env_path           = $::cron_env_path,
-  $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
-  $https_proxy        = $::cron_https_proxy,
-  $ec2_id             = $::ec2_metadata['instance-id'],
+  $component                  = $::component,
+  $stack_prefix               = $::stack_prefix,
+  $aem_tools_env_path         = '$PATH:/opt/puppetlabs/puppet/bin',
+  $ec2_id                     = $::ec2_metadata['instance-id'],
 ) {
 
   class { 'aem_curator::config_aem_tools':
@@ -24,7 +20,8 @@ class author_primary (
   } -> class { 'aem_curator::config_collectd':
     component       => $component,
     collectd_prefix => "${stack_prefix}-${component}",
-    ec2_id          => "${ec2_id}"
+    ec2_id          => $ec2_id
+  } -> class { 'aem_curator::config_aem_scheduled_jobs':
   }
 
   ##############################################################################
@@ -61,17 +58,6 @@ class author_primary (
     ),
   }
 
-  if $enable_daily_export_cron {
-    cron { 'daily-export-backups':
-      command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>/var/log/export-backups.log 2>&1",
-      user        => 'root',
-      hour        => 2,
-      minute      => 0,
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
-      require     => File["${base_dir}/aem-tools/export-backups.sh"],
-    }
-    }
-
   ##############################################################################
   # Live snapshot backup
   ##############################################################################
@@ -91,16 +77,6 @@ class author_primary (
         'stack_prefix'       => $stack_prefix,
       }
     ),
-  }
-
-  if $enable_hourly_live_snapshot_cron {
-    cron { 'hourly-live-snapshot-backup':
-      command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>/var/log/live-snapshot-backup.log 2>&1",
-      user        => 'root',
-      hour        => '*',
-      minute      => 0,
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
-    }
   }
 
   ##############################################################################
@@ -123,6 +99,7 @@ class author_primary (
       }
     ),
   }
+
 }
 
 include author_primary
