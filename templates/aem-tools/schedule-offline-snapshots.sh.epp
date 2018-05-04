@@ -43,7 +43,7 @@ state=$2
 tmp_dir=<%= $tmp_dir %>/schedule_offline_snapshot
 
 cd "<%= $base_dir %>/aem-aws-stack-provisioner/"
-
+set +o errexit
 ###################################################
 # Case check to enable/disable all
 # or a specific offline snapshot
