@@ -12,8 +12,8 @@ exec_path:
   - "%{hiera('common::base_dir')}/common-tools"
 
 common::base_dir: /opt/shinesolutions
-common::aws_region: ap-southeast-2
 
+common::aws_region: ap-southeast-2
 common::user: ec2-user
 common::group: ec2-user
 
@@ -21,27 +21,34 @@ common::tmp_base_dir: /tmp/shinesolutions
 common::tmp_dir: /tmp/shinesolutions/aem-aws-stack-provisioner
 common::puppet_conf_dir: /etc/puppetlabs/puppet/
 common::credentials_file: system-users-credentials.json
-common::docroot_dir: /var/www/html/
-common::httpd::log_dir: /var/log/httpd
+
+common::aem_password_retrieval_command: "aws s3 cp s3://%{::data_bucket_name}/%{::stack_prefix}/system-users-credentials.json - | jq --raw-output .$aem_username"
 
 # Dispatcher configuration
 common::publish_host: localhost
 common::publish_port: 5433
 common::publish_secure: 1
-
 common::author_host: localhost
 common::author_port: 443
 common::author_secure: 1
-
+common::docroot_dir: /var/www/html/
+common::httpd::log_dir: /var/log/httpd
 common::apache_conf_dir: /etc/httpd/conf
 common::dispatcher_conf_dir: /etc/httpd/conf.modules.d
 common::virtual_hosts_dir: /etc/httpd/conf.d
 common::dispatcher_ssl_cert: /etc/ssl/aem.unified-dispatcher.cert
 
-common::aem_password_retrieval_command: "aws s3 cp s3://%{::data_bucket_name}/%{::stack_prefix}/system-users-credentials.json - | jq --raw-output .$aem_username"
+# pre-common
+pre_common::base_dir: "%{hiera('common::base_dir')}"
+pre_common::tmp_base_dir: "%{hiera('common::tmp_base_dir')}"
+pre_common::tmp_dir: "%{hiera('common::tmp_dir')}"
+pre_common::aws_region: "%{hiera('common::aws_region')}"
+pre_common::user: "%{hiera('common::user')}"
+pre_common::group: "%{hiera('common::group')}"
+pre_common::credentials_file: "%{hiera('common::credentials_file')}"
 
-# AEM AWS scheduled jobs
-scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
+# post-common
+post_common::base_dir: "%{hiera('common::base_dir')}"
 
 author::exec_path: "%{alias('exec_path')}"
 publish::exec_path: "%{alias('exec_path')}"

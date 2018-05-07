@@ -17,14 +17,14 @@ author_publish_dispatcher::volume_type: gp2
 
 author_publish_dispatcher::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
 
-scheduled_jobs::export_enable: "%{alias('publish::scheduled_jobs::enable::export')}"
-scheduled_jobs::export_weekday: "%{hiera('publish::scheduled_jobs::weekday::export')}"
-scheduled_jobs::export_hour: "%{hiera('publish::scheduled_jobs::hour::export')}"
-scheduled_jobs::export_minute: "%{hiera('publish::scheduled_jobs::minute::export')}"
-scheduled_jobs::live_snapshot_enable: "%{alias('publish::scheduled_jobs::enable::live_snapshot')}"
-scheduled_jobs::live_snapshot_weekday: "%{hiera('publish::scheduled_jobs::weekday::live_snapshot')}"
-scheduled_jobs::live_snapshot_hour: "%{hiera('publish::scheduled_jobs::hour::live_snapshot')}"
-scheduled_jobs::live_snapshot_minute: "%{hiera('publish::scheduled_jobs::minute::live_snapshot')}"
+post_common::export_enable: "%{alias('publish::scheduled_jobs::enable::export')}"
+post_common::export_weekday: "%{hiera('publish::scheduled_jobs::weekday::export')}"
+post_common::export_hour: "%{hiera('publish::scheduled_jobs::hour::export')}"
+post_common::export_minute: "%{hiera('publish::scheduled_jobs::minute::export')}"
+post_common::live_snapshot_enable: "%{alias('publish::scheduled_jobs::enable::live_snapshot')}"
+post_common::live_snapshot_weekday: "%{hiera('publish::scheduled_jobs::weekday::live_snapshot')}"
+post_common::live_snapshot_hour: "%{hiera('publish::scheduled_jobs::hour::live_snapshot')}"
+post_common::live_snapshot_minute: "%{hiera('publish::scheduled_jobs::minute::live_snapshot')}"
 
 aem_curator::action_enable_crxde::aem_instances:
   - run_mode: author
@@ -113,7 +113,7 @@ aem_curator::config_publish_dispatcher::ssl_cert: "%{hiera('common::dispatcher_s
 aem_curator::config_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_publish_dispatcher::virtual_hosts_dir: "%{hiera('common::virtual_hosts_dir')}"
 
-aem_curator::config_aem_scheduled_jobs::offline_compaction_enable: "%{alias('publish::scheduled_jobs::aem::enable::offline_compaction')}"
-aem_curator::config_aem_scheduled_jobs::offline_compaction_weekday: "%{hiera('publish::scheduled_jobs::aem::weekday::offline_compaction')}"
-aem_curator::config_aem_scheduled_jobs::offline_compaction_hour: "%{hiera('publish::scheduled_jobs::aem::hour::offline_compaction')}"
-aem_curator::config_aem_scheduled_jobs::offline_compaction_minute: "%{hiera('publish::scheduled_jobs::aem::minute::offline_compaction')}"
+aem_curator::config_aem_scheduled_jobs::offline_compaction_enable: "%{alias('publish::scheduled_jobs::enable::offline_compaction')}"
+aem_curator::config_aem_scheduled_jobs::offline_compaction_weekday: "%{hiera('publish::scheduled_jobs::weekday::offline_compaction')}"
+aem_curator::config_aem_scheduled_jobs::offline_compaction_hour: "%{hiera('publish::scheduled_jobs::hour::offline_compaction')}"
+aem_curator::config_aem_scheduled_jobs::offline_compaction_minute: "%{hiera('publish::scheduled_jobs::minute::offline_compaction')}"

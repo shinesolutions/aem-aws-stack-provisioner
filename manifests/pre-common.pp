@@ -2,7 +2,7 @@ File {
   backup => false,
 }
 
-class common (
+class pre_common (
   $base_dir,
   $tmp_base_dir,
   $tmp_dir,
@@ -168,4 +168,4 @@ class common (
   }
 }
 
-include common
+include pre_common

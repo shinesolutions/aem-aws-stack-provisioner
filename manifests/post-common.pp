@@ -2,7 +2,7 @@ File {
   backup => false,
 }
 
-class scheduled_jobs (
+class post_common (
   $base_dir,
   $env_path                            = $::cron_env_path,
   $https_proxy                         = $::cron_https_proxy,
@@ -101,4 +101,4 @@ class scheduled_jobs (
   }
 }
 
-include scheduled_jobs
+include post_common
