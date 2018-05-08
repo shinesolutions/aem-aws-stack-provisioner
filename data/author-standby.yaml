@@ -7,10 +7,10 @@ author_standby::aem_repo_devices:
     device_alias: /dev/xvdb
     aem_id: "%{hiera('author_standby::aem_id')}"
 
-post_common::live_snapshot_enable: "%{alias('author_standby::scheduled_jobs::enable::live_snapshot')}"
-post_common::live_snapshot_weekday: "%{hiera('author_standby::scheduled_jobs::weekday::live_snapshot')}"
-post_common::live_snapshot_hour: "%{hiera('author_standby::scheduled_jobs::hour::live_snapshot')}"
-post_common::live_snapshot_minute: "%{hiera('author_standby::scheduled_jobs::minute::live_snapshot')}"
+action_scheduled_jobs::live_snapshot_enable: "%{alias('author_standby::scheduled_jobs::enable::live_snapshot')}"
+action_scheduled_jobs::live_snapshot_weekday: "%{hiera('author_standby::scheduled_jobs::weekday::live_snapshot')}"
+action_scheduled_jobs::live_snapshot_hour: "%{hiera('author_standby::scheduled_jobs::hour::live_snapshot')}"
+action_scheduled_jobs::live_snapshot_minute: "%{hiera('author_standby::scheduled_jobs::minute::live_snapshot')}"
 
 aem_curator::action_enable_crxde::aem_instances:
   - run_mode: author

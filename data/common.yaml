@@ -48,7 +48,7 @@ pre_common::group: "%{hiera('common::group')}"
 pre_common::credentials_file: "%{hiera('common::credentials_file')}"
 
 # post-common
-post_common::base_dir: "%{hiera('common::base_dir')}"
+action_scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
 
 author::exec_path: "%{alias('exec_path')}"
 publish::exec_path: "%{alias('exec_path')}"
