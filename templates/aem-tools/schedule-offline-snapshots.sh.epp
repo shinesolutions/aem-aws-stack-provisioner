@@ -3,7 +3,7 @@ set -o nounset
 set -o errexit
 
 if [ "$#" -ne 2 ]; then
-  echo 'Usage: ./schedule-offline-snapshots.sh <all | offline_snapshot | offline_compaction_snapshot> <enable | disable>'
+  echo 'Usage: ./schedule-offline-snapshots.sh <offline_snapshot | offline_compaction_snapshot> <enable | disable>'
   exit 1
 fi
 
@@ -13,6 +13,8 @@ translate_exit_code() {
   exit_code="$1"
   if [ "$exit_code" -eq 0 ]; then
     exit_code=0
+  elif [ "$exit_code" -eq 3 ]; then
+    exit_code=3
   else
     rm -rf "${tmp_dir:?}/*"
     exit "$exit_code"
@@ -36,40 +38,88 @@ translate_puppet_exit_code() {
 }
 
 PATH=<%= $aem_tools_env_path %>
-
-scheduled_job_name=$1
-state=$2
-
 tmp_dir=<%= $tmp_dir %>/schedule_offline_snapshot
 
-cd "<%= $base_dir %>/aem-aws-stack-provisioner/"
-set +o errexit
-###################################################
-# Case check to enable/disable all
-# or a specific offline snapshot
-###################################################
-case "$state" in
-  enable)
-    mkdir -p ${tmp_dir}
-    case "$scheduled_job_name" in
-      all)
-        sed -e '/^.*scheduled_jobs.*enable::offline.*$/s/False$/True/' \
-        < <%= $base_dir %>/aem-aws-stack-provisioner/data/local.yaml \
-        >> ${tmp_dir}/local.yaml
+scheduled_job_name=$1
+scheduled_job_state=$2
 
-        translate_exit_code "$?"
-      ;;
+case "$scheduled_job_state" in
+  enable)
+    scheduled_job_state=True
+  ;;
+  disable)
+    scheduled_job_state=False
+  ;;
+  *)
+    exit 1
+  ;;
+esac
+
+set +o errexit
+
+mkdir -p $tmp_dir
+
+# Download latest local.yaml file
+cd "<%= $base_dir %>"
+aws s3 cp "s3://<%= $data_bucket_name %>/<%= $stack_prefix %>/data/local.yaml" "${tmp_dir}/local.yaml"
+
+# Update local.yaml
+cd "<%= $base_dir %>/aws-tools/"
+
+<%= $base_dir %>/aws-tools/update_hiera.py --file "${tmp_dir}/local.yaml" \
+  --parameter "aem_orchestrator::scheduled_jobs::enable::${scheduled_job_name}" \
+  --parameter-value ${scheduled_job_state} \
+  --action change \
+  --dest-file "${tmp_dir}/local.yaml"
+
+translate_exit_code "$?"
+
+if [ "$exit_code" -eq 3 ]; then
+  <%= $base_dir %>/aws-tools/update_hiera.py --file "${tmp_dir}/local.yaml" \
+    --parameter "aem_orchestrator::scheduled_jobs::enable::${scheduled_job_name}" \
+    --parameter-value ${scheduled_job_state} \
+    --action add \
+    --dest-file "${tmp_dir}/local.yaml"
+
+  translate_exit_code "$?"
+fi
+
+# Upload new local.yaml file to S3
+aws s3 cp "${tmp_dir}/local.yaml" "s3://<%= $data_bucket_name %>/<%= $stack_prefix %>/data/local.yaml"
+translate_exit_code "$?"
+
+# Replace existing local.yaml in aem-aws-stack-provisioner directory
+mv -f "${tmp_dir}/local.yaml" <%= $base_dir %>/aem-aws-stack-provisioner/data/local.yaml
+translate_exit_code "$?"
+
+cd "<%= $base_dir %>/aem-aws-stack-provisioner/"
+# Applying action-scheduled-job Puppet manifest
+echo "Applying action-scheduled-job Puppet manifest..."
+puppet apply \
+  --detailed-exitcodes \
+  --debug \
+  --modulepath modules \
+  --hiera_config conf/hiera.yaml \
+  manifests/action-scheduled-jobs.pp
+
+translate_puppet_exit_code "$?"
+
+case "$scheduled_job_state" in
+  True)
+    case "$scheduled_job_name" in
       offline_snapshot)
-        sed -e '/^.*scheduled_jobs.*enable::offline_snapshot.*$/s/False$/True/' \
-        < <%= $base_dir %>/aem-aws-stack-provisioner/data/local.yaml \
-        >> ${tmp_dir}/local.yaml
+        echo "Testing if scheduled job offline-snapshot is enabled using InSpec..."
+        cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+        HOME=/root \
+          inspec exec . --controls aws-scheduled-job-offline-snapshot-enabled
 
         translate_exit_code "$?"
       ;;
       offline_compaction_snapshot)
-        sed -e '/^.*scheduled_jobs.*enable::offline_compaction_snapshot.*$/s/False$/True/' \
-        < <%= $base_dir %>/aem-aws-stack-provisioner/data/local.yaml \
-        >> ${tmp_dir}/local.yaml
+        echo "Testing if scheduled job offline-compaction-snapshot is enabled using InSpec..."
+        cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+        HOME=/root \
+          inspec exec . --controls aws-scheduled-job-offline-compaction-snapshot-enabled
 
         translate_exit_code "$?"
       ;;
@@ -78,28 +128,21 @@ case "$state" in
       ;;
     esac
     ;;
-  disable)
-    mkdir -p ${tmp_dir}
+  False)
     case "$scheduled_job_name" in
-      all)
-        sed -e '/^.*scheduled_jobs.*enable::offline.*$/s/True$/False/' \
-        < <%= $base_dir %>/aem-aws-stack-provisioner/data/local.yaml \
-        >> ${tmp_dir}/local.yaml
-
-        translate_exit_code "$?"
-      ;;
       offline_snapshot)
-        sed -e '/^.*scheduled_jobs.*enable::offline_snapshot.*$/s/True$/False/' \
-        < <%= $base_dir %>/aem-aws-stack-provisioner/data/local.yaml \
-        >> ${tmp_dir}/local.yaml
+        echo "Testing if scheduled job offline-snapshot is disabled using InSpec..."
+        cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+        HOME=/root \
+          inspec exec . --controls aws-scheduled-job-offline-snapshot-disabled
 
         translate_exit_code "$?"
       ;;
       offline_compaction_snapshot)
-
-        sed -e '/^.*scheduled_jobs.*enable::offline_compaction_snapshot.*$/s/True$/False/' \
-        < <%= $base_dir %>/aem-aws-stack-provisioner/data/local.yaml \
-        >> ${tmp_dir}/local.yaml
+        echo "Testing if scheduled job offline-compaction-snapshot is disabled using InSpec..."
+        cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+        HOME=/root \
+          inspec exec . --controls aws-scheduled-job-offline-compaction-snapshot-disabled
 
         translate_exit_code "$?"
       ;;
@@ -107,28 +150,10 @@ case "$state" in
         exit 1
       ;;
     esac
-  ;;
+    ;;
   *)
     exit 1
   ;;
 esac
-
-aws s3 cp "${tmp_dir}/local.yaml" "s3://<%= $data_bucket_name %>/<%= $stack_prefix %>/data/local.yaml"
-translate_exit_code "$?"
-
-mv -f "${tmp_dir}/local.yaml" <%= $base_dir %>/aem-aws-stack-provisioner/data/local.yaml
-translate_exit_code "$?"
-
-cd "<%= $base_dir %>/aem-aws-stack-provisioner/"
-# Schedule job for offline-snapshot
-echo "Applying scheduled-job Puppet manifest for all components..."
-puppet apply \
-  --detailed-exitcodes \
-  --debug \
-  --modulepath modules \
-  --hiera_config conf/hiera.yaml \
-  manifests/scheduled-job.pp
-
-translate_puppet_exit_code "$?"
 
 rm -rf "${tmp_dir:?}/*"

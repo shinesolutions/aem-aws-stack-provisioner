@@ -2,7 +2,7 @@ File {
   backup => false,
 }
 
-class post_common (
+class action_scheduled_jobs (
   $base_dir,
   $env_path                            = $::cron_env_path,
   $https_proxy                         = $::cron_https_proxy,
@@ -27,7 +27,7 @@ class post_common (
   if $offline_snapshot_enable == true {
     cron { 'stack-offline-snapshot':
       ensure      => present,
-      command     => "cd ${base_dir}/aem-tools && ./stack-offline-snapshot.sh >/var/log/stack-offline-snapshot.log 2>&1",
+      command     => "${base_dir}/aem-tools/stack-offline-snapshot.sh >/var/log/stack-offline-snapshot.log 2>&1",
       user        => 'root',
       hour        => $offline_snapshot_hour,
       minute      => $offline_snapshot_minute,
@@ -37,7 +37,7 @@ class post_common (
   } else {
     cron { 'stack-offline-snapshot':
       ensure      => absent,
-      command     => "cd ${base_dir}/aem-tools && ./stack-offline-snapshot.sh >/var/log/stack-offline-snapshot.log 2>&1",
+      command     => "${base_dir}/aem-tools/stack-offline-snapshot.sh >/var/log/stack-offline-snapshot.log 2>&1",
       user        => 'root',
       environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
     }
@@ -46,7 +46,7 @@ class post_common (
   if $offline_compaction_snapshot_enable == true {
     cron { 'stack-offline-compaction-snapshot':
       ensure      => present,
-      command     => "cd ${base_dir}/aem-tools && ./stack-offline-compaction-snapshot.sh >/var/log/stack-offline-compaction-snapshot.log 2>&1",
+      command     => "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh >/var/log/stack-offline-compaction-snapshot.log 2>&1",
       user        => 'root',
       hour        => $offline_compaction_snapshot_hour,
       minute      => $offline_compaction_snapshot_minute,
@@ -56,7 +56,7 @@ class post_common (
   } else {
     cron { 'stack-offline-compaction-snapshot':
       ensure      => absent,
-      command     => "cd ${base_dir}/aem-tools && ./stack-offline-compaction-snapshot.sh >/var/log/stack-offline-compaction-snapshot.log 2>&1",
+      command     => "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh >/var/log/stack-offline-compaction-snapshot.log 2>&1",
       user        => 'root',
       environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
     }
@@ -101,4 +101,4 @@ class post_common (
   }
 }
 
-include post_common
+include action_scheduled_jobs

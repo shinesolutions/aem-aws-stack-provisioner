@@ -43,6 +43,6 @@ puppet apply \
   --debug \
   --modulepath modules \
   --hiera_config conf/hiera.yaml \
-  manifests/scheduled-job.pp
+  manifests/action-scheduled-jobs.pp
 
 translate_exit_code "$?"

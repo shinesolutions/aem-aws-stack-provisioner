@@ -3,14 +3,14 @@ orchestrator::base_dir: "%{hiera('common::base_dir')}"
 orchestrator::tmp_dir: "%{hiera('common::tmp_dir')}"
 orchestrator::aem_orchestrator_version: 1.0.0
 
-post_common::offline_compaction_snapshot_enable: "%{alias('aem_orchestrator::scheduled_jobs::enable::offline_compaction_snapshot')}"
-post_common::offline_compaction_snapshot_weekday: "%{hiera('aem_orchestrator::scheduled_jobs::weekday::offline_compaction_snapshot')}"
-post_common::offline_compaction_snapshot_hour: "%{hiera('aem_orchestrator::scheduled_jobs::hour::offline_compaction_snapshot')}"
-post_common::offline_compaction_snapshot_minute: "%{hiera('aem_orchestrator::scheduled_jobs::minute::offline_compaction_snapshot')}"
-post_common::offline_snapshot_enable: "%{alias('aem_orchestrator::scheduled_jobs::enable::offline_snapshot')}"
-post_common::offline_snapshot_weekday: "%{hiera('aem_orchestrator::scheduled_jobs::weekday::offline_snapshot')}"
-post_common::offline_snapshot_hour: "%{hiera('aem_orchestrator::scheduled_jobs::hour::offline_snapshot')}"
-post_common::offline_snapshot_minute: "%{hiera('aem_orchestrator::scheduled_jobs::minute::offline_snapshot')}"
+action_scheduled_jobs::offline_compaction_snapshot_enable: "%{alias('aem_orchestrator::scheduled_jobs::enable::offline_compaction_snapshot')}"
+action_scheduled_jobs::offline_compaction_snapshot_weekday: "%{hiera('aem_orchestrator::scheduled_jobs::weekday::offline_compaction_snapshot')}"
+action_scheduled_jobs::offline_compaction_snapshot_hour: "%{hiera('aem_orchestrator::scheduled_jobs::hour::offline_compaction_snapshot')}"
+action_scheduled_jobs::offline_compaction_snapshot_minute: "%{hiera('aem_orchestrator::scheduled_jobs::minute::offline_compaction_snapshot')}"
+action_scheduled_jobs::offline_snapshot_enable: "%{alias('aem_orchestrator::scheduled_jobs::enable::offline_snapshot')}"
+action_scheduled_jobs::offline_snapshot_weekday: "%{hiera('aem_orchestrator::scheduled_jobs::weekday::offline_snapshot')}"
+action_scheduled_jobs::offline_snapshot_hour: "%{hiera('aem_orchestrator::scheduled_jobs::hour::offline_snapshot')}"
+action_scheduled_jobs::offline_snapshot_minute: "%{hiera('aem_orchestrator::scheduled_jobs::minute::offline_snapshot')}"
 
 aem_orchestrator::jarfile_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/aem-orchestrator-%{hiera('orchestrator::aem_orchestrator_version')}.jar"
 aem_orchestrator::manage_installdir: true

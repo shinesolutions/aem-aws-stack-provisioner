@@ -13,6 +13,7 @@ class author_publish_dispatcher (
   $enable_deploy_on_init,
   $aem_repo_devices,
   $component             = $::component,
+  $data_bucket_name      = $::data_bucket_name,
   $stack_prefix          = $::stack_prefix,
   $aem_tools_env_path    = '$PATH:/opt/puppetlabs/puppet/bin',
   $aem_id_author_primary = 'author-primary',
@@ -134,6 +135,28 @@ class author_publish_dispatcher (
       }
     ),
   }
+
+  ##############################################################################
+  # Schedule jobs for offline snapshot & offline compaction snapshot
+  ##############################################################################
+
+  file { "${base_dir}/aem-tools/schedule-offline-snapshots.sh":
+    ensure  => present,
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/schedule-offline-snapshots.sh.epp",
+    {
+      'aem_tools_env_path' => $aem_tools_env_path,
+      'base_dir'           => $base_dir,
+      'data_bucket_name'   => $data_bucket_name,
+      'stack_prefix'       => $stack_prefix,
+      'tmp_dir'            => $tmp_dir
+      }
+    ),
+  }
+
 }
 
 class deploy_on_init (
@@ -150,7 +173,7 @@ class deploy_on_init (
       environment => ["https_proxy=${::cron_https_proxy}"],
       cwd         => $tmp_dir,
       command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>/var/log/puppet-deploy-artifacts.log 2>&1",
-      onlyif      => "test `aws s3 ls s3://${::data_bucket_name}/${::stack_prefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
+      onlyif      => "test `aws s3 ls s3://${data_bucket_name}/${stack_prefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
     }
   }
 

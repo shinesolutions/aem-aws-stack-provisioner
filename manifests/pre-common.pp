@@ -10,11 +10,11 @@ class pre_common (
   $user,
   $group,
   $credentials_file,
-  $extra_packages       = [],
-  $template_dir         = undef,
-  $file_dir             = undef,
-  $stack_prefix         = $::stack_prefix,
-  $data_bucket_name     = $::data_bucket_name,
+  $extra_packages    = [],
+  $template_dir      = undef,
+  $file_dir          = undef,
+  $stack_prefix      = $::stack_prefix,
+  $data_bucket_name  = $::data_bucket_name,
 ) {
   $template_dir_final = pick(
     $template_dir,
@@ -124,6 +124,15 @@ class pre_common (
   file { "${base_dir}/aws-tools/wait_for_ec2tags.py":
     ensure  => present,
     source  => "${file_dir_final}/aws-tools/wait_for_ec2tags.py",
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    require => File["${base_dir}/aws-tools/"],
+  }
+
+  file { "${base_dir}/aws-tools/update_hiera.py":
+    ensure  => present,
+    source  => "${file_dir_final}/aws-tools/update_hiera.py",
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
