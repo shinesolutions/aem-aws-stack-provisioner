@@ -1,5 +1,5 @@
 ### 2.4.17
-*
+* Fix undefined method lookup error on Chaos Monkey InSpec test #82
 
 ### 2.4.16
 * Fix Orchestrator InSpec test failure #70

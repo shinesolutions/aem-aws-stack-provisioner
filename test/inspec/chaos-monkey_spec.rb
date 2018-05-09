@@ -1,5 +1,7 @@
 require_relative './spec_helper'
 
+init_conf
+
 tomcat_srv_name = @hiera.lookup('chaos_monkey::tomcat_srv_name', nil, nil)
 tomcat_srv_name ||= 'tomcat'
 
