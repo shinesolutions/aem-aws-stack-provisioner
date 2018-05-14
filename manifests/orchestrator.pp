@@ -6,6 +6,7 @@ class orchestrator (
   $base_dir,
   $tmp_dir,
   $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
+  $component          = $::component,
   $data_bucket_name   = $::data_bucket_name,
   $stack_prefix       = $::stack_prefix
 
@@ -90,7 +91,29 @@ class orchestrator (
       }
       ),
     }
+  ##############################################################################
+  # Update /etc/awslogs/awslogs.conf
+  # to contain stack_prefix and component name
+  ##############################################################################
 
+  class { 'update_awslogs': }
+}
+
+class update_awslogs (
+  $old_awslogs_content = file('/etc/awslogs/awslogs.conf'),
+) {
+  service { 'awslogs':
+    ensure => 'running',
+    enable => true
+  }
+  $mod_awslogs_content = regsubst($old_awslogs_content, '^log_group_name = ', "log_group_name = ${$stack_prefix}", 'G' )
+  $new_awslogs_content = regsubst($mod_awslogs_content, '^log_stream_name = ', "log_stream_name = ${$component}/", 'G' )
+  file { 'Update file /etc/awslogs/awslogs.conf':
+    ensure  => file,
+    content => $new_awslogs_content,
+    path    => '/etc/awslogs/awslogs.conf',
+    notify  => Service['awslogs'],
+  }
 }
 
 include orchestrator

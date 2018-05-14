@@ -134,6 +134,29 @@ class publish (
     group  => 'root',
   }
 
+  ##############################################################################
+  # Update /etc/awslogs/awslogs.conf
+  # to contain stack_prefix and component name
+  ##############################################################################
+
+  class { 'update_awslogs': }
+}
+
+class update_awslogs (
+  $old_awslogs_content = file('/etc/awslogs/awslogs.conf'),
+) {
+  service { 'awslogs':
+    ensure => 'running',
+    enable => true
+  }
+  $mod_awslogs_content = regsubst($old_awslogs_content, '^log_group_name = ', "log_group_name = ${$stack_prefix}", 'G' )
+  $new_awslogs_content = regsubst($mod_awslogs_content, '^log_stream_name = ', "log_stream_name = ${$component}/", 'G' )
+  file { 'Update file /etc/awslogs/awslogs.conf':
+    ensure  => file,
+    content => $new_awslogs_content,
+    path    => '/etc/awslogs/awslogs.conf',
+    notify  => Service['awslogs'],
+  }
 }
 
 include publish

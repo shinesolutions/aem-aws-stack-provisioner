@@ -6,10 +6,10 @@ class author_primary (
   $base_dir,
   $aem_repo_devices,
   $aem_password_retrieval_command,
-  $component                  = $::component,
-  $stack_prefix               = $::stack_prefix,
-  $aem_tools_env_path         = '$PATH:/opt/puppetlabs/puppet/bin',
-  $ec2_id                     = $::ec2_metadata['instance-id'],
+  $component          = $::component,
+  $stack_prefix       = $::stack_prefix,
+  $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
+  $ec2_id             = $::ec2_metadata['instance-id'],
 ) {
 
   class { 'aem_curator::config_aem_tools':
@@ -99,7 +99,29 @@ class author_primary (
       }
     ),
   }
+  ##############################################################################
+  # Update /etc/awslogs/awslogs.conf
+  # to contain stack_prefix and component name
+  ##############################################################################
 
+  class { 'update_awslogs': }
+}
+
+class update_awslogs (
+  $old_awslogs_content = file('/etc/awslogs/awslogs.conf'),
+) {
+  service { 'awslogs':
+    ensure => 'running',
+    enable => true
+  }
+  $mod_awslogs_content = regsubst($old_awslogs_content, '^log_group_name = ', "log_group_name = ${$stack_prefix}", 'G' )
+  $new_awslogs_content = regsubst($mod_awslogs_content, '^log_stream_name = ', "log_stream_name = ${$component}/", 'G' )
+  file { 'Update file /etc/awslogs/awslogs.conf':
+    ensure  => file,
+    content => $new_awslogs_content,
+    path    => '/etc/awslogs/awslogs.conf',
+    notify  => Service['awslogs'],
+  }
 }
 
 include author_primary
