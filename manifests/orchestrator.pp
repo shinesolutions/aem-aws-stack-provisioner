@@ -5,10 +5,10 @@ File {
 class orchestrator (
   $base_dir,
   $tmp_dir,
-  $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
-  $data_bucket_name   = $::data_bucket_name,
-  $stack_prefix       = $::stack_prefix
-
+  $aem_tools_env_path       = '$PATH:/opt/puppetlabs/puppet/bin',
+  $stack_manager_stack_name = undef,
+  $data_bucket_name         = $::data_bucket_name,
+  $stack_prefix             = $::stack_prefix,
 ) {
 
   Archive {
@@ -29,7 +29,9 @@ class orchestrator (
     group   => 'root',
   } -> file { "${base_dir}/aem-tools/stack-offline-snapshot.sh":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-snapshot.sh.epp", { 'sns_topic_arn' => "${::stack_manager_sns_topic_arn}",}),
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-snapshot.sh.epp", {
+      'stack_manager_stack_name' => "${stack_manager_stack_name}",
+    }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
@@ -47,7 +49,9 @@ class orchestrator (
     group   => 'root',
   } -> file { "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-compaction-snapshot.sh.epp", { 'sns_topic_arn' => "${::stack_manager_sns_topic_arn}",}),
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-compaction-snapshot.sh.epp", {
+      'stack_manager_stack_name' => "${stack_manager_stack_name}",
+    }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',

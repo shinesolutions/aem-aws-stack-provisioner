@@ -2,5 +2,14 @@
 set -o nounset
 set -o errexit
 
+echo "Triggering offline compaction snapshot using Stack Manager stack name <%= $stack_manager_stack_name %>..."
+
+stack_manager_stack_arn=$(aws cloudformation describe-stacks --stack-name "<%= $stack_manager_stack_name %>" --query 'Stacks[0].Outputs[?OutputKey==`StackManagerStackArn`].OutputValue' --output text)
+echo "Using Stack Manager stack ARN ${stack_manager_stack_arn} ..."
+
+stack_manager_backup_sns_topic_arn=$(aws cloudformation describe-stacks --stack-name "$stack_manager_stack_arn" --query 'Stacks[0].Outputs[?OutputKey==`BackupTopicArn`].OutputValue' --output text)
+echo "Using Stack Manager backup SNS topic ARN ${stack_manager_backup_sns_topic_arn} ..."
+
 message=$(cat stack-offline-compaction-snapshot-message.json)
-aws sns publish --topic-arn "<%= $sns_topic_arn %>" --message "${message}"
+echo "Sending message ${message}..."
+aws sns publish --topic-arn "${stack_manager_backup_sns_topic_arn}" --message "${message}"
