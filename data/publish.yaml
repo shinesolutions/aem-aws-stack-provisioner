@@ -8,6 +8,8 @@ publish::aem_repo_devices:
     aem_id: "%{hiera('publish::aem_id')}"
 publish::volume_type: gp2
 
+publish::revert_snapshot_type: "%{hiera('publish::revert_snapshot_type')}"
+
 publish::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
 
 action_scheduled_jobs::export_enable: "%{alias('publish::scheduled_jobs::enable::export')}"
