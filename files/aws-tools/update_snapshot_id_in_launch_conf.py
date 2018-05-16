@@ -161,7 +161,7 @@ def sanitize_for_create_launch_conf(launch_conf):
   launch_conf.pop('KernelId')
   launch_conf.pop('RamdiskId')
 
-def find_launch_conf(client, launch_conf_name):
+def get_sanitized_launch_conf(client, launch_conf_name):
   launch_conf = client.describe_launch_configurations(LaunchConfigurationNames=[launch_conf_name])['LaunchConfigurations'][0]
   sanitize_for_create_launch_conf(launch_conf)
   log.debug('Launch Configuration to update: %r', launch_conf)
@@ -170,43 +170,46 @@ def find_launch_conf(client, launch_conf_name):
 def delete_launch_conf(client, launch_conf_name):
   client.delete_launch_configuration(LaunchConfigurationName=launch_conf_name)
 
-def update_autoscaling_group(client, group_name, launch_conf_name):
-  client.update_auto_scaling_group(
-    AutoScalingGroupName=group_name,
-    LaunchConfigurationName=launch_conf_name
-  )
-
-def copy_launch_conf(client, launch_conf, new_launch_conf_name):
+def repoint_autoscaling_group(client, group_name, launch_conf, new_launch_conf_name):
+  """
+    Update auto scaling group with the same launch configuration (but with a new name)
+  """
+  # Copy the launch configuration with the new name
   launch_conf['LaunchConfigurationName'] = new_launch_conf_name
   client.create_launch_configuration(**launch_conf)
+  # Update auto scaling group with this new launch configuration
+  client.update_auto_scaling_group(
+    AutoScalingGroupName=group_name,
+    LaunchConfigurationName=new_launch_conf_name
+  )
 
-def repoint_autoscaling_group(client, group_name, launch_conf, new_launch_conf_name):
-  copy_launch_conf(client, launch_conf, new_launch_conf_name)
-  update_autoscaling_group(client, group_name, new_launch_conf_name)
-
-# TODO: Explain what this is doing and Why?
 def update_snapshot_id_to_launch_conf(snapshot_id, component, stack_prefix, device_name):
+  """
+    Updates the autoscaling group's launch configuration with a new snapshot id
+        1. Gets the autoscaling group  (filtered by component and stack_prefix)
+        2. Copies existing launch configuration and updates the snapshot id for the given device_name
+        3. Points autoscaling group to a temporary launch configuration while deleting the old launch Configuration
+        4. Points autoscaling group to the new launch configuration (using original name) while deleting the temporary launch Configuration
+  """
   client = boto3.client('autoscaling')
   group = get_autoscaling_group(client, component, stack_prefix)
   group_name = group['AutoScalingGroupName']
-  launch_conf_name = group['LaunchConfigurationName']
-  temp_launch_conf_name = launch_conf_name + "-temp" # need
+  launch_conf_name = group['LaunchConfigurationName'] # get the current name
+  temp_launch_conf_name = launch_conf_name + "-temp"  # create a temporary version
 
-  # create a sanitized launch configuration using the existing launch configuration
-  launch_conf = find_launch_conf(client, launch_conf_name)
-  # update the snapshot_id in this sanitized launch_conf
+  # Create a sanitized launch configuration using the existing launch configuration
+  launch_conf = get_sanitized_launch_conf(client, launch_conf_name)
+  # Update the snapshot_id in this launch configuration
   update_snapshot_id(launch_conf, device_name, snapshot_id)
-  # create a temp Launch conf and point the autoscaling group to it (asg needs to have a launch configuration as all times)
+
+  # Update autoscaling group with this launch configuration but using the temporary name
   repoint_autoscaling_group(client, group_name, launch_conf, temp_launch_conf_name)
-  # delete current launch conf
+  # Delete the original launch configuration
   delete_launch_conf(client, launch_conf_name)
-  # create a the new Launch conf (using original name) and point the autoscaling group to it
+  # Update autoscaling group with this launch configuration but using the original name
   repoint_autoscaling_group(client, group_name, launch_conf, launch_conf_name)
-  # delete the temp launch conf
+  # Delete the temporary launch configuration
   delete_launch_conf(client, temp_launch_conf_name)
-
-
-
 
 
 def main():
