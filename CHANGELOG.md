@@ -1,5 +1,5 @@
 ### 2.4.18
-*
+* Replace global SNS topic ARN with Stack Manager stack name class parameter
 
 ### 2.4.17
 * Fix undefined method lookup error on Chaos Monkey InSpec test #82
