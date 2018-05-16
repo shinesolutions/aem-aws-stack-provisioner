@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# updat_hiera.py is used to updates parameters in the hiera YAML file.
+# update_hiera.py is used to updates parameters in the hiera YAML file.
 #
 # Exit codes:
 # 2 - general error
