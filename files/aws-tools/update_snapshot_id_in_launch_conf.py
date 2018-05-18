@@ -197,6 +197,10 @@ def update_snapshot_id_to_launch_conf(snapshot_id, component, stack_prefix, devi
   launch_conf_name = group['LaunchConfigurationName'] # get the current name
   temp_launch_conf_name = launch_conf_name + "-temp"  # create a temporary version
 
+  # Delete temp_launch_conf_name, if any (due to previous failed executions)
+  if len(client.describe_launch_configurations(LaunchConfigurationNames=[temp_launch_conf_name])['LaunchConfigurations']) == 1:
+    client.delete_launch_configuration(LaunchConfigurationName=temp_launch_conf_name)
+
   # Create a sanitized launch configuration using the existing launch configuration
   launch_conf = get_sanitized_launch_conf(client, launch_conf_name)
   # Update the snapshot_id in this launch configuration
