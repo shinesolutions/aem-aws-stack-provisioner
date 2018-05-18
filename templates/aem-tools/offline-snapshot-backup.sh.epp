@@ -58,27 +58,26 @@ else
 
     translate_exit_code "$?"
 
-  <% } -%>
 
-  <% if $revert_snapshot_type == 'offline' { %>
+    <% if $revert_snapshot_type == 'offline' { %>
 
-    echo "Update Launch Configuration Started: $(date)"
+      echo "Update Launch Configuration Started: $(date)"
 
-    <%= $base_dir %>/aws-tools/update_snapshot_id_in_launch_conf.py \
-            --stack-prefix $stack_prefix \
-            --component $component \
-            --device /dev/sdb \
-            --snapshot-id ${snap_id}
+      <%= $base_dir %>/aws-tools/update_snapshot_id_in_launch_conf.py \
+              --stack-prefix ${stack_prefix} \
+              --component ${component} \
+              --device <%= $aem_repo_device['device_name'] %> \
+              --snapshot-id ${snap_id}
 
-    translate_exit_code "$?"
+      translate_exit_code "$?"
 
-    echo "Update Launch Configuration Ended: $(date)"
+      echo "Update Launch Configuration Ended: $(date)"
 
-
-  <% } else { -%>
-
+    <% } -%>
 
 
   <% } -%>
+
+
 
 fi
