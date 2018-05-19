@@ -1,3 +1,6 @@
+### 2.5.0
+*
+
 ### 2.4.18
 * Replace global SNS topic ARN with Stack Manager stack name class parameter
 
