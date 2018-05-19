@@ -156,6 +156,25 @@ class author_publish_dispatcher (
       }
     ),
   }
+
+  ##############################################################################
+  # AEM Readiness test
+  ##############################################################################
+
+  file { "${base_dir}/aem-tools/test-readiness.sh":
+    ensure  => present,
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/test-readiness.sh.epp",
+      {
+        'aem_tools_env_path' => $aem_tools_env_path,
+        'base_dir'           => $base_dir,
+      }
+    ),
+  }
+
   ##############################################################################
   # Update /etc/awslogs/awslogs.conf
   # to contain stack_prefix and component name
