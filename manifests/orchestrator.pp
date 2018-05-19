@@ -93,8 +93,9 @@ class orchestrator (
         'aem_tools_env_path' => $aem_tools_env_path,
         'base_dir'           => $base_dir,
       }
-      ),
-    }
+    ),
+  }
+
   ##############################################################################
   # Update /etc/awslogs/awslogs.conf
   # to contain stack_prefix and component name
