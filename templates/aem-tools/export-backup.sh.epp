@@ -67,7 +67,7 @@ FACTER_aem_username="${aem_username}" \
 translate_exit_code "$?"
 
 echo "Testing package was exported using InSpec..."
-cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
 HOME=/root \
   aem_component=${component} \
   aem_stack_prefix="${stack_prefix}" \
@@ -98,7 +98,7 @@ FACTER_aem_username="${aem_username}" \
 translate_exit_code "$?"
 
 echo "Testing package was exported using InSpec..."
-cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
 HOME=/root \
   aem_component=${component} \
   aem_stack_prefix="${stack_prefix}" \
@@ -129,7 +129,7 @@ FACTER_aem_username="${aem_username}" \
 translate_exit_code "$?"
 
 echo "Testing package was exported using InSpec..."
-cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
 HOME=/root \
   aem_component="${component}" \
   aem_stack_prefix="${stack_prefix}" \

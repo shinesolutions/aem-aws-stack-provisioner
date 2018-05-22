@@ -8,14 +8,14 @@ component=$(/opt/puppetlabs/bin/facter component)
 
 if [ ${component} = 'author-publish-dispatcher' ]; then
   echo "Testing if AEM Consolidated is ready using InSpec..."
-  cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+  cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
   # # TODO: not yet supported
   # HOME=/root \
   #   aem_stack_prefix="${stack_prefix}" \
   #   make test-readiness-consolidated
 else
   echo "Testing if AEM Full-Set is ready using InSpec..."
-  cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+  cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
   HOME=/root \
     aem_stack_prefix="${stack_prefix}" \
     make test-readiness

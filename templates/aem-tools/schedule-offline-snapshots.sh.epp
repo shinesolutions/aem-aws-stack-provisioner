@@ -109,7 +109,7 @@ case "$scheduled_job_state" in
     case "$scheduled_job_name" in
       offline_snapshot)
         echo "Testing if scheduled job offline-snapshot is enabled using InSpec..."
-        cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+        cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
         HOME=/root \
           inspec exec . --controls aws-scheduled-job-offline-snapshot-enabled
 
@@ -117,7 +117,7 @@ case "$scheduled_job_state" in
       ;;
       offline_compaction_snapshot)
         echo "Testing if scheduled job offline-compaction-snapshot is enabled using InSpec..."
-        cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+        cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
         HOME=/root \
           inspec exec . --controls aws-scheduled-job-offline-compaction-snapshot-enabled
 
@@ -132,7 +132,7 @@ case "$scheduled_job_state" in
     case "$scheduled_job_name" in
       offline_snapshot)
         echo "Testing if scheduled job offline-snapshot is disabled using InSpec..."
-        cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+        cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
         HOME=/root \
           inspec exec . --controls aws-scheduled-job-offline-snapshot-disabled
 
@@ -140,7 +140,7 @@ case "$scheduled_job_state" in
       ;;
       offline_compaction_snapshot)
         echo "Testing if scheduled job offline-compaction-snapshot is disabled using InSpec..."
-        cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+        cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
         HOME=/root \
           inspec exec . --controls aws-scheduled-job-offline-compaction-snapshot-disabled
 

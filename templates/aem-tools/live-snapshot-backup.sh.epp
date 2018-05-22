@@ -49,7 +49,7 @@ else
     echo "<%= $aem_repo_device['device_name'] %> Snapshot Ended: $(date)"
 
     echo "Testing if taken livesnapshot exists using InSpec..."
-    cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws-master"
+    cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
     HOME=/root \
       aem_component="${component}" \
       aem_stack_prefix="${stack_prefix}" \

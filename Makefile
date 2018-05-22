@@ -9,8 +9,10 @@ deps:
 	gem install bundler
 	bundle install --binstubs
 	bundle exec r10k puppetfile install --verbose --moduledir modules
-	inspec vendor --overwrite
-	mkdir -p files/test/inspec && mv vendor/*.tar.gz files/test/inspec/ && cd files/test/inspec && gunzip *.tar.gz && tar -xvf *.tar && rm *.tar
+	bundle exec inspec vendor --overwrite
+	cd vendor && find . -name "*.tar.gz" -exec tar -xzvf '{}' \; -exec rm '{}' \;
+	cd vendor && mv inspec-aem-aws-?.?.? inspec-aem-aws
+	rm -rf files/test/inspec/ && mkdir -p files/test/inspec/ && cp -R vendor/* files/test/inspec/
 
 validate:
 	bundle exec puppet parser validate manifests/*.pp
