@@ -1,5 +1,6 @@
 ### 2.5.0
 * Fix cron scheduled execution of offline snapshot by specifying message full path
+* Enable publish launch configuration default to be set to the live or offline snapshot
 
 ### 2.4.18
 * Replace global SNS topic ARN with Stack Manager stack name class parameter
