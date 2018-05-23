@@ -87,11 +87,11 @@ class publish (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/live-snapshot-backup.sh.epp",
       {
-        'aem_tools_env_path' => $aem_tools_env_path,
-        'base_dir'           => $base_dir,
-        'aem_repo_devices'   => $aem_repo_devices,
-        'component'          => $component,
-        'stack_prefix'       => $stack_prefix,
+        'aem_tools_env_path'   => $aem_tools_env_path,
+        'base_dir'             => $base_dir,
+        'aem_repo_devices'     => $aem_repo_devices,
+        'component'            => $component,
+        'stack_prefix'         => $stack_prefix,
         'revert_snapshot_type' => $revert_snapshot_type,
       }
     )
