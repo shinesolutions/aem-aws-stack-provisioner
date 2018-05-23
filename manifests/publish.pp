@@ -92,6 +92,7 @@ class publish (
         'aem_repo_devices'   => $aem_repo_devices,
         'component'          => $component,
         'stack_prefix'       => $stack_prefix,
+        'revert_snapshot_type' => $revert_snapshot_type,
       }
     )
   }

@@ -58,5 +58,26 @@ else
 
     translate_exit_code "$?"
 
+
+    <% if $revert_snapshot_type == 'live' { %>
+
+      echo "Update Launch Configuration Started: $(date)"
+
+      <%= $base_dir %>/aws-tools/update_snapshot_id_in_launch_conf.py \
+              --stack-prefix ${stack_prefix} \
+              --component ${component} \
+              --device <%= $aem_repo_device['device_name'] %> \
+              --snapshot-id ${snap_id}
+
+      translate_exit_code "$?"
+
+      echo "Update Launch Configuration Ended: $(date)"
+
+    <% } -%>
+
+
   <% } -%>
+
+
+
 fi
