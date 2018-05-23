@@ -31,6 +31,7 @@ class orchestrator (
   } -> file { "${base_dir}/aem-tools/stack-offline-snapshot.sh":
     ensure  => present,
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-snapshot.sh.epp", {
+      'base_dir'                 => "${base_dir}",
       'stack_manager_stack_name' => "${stack_manager_stack_name}",
     }),
     mode    => '0775',
