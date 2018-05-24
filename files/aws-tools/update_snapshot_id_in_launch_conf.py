@@ -134,6 +134,18 @@ def get_autoscaling_group(client, component, stack_prefix):
         return group
   raise ValueError('No Autoscaling Group found for stack_prefix: \'{}\' and component: \'{}\'.'.format(stack_prefix, component))
 
+def snapshot_id_exists(snapshot_id):
+  """
+    Checks for the existence of the snapshot
+  """
+  try:
+    client = boto3.client('ec2')
+    response = len(client.describe_snapshots(SnapshotIds=[snapshot_id])['Snapshots'])
+    if response == 1:
+      return True
+  except:
+    return False
+
 def update_snapshot_id(launch_conf, device_name, snapshot_id):
   """
     Updates launch configuration with the device name for the snapshot id
@@ -201,19 +213,22 @@ def update_snapshot_id_to_launch_conf(snapshot_id, component, stack_prefix, devi
   if len(client.describe_launch_configurations(LaunchConfigurationNames=[temp_launch_conf_name])['LaunchConfigurations']) == 1:
     client.delete_launch_configuration(LaunchConfigurationName=temp_launch_conf_name)
 
-  # Create a sanitized launch configuration using the existing launch configuration
-  launch_conf = get_sanitized_launch_conf(client, launch_conf_name)
-  # Update the snapshot_id in this launch configuration
-  update_snapshot_id(launch_conf, device_name, snapshot_id)
+  if snapshot_id_exists(snapshot_id):
+      # Create a sanitized launch configuration using the existing launch configuration
+      launch_conf = get_sanitized_launch_conf(client, launch_conf_name)
+      # Update the snapshot_id in this launch configuration
+      update_snapshot_id(launch_conf, device_name, snapshot_id)
 
-  # Update autoscaling group with this launch configuration but using the temporary name
-  repoint_autoscaling_group(client, group_name, launch_conf, temp_launch_conf_name)
-  # Delete the original launch configuration
-  delete_launch_conf(client, launch_conf_name)
-  # Update autoscaling group with this launch configuration but using the original name
-  repoint_autoscaling_group(client, group_name, launch_conf, launch_conf_name)
-  # Delete the temporary launch configuration
-  delete_launch_conf(client, temp_launch_conf_name)
+      # Update autoscaling group with this launch configuration but using the temporary name
+      repoint_autoscaling_group(client, group_name, launch_conf, temp_launch_conf_name)
+      # Delete the original launch configuration
+      delete_launch_conf(client, launch_conf_name)
+      # Update autoscaling group with this launch configuration but using the original name
+      repoint_autoscaling_group(client, group_name, launch_conf, launch_conf_name)
+      # Delete the temporary launch configuration
+      delete_launch_conf(client, temp_launch_conf_name)
+  else:
+    raise ValueError('Snapshot Id cannot be found: \'{}\''.format(snapshot_id))
 
 
 def main():
