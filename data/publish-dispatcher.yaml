@@ -1,5 +1,6 @@
 ---
 publish_dispatcher::base_dir: "%{hiera('common::base_dir')}"
+publish_dispatcher::log_dir: "%{hiera('common::log_dir')}"
 publish_dispatcher::docroot_dir: "%{hiera('common::docroot_dir')}"
 publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
 
@@ -11,3 +12,7 @@ aem_curator::config_publish_dispatcher::publish_port: "%{hiera('common::publish_
 aem_curator::config_publish_dispatcher::publish_secure: "%{hiera('common::publish_secure')}"
 aem_curator::config_publish_dispatcher::ssl_cert: "%{hiera('common::dispatcher_ssl_cert')}"
 aem_curator::config_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
+
+# Logrotation configuration
+aem_curator::config_logrotate::config: "%{alias('publish_dispatcher::logrotation::config')}"
+aem_curator::config_logrotate::rules: "%{alias('publish_dispatcher::logrotation::rules')}"

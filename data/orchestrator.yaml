@@ -43,3 +43,7 @@ aem_orchestrator::application_properties::aem_replication_log_level: 'info'
 aem_orchestrator::application_properties::aem_reverse_replication_log_level: 'error'
 
 aem_orchestrator::application_properties::startup_wait_for_author_elb_max_attempts: '150'
+
+# Logrotation configuration
+aem_curator::config_logrotate::config: "%{alias('aem_orchestrator::logrotation:::config')}"
+aem_curator::config_logrotate::rules: "%{alias('aem_orchestrator::logrotation:::rules')}"

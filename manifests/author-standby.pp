@@ -18,6 +18,7 @@ class author_standby (
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_author_standby':
     author_primary_host => $author_primary_host,
+  } -> class { 'aem_curator::config_logrotate':
   } -> class { 'aem_curator::config_collectd':
     component       => $component,
     collectd_prefix => "${stack_prefix}-${component}",

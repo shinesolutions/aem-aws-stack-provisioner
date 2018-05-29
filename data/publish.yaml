@@ -77,3 +77,7 @@ aem_curator::config_aem_scheduled_jobs::offline_compaction_enable: "%{alias('pub
 aem_curator::config_aem_scheduled_jobs::offline_compaction_weekday: "%{hiera('publish::scheduled_jobs::weekday::offline_compaction')}"
 aem_curator::config_aem_scheduled_jobs::offline_compaction_hour: "%{hiera('publish::scheduled_jobs::hour::offline_compaction')}"
 aem_curator::config_aem_scheduled_jobs::offline_compaction_minute: "%{hiera('publish::scheduled_jobs::minute::offline_compaction')}"
+
+# Logrotation configuration
+aem_curator::config_logrotate::config: "%{alias('publish::logrotation::config')}"
+aem_curator::config_logrotate::rules: "%{alias('publish::logrotation::rules')}"
