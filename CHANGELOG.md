@@ -1,3 +1,6 @@
+### 2.5.1
+* Update hiera configuration file to version 5
+
 ### 2.5.0
 * Fix cron scheduled execution of offline snapshot by specifying message full path
 * Enable publish launch configuration default to be set to the live or offline snapshot
