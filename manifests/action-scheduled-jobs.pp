@@ -22,7 +22,7 @@ class action_scheduled_jobs (
   $offline_snapshot_hour               = '1',
   $offline_snapshot_minute             = '15',
   $offline_snapshot_weekday            = '2-7',
-  $log_dir                             = '/var/log/shinesolutions'
+  $log_dir                             = '/var/log/shinesolutions',
 ) {
 
   if $offline_snapshot_enable == true {
