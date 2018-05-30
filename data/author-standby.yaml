@@ -61,3 +61,7 @@ aem_curator::config_author_standby::credentials_file: "%{hiera('common::credenti
 aem_curator::config_author_standby::enable_deploy_flag: false
 aem_curator::config_author_standby::enable_crxde: false
 aem_curator::config_author_standby::enable_default_passwords: false
+
+# Logrotation configuration
+aem_curator::config_logrotate::config: "%{alias('author_standby::logrotation::config')}"
+aem_curator::config_logrotate::rules: "%{alias('author_standby::logrotation::rules')}"

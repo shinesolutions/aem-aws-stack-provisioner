@@ -30,3 +30,7 @@ simianarmy::chaos_properties::simianarmy_chaos_mandatory_termination_enabled: 'f
 simianarmy::chaos_properties::simianarmy_chaos_mandatory_termination_window_in_days: '32'
 
 simianarmy::chaos_properties::simianarmy_chaos_terminate_on_demand.enabled: 'true'
+
+# Logrotation configuration
+aem_curator::config_logrotate::config: "%{alias('simianarmy::logrotation::config')}"
+aem_curator::config_logrotate::rules: "%{alias('simianarmy::logrotation::rules')}"

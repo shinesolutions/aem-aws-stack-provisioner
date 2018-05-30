@@ -34,6 +34,7 @@ class publish (
   } -> class { 'aem_curator::config_publish':
     publish_dispatcher_id   => $publish_dispatcher_id,
     publish_dispatcher_host => $publish_dispatcher_host,
+  } -> class { 'aem_curator::config_logrotate':
   } -> class { 'aem_curator::config_collectd':
     component       => $component,
     collectd_prefix => "${stack_prefix}-${component}",

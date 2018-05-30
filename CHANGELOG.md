@@ -1,6 +1,9 @@
 ### 2.5.0
 * Fix cron scheduled execution of offline snapshot by specifying message full path
 * Enable publish launch configuration default to be set to the live or offline snapshot
+* Add feature to make logrotation configurable for all AEM components
+* Add Log directory /var/log/shinesolutions
+* Moved schedule jobs log files to /var/log/shinesolutions
 * Upgrade Hiera configuration file to version 5
 
 ### 2.4.18

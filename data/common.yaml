@@ -1,4 +1,15 @@
 ---
+# Define lookup_options e.g. merge behaviours for specific parameters
+lookup_options:
+  aem_curator::config_logrotate::rules:
+    merge:          # Merge behavior as a hash
+      strategy: deep
+      merge_hash_arrays: true
+  aem_curator::config_logrotate::config:
+    merge:          # Merge behavior as a hash
+      strategy: deep
+      merge_hash_arrays: true
+
 exec_path:
   - /bin
   - /usr/bin
@@ -12,6 +23,7 @@ exec_path:
   - "%{hiera('common::base_dir')}/common-tools"
 
 common::base_dir: /opt/shinesolutions
+common::log_dir: /var/log/shinesolutions
 
 common::aws_region: ap-southeast-2
 common::user: ec2-user
@@ -38,6 +50,25 @@ common::dispatcher_conf_dir: /etc/httpd/conf.modules.d
 common::virtual_hosts_dir: /etc/httpd/conf.d
 common::dispatcher_ssl_cert: /etc/ssl/aem.unified-dispatcher.cert
 
+# Logrotation configuration
+aem_curator::config_logrotate::config_default_params: "%{alias('common::logrotation::config_default')}"
+aem_curator::config_logrotate::config: "%{alias('common::logrotation::config')}"
+aem_curator::config_logrotate::rules: "%{alias('common::logrotation::rules')}"
+author_primary::logrotation::config: "%{alias('author_primary::logrotation.config')}"
+author_primary::logrotation::rules: "%{alias('author_primary::logrotation.rules')}"
+author_standby::logrotation::config: "%{alias('author_standby::logrotation.config')}"
+author_standby::logrotation::rules: "%{alias('author_standby::logrotation.rules')}"
+publish::logrotation::config: "%{alias('publish::logrotation.config')}"
+publish::logrotation::rules: "%{alias('publish::logrotation.rules')}"
+aem_orchestrator::logrotation:::config: "%{alias('aem_orchestrator::logrotation.config')}"
+aem_orchestrator::logrotation:::rules: "%{alias('aem_orchestrator::logrotation.rules')}"
+simianarmy::logrotation::config: "%{alias('simianarmy::logrotation.config')}"
+simianarmy::logrotation::rules: "%{alias('simianarmy::logrotation.rules')}"
+author_dispatcher::logrotation::config: "%{alias('author_dispatcher::logrotation.config')}"
+author_dispatcher::logrotation::rules: "%{alias('author_dispatcher::logrotation.rules')}"
+publish_dispatcher::logrotation::config: "%{alias('publish_dispatcher::logrotation.config')}"
+publish_dispatcher::logrotation::rules: "%{alias('publish_dispatcher::logrotation.rules')}"
+
 # pre-common
 pre_common::base_dir: "%{hiera('common::base_dir')}"
 pre_common::tmp_base_dir: "%{hiera('common::tmp_base_dir')}"
@@ -46,9 +77,11 @@ pre_common::aws_region: "%{hiera('common::aws_region')}"
 pre_common::user: "%{hiera('common::user')}"
 pre_common::group: "%{hiera('common::group')}"
 pre_common::credentials_file: "%{hiera('common::credentials_file')}"
+pre_common::log_dir: "%{hiera('common::log_dir')}"
 
 # post-common
 action_scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
+action_scheduled_jobs::log_dir: "%{hiera('common::log_dir')}"
 
 author::exec_path: "%{alias('exec_path')}"
 publish::exec_path: "%{alias('exec_path')}"
@@ -63,8 +96,9 @@ publish::login_ready_max_tries: 60
 publish::login_ready_base_sleep_seconds: 5
 publish::login_ready_max_sleep_seconds: 5
 
-# AEM Cronjobs
+# AEM Scheduled jobs
 aem_curator::config_aem_scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
+aem_curator::config_aem_scheduled_jobs::log_dir: "%{hiera('common::log_dir')}"
 
 # AEM Tools
 aem_curator::config_aem_tools::oak_run_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/oak-run-%{hiera('aem_curator::config_aem_tools::oak_run_version')}.jar"

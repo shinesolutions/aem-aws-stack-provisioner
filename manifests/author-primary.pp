@@ -17,6 +17,7 @@ class author_primary (
   } -> class { 'aem_curator::config_aem_deployer':
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_author_primary':
+  } -> class { 'aem_curator::config_logrotate':
   } -> class { 'aem_curator::config_collectd':
     component       => $component,
     collectd_prefix => "${stack_prefix}-${component}",

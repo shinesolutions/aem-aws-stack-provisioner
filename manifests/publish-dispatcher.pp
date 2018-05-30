@@ -16,6 +16,7 @@ class publish_dispatcher (
   $enable_content_healthcheck = true,
   $exec_path                  = ['/bin', '/usr/local/bin', '/usr/bin'],
   $aem_tools_env_path         = '$PATH:/opt/puppetlabs/puppet/bin',
+  $log_dir                    = '/var/log/shinesolutions',
 ) {
 
   class { 'aem_curator::config_aem_tools_dispatcher':
@@ -26,11 +27,12 @@ class publish_dispatcher (
     allowed_client => $allowed_client,
     publish_host   => $publish_host,
     docroot_dir    => $docroot_dir,
+  } -> class { 'aem_curator::config_logrotate':
   } -> exec { 'Deploy Publish-Dispatcher artifacts':
     path        => $exec_path,
     environment => ["https_proxy=${https_proxy}"],
     cwd         => $tmp_dir,
-    command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>/var/log/puppet-deploy-artifacts.log 2>&1",
+    command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>${log_dir}/puppet-deploy-artifacts-init.log 2>&1",
     onlyif      => "test `aws s3 ls s3://${data_bucket_name}/${stack_prefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
   }
 

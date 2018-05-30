@@ -22,12 +22,13 @@ class action_scheduled_jobs (
   $offline_snapshot_hour               = '1',
   $offline_snapshot_minute             = '15',
   $offline_snapshot_weekday            = '2-7',
+  $log_dir                             = '/var/log/shinesolutions',
 ) {
 
   if $offline_snapshot_enable == true {
     cron { 'stack-offline-snapshot':
       ensure      => present,
-      command     => "${base_dir}/aem-tools/stack-offline-snapshot.sh >/var/log/stack-offline-snapshot.log 2>&1",
+      command     => "${base_dir}/aem-tools/stack-offline-snapshot.sh >${log_dir}/cron-stack-offline-snapshot.log 2>&1",
       user        => 'root',
       hour        => $offline_snapshot_hour,
       minute      => $offline_snapshot_minute,
@@ -37,7 +38,7 @@ class action_scheduled_jobs (
   } else {
     cron { 'stack-offline-snapshot':
       ensure      => absent,
-      command     => "${base_dir}/aem-tools/stack-offline-snapshot.sh >/var/log/stack-offline-snapshot.log 2>&1",
+      command     => "${base_dir}/aem-tools/stack-offline-snapshot.sh >${log_dir}/cron-stack-offline-snapshot.log 2>&1",
       user        => 'root',
       environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
     }
@@ -46,7 +47,7 @@ class action_scheduled_jobs (
   if $offline_compaction_snapshot_enable == true {
     cron { 'stack-offline-compaction-snapshot':
       ensure      => present,
-      command     => "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh >/var/log/stack-offline-compaction-snapshot.log 2>&1",
+      command     => "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh >${log_dir}/cron-stack-offline-compaction-snapshot.log 2>&1",
       user        => 'root',
       hour        => $offline_compaction_snapshot_hour,
       minute      => $offline_compaction_snapshot_minute,
@@ -56,7 +57,7 @@ class action_scheduled_jobs (
   } else {
     cron { 'stack-offline-compaction-snapshot':
       ensure      => absent,
-      command     => "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh >/var/log/stack-offline-compaction-snapshot.log 2>&1",
+      command     => "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh >${log_dir}/cron-stack-offline-compaction-snapshot.log 2>&1",
       user        => 'root',
       environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
     }
@@ -65,7 +66,7 @@ class action_scheduled_jobs (
   if $live_snapshot_enable == true {
     cron { 'live-snapshot-backup':
       ensure      => present,
-      command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>/var/log/live-snapshot-backup.log 2>&1",
+      command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>${log_dir}/cron-live-snapshot-backup.log 2>&1",
       user        => 'root',
       hour        => $live_snapshot_hour,
       minute      => $live_snapshot_minute,
@@ -75,7 +76,7 @@ class action_scheduled_jobs (
   } else {
     cron { 'live-snapshot-backup':
     ensure      => absent,
-    command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>/var/log/live-snapshot-backup.log 2>&1",
+    command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>${log_dir}/cron-live-snapshot-backup.log 2>&1",
     user        => 'root',
     environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
     }
@@ -84,7 +85,7 @@ class action_scheduled_jobs (
   if $export_enable == true {
     cron { 'export-backups':
       ensure      => present,
-      command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>/var/log/export-backups.log 2>&1",
+      command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>${log_dir}/cron-export-backups.log 2>&1",
       user        => 'root',
       hour        => $export_hour,
       minute      => $export_minute,
@@ -94,7 +95,7 @@ class action_scheduled_jobs (
   } else {
     cron { 'export-backups':
       ensure      => absent,
-      command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>/var/log/export-backups.log 2>&1",
+      command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>${log_dir}/cron-export-backups.log 2>&1",
       user        => 'root',
       environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
     }
