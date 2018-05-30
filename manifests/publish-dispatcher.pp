@@ -16,7 +16,7 @@ class publish_dispatcher (
   $enable_content_healthcheck = true,
   $exec_path                  = ['/bin', '/usr/local/bin', '/usr/bin'],
   $aem_tools_env_path         = '$PATH:/opt/puppetlabs/puppet/bin',
-  $log_dir                    = '/var/log/shinesolutions'
+  $log_dir                    = '/var/log/shinesolutions',
 ) {
 
   class { 'aem_curator::config_aem_tools_dispatcher':
