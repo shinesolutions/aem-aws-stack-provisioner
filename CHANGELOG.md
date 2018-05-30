@@ -1,9 +1,7 @@
-### 2.5.1
-* Update hiera configuration file to version 5
-
 ### 2.5.0
 * Fix cron scheduled execution of offline snapshot by specifying message full path
 * Enable publish launch configuration default to be set to the live or offline snapshot
+* Upgrade Hiera configuration file to version 5
 
 ### 2.4.18
 * Replace global SNS topic ARN with Stack Manager stack name class parameter
