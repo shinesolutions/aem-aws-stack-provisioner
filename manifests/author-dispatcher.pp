@@ -12,7 +12,7 @@ class author_dispatcher (
   $exec_path          = ['/bin', '/usr/local/bin', '/usr/bin'],
   $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
   $https_proxy        = $::cron_https_proxy,
-  $log_dir            = '/var/log/shinesolutions'
+  $log_dir            = '/var/log/shinesolutions',
 ) {
 
   class { 'aem_curator::config_aem_tools_dispatcher':
