@@ -1,5 +1,5 @@
 ### 2.5.0
-* Fix cron scheduled execution of offline snapshot by specifying message full path
+* Fix cron scheduled execution of offline snapshot and offline compaction snapshot by specifying message full path
 * Enable publish launch configuration default to be set to the live or offline snapshot
 * Add feature to make logrotation configurable for all AEM components
 * Add Log directory /var/log/shinesolutions

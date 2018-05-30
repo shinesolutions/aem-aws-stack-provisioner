@@ -10,6 +10,6 @@ echo "Using Stack Manager stack ARN ${stack_manager_stack_arn} ..."
 stack_manager_backup_sns_topic_arn=$(aws cloudformation describe-stacks --stack-name "$stack_manager_stack_arn" --query 'Stacks[0].Outputs[?OutputKey==`BackupTopicArn`].OutputValue' --output text)
 echo "Using Stack Manager backup SNS topic ARN ${stack_manager_backup_sns_topic_arn} ..."
 
-message=$(cat stack-offline-compaction-snapshot-message.json)
+message=$(cat <%= $base_dir %>/aem-tools/stack-offline-compaction-snapshot-message.json)
 echo "Sending message ${message}..."
 aws sns publish --topic-arn "${stack_manager_backup_sns_topic_arn}" --message "${message}"
