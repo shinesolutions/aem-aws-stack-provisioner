@@ -15,7 +15,7 @@ class pre_common (
   $file_dir          = undef,
   $stack_prefix      = $::stack_prefix,
   $data_bucket_name  = $::data_bucket_name,
-  $log_dir           = '/var/log/shinesolutions'
+  $log_dir           = '/var/log/shinesolutions',
 ) {
   $template_dir_final = pick(
     $template_dir,
