@@ -1,12 +1,14 @@
 ---
-:backends: yaml
-:yaml:
-  :datadir: /opt/shinesolutions/aem-aws-stack-provisioner/data
-:hierarchy:
-  - local
-  - "%{::event}"
-  - "%{::component}"
-  - common
-:logger: console
-:merge_behavior: native
-:deep_merge_options: {}
+version: 5
+defaults:
+  datadir: /opt/shinesolutions/aem-aws-stack-provisioner/data
+  data_hash: yaml_data
+hierarchy:
+  - name: "User defined hiera file"
+    path: local.yaml
+  - name: "Event hiera"
+    path: "%{::event}.yaml"
+  - name: "Component hiera"
+    path: "%{::component}.yaml"
+  - name: "Common hiera"
+    path: common.yaml

@@ -4,6 +4,7 @@
 * Add feature to make logrotation configurable for all AEM components
 * Add Log directory /var/log/shinesolutions
 * Moved schedule jobs log files to /var/log/shinesolutions
+* Upgrade Hiera configuration file to version 5
 
 ### 2.4.18
 * Replace global SNS topic ARN with Stack Manager stack name class parameter
