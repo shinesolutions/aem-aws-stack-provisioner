@@ -18,7 +18,7 @@ class author_publish_dispatcher (
   $aem_tools_env_path    = '$PATH:/opt/puppetlabs/puppet/bin',
   $aem_id_author_primary = 'author-primary',
   $ec2_id                = $::ec2_metadata['instance-id'],
-  $log_dir               = '/var/log/shinesolutions'
+  $log_dir               = '/var/log/shinesolutions',
 ) {
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
