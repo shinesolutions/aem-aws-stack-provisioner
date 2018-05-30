@@ -129,6 +129,6 @@ aem_curator::config_aem_scheduled_jobs::offline_compaction_hour: "%{hiera('publi
 aem_curator::config_aem_scheduled_jobs::offline_compaction_minute: "%{hiera('publish::scheduled_jobs::minute::offline_compaction')}"
 
 # Logrotation configuration
-aem_curator::config_logrotate::rules: "%{alias('author::logrotation.rules')}"
-aem_curator::config_logrotate::rules: "%{alias('publish::logrotation.rules')}"
-aem_curator::config_logrotate::rules: "%{alias('publish_dispatcher::logrotation.rules')}"
+aem_curator::config_logrotate::rules: "%{alias('author_primary::logrotation::rules')}"
+aem_curator::config_logrotate::rules: "%{alias('publish::logrotation::rules')}"
+aem_curator::config_logrotate::rules: "%{alias('publish_dispatcher::logrotation::rules')}"
