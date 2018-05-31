@@ -33,6 +33,7 @@ class author_publish_dispatcher (
   } -> class { 'aem_curator::config_publish':
   } -> class { 'aem_curator::config_publish_dispatcher':
     docroot_dir => $docroot_dir,
+  } -> class { 'aem_curator::config_logrotate':
   } -> aem_replication_agent { 'Create replication agent':
     ensure             => present,
     aem_username       => 'admin',
