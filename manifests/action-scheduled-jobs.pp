@@ -5,7 +5,9 @@ File {
 class action_scheduled_jobs (
   $base_dir,
   $env_path                            = $::cron_env_path,
+  $http_proxy                          = $::cron_http_proxy,
   $https_proxy                         = $::cron_https_proxy,
+  $no_proxy                            = $::cron_no_proxy,
   $export_enable                       = false,
   $live_snapshot_enable                = false,
   $offline_compaction_snapshot_enable  = false,
@@ -71,14 +73,14 @@ class action_scheduled_jobs (
       hour        => $live_snapshot_hour,
       minute      => $live_snapshot_minute,
       weekday     => $live_snapshot_weekday,
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
+      environment => ["PATH=${env_path}", "http_proxy=\"${http_proxy}\"", "https_proxy=\"${https_proxy}\"", "no_proxy=\"${no_proxy}\""],
     }
   } else {
     cron { 'live-snapshot-backup':
     ensure      => absent,
     command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>${log_dir}/cron-live-snapshot-backup.log 2>&1",
     user        => 'root',
-    environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
+    environment => ["PATH=${env_path}", "http_proxy=\"${http_proxy}\"", "https_proxy=\"${https_proxy}\"", "no_proxy=\"${no_proxy}\""]
     }
   }
 
