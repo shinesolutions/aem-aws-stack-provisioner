@@ -1,3 +1,6 @@
+### 2.5.2
+*
+
 ### 2.5.1
 * Add hourly log rotation support
 * Add cron http_proxy and no_proxy support
