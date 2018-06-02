@@ -1,5 +1,6 @@
 ### 2.5.1
-*
+* Add hourly log rotation support
+* Add cron http_proxy and no_proxy support
 
 ### 2.5.0
 * Fix cron scheduled execution of offline snapshot and offline compaction snapshot by specifying message full path
