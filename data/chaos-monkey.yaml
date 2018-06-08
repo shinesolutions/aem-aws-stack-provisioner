@@ -4,12 +4,12 @@ simianarmy::warfile_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/simian
 
 # simianarmy.properties
 # https://github.com/Netflix/SimianArmy/wiki/Global-Settings
-simianarmy::simianarmy_properties::simianarmy_calendar_close_hour: '15'
-simianarmy::simianarmy_properties::simianarmy_calendar_open_hour: '9'
-simianarmy::simianarmy_properties::simianarmy_calendar_timezone: 'Australia/Sydney'
+simianarmy::simianarmy_properties::simianarmy_calendar_close_hour: "%{hiera('simianarmy::simianarmy_properties::simianarmy_calendar_close_hour')}"
+simianarmy::simianarmy_properties::simianarmy_calendar_open_hour: "%{hiera('simianarmy::simianarmy_properties::simianarmy_calendar_open_hour')}"
+simianarmy::simianarmy_properties::simianarmy_calendar_timezone: "%{hiera('simianarmy::simianarmy_properties::simianarmy_calendar_timezone')}"
 simianarmy::simianarmy_properties::simianarmy_recorder_sdb_domain: "SIMIAN_ARMY_%{::stack_prefix}"
-simianarmy::simianarmy_properties::simianarmy_scheduler_frequency: '5'
-simianarmy::simianarmy_properties::simianarmy_scheduler_frequency_unit: 'MINUTES'
+simianarmy::simianarmy_properties::simianarmy_scheduler_frequency: "%{hiera('simianarmy::simianarmy_properties::simianarmy_scheduler_frequency')}"
+simianarmy::simianarmy_properties::simianarmy_scheduler_frequency_unit: "%{hiera('simianarmy::simianarmy_properties::simianarmy_scheduler_frequency_unit')}"
 simianarmy::simianarmy_properties::simianarmy_scheduler_threads: '1'
 
 # client.properties
@@ -22,9 +22,9 @@ simianarmy::client_properties::simianarmy_client_aws_proxy_port: "%{hiera('commo
 # https://github.com/Netflix/SimianArmy/wiki/Chaos-Settings
 simianarmy::chaos_properties::simianarmy_chaos_enabled: 'true'
 simianarmy::chaos_properties::simianarmy_chaos_asg_enabled: 'false'
-simianarmy::chaos_properties::simianarmy_chaos_asg_max_terminations_per_day: '1.0'
+simianarmy::chaos_properties::simianarmy_chaos_asg_max_terminations_per_day: "%{hiera('simianarmy::chaos_properties::simianarmy_chaos_asg_max_terminations_per_day')}"
 simianarmy::chaos_properties::simianarmy_chaos_leashed: 'false'
-simianarmy::chaos_properties::simianarmy_chaos_asg_probability: '1.0'
+simianarmy::chaos_properties::simianarmy_chaos_asg_probability: "%{hiera('simianarmy::chaos_properties::simianarmy_chaos_asg_probability')}"
 simianarmy::chaos_properties::simianarmy_chaos_mandatory_termination_default_probability: '1.0'
 simianarmy::chaos_properties::simianarmy_chaos_mandatory_termination_enabled: 'false'
 simianarmy::chaos_properties::simianarmy_chaos_mandatory_termination_window_in_days: '32'
