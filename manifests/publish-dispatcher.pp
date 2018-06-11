@@ -12,7 +12,9 @@ class publish_dispatcher (
   $stack_prefix               = $::stack_prefix,
   $data_bucket_name           = $::data_bucket_name,
   $env_path                   = $::cron_env_path,
+  $http_proxy                 = $::cron_http_proxy,
   $https_proxy                = $::cron_https_proxy,
+  $no_proxy                   = $::cron_no_proxy,
   $enable_content_healthcheck = true,
   $exec_path                  = ['/bin', '/usr/local/bin', '/usr/bin'],
   $aem_tools_env_path         = '$PATH:/opt/puppetlabs/puppet/bin',
@@ -58,7 +60,7 @@ class publish_dispatcher (
       command     => "${base_dir}/aem-tools/content-healthcheck.py >/dev/null 2>&1",
       user        => 'root',
       minute      => '*',
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
+      environment => ["PATH=${env_path}", "http_proxy=\"${http_proxy}\"", "https_proxy=\"${https_proxy}\"", "no_proxy=\"${no_proxy}\""],
     }
   }
 
