@@ -55,7 +55,7 @@ class publish_dispatcher (
         }
       ),
     } -> cron { 'every-minute-content-healthcheck':
-      command     => "${base_dir}/aem-tools/content-healthcheck.py",
+      command     => "${base_dir}/aem-tools/content-healthcheck.py >/dev/null 2>&1",
       user        => 'root',
       minute      => '*',
       environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
