@@ -3,44 +3,46 @@ File {
 }
 
 class chaos_monkey (
-  $component              = $::component,
-  $stack_prefix           = $::stack_prefix,
-  $orchestrator_asg       = $::orchestratorasg,
-  $publish_asg            = $::publisherasg,
-  $publish_dispatcher_asg = $::publisherdispatcherasg,
-  $author_dispatcher_asg  = $::authordispatcherasg,
+  $component                    = $::component,
+  $stack_prefix                 = $::stack_prefix,
+  $orchestrator_asg             = $::orchestratorasg,
+  $publish_asg                  = $::publisherasg,
+  $publish_dispatcher_asg       = $::publisherdispatcherasg,
+  $author_dispatcher_asg        = $::authordispatcherasg,
+  $asg_probability              = $::asg_probability,
+  $asg_max_terminations_per_day = $::asg_max_terminations_per_day,
 ) {
 
   include simianarmy
 
   simianarmy::chaos_properties::asg { $::orchestratorasg:
     enabled                  => true,
-    probability              => '1.0',
-    max_terminations_per_day => '1.0',
+    probability              => $asg_probability,
+    max_terminations_per_day => $asg_max_terminations_per_day,
   }
   # Chaos Monkey
   simianarmy::chaos_properties::asg { $facts['aws:autoscaling:groupname']:
     enabled                  => true,
-    probability              => '1.0',
-    max_terminations_per_day => '1.0',
+    probability              => $asg_probability,
+    max_terminations_per_day => $asg_max_terminations_per_day,
   }
   # Publish
   simianarmy::chaos_properties::asg { $publish_asg:
     enabled                  => true,
-    probability              => '1.0',
-    max_terminations_per_day => '1.0',
+    probability              => $asg_probability,
+    max_terminations_per_day => $asg_max_terminations_per_day,
   }
   # Publish-dispatcher
   simianarmy::chaos_properties::asg { $publish_dispatcher_asg:
     enabled                  => true,
-    probability              => '1.0',
-    max_terminations_per_day => '1.0',
+    probability              => $asg_probability,
+    max_terminations_per_day => $asg_max_terminations_per_day,
   }
   # Author-Dispatcher
   simianarmy::chaos_properties::asg { $author_dispatcher_asg:
     enabled                  => true,
-    probability              => '1.0',
-    max_terminations_per_day => '1.0',
+    probability              => $asg_probability,
+    max_terminations_per_day => $asg_max_terminations_per_day,
   }
 
   ##############################################################################

@@ -1,5 +1,6 @@
 ### 2.5.2
 * Set http_proxy and no_proxy to cron http support
+* Add configurable chaos monkey settings
 
 ### 2.5.1
 * Add hourly log rotation support
