@@ -8,8 +8,8 @@ simianarmy::simianarmy_properties::simianarmy_calendar_close_hour: "%{hiera('sim
 simianarmy::simianarmy_properties::simianarmy_calendar_open_hour: "%{hiera('simianarmy::simianarmy_properties::simianarmy_calendar_open_hour')}"
 simianarmy::simianarmy_properties::simianarmy_calendar_timezone: "%{hiera('simianarmy::simianarmy_properties::simianarmy_calendar_timezone')}"
 simianarmy::simianarmy_properties::simianarmy_recorder_sdb_domain: "SIMIAN_ARMY_%{::stack_prefix}"
-simianarmy::simianarmy_properties::simianarmy_scheduler_frequency: "%{hiera('simianarmy::simianarmy_properties::simianarmy_scheduler_frequency')}"
-simianarmy::simianarmy_properties::simianarmy_scheduler_frequency_unit: "%{hiera('simianarmy::simianarmy_properties::simianarmy_scheduler_frequency_unit')}"
+simianarmy::simianarmy_properties::simianarmy_scheduler_frequency: "%{hiera('simianarmy::simianarmy_properties::simianarmy_scheduler_frequency_in_minutes')}"
+simianarmy::simianarmy_properties::simianarmy_scheduler_frequency_unit: 'MINUTES'
 simianarmy::simianarmy_properties::simianarmy_scheduler_threads: '1'
 
 # client.properties
