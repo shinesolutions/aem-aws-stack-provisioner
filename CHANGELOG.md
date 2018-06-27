@@ -1,5 +1,8 @@
-### 2.5.3
-*
+### 3.0.0
+* 
+
+### 2.6.0
+* Add content health check cron configuration
 
 ### 2.5.2
 * Set http_proxy and no_proxy to cron http support
