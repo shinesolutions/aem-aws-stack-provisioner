@@ -12,6 +12,10 @@ class action_scheduled_jobs (
   $live_snapshot_enable                = false,
   $offline_compaction_snapshot_enable  = false,
   $offline_snapshot_enable             = false,
+  $content_health_check_enable         = true,
+  $content_health_check_weekday        = '*',
+  $content_health_check_hour           = '*',
+  $content_health_check_minute         = '*',
   $export_hour                         = '2',
   $export_minute                       = '0',
   $export_weekday                      = '0-7',
@@ -98,6 +102,25 @@ class action_scheduled_jobs (
     cron { 'export-backups':
       ensure      => absent,
       command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>${log_dir}/cron-export-backups.log 2>&1",
+      user        => 'root',
+      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
+    }
+  }
+
+  if $content_health_check_enable == true {
+    cron { 'content-health-check':
+      ensure      => present,
+      command     => "${base_dir}/aem-tools/content-healthcheck.py >>${log_dir}/cron-content-health-check.log 2>&1",
+      user        => 'root',
+      hour        => $content_health_check_hour,
+      minute      => $content_health_check_minute,
+      weekday     => $content_health_check_weekday,
+      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
+    }
+  } else {
+    cron { 'content-health-check':
+      ensure      => absent,
+      command     => "${base_dir}/aem-tools/content-healthcheck.py >>${log_dir}/cron-content-health-check.log 2>&1",
       user        => 'root',
       environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
     }
