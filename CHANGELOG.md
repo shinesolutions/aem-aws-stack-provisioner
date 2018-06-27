@@ -1,5 +1,5 @@
-### 2.5.3
-*
+### 2.6.0
+* 
 
 ### 2.5.2
 * Set http_proxy and no_proxy to cron http support
