@@ -1,3 +1,6 @@
+### 3.0.0
+* Upgrade aem_curator to 1.x and aem_resources to 3.x for AEM 6.4 support
+
 ### 2.5.3
 *
 
