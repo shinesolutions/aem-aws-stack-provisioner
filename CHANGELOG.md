@@ -1,3 +1,6 @@
+### 2.6.1
+*
+
 ### 2.6.0
 * Add content health check cron configuration
 
