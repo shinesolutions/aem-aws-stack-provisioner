@@ -149,7 +149,7 @@ def submit_request(path):
         return r
     except requests.exceptions.RequestException as e:
         log.error('The content path %s is unreachable. Error: %s', publish_host, str(e))
-        send_to_cloudwatch(0)
+        send_to_cloudwatch(0, path)
         sys.exit(1)
 
 # If the response status code is 200 it will return true.
