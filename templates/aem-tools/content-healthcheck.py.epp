@@ -5,6 +5,8 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
+import HTMLParser from HTMLParser
+
 try:
     import coloredlogs
     coloredlogs.install(
@@ -33,6 +35,24 @@ parser = argparse.ArgumentParser(description='Process the protocol and port numb
 parser.add_argument('protocol', nargs='?', type=str, default='http', help='a protocol of type http or https.', choices=['https', 'http'])
 parser.add_argument('port', nargs='?', type=str, default='4503', help='a port number. e.g. 4503')
 args = parser.parse_args()
+
+#define class for parsing html and handling tags
+class LinkExtractor(HTMLParser):
+
+    def __init__(self):
+        HTMLParser.__init__(self)
+        self.srclinks = []
+        self.hreflinks = []
+
+    def handle_starttag(self, tag, attrs):
+
+        if (tag in {'script', 'link', 'a', 'img'}):
+            if (("src" in dict(attrs))):
+                self.srclinks.append(dict(attrs).get("src"))
+            if (("href" in dict(attrs))):
+                self.hreflinks.append(dict(attrs).get("href"))
+
+
 
 def main():
     download_file_from_s3();
@@ -85,6 +105,13 @@ def download_file_from_s3():
             log.error('The data bucket %s path %s is unreachable. Error: %s', bucket_name, bucket_key, str(e))
         sys.exit(1)
 
+# changes made so far
+# 1. removed the else statements and just set a status of 0 unless we meet the criteria for healthy
+# 2. removed global variable for endpoint and just passed content to the send to cloudwatch function
+
+# TODO:
+# introduce new metrics
+
 
 # TODO: This function could be vastly improved
 # Loops through the descriptor file in search of all the content paths
@@ -95,21 +122,20 @@ def traverse_descriptor(instances):
     for packages in instances["publish-dispatcher"]["packages"]:
         for content in packages["content"]:
             if content:
-                global endpoint
-                endpoint = content
+                status = 0
                 response = submit_request(content)
                 if process_response(response):
                     if response.headers['Content-Type'].split(';')[0] == 'text/html':
                         if get_links_health(response):
-                            send_to_cloudwatch(1)
-                        else:
-                            send_to_cloudwatch(0)
+                            status = 1
                     else:
-                        send_to_cloudwatch(1)
-                else:
-                    send_to_cloudwatch(0)
+                        status = 1
+
+                send_to_cloudwatch(status, content)
             else:
-                log.error('The content node provideded is emtpy.')
+                log.error('The content node provided is empty.')
+
+
 
 
 # Submits the request to the given content path and returns the response
@@ -170,7 +196,7 @@ def check_random_resource(resource_list, resource_type):
 # Sends cutom metric to cloudwatch with the following dimensions:
 # PairInstanceId which is the publisher Id
 # Prints the status of the the current content path
-def send_to_cloudwatch(status):
+def send_to_cloudwatch(status, endpoint):
     publisher_id = get_instance_tag('PairInstanceId')
     cw = boto3.client('cloudwatch', region_name=region)
     namespace = get_instance_tag('aws:cloudformation:stack-name')
