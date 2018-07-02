@@ -5,7 +5,18 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-import HTMLParser from HTMLParser
+DISPATCHER_HEALTH_METRIC = 'DispatcherPublisherDeepHealth'
+REQUEST_LATENCY_METRIC ='DispatcherPublisherRequestLatency'
+TIMEOUT_METRIC ='DispatcherPublisherRequestTimeOut'
+CONNECTION_ERROR_METRIC ='DispatcherPublisherRequestConnectionError'
+UNHEALTHY_MESSAGE = 'UNHEALTHY CloudWatch Metric Sent'
+HEALTHY_MESSAGE = 'HEALTHY CloudWatch Metric Sent'
+SUCCESSFUL_VALUE = 1;
+UNSUCCESSFUL_VALUE = 0;
+
+metric_names = [];
+metric_values = [];
+metric_units = [];
 
 try:
     import coloredlogs
@@ -35,24 +46,6 @@ parser = argparse.ArgumentParser(description='Process the protocol and port numb
 parser.add_argument('protocol', nargs='?', type=str, default='http', help='a protocol of type http or https.', choices=['https', 'http'])
 parser.add_argument('port', nargs='?', type=str, default='4503', help='a port number. e.g. 4503')
 args = parser.parse_args()
-
-#define class for parsing html and handling tags
-class LinkExtractor(HTMLParser):
-
-    def __init__(self):
-        HTMLParser.__init__(self)
-        self.srclinks = []
-        self.hreflinks = []
-
-    def handle_starttag(self, tag, attrs):
-
-        if (tag in {'script', 'link', 'a', 'img'}):
-            if (("src" in dict(attrs))):
-                self.srclinks.append(dict(attrs).get("src"))
-            if (("href" in dict(attrs))):
-                self.hreflinks.append(dict(attrs).get("href"))
-
-
 
 def main():
     download_file_from_s3();
@@ -105,14 +98,6 @@ def download_file_from_s3():
             log.error('The data bucket %s path %s is unreachable. Error: %s', bucket_name, bucket_key, str(e))
         sys.exit(1)
 
-# changes made so far
-# 1. removed the else statements and just set a status of 0 unless we meet the criteria for healthy
-# 2. removed global variable for endpoint and just passed content to the send to cloudwatch function
-
-# TODO:
-# introduce new metrics
-
-
 # TODO: This function could be vastly improved
 # Loops through the descriptor file in search of all the content paths
 # If the healthy response of the content path is of type HTML,
@@ -122,40 +107,48 @@ def traverse_descriptor(instances):
     for packages in instances["publish-dispatcher"]["packages"]:
         for content in packages["content"]:
             if content:
-                status = 0
                 response = submit_request(content)
+                health_value = UNSUCCESSFUL_VALUE
                 if process_response(response):
                     if response.headers['Content-Type'].split(';')[0] == 'text/html':
                         if get_links_health(response):
-                            status = 1
-                    else:
-                        status = 1
+                            health_value = SUCCESSFUL_VALUE
 
-                send_to_cloudwatch(status, content)
+                aggregate_cloudwatch_metrics(DISPATCHER_HEALTH_METRIC, health_value, 'Count', message)
+                send_aggregated_metrics()
             else:
                 log.error('The content node provided is empty.')
-
-
-
 
 # Submits the request to the given content path and returns the response
 # If there is an error, it will count as an unhealthy metric
 def submit_request(path):
     publish_host = get_instance_tag('PublishHost')
     url = args.protocol + '://' + publish_host + ':' + args.port + path
+    start = time.time()
     try:
         r = requests.get(url, verify=False, timeout=30)
+        end = time.time()
         log.debug('A request was made to the following publish endpoint: %s', url)
+        aggregate_cloudwatch_metrics(REQUEST_LATENCY_METRIC, float(end-start), 'Seconds', 'Time taken: ' + str(end-start))
         return r
-    except requests.exceptions.RequestException as e:
+    except requests.exceptions.ConnectionError as err:
         log.error('The content path %s is unreachable. Error: %s', publish_host, str(e))
-        send_to_cloudwatch(0, path)
-        sys.exit(1)
+        aggregate_cloudwatch_metrics(CONNECTION_ERROR_METRIC, successful_value, 'Count', err)
+        aggregate_cloudwatch_metrics(DISPATCHER_HEALTH_METRIC, unsuccessful_value, 'Count', unhealthy_message)
+        return None
+    except requests.exceptions.Timeout as err:
+        log.error('The content path %s timed out. Error: %s', publish_host, str(e))
+        aggregate_cloudwatch_metrics(TIMEOUT_METRIC, successful_value, 'Count', err)
+        aggregate_cloudwatch_metrics(DISPATCHER_HEALTH_METRIC, unsuccessful_value, 'Count', unhealthy_message)
+        return None
 
 # If the response status code is 200 it will return true.
 # Anything different from a 200 will return false.
 def process_response(response):
     log.info('Response code: %s', response.status_code)
+    #add a metric
+    aggregate_cloudwatch_metrics(response.status_code, SUCCESSFUL_VALUE, 'Count','Response of '+str(response.status_code) + ' found.')
+
     if response.status_code == requests.codes.ok:
         return True
     else:
@@ -183,7 +176,6 @@ def get_links_health(response):
         log.debug('There was an error reaching resources. Resource CSS was %s, JS was %s and PNG was %s ', css_check, js_check, image_check);
         return False
 
-
 # Randomises and filters resource list, which is then sent to check the first elements helth status
 def check_random_resource(resource_list, resource_type):
     if len(resource_list) == 0:
@@ -193,16 +185,23 @@ def check_random_resource(resource_list, resource_type):
     log.debug('The resource list had a size of %s for type %s. ', len(resource_list), resource_type)
     return process_response(submit_request((resource_list[0])))
 
-# Sends cutom metric to cloudwatch with the following dimensions:
-# PairInstanceId which is the publisher Id
-# Prints the status of the the current content path
-def send_to_cloudwatch(status, endpoint):
+def aggregate_cloudwatch_metrics(name, value, unit, log_message = False):
+    metric_names.append(name)
+    metric_values.append(value)
+    metric_units.append(unit)
+
+    print "Aggregating metrics for " + stack_name + ": name=" + str(name) + " value=" + str(value) + " unit=" + unit
+    if log_message:
+        print log_message
+
+def send_aggregated_metrics():
     publisher_id = get_instance_tag('PairInstanceId')
     cw = boto3.client('cloudwatch', region_name=region)
     namespace = get_instance_tag('aws:cloudformation:stack-name')
     name = 'contentHealthCheck'
     dimensions = [{'Name': 'PairInstanceId','Value': publisher_id}]
-    metric_data = { 'MetricName': name, 'Dimensions': dimensions, 'Value': status, 'Unit': 'Count' }
+    metric_data = { metric_names, value=metric_values, unit=metric_units }
+
     try:
         cw_response = cw.put_metric_data(Namespace=namespace, MetricData=[ metric_data ])
         message = 'The content path ' + endpoint + ' in the publisher instance ' + publisher_id + ' is '
