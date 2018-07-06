@@ -16,3 +16,9 @@ aem_curator::config_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
 # Logrotation configuration
 aem_curator::config_logrotate::config: "%{alias('publish_dispatcher::logrotation::config')}"
 aem_curator::config_logrotate::rules: "%{alias('publish_dispatcher::logrotation::rules')}"
+
+# Schedule job configuration
+action_scheduled_jobs::content_health_check_enable: "%{alias('publish_dispatcher::scheduled_jobs::enable::content_health_check')}"
+action_scheduled_jobs::content_health_check_weekday: "%{hiera('publish_dispatcher::scheduled_jobs::weekday::content_health_check')}"
+action_scheduled_jobs::content_health_check_hour: "%{hiera('publish_dispatcher::scheduled_jobs::hour::content_health_check')}"
+action_scheduled_jobs::content_health_check_minute: "%{hiera('publish_dispatcher::scheduled_jobs::minute::content_health_check')}"

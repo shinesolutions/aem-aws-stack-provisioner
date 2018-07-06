@@ -1,8 +1,8 @@
 ### 3.0.0
 * Upgrade aem_curator to 1.x and aem_resources to 3.x for AEM 6.4 support
 
-### 2.5.3
-*
+### 2.6.0
+* Add content health check cron configuration
 
 ### 2.5.2
 * Set http_proxy and no_proxy to cron http support
