@@ -1,3 +1,6 @@
+### 3.0.1
+*
+
 ### 3.0.0
 * Upgrade puppet-aem-resources to 3.x.x and puppet-aem-curator to 1.x.x for AEM 6.4 support 
 
