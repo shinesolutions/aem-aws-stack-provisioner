@@ -13,6 +13,7 @@
 * Add additional metrics to content health check for request latency and exceptions
 * Refactored content health check to add constants, simplify traverse_descriptor function, handling for internal URLs and support multiple metric submission
 * Added aws instance tags facts as variables in publish_dispatcher manifest for use in health check
+* Fix deploy on init timeout
 
 ### 2.6.0
 * Add content health check cron configuration
