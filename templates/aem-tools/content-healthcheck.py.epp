@@ -156,7 +156,6 @@ def check_content(content):
     aggregate_cloudwatch_metrics(DISPATCHER_HEALTH_METRIC, health_value, 'Count', message)
     send_aggregated_metrics(health_value, content)
 
-
 # Submits the request to the given content path and returns the response
 # If there is an error, we add an additional metric based on the request exception
 def submit_request(path):
@@ -232,7 +231,6 @@ def isInternalResourceLink(link, type):
         return True
     return False
 
-#need to refactor this to boto3 format
 def aggregate_cloudwatch_metrics(name, value, unit, log_message = False):
     dimensions = [{'Name': 'PairInstanceId','Value': instance_variables['PairInstanceId']}]
     metric = {'MetricName': name, 'Dimensions': dimensions, 'Value': value, 'Unit': unit}
