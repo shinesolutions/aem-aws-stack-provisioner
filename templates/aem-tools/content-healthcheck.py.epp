@@ -7,10 +7,10 @@ from urlparse import urlparse
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-DISPATCHER_HEALTH_METRIC = 'temp-contentHealthCheck'
-REQUEST_LATENCY_METRIC ='temp-contentRequestLatency'
-TIMEOUT_METRIC ='temp-contentRequestTimeOut'
-CONNECTION_ERROR_METRIC ='temp-contentRequestConnectionError'
+DISPATCHER_HEALTH_METRIC = 'contentHealthCheck'
+REQUEST_LATENCY_METRIC ='contentRequestLatency'
+TIMEOUT_METRIC ='contentRequestTimeOut'
+CONNECTION_ERROR_METRIC ='contentRequestConnectionError'
 
 UNHEALTHY_MESSAGE = 'UNHEALTHY CloudWatch Metric Sent'
 HEALTHY_MESSAGE = 'HEALTHY CloudWatch Metric Sent'
@@ -40,8 +40,7 @@ except:
     )
 log = logging.getLogger(__name__)
 
-#local_path = '<%= $tmp_dir %>/content-healthcheck-descriptor.json'
-local_path = '/tmp/stan/content-healthcheck-descriptor.json'
+local_path = '<%= $tmp_dir %>/content-healthcheck-descriptor.json'
 
 #set region as no default region
 region='ap-southeast-2'
@@ -69,7 +68,7 @@ class LinkExtractor(HTMLParser):
                 self.href_links.append(dict(attrs).get("href"))
 
 def main():
-    #download_file_from_s3();
+    download_file_from_s3();
     get_instance_variables()
     response = urllib.urlopen(local_path)
     try:
