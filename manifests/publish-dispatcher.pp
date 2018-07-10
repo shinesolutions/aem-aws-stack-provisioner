@@ -8,6 +8,7 @@ class publish_dispatcher (
   $tmp_dir,
   $allowed_client             = $::publish_dispatcher_allowed_client,
   $publish_host               = $::publishhost,
+  $aws_region                 = $::aws_region,
   $component                  = $::component,
   $stack_prefix               = $::stack_prefix,
   $data_bucket_name           = $::data_bucket_name,
@@ -52,6 +53,7 @@ class publish_dispatcher (
         'tmp_dir'          => $tmp_dir,
         'stack_prefix'     => $stack_prefix,
         'data_bucket_name' => $data_bucket_name,
+        'aws_region' => $aws_region,
       }
     ),
   }
