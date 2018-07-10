@@ -1,0 +1,294 @@
+#!/usr/bin/env python
+import sys
+import argparse
+import logging
+import socket
+import random
+import time
+import urllib
+
+from HTMLParser import HTMLParser
+from urlparse import urlparse
+
+import json
+import requests
+import boto3
+
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from botocore.exceptions import ClientError
+
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+DISPATCHER_HEALTH_METRIC = 'contentHealthCheck'
+REQUEST_LATENCY_METRIC = 'contentRequestLatency'
+TIMEOUT_METRIC = 'contentRequestTimeOut'
+CONNECTION_ERROR_METRIC = 'contentRequestConnectionError'
+
+UNHEALTHY_MESSAGE = 'UNHEALTHY CloudWatch Metric Sent'
+HEALTHY_MESSAGE = 'HEALTHY CloudWatch Metric Sent'
+SUCCESSFUL_VALUE = 1
+UNSUCCESSFUL_VALUE = 0
+
+LOG_LEVEL = logging.INFO
+
+metric_data = []
+instance_variables = {}
+
+try:
+    import coloredlogs
+    coloredlogs.install(
+        isatty=True,
+        show_name=False,
+        show_severity=False,
+        level=LOG_LEVEL,
+        severity_to_style={'DEBUG': {'color': 'blue'}},
+    )
+except:
+    logging.basicConfig(
+        stream=sys.stdout,
+        format='%(asctime)s ' + socket.gethostname() + ' %(levelname)-8s %(message)s',
+        datefmt="%Y-%m-%d %H:%M:%S",
+        level=LOG_LEVEL,
+    )
+log = logging.getLogger(__name__)
+
+local_path = '<%= $tmp_dir %>/content-healthcheck-descriptor.json'
+
+region = '<%= $aws_region %>'
+session = boto3.session.Session(region_name=region)
+
+# Get arguments for protocol and port number.
+# If these are not passed, http and 4503 will be used by default.
+parser = argparse.ArgumentParser(description='Process the protocol and port number.')
+parser.add_argument('protocol', nargs='?',
+                    type=str, default='http',
+                    help='a protocol of type http or https.',
+                    choices=['https', 'http'])
+parser.add_argument('port', nargs='?', type=str, default='4503', help='a port number. e.g. 4503')
+args = parser.parse_args()
+
+#create HTMlParser class
+class LinkExtractor(HTMLParser):
+    def __init__(self):
+        HTMLParser.__init__(self)
+        self.src_links = []
+        self.href_links = []
+
+    def handle_starttag(self, tag, attrs):
+        if (tag in {'script', 'link', 'a', 'img'}):
+            if "src" in dict(attrs):
+                self.src_links.append(dict(attrs).get("src"))
+            if "href" in dict(attrs):
+                self.href_links.append(dict(attrs).get("href"))
+
+def main():
+    download_file_from_s3()
+    get_instance_variables()
+    response = urllib.urlopen(local_path)
+    try:
+        resp_str = json.loads(response.read())
+        traverse_descriptor(resp_str)
+    except ValueError as e:
+        log.error('The descriptor file in path %s is empty. Error: %s', local_path, str(e))
+        sys.exit(1)
+
+# Retrive the instance id from metadata
+def get_instance_id():
+    response = requests.get('http://169.254.169.254/latest/meta-data/instance-id')
+    instance_id = response.text
+    log.debug('The instance ID %s was retrived.', instance_id)
+    return str(instance_id)
+
+# Retrives an instance tag
+# The Key is given as a parameter and the value is returned
+def get_instance_tag(tag_key):
+    instance_id = get_instance_id()
+    ec2 = boto3.resource('ec2', region_name=region)
+    try:
+        ec2_instance = ec2.Instance(instance_id)
+        tag_value = ''
+        for tags in ec2_instance.tags:
+            if tags["Key"] == tag_key:
+                tag_value = tags["Value"]
+        return tag_value
+    except ClientError as e:
+        log.error('The ec2 instance %s is unreachable. Error: %s', instance_id, str(e))
+        sys.exit(1)
+
+# define some aws variables we re-use
+def get_instance_variables():
+    publish_host = get_instance_tag('PublishHost')
+    stack_name = get_instance_tag('aws:cloudformation:stack-name')
+    pair_instance_id = get_instance_tag('PairInstanceId')
+
+    instance_variables.update({'StackName': stack_name,
+                               'PairInstanceId': pair_instance_id,
+                               'PublishHost': publish_host})
+
+# Downloads descriptor file from an s3 bucket into a local tmp folder
+def download_file_from_s3():
+    bucket_name = '<%= $data_bucket_name %>'
+    bucket_key = '<%= $stack_prefix %>/content-healthcheck-descriptor.json'
+    s3 = boto3.client('s3')
+    try:
+        s3.download_file(bucket_name, bucket_key, local_path)
+        log.debug('The file %s from bucket %s was succesfully downloaded to %s.',
+                  bucket_key, bucket_name, local_path)
+    except ClientError as e:
+        # If a client error is thrown, then check that it was a 404 error.
+        # If it was a 404 error, then the bucket does not exist.
+        error_code = int(e.response['Error']['Code'])
+        if error_code == 404:
+            log.error('The descriptor file %s from bucket %s is missing. Error: %s',
+                      bucket_key, bucket_name, str(e))
+        else:
+            log.error('The data bucket %s path %s is unreachable. Error: %s',
+                      bucket_name, bucket_key, str(e))
+        sys.exit(1)
+
+# Loops through the descriptor file in search of all the content paths
+# If the healthy response of the content path is of type HTML,
+# then do a search of the JS, CSS and PNG links inside it
+# else set the contentHealthCheck metric to unhealthy
+def traverse_descriptor(instances):
+    for packages in instances["publish-dispatcher"]["packages"]:
+        for content in packages["content"]:
+            if content:
+                check_content(content)
+            else:
+                log.error('The content node provided is empty.')
+
+def check_content(content):
+    health_value = UNSUCCESSFUL_VALUE
+    message = UNHEALTHY_MESSAGE
+    response = submit_request(content)
+
+    if response is not None:
+        if process_response(response):
+            if response.headers['Content-Type'].split(';')[0] == 'text/html':
+                if get_links_health(response):
+                    health_value = SUCCESSFUL_VALUE
+                    message = HEALTHY_MESSAGE
+    else:
+        log.error('No response from endpoint: %s', content)
+
+    aggregate_cloudwatch_metrics(DISPATCHER_HEALTH_METRIC, health_value, 'Count', message)
+    send_aggregated_metrics(health_value, content)
+
+# Submits the request to the given content path and returns the response
+# If there is an error, we add an additional metric based on the request exception
+def submit_request(path):
+    url = args.protocol + '://' + instance_variables['PublishHost'] + ':' + args.port + path
+
+    start = time.time()
+
+    try:
+        r = requests.get(url, verify=False, timeout=30)
+        end = time.time()
+        log.debug('A request was made to the following publish endpoint: %s', url)
+        aggregate_cloudwatch_metrics(REQUEST_LATENCY_METRIC,
+                                     float(end-start),
+                                     'Seconds',
+                                     'Time taken: ' + str(end-start))
+        return r
+    except requests.exceptions.ConnectionError as e:
+        log.error('The content path %s is unreachable. Error: %s',
+                  instance_variables['PublishHost'],
+                  str(e))
+        aggregate_cloudwatch_metrics(CONNECTION_ERROR_METRIC,
+                                     SUCCESSFUL_VALUE,
+                                     'Count',
+                                     e)
+        aggregate_cloudwatch_metrics(DISPATCHER_HEALTH_METRIC,
+                                     UNSUCCESSFUL_VALUE, 'Count',
+                                     UNHEALTHY_MESSAGE)
+        return None
+    except requests.exceptions.Timeout as e:
+        log.error('The content path %s timed out. Error: %s',
+                  instance_variables['PublishHost'],
+                  str(e))
+        aggregate_cloudwatch_metrics(TIMEOUT_METRIC, SUCCESSFUL_VALUE, 'Count', e)
+        aggregate_cloudwatch_metrics(DISPATCHER_HEALTH_METRIC,
+                                     UNSUCCESSFUL_VALUE,
+                                     'Count',
+                                     UNHEALTHY_MESSAGE)
+        return None
+
+# If the response status code is 200 it will return true.
+# Anything different from a 200 will return false.
+def process_response(response):
+    log.info('Response code: %s', response.status_code)
+
+    return bool(response.status_code == requests.codes.ok)
+
+# Parses the content of the page looking for css, js and png links
+# Gets successful or failed response from check_random_resource
+def get_links_health(response):
+    html = response.text
+    # Use the HTMlParser library to parse the markup of each page and filter all src and href links
+    linkExtractor = LinkExtractor()
+    linkExtractor.feed(html)
+
+    # filter links for image , javascript and css resources
+    image_links = list(filter(lambda x: isInternalResourceLink(x, ".png"), linkExtractor.src_links))
+    js_links = list(filter(lambda x: isInternalResourceLink(x, ".js"), linkExtractor.src_links))
+    css_links = list(filter(lambda x: isInternalResourceLink(x, ".css"), linkExtractor.href_links))
+
+    css_check = check_random_resource(css_links, 'CSS')
+    js_check = check_random_resource(js_links, 'JS')
+    image_check = check_random_resource(image_links, 'PNG')
+
+    if css_check and js_check and image_check:
+        log.debug('All resources of type CSS, JS and PNG were reached succesfully')
+        return True
+    else:
+        log.debug('There was an error reaching resources. Resource CSS was %s, JS was %s and PNG was %s',
+                  css_check, js_check, image_check)
+        return False
+
+# Randomises and filters resource list, which is then sent to check the first elements helth status
+def check_random_resource(resource_list, resource_type):
+    if len(resource_list) == 0:
+        log.debug('The resource list was empty for type %s. Skip this step.', resource_type)
+        return True
+    random.shuffle(resource_list)
+    log.debug('The resource list had a size of %s for type %s. ', len(resource_list), resource_type)
+    return process_response(submit_request((resource_list[0])))
+
+def isInternalResourceLink(link, link_type):
+    url = urlparse(link)
+
+    # check to see if the url refers to an external link (url.netloc is the domain name
+    # which should be empty for all internal resource links)
+    if not url.netloc and url.path.endswith(link_type):
+        return True
+    return False
+
+def aggregate_cloudwatch_metrics(name, value, unit, log_message=False):
+    dimensions = [{'Name': 'PairInstanceId', 'Value': instance_variables['PairInstanceId']}]
+    metric = {'MetricName': name, 'Dimensions': dimensions, 'Value': value, 'Unit': unit}
+
+    metric_data.append(metric)
+
+    log.debug('Aggregating metrics for %s: name=%s value=%s unit=%s', instance_variables['StackName'], str(name), str(value), unit)
+
+    if log_message:
+        print log_message
+
+def send_aggregated_metrics(status, endpoint):
+    cw = boto3.client('cloudwatch', region)
+
+    try:
+        cw_response = cw.put_metric_data(Namespace=instance_variables['StackName'],
+                                         MetricData=metric_data)
+        message = 'The content path ' + endpoint + ' in the publisher instance ' + instance_variables['PairInstanceId'] + ' is'
+        if status == 1:
+            log.info('%s healthy.', message)
+        else:
+            log.info('%s unhealthy.', message)
+    except ClientError as e:
+        log.error('The cloudwatch instance is unreachable. Error: %s', str(e))
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
