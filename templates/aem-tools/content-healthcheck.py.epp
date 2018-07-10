@@ -92,29 +92,6 @@ def main():
         log.error('The descriptor file in path %s is empty. Error: %s', local_path, str(e))
         sys.exit(1)
 
-# Retrive the instance id from metadata
-def get_instance_id():
-    response = requests.get('http://169.254.169.254/latest/meta-data/instance-id')
-    instance_id = response.text
-    log.debug('The instance ID %s was retrived.', instance_id)
-    return str(instance_id)
-
-# Retrives an instance tag
-# The Key is given as a parameter and the value is returned
-def get_instance_tag(tag_key):
-    instance_id = get_instance_id()
-    ec2 = boto3.resource('ec2', region_name=region)
-    try:
-        ec2_instance = ec2.Instance(instance_id)
-        tag_value = ''
-        for tags in ec2_instance.tags:
-            if tags["Key"] == tag_key:
-                tag_value = tags["Value"]
-        return tag_value
-    except ClientError as e:
-        log.error('The ec2 instance %s is unreachable. Error: %s', instance_id, str(e))
-        sys.exit(1)
-
 # define some aws variables we re-use
 def get_instance_variables():
     publish_host = get_instance_tag('PublishHost')
