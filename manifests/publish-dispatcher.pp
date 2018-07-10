@@ -53,7 +53,7 @@ class publish_dispatcher (
         'tmp_dir'          => $tmp_dir,
         'stack_prefix'     => $stack_prefix,
         'data_bucket_name' => $data_bucket_name,
-        'aws_region' => $aws_region,
+        'aws_region'       => $aws_region,
       }
     ),
   }
