@@ -52,6 +52,7 @@ class author_publish_dispatcher (
   } -> class { 'deploy_on_init':
     aem_id                => $aem_id_author_primary,
     base_dir              => $base_dir,
+    log_dir               => $log_dir,
     tmp_dir               => $tmp_dir,
     exec_path             => $exec_path,
     enable_deploy_on_init => $enable_deploy_on_init,
@@ -188,6 +189,7 @@ class author_publish_dispatcher (
 class deploy_on_init (
   $aem_id,
   $base_dir,
+  $log_dir,
   $tmp_dir,
   $exec_path             = ['/bin', '/usr/local/bin', '/usr/bin'],
   $enable_deploy_on_init = false,
