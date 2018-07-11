@@ -32,7 +32,9 @@ UNSUCCESSFUL_VALUE = 0
 LOG_LEVEL = logging.INFO
 
 metric_data = []
-instance_variables = {}
+instance_variables = {'StackName': '<%= $stack_name %>,
+                           'PairInstanceId': '<%= $pair_instance_id %>,
+                           'PublishHost': '<%= $publish_host %>'}
 
 try:
     import coloredlogs
@@ -83,7 +85,6 @@ class LinkExtractor(HTMLParser):
 
 def main():
     download_file_from_s3()
-    get_instance_variables()
     response = urllib.urlopen(local_path)
     try:
         resp_str = json.loads(response.read())
@@ -114,16 +115,6 @@ def get_instance_tag(tag_key):
     except ClientError as e:
         log.error('The ec2 instance %s is unreachable. Error: %s', instance_id, str(e))
         sys.exit(1)
-
-# define some aws variables we re-use
-def get_instance_variables():
-    publish_host = get_instance_tag('PublishHost')
-    stack_name = get_instance_tag('aws:cloudformation:stack-name')
-    pair_instance_id = get_instance_tag('PairInstanceId')
-
-    instance_variables.update({'StackName': stack_name,
-                               'PairInstanceId': pair_instance_id,
-                               'PublishHost': publish_host})
 
 # Downloads descriptor file from an s3 bucket into a local tmp folder
 def download_file_from_s3():

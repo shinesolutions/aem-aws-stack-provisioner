@@ -11,6 +11,8 @@ class publish_dispatcher (
   $publish_host               = $::publishhost,
   $component                  = $::component,
   $stack_prefix               = $::stack_prefix,
+  $stack_name                 = $facts['aws:cloudformation:stack-name'],
+  $pair_instance_id           = $::pairinstanceid,
   $data_bucket_name           = $::data_bucket_name,
   $env_path                   = $::cron_env_path,
   $http_proxy                 = $::cron_http_proxy,
@@ -54,6 +56,9 @@ class publish_dispatcher (
         'stack_prefix'     => $stack_prefix,
         'data_bucket_name' => $data_bucket_name,
         'aws_region'       => $aws_region,
+		'pair_instance_id' => $pair_instance_id,
+		'stack_name'       => $stack_name,
+		'publish_host'     => $publishhost,
       }
     ),
   }
