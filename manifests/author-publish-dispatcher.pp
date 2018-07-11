@@ -202,6 +202,7 @@ class deploy_on_init (
       cwd         => $tmp_dir,
       command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>${log_dir}/puppet-deploy-artifacts-init.log 2>&1",
       onlyif      => "test `aws s3 ls s3://${data_bucket_name}/${stack_prefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
+      timeout     => 0,
     }
   }
 
