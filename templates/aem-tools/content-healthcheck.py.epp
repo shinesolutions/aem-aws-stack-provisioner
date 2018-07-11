@@ -32,9 +32,9 @@ UNSUCCESSFUL_VALUE = 0
 LOG_LEVEL = logging.INFO
 
 metric_data = []
-instance_variables = {'StackName': '<%= $stack_name %>,
-                           'PairInstanceId': '<%= $pair_instance_id %>,
-                           'PublishHost': '<%= $publish_host %>'}
+instance_variables = {'StackName': '<%= $stack_name %>',
+                      'PairInstanceId': '<%= $pair_instance_id %>',
+                      'PublishHost': '<%= $publish_host %>'}
 
 try:
     import coloredlogs
