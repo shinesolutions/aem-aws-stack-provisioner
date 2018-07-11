@@ -32,6 +32,9 @@ UNSUCCESSFUL_VALUE = 0
 LOG_LEVEL = logging.INFO
 
 metric_data = []
+# StackName is needed here for current AEM Orchestrator compatibility.
+# TODO: replace the instance_variables accordingly when the effort to simplify metrics troubleshooting
+# is completed on the AEM Orchestrator side as part of https://github.com/shinesolutions/aem-orchestrator/issues/44
 instance_variables = {'StackName': '<%= $stack_name %>',
                       'PairInstanceId': '<%= $pair_instance_id %>',
                       'PublishHost': '<%= $publish_host %>'}
