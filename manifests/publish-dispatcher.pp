@@ -56,9 +56,9 @@ class publish_dispatcher (
         'stack_prefix'     => $stack_prefix,
         'data_bucket_name' => $data_bucket_name,
         'aws_region'       => $aws_region,
-		'pair_instance_id' => $pair_instance_id,
-		'stack_name'       => $stack_name,
-		'publish_host'     => $publishhost,
+        'pair_instance_id' => $pair_instance_id,
+        'stack_name'       => $stack_name,
+        'publish_host'     => $publishhost,
       }
     ),
   }
