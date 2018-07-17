@@ -1,3 +1,6 @@
+### 3.0.2
+* Upgrade puppet-aem-curator to 1.0.2 for supporting non AEM OpenCloud extracted repositories
+
 ### 3.0.1
 * Fix deploy on init timeout
 
