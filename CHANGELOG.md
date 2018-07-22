@@ -1,3 +1,6 @@
+### 2.6.2
+* Add Library puppet-aem to Puppetfile
+
 ### 2.6.1
 * Add additional metrics to content health check for request latency and exceptions
 * Refactored content health check to add constants, simplify traverse_descriptor function, handling for internal URLs and support multiple metric submission

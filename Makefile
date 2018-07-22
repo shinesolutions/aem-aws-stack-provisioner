@@ -1,4 +1,5 @@
-version ?= 2.6.1
+version ?= 2.6.2
+>>>>>>> 1d4e056... Merge branch 'master' into feature/stack_manager_event_install_aem_profile
 
 ci: clean deps lint validate package
 
