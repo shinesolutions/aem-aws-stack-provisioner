@@ -28,9 +28,9 @@ class orchestrator (
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } -> file { "${base_dir}/aem-tools/stack-offline-snapshot.sh":
+  } -> file { "${base_dir}/aem-tools/stack-offline-snapshot-full-set.sh":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-snapshot.sh.epp", {
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-snapshot-full-set.sh.epp", {
       'base_dir'                 => $base_dir,
       'stack_manager_stack_name' => $stack_manager_stack_name,
     }),
@@ -49,9 +49,9 @@ class orchestrator (
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
-  } -> file { "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh":
+  } -> file { "${base_dir}/aem-tools/stack-offline-compaction-snapshot-full-set.sh":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-compaction-snapshot.sh.epp", {
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-compaction-snapshot-full-set.sh.epp", {
       'base_dir'                 => $base_dir,
       'stack_manager_stack_name' => $stack_manager_stack_name,
     }),
