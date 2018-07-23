@@ -16,7 +16,7 @@ deps:
 	# only needed while using shinesolutions/puppet-aem fork
 	# TODO: remove when switching back to bstopp/puppet-aem
 	rm -rf modules/aem/.git
-	
+
 validate:
 	bundle exec puppet parser validate manifests/*.pp
 	bundle exec puppet epp validate templates/**/*.epp
