@@ -1,5 +1,6 @@
 ### 3.0.2
 * Add Library puppet-aem to Puppetfile
+* Upgrade puppet-aem-curator to 1.0.3
 
 ### 3.0.1
 * Fix deploy on init timeout
