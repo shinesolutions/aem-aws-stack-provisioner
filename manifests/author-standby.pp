@@ -56,7 +56,7 @@ class author_standby (
     owner   => 'root',
     group   => 'root',
     content => epp(
-      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-snapshot-backup.sh.epp",
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-snapshot-backup-full-set.sh.epp",
       {
         'aem_tools_env_path' => $aem_tools_env_path,
         'base_dir'           => $base_dir,
