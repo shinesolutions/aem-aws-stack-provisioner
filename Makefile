@@ -13,6 +13,9 @@ deps:
 	cd vendor && find . -name "*.tar.gz" -exec tar -xzvf '{}' \; -exec rm '{}' \;
 	cd vendor && mv inspec-aem-aws-*.*.* inspec-aem-aws
 	rm -rf files/test/inspec/ && mkdir -p files/test/inspec/ && cp -R vendor/* files/test/inspec/
+	# only needed while using shinesolutions/puppet-aem fork
+	# TODO: remove when switching back to bstopp/puppet-aem
+	rm -rf modules/aem/.git
 
 validate:
 	bundle exec puppet parser validate manifests/*.pp
