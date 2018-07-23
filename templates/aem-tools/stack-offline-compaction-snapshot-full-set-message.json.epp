@@ -1,0 +1,4 @@
+{
+  "task": "offline-compaction-snapshot-full-set",
+  "stack_prefix": "<%= $stack_prefix %>"
+}

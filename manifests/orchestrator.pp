@@ -22,9 +22,9 @@ class orchestrator (
   # Stack offline snapshot without compaction
   ##############################################################################
 
-  file { "${base_dir}/aem-tools/stack-offline-snapshot-message.json":
+  file { "${base_dir}/aem-tools/stack-offline-snapshot-full-set-message.json":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-snapshot-message.json.epp", { 'stack_prefix' => "${stack_prefix}"}),
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-snapshot-full-set-message.json.epp", { 'stack_prefix' => "${stack_prefix}"}),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
@@ -43,9 +43,9 @@ class orchestrator (
   # Stack-level offline snapshot with compaction
   ##############################################################################
 
-  file { "${base_dir}/aem-tools/stack-offline-compaction-snapshot-message.json":
+  file { "${base_dir}/aem-tools/stack-offline-compaction-snapshot-full-set-message.json":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-compaction-snapshot-message.json.epp", { 'stack_prefix' => "${stack_prefix}"}),
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-compaction-snapshot-full-set-message.json.epp", { 'stack_prefix' => "${stack_prefix}"}),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
