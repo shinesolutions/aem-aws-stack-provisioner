@@ -34,7 +34,7 @@ class action_scheduled_jobs (
   if $offline_snapshot_enable == true {
     cron { 'stack-offline-snapshot':
       ensure      => present,
-      command     => "${base_dir}/aem-tools/stack-offline-snapshot-full-set.sh >${log_dir}/cron-stack-offline-snapshot.log 2>&1",
+      command     => "${base_dir}/aem-tools/stack-offline-snapshot.sh >${log_dir}/cron-stack-offline-snapshot.log 2>&1",
       user        => 'root',
       hour        => $offline_snapshot_hour,
       minute      => $offline_snapshot_minute,
@@ -44,7 +44,7 @@ class action_scheduled_jobs (
   } else {
     cron { 'stack-offline-snapshot':
       ensure      => absent,
-      command     => "${base_dir}/aem-tools/stack-offline-snapshot-full-set.sh >${log_dir}/cron-stack-offline-snapshot.log 2>&1",
+      command     => "${base_dir}/aem-tools/stack-offline-snapshot.sh >${log_dir}/cron-stack-offline-snapshot.log 2>&1",
       user        => 'root',
       environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
     }
@@ -53,7 +53,7 @@ class action_scheduled_jobs (
   if $offline_compaction_snapshot_enable == true {
     cron { 'stack-offline-compaction-snapshot':
       ensure      => present,
-      command     => "${base_dir}/aem-tools/stack-offline-compaction-snapshot-full-set.sh >${log_dir}/cron-stack-offline-compaction-snapshot.log 2>&1",
+      command     => "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh >${log_dir}/cron-stack-offline-compaction-snapshot.log 2>&1",
       user        => 'root',
       hour        => $offline_compaction_snapshot_hour,
       minute      => $offline_compaction_snapshot_minute,
@@ -63,7 +63,7 @@ class action_scheduled_jobs (
   } else {
     cron { 'stack-offline-compaction-snapshot':
       ensure      => absent,
-      command     => "${base_dir}/aem-tools/stack-offline-compaction-snapshot-full-set.sh >${log_dir}/cron-stack-offline-compaction-snapshot.log 2>&1",
+      command     => "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh >${log_dir}/cron-stack-offline-compaction-snapshot.log 2>&1",
       user        => 'root',
       environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
     }
