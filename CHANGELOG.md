@@ -1,3 +1,6 @@
+### 2.6.3
+* Update Hiera configuration for Author, Publish & Consolidated to support reconfiguring existing AEM installation
+
 ### 2.6.2
 * Add Library puppet-aem to Puppetfile
 * Fix deploy on init timeout
