@@ -1,6 +1,8 @@
 ### 3.0.2
 * Add Library puppet-aem to Puppetfile
 * Upgrade puppet-aem-curator to 1.0.3
+* Rename all offline-snapshot, offline-compaction-snapshot related files with full-set suffix
+* Add offline-snapshot and offline-compaction-snapshot feature for AEM Consolidated
 
 ### 3.0.1
 * Fix deploy on init timeout
