@@ -1,6 +1,8 @@
 ### 2.6.2
 * Add Library puppet-aem to Puppetfile
 * Fix deploy on init timeout
+* Rename all offline-snapshot, offline-compaction-snapshot related files with full-set suffix
+* Add offline-snapshot and offline-compaction-snapshot feature for AEM Consolidated
 
 ### 2.6.1
 * Add additional metrics to content health check for request latency and exceptions
