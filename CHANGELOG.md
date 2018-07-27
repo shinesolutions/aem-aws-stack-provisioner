@@ -1,3 +1,6 @@
+### 2.5.3
+* Increase default publish login readiness checks to run 60 times every 15 seconds #110
+
 ### 2.5.2
 * Set http_proxy and no_proxy to cron http support
 * Add configurable chaos monkey settings

@@ -93,8 +93,8 @@ aem_curator::config_author_dispatcher::exec_path: "%{alias('exec_path')}"
 aem_curator::config_publish_dispatcher::exec_path: "%{alias('exec_path')}"
 
 publish::login_ready_max_tries: 60
-publish::login_ready_base_sleep_seconds: 5
-publish::login_ready_max_sleep_seconds: 5
+publish::login_ready_base_sleep_seconds: 15
+publish::login_ready_max_sleep_seconds: 15
 
 # AEM Scheduled jobs
 aem_curator::config_aem_scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
