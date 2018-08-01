@@ -1,3 +1,6 @@
+### 2.7.1
+*
+
 ### 2.7.0
 * Update Hiera configuration for Author, Publish & Consolidated to support reconfiguring existing AEM installation
 * Update Hiera configuration for Author, Publish & Consolidated to include parameters for System Users
