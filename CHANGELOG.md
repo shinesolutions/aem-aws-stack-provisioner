@@ -1,3 +1,7 @@
+### 3.0.3
+* Update Hiera configuration for Author, Publish & Consolidated to support reconfiguring existing AEM installation
+* Update Hiera configuration for Author, Publish & Consolidated to include parameters for System Users
+
 ### 3.0.2
 * Add Library puppet-aem to Puppetfile
 * Upgrade puppet-aem-curator to 1.0.3
