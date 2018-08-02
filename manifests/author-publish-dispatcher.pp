@@ -128,7 +128,28 @@ class author_publish_dispatcher (
     owner   => 'root',
     group   => 'root',
     content => epp(
-      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-snapshot-backup.sh.epp",
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-snapshot-backup-consolidated.sh.epp",
+      {
+        'base_dir'           => $base_dir,
+        'aem_tools_env_path' => $aem_tools_env_path,
+        'aem_repo_devices'   => $aem_repo_devices,
+        'component'          => $component,
+        'stack_prefix'       => $stack_prefix,
+      }
+    ),
+  }
+
+  ##############################################################################
+  # Offline Compaction snapshot backup
+  ##############################################################################
+
+  file { "${base_dir}/aem-tools/offline-compaction-snapshot-backup.sh":
+    ensure  => present,
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-compaction-snapshot-backup-consolidated.sh.epp",
       {
         'base_dir'           => $base_dir,
         'aem_tools_env_path' => $aem_tools_env_path,

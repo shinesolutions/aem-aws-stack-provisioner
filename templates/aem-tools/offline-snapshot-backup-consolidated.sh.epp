@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+set -o nounset
+set -o errexit
+
+translate_exit_code() {
+
+  exit_code="$1"
+  if [ "$exit_code" -eq 0 ] ; then
+    exit_code=0
+  else
+    exit "$exit_code"
+  fi
+
+  return "$exit_code"
+}
+
+if (( $(ps -ef | grep -v grep | grep python | grep snapshot_backup | wc -l) > 0 )); then
+
+  echo “snapshot_backup is running!!! Snapshots can hang when snapshoting the volume at the same time. Exiting”
+  exit 1
+
+else
+
+  # Take a snapshot backup of an offline (stopped) AEM instance's repository.
+  # The purpose of this backup is to eliminate/reduce the probability of
+  # getting a corrupted repository.
+
+  PATH=<%= $aem_tools_env_path %>
+  instance_id=$(facter ec2_metadata.instance-id)
+  component=$(facter component)
+  stack_prefix=$(facter stack_prefix)
+  instance_id=$(facter ec2_metadata.instance-id)
+
+  <% $aem_repo_devices.each | Integer $index, Hash $aem_repo_device | { -%>
+
+    echo "Stopping: aem-<%= $aem_repo_device['aem_id'] %>"
+    service aem-<%= $aem_repo_device['aem_id'] %> stop
+
+    echo "<%= $aem_repo_device['device_name'] %> Snapshot Started: $(date)"
+
+    snap_id=$(<%= $base_dir %>/aws-tools/snapshot_backup.py \
+                --snapshot-description "Offline AEM snapshot of <%= $component %> instance ${instance_id}" \
+                --tag "Name=AEM <%= $component %> Snapshot ${instance_id}" \
+                --tag "Component=<%= $component %>" \
+                --tag "StackPrefix=<%= $stack_prefix %>" \
+                --tag "SnapshotType=offline" \
+                --tag "AemId=<%= $aem_repo_device['aem_id'] %>" \
+                <%= $aem_repo_device['device_name'] %>)
+
+    translate_exit_code "$?"
+
+    echo "<%= $aem_repo_device['device_name'] %> Snapshot Ended: $(date)"
+
+    echo "Starting: aem-<%= $aem_repo_device['aem_id'] %>"
+    service aem-<%= $aem_repo_device['aem_id'] %> start
+
+    echo "Testing if taken livesnapshot exists using InSpec..."
+    cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
+    HOME=/root \
+      aem_component="${component}" \
+      aem_stack_prefix="${stack_prefix}" \
+      snapshot_id="${snap_id}" \
+      inspec exec . --controls aws-snapshot-exists
+
+    translate_exit_code "$?"
+
+
+  <% } -%>
+
+
+
+fi
