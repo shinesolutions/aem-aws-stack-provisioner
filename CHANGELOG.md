@@ -1,5 +1,5 @@
 ### 3.1.1
-*
+* Upgrade puppet-aem-curator to 1.1.1 to fix pre-6.4 config path for AEM Password Reset and AEM Health Check
 
 ### 3.1.0
 * Update Hiera configuration for Author, Publish & Consolidated to support reconfiguring existing AEM installation
