@@ -1,5 +1,5 @@
-source ENV['GEM_SOURCE'] || "https://rubygems.org"
+source "https://rubygems.org"
 
-gem 'inspec'
+gem 'inspec', '1.51.6'
 gem 'puppet-lint'
 gem 'r10k'
