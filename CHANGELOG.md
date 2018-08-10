@@ -1,5 +1,5 @@
 ### 2.7.1
-*
+* Update aem_curator to 0.10.6 and aem_resources to 2.3.1 
 
 ### 2.7.0
 * Update Hiera configuration for Author, Publish & Consolidated to support reconfiguring existing AEM installation
