@@ -1,5 +1,5 @@
 ### 3.1.2
-*
+* Update aem_curator to 1.1.2 and aem_resources to 3.1.1
 
 ### 3.1.1
 * Upgrade puppet-aem-curator to 1.1.1 to fix pre-6.4 config path for AEM Password Reset and AEM Health Check
