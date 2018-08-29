@@ -7,6 +7,8 @@ author_standby::aem_repo_devices:
     device_alias: /dev/xvdb
     aem_id: "%{hiera('author_standby::aem_id')}"
 
+author_standby::awslogs_config_path: "%{hiera('common::awslogs_config_path')}"
+
 action_scheduled_jobs::live_snapshot_enable: "%{alias('author_standby::scheduled_jobs::enable::live_snapshot')}"
 action_scheduled_jobs::live_snapshot_weekday: "%{hiera('author_standby::scheduled_jobs::weekday::live_snapshot')}"
 action_scheduled_jobs::live_snapshot_hour: "%{hiera('author_standby::scheduled_jobs::hour::live_snapshot')}"
