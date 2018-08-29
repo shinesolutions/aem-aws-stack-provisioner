@@ -5,6 +5,7 @@ File {
 class author_standby (
   $base_dir,
   $aem_repo_devices,
+  $awslogs_config_path,
   $author_primary_host        = $::authorprimaryhost,
   $component                  = $::component,
   $stack_prefix               = $::stack_prefix,
@@ -84,26 +85,29 @@ class author_standby (
     ),
   }
   ##############################################################################
-  # Update /etc/awslogs/awslogs.conf
+  # Update AWS Logs proxy settings file
   # to contain stack_prefix and component name
   ##############################################################################
 
-  class { 'update_awslogs': }
+  class { 'update_awslogs':
+    config_file_path => $awslogs_config_path
+  }
 }
 
 class update_awslogs (
-  $old_awslogs_content = file('/etc/awslogs/awslogs.conf'),
+  $config_file_path,
 ) {
   service { 'awslogs':
     ensure => 'running',
     enable => true
   }
+  $old_awslogs_content = file($config_file_path)
   $mod_awslogs_content = regsubst($old_awslogs_content, '^log_group_name = ', "log_group_name = ${$stack_prefix}", 'G' )
   $new_awslogs_content = regsubst($mod_awslogs_content, '^log_stream_name = ', "log_stream_name = ${$component}/", 'G' )
-  file { 'Update file /etc/awslogs/awslogs.conf':
+  file { 'Update AWS Logs proxy settings file':
     ensure  => file,
     content => $new_awslogs_content,
-    path    => '/etc/awslogs/awslogs.conf',
+    path    => $config_file_path,
     notify  => Service['awslogs'],
   }
 }
