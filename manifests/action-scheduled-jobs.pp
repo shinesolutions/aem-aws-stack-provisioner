@@ -12,7 +12,7 @@ class action_scheduled_jobs (
   $live_snapshot_enable                = false,
   $offline_compaction_snapshot_enable  = false,
   $offline_snapshot_enable             = false,
-  $content_health_check_enable         = true,
+  $content_health_check_enable         = false,
   $content_health_check_weekday        = '*',
   $content_health_check_hour           = '*',
   $content_health_check_minute         = '*',
