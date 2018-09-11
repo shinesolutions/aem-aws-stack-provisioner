@@ -1,6 +1,8 @@
+### 2.7.3
+*
+
 ### 2.7.2
 * Improved logging for taking live/offline snapshot
-* 
 
 ### 2.7.1
 * Update aem_curator to 0.10.6 and aem_resources to 2.3.1
