@@ -11,6 +11,7 @@ publish::volume_type: gp2
 publish::revert_snapshot_type: "%{hiera('publish::revert_snapshot_type')}"
 
 publish::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
+publish::awslogs_config_path: "%{hiera('common::awslogs_config_path')}"
 
 action_scheduled_jobs::export_enable: "%{alias('publish::scheduled_jobs::enable::export')}"
 action_scheduled_jobs::export_weekday: "%{hiera('publish::scheduled_jobs::weekday::export')}"
