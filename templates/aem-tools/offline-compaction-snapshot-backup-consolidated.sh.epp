@@ -61,7 +61,7 @@ else
     translate_exit_code "$?"
 
     echo "[${stack_prefix}-${component}/${instance_id}] <%= $aem_repo_device['device_name'] %> Snapshot Ended: $(date)"
-    echo "[${stack_prefix}-${component}/${instance_id}] Finish taking offline snapshot."
+    echo "[${stack_prefix}-${component}/${instance_id}] Finished taking offline snapshot."
 
     echo "[${stack_prefix}-${component}/${instance_id}] Starting: aem-<%= $aem_repo_device['aem_id'] %>"
     service aem-<%= $aem_repo_device['aem_id'] %> start
@@ -75,7 +75,7 @@ else
       inspec exec . --controls aws-snapshot-exists
 
     translate_exit_code "$?"
-    echo "[${stack_prefix}-${component}/${instance_id}] Finish testing if offline snapshot exists using InSpec."
+    echo "[${stack_prefix}-${component}/${instance_id}] Finished testing if offline snapshot exists using InSpec."
 
   <% } -%>
 
