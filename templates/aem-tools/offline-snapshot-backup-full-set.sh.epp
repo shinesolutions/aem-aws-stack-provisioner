@@ -48,7 +48,7 @@ else
     translate_exit_code "$?"
 
     echo "[${stack_prefix}-${component}/${instance_id}] <%= $aem_repo_device['device_name'] %> Snapshot Ended: $(date)"
-    echo "[${stack_prefix}-${component}/${instance_id}] Finish taking offline snapshot."
+    echo "[${stack_prefix}-${component}/${instance_id}] Finished taking offline snapshot."
 
     echo "[${stack_prefix}-${component}/${instance_id}] Start testing if offline snapshot exists using InSpec ..."
     cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
@@ -59,7 +59,7 @@ else
       inspec exec . --controls aws-snapshot-exists
 
     translate_exit_code "$?"
-    echo "[${stack_prefix}-${component}/${instance_id}] Finish testing if offline snapshot exists using InSpec."
+    echo "[${stack_prefix}-${component}/${instance_id}] Finished testing if offline snapshot exists using InSpec."
 
 
     <% if $revert_snapshot_type == 'offline' { %>
@@ -74,7 +74,7 @@ else
 
       translate_exit_code "$?"
 
-      echo "[${stack_prefix}-${component}/${instance_id}] Finish updating Launch Configuration: $(date)"
+      echo "[${stack_prefix}-${component}/${instance_id}] Finished updating Launch Configuration: $(date)"
 
     <% } -%>
 
