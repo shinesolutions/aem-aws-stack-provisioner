@@ -2,6 +2,7 @@
 orchestrator::base_dir: "%{hiera('common::base_dir')}"
 orchestrator::tmp_dir: "%{hiera('common::tmp_dir')}"
 orchestrator::aem_orchestrator_version: 1.0.0
+orchestrator::awslogs_config_path: "%{hiera('common::awslogs_config_path')}"
 
 action_scheduled_jobs::offline_compaction_snapshot_enable: "%{alias('aem_orchestrator::scheduled_jobs::enable::offline_compaction_snapshot')}"
 action_scheduled_jobs::offline_compaction_snapshot_weekday: "%{hiera('aem_orchestrator::scheduled_jobs::weekday::offline_compaction_snapshot')}"

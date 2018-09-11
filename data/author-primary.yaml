@@ -8,6 +8,7 @@ author_primary::aem_repo_devices:
     aem_id: "%{hiera('author_primary::aem_id')}"
 
 author_primary::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
+author_primary::awslogs_config_path: "%{hiera('common::awslogs_config_path')}"
 
 action_scheduled_jobs::export_enable: "%{alias('author_primary::scheduled_jobs::enable::export')}"
 action_scheduled_jobs::export_weekday: "%{hiera('author_primary::scheduled_jobs::weekday::export')}"
