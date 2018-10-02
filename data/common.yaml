@@ -93,9 +93,14 @@ aem_curator::config_publish::exec_path: "%{alias('exec_path')}"
 aem_curator::config_author_dispatcher::exec_path: "%{alias('exec_path')}"
 aem_curator::config_publish_dispatcher::exec_path: "%{alias('exec_path')}"
 
-publish::login_ready_max_tries: 60
-publish::login_ready_base_sleep_seconds: 5
-publish::login_ready_max_sleep_seconds: 5
+# Wait until login page is ready parameters
+author_primary::login_ready_max_tries: "%{hiera('common::login_ready_max_tries')}"
+author_primary::login_ready_base_sleep_seconds: "%{hiera('common::login_ready_base_sleep_seconds')}"
+author_primary::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max_sleep_seconds')}"
+publish::login_ready_max_tries: "%{hiera('common::login_ready_max_tries')}"
+publish::login_ready_base_sleep_seconds: "%{hiera('common::login_ready_base_sleep_seconds')}"
+publish::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max_sleep_seconds')}"
+
 
 # AEM Scheduled jobs
 aem_curator::config_aem_scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
