@@ -1,7 +1,5 @@
-### 3.1.4
-* Update Hier configuration for Author, Publish & Consolidated to support custom configuration Parameters for waiting until login page is ready. shinesolutions/aem-aws-stack-builder#184
-
 ### 3.1.3
+* Update Hier configuration for Author, Publish & Consolidated to support custom configuration Parameters for waiting until login page is ready. shinesolutions/aem-aws-stack-builder#184
 * Improved logging for taking live/offline snapshot
 
 ### 3.1.2
