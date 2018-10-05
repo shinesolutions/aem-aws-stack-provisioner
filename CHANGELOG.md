@@ -1,8 +1,5 @@
 ### 3.1.3
-* Add configuration parameters for Chaos Monkey to configure component termination rule
-*
-
-### 3.1.3
+* Add configuration parameters for Chaos Monkey to configure component termination rule #122
 * Improved logging for taking live/offline snapshot
 
 ### 3.1.2
