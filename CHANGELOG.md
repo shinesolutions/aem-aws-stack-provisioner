@@ -1,5 +1,5 @@
 ### 2.7.3
-*
+* Add configuration parameters for Chaos Monkey to configure component termination rule
 
 ### 2.7.2
 * Improved logging for taking live/offline snapshot
