@@ -1,5 +1,6 @@
 ### 2.7.3
-* Update Hier configuration for Author, Publish & Consolidated to support custom configuration Parameters for waiting until login page is ready. shinesolutions/aem-aws-stack-builder#184
+* Update Hiera configuration for Author, Publish & Consolidated to support custom configuration Parameters for waiting until login page is ready. shinesolutions/aem-aws-stack-builder#184
+* Add configuration parameters for Chaos Monkey to configure component termination rule
 
 ### 2.7.2
 * Improved logging for taking live/offline snapshot
