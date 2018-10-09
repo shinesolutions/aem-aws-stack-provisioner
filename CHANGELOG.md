@@ -1,5 +1,6 @@
 ### 2.7.4
 * Disable collectd-java plugin installation
+* Add InSpec checks to ensure java does not use OpenJDK
 
 ### 2.7.3
 * Update Hiera configuration for Author, Publish & Consolidated to support custom configuration Parameters for waiting until login page is ready. shinesolutions/aem-aws-stack-builder#184
