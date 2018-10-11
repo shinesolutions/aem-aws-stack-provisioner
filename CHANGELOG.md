@@ -1,3 +1,6 @@
+### 3.1.4
+* Add existing check of AEM pid file cq.pid before running offline-snapshot and offline-compaction
+
 ### 3.1.3
 * Update Hiera configuration for Author, Publish & Consolidated to support custom configuration Parameters for waiting until login page is ready. shinesolutions/aem-aws-stack-builder#184
 * Add configuration parameters for Chaos Monkey to configure component termination rule #122

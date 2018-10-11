@@ -6,6 +6,7 @@ PATH=<%= $aem_tools_env_path %>
 instance_id=$(facter ec2_metadata.instance-id)
 component=$(facter component)
 stack_prefix=$(facter stack_prefix)
+pid_file="crx-quickstart/conf/cq.pid"
 
 translate_exit_code() {
 
@@ -36,6 +37,12 @@ else
 
     echo "[${stack_prefix}-${component}/${instance_id}] Stopping: aem-<%= $aem_repo_device['aem_id'] %>"
     service aem-<%= $aem_repo_device['aem_id'] %> stop
+
+    if [ -f /opt/aem/${aem_repo_device}['aem_id']/${pid_file} ]; then
+      echo "/opt/aem/${aem_repo_device}['aem_id']/${pid_file} still exists. Deleting it manualy now..."
+      rm -f /opt/aem/${aem_repo_device}['aem_id']/${pid_file}
+      echo "Finish deletion of Pid file."
+    fi
 
   <% } -%>
 
