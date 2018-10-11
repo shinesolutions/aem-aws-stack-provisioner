@@ -1,3 +1,6 @@
+### 2.7.6
+*
+
 ### 2.7.5
 * Add existing check of AEM pid file cq.pid before running offline-snapshot and offline-compaction #113
 
