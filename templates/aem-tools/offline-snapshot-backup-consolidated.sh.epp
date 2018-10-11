@@ -36,6 +36,13 @@ else
     echo "[${stack_prefix}-${component}/${instance_id}] Stopping: aem-<%= $aem_repo_device['aem_id'] %>"
     service aem-<%= $aem_repo_device['aem_id'] %> stop
 
+    if [ -f /opt/aem/${aem_repo_device}['aem_id']/${pid_file} ]; then
+      echo "Warning: AEM PID file /opt/aem/${aem_repo_device}['aem_id']/${pid_file} still exists when AEM is already stopped"
+      echo "Deleting AEM PID file..."
+      rm -f /opt/aem/${aem_repo_device}['aem_id']/${pid_file}
+      echo "AEM PID file has been deleted"
+    fi
+
     echo "[${stack_prefix}-${component}/${instance_id}] Start taking offline snapshot ..."
     echo "[${stack_prefix}-${component}/${instance_id}] <%= $aem_repo_device['device_name'] %> Snapshot Started: $(date)"
 
