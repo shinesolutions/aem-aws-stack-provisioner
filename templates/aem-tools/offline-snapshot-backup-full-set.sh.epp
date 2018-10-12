@@ -34,10 +34,10 @@ else
 
   <% $aem_repo_devices.each | Integer $index, Hash $aem_repo_device | { -%>
 
-    if [ -f /opt/aem/${aem_repo_device}['aem_id']/${pid_file} ]; then
-      echo "Warning: AEM PID file /opt/aem/${aem_repo_device}['aem_id']/${pid_file} still exists when AEM is already stopped"
+    if [ -f /opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file} ]; then
+      echo "Warning: AEM PID file /opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file} still exists when AEM is already stopped"
       echo "Deleting AEM PID file..."
-      rm -f /opt/aem/${aem_repo_device}['aem_id']/${pid_file}
+      rm -f /opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file}
       echo "AEM PID file has been deleted"
     fi
 
