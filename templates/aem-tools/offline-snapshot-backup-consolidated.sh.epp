@@ -7,6 +7,7 @@ PATH=<%= $aem_tools_env_path %>
 instance_id=$(facter ec2_metadata.instance-id)
 component=$(facter component)
 stack_prefix=$(facter stack_prefix)
+pid_file="crx-quickstart/conf/cq.pid"
 
 translate_exit_code() {
 
