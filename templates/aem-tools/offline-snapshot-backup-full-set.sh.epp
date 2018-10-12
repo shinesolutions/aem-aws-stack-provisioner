@@ -34,9 +34,9 @@ else
 
   <% $aem_repo_devices.each | Integer $index, Hash $aem_repo_device | { -%>
 
-    if [ -f /opt/aem/${aem_repo_device}['aem_id']/${pid_file} ]; then
-      echo "/opt/aem/${aem_repo_device}['aem_id']/${pid_file} still exists. Deleting it manualy now..."
-      rm -f /opt/aem/${aem_repo_device}['aem_id']/${pid_file}
+    if [ -f /opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file} ]; then
+      echo "/opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file} still exists. Deleting it manualy now..."
+      rm -f /opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file}
       echo "Finish deletion of Pid file."
     fi
 

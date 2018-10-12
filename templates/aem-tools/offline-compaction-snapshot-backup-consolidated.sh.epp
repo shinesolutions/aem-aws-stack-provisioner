@@ -38,9 +38,9 @@ else
     echo "[${stack_prefix}-${component}/${instance_id}] Stopping: aem-<%= $aem_repo_device['aem_id'] %>"
     service aem-<%= $aem_repo_device['aem_id'] %> stop
 
-    if [ -f /opt/aem/${aem_repo_device}['aem_id']/${pid_file} ]; then
-      echo "/opt/aem/${aem_repo_device}['aem_id']/${pid_file} still exists. Deleting it manualy now..."
-      rm -f /opt/aem/${aem_repo_device}['aem_id']/${pid_file}
+    if [ -f /opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file} ]; then
+      echo "/opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file} still exists. Deleting it manualy now..."
+      rm -f /opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file}
       echo "Finish deletion of Pid file."
     fi
 
