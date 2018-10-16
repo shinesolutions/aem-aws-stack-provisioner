@@ -1,5 +1,5 @@
 ### 2.7.8
-*
+* Upgrade puppet-aem-curator to 0.11.5 for improved AEM Author Standby readiness check
 
 ### 2.7.7
 * Add existing check of AEM pid file cq.pid before running offline-snapshot and offline-compaction #113
