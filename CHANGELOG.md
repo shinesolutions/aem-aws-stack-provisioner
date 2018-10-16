@@ -1,3 +1,6 @@
+### 2.7.9
+*
+
 ### 2.7.8
 * Upgrade puppet-aem-curator to 0.11.5 for improved AEM Author Standby readiness check
 
