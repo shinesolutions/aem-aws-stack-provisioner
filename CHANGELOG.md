@@ -1,3 +1,7 @@
+### 3.1.4
+* Disable package management for simianarmy shinesolutions/puppet-simianarmy#6
+* Enable InSpec test for Chaos Monkey
+
 ### 3.1.3
 * Update Hiera configuration for Author, Publish & Consolidated to support custom configuration Parameters for waiting until login page is ready. shinesolutions/aem-aws-stack-builder#184
 * Add configuration parameters for Chaos Monkey to configure component termination rule #122
