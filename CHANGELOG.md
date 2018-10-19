@@ -1,4 +1,4 @@
-### 2.7.9
+### 2.8.0
 * Disable package management for simianarmy shinesolutions/puppet-simianarmy#6
 * Enable InSpec test for Chaos Monkey
 * Upgrade puppet-aem-curator to 0.11.6, puppet-aem-resources to 2.4.1, puppet-simianarmy to 1.1.2
