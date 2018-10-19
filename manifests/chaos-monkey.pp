@@ -19,34 +19,24 @@ class chaos_monkey (
   $asg_max_terminations_per_day                 = $::asg_max_terminations_per_day,
 ) {
 
-  include simianarmy
-
-  # Orchestrator
-  simianarmy::chaos_properties::asg { $::orchestratorasg:
+  class { 'simianarmy':
+  } -> simianarmy::chaos_properties::asg { $::orchestratorasg:
     enabled                  => $orchestrator_enable_random_termination,
     probability              => $asg_probability,
     max_terminations_per_day => $asg_max_terminations_per_day,
-  }
-  # Chaos Monkey
-  simianarmy::chaos_properties::asg { $facts['aws:autoscaling:groupname']:
+  } -> simianarmy::chaos_properties::asg { $facts['aws:autoscaling:groupname']:
     enabled                  => $chaos_monkey_enable_random_termination,
     probability              => $asg_probability,
     max_terminations_per_day => $asg_max_terminations_per_day,
-  }
-  # Publish
-  simianarmy::chaos_properties::asg { $publish_asg:
+  } -> simianarmy::chaos_properties::asg { $publish_asg:
     enabled                  => $publish_enable_random_termination,
     probability              => $asg_probability,
     max_terminations_per_day => $asg_max_terminations_per_day,
-  }
-  # Publish-dispatcher
-  simianarmy::chaos_properties::asg { $publish_dispatcher_asg:
+  } -> simianarmy::chaos_properties::asg { $publish_dispatcher_asg:
     enabled                  => $publish_dispatcher_enable_random_termination,
     probability              => $asg_probability,
     max_terminations_per_day => $asg_max_terminations_per_day,
-  }
-  # Author-Dispatcher
-  simianarmy::chaos_properties::asg { $author_dispatcher_asg:
+  } -> simianarmy::chaos_properties::asg { $author_dispatcher_asg:
     enabled                  => $author_dispatcher_enable_random_termination,
     probability              => $asg_probability,
     max_terminations_per_day => $asg_max_terminations_per_day,
