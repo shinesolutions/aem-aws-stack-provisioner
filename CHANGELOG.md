@@ -1,4 +1,5 @@
 ### 3.1.3
+* Add existing check of AEM pid file cq.pid before running offline-snapshot and offline-compaction #113
 * Disable collectd-java plugin installation
 * Add InSpec checks to ensure java does not use OpenJDK
 * Update Hiera configuration for Author, Publish & Consolidated to support custom configuration Parameters for waiting until login page is ready. shinesolutions/aem-aws-stack-builder#184
