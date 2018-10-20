@@ -144,3 +144,5 @@ aem_curator::action_flush_dispatcher_cache::docroot_dir: "%{hiera('common::docro
 aem_curator::config_author_primary::aem_version: '6.2'
 aem_curator::config_author_standby::aem_version: '6.2'
 aem_curator::action_promote_author_standby_to_primary::aem_version: '6.2'
+
+collectd::plugin::java::manage_package: false
