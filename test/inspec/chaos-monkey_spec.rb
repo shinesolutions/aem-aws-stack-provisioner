@@ -10,3 +10,7 @@ init_conf
 #   it { should be_enabled }
 #   it { should be_running }
 # end
+
+describe command('java -version') do
+  its('stdout') { should_not match /openjdk/i }
+end
