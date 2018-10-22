@@ -1,3 +1,6 @@
+### 3.2.1
+*
+
 ### 3.2.0
 * Disable package management for simianarmy shinesolutions/puppet-simianarmy#6
 * Enable InSpec test for Chaos Monkey
