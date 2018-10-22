@@ -1,4 +1,4 @@
-### 3.1.3
+### 3.2.0
 * Disable package management for simianarmy shinesolutions/puppet-simianarmy#6
 * Enable InSpec test for Chaos Monkey
 * Add existing check of AEM pid file cq.pid before running offline-snapshot and offline-compaction #113
