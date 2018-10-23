@@ -84,6 +84,28 @@ class author_standby (
       }
     ),
   }
+
+  ##############################################################################
+  # Schedule jobs for live snapshot, offline snapshot & offline compaction snapshot
+  ##############################################################################
+
+  file { "${base_dir}/aem-tools/schedule-snapshots.sh":
+    ensure  => present,
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/schedule-snapshots.sh.epp",
+    {
+      'aem_tools_env_path' => $aem_tools_env_path,
+      'base_dir'           => $base_dir,
+      'data_bucket_name'   => $data_bucket_name,
+      'stack_prefix'       => $stack_prefix,
+      'tmp_dir'            => $tmp_dir
+      }
+    ),
+  }
+
   ##############################################################################
   # Update AWS Logs proxy settings file
   # to contain stack_prefix and component name

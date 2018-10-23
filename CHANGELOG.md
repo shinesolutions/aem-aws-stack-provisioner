@@ -1,5 +1,5 @@
 ### 2.8.1
-*
+* Extend schedule snapshot script to un/schedule live snapshots shinesolutions/aem-aws-stack-builder#212
 
 ### 2.8.0
 * Disable package management for simianarmy shinesolutions/puppet-simianarmy#6
