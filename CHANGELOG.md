@@ -1,5 +1,5 @@
 ### 3.2.1
-*
+* Extend schedule snapshot script to un/schedule live snapshots shinesolutions/aem-aws-stack-builder#212
 
 ### 3.2.0
 * Disable package management for simianarmy shinesolutions/puppet-simianarmy#6
@@ -10,7 +10,7 @@
 * Update Hiera configuration for Author, Publish & Consolidated to support custom configuration Parameters for waiting until login page is ready. shinesolutions/aem-aws-stack-builder#184
 * Add configuration parameters for Chaos Monkey to configure component termination rule #122
 * Improved logging for taking live/offline snapshot
-* Upgrade aem_curator to 1.2.3, aem_resources to 3.2.1, simianarmy to 1.1.2 
+* Upgrade aem_curator to 1.2.3, aem_resources to 3.2.1, simianarmy to 1.1.2
 
 ### 3.1.2
 * Update aem_curator to 1.1.2 and aem_resources to 3.1.1

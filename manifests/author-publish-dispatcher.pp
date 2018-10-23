@@ -162,16 +162,16 @@ class author_publish_dispatcher (
   }
 
   ##############################################################################
-  # Schedule jobs for offline snapshot & offline compaction snapshot
+  # Schedule jobs for live snapshot, offline snapshot & offline compaction snapshot
   ##############################################################################
 
-  file { "${base_dir}/aem-tools/schedule-offline-snapshots.sh":
+  file { "${base_dir}/aem-tools/schedule-snapshots.sh":
     ensure  => present,
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
     content => epp(
-      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/schedule-offline-snapshots.sh.epp",
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/schedule-snapshots.sh.epp",
     {
       'aem_tools_env_path' => $aem_tools_env_path,
       'base_dir'           => $base_dir,
