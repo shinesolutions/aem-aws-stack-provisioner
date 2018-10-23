@@ -6,6 +6,7 @@ PATH=<%= $aem_tools_env_path %>
 instance_id=$(facter ec2_metadata.instance-id)
 component=$(facter component)
 stack_prefix=$(facter stack_prefix)
+pid_file="crx-quickstart/conf/cq.pid"
 
 translate_exit_code() {
 
@@ -32,6 +33,13 @@ else
   # getting a corrupted repository.
 
   <% $aem_repo_devices.each | Integer $index, Hash $aem_repo_device | { -%>
+
+    if [ -f /opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file} ]; then
+      echo "Warning: AEM PID file /opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file} still exists when AEM is already stopped"
+      echo "Deleting AEM PID file..."
+      rm -f /opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file}
+      echo "AEM PID file has been deleted"
+    fi
 
     echo "[${stack_prefix}-${component}/${instance_id}] Start taking offline snapshot ..."
     echo "[${stack_prefix}-${component}/${instance_id}] <%= $aem_repo_device['device_name'] %> Snapshot Started: $(date)"

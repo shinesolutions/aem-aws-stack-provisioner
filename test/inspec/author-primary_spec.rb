@@ -12,3 +12,7 @@ end
 describe port(5432) do
   it { should be_listening }
 end
+
+describe command('java -version') do
+  its('stdout') { should_not match /openjdk/i }
+end

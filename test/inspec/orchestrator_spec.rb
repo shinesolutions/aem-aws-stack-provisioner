@@ -14,3 +14,7 @@ if os[:family].eql? 'amazon'
     its(:stdout) { should match 'enable => \'true\'' }
   end
 end
+
+describe command('java -version') do
+  its('stdout') { should_not match /openjdk/i }
+end
