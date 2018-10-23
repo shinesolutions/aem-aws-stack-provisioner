@@ -3,7 +3,7 @@ set -o nounset
 set -o errexit
 
 if [ "$#" -ne 2 ]; then
-  echo 'Usage: ./schedule-offline-snapshots.sh <offline_snapshot | offline_compaction_snapshot> <enable | disable>'
+  echo 'Usage: ./schedule-snapshots.sh <live_snapshot | offline_snapshot | offline_compaction_snapshot> <enable | disable>'
   exit 1
 fi
 
@@ -38,8 +38,9 @@ translate_puppet_exit_code() {
 }
 
 PATH=<%= $aem_tools_env_path %>
-tmp_dir=<%= $tmp_dir %>/schedule_offline_snapshot
+tmp_dir=<%= $tmp_dir %>/schedule_snapshot
 
+component=$(facter component)
 scheduled_job_name=$1
 scheduled_job_state=$2
 
@@ -63,11 +64,37 @@ mkdir -p $tmp_dir
 cd "<%= $base_dir %>"
 aws s3 cp "s3://<%= $data_bucket_name %>/<%= $stack_prefix %>/data/local.yaml" "${tmp_dir}/local.yaml"
 
+# Determine component to update local.yaml
+case "$scheduled_job_name" in
+  live_snapshot)
+    case "$component" in
+      author-primary)
+        aem_component=author_primary
+      ;;
+      author-standby)
+        aem_component=author_standby
+      ;;
+      publish)
+        aem_component=publish
+      ;;
+      author-publish-dispatcher)
+        aem_component=publish
+      ;;
+      *)
+        aem_component=aem_orchestrator
+      ;;
+    esac
+  ;;
+  *)
+    aem_component=aem_orchestrator
+  ;;
+esac
+
 # Update local.yaml
 cd "<%= $base_dir %>/aws-tools/"
 
 <%= $base_dir %>/aws-tools/update_hiera.py --file "${tmp_dir}/local.yaml" \
-  --parameter "aem_orchestrator::scheduled_jobs::enable::${scheduled_job_name}" \
+  --parameter "${aem_component}::scheduled_jobs::enable::${scheduled_job_name}" \
   --parameter-value ${scheduled_job_state} \
   --action change \
   --dest-file "${tmp_dir}/local.yaml"
@@ -76,7 +103,7 @@ translate_exit_code "$?"
 
 if [ "$exit_code" -eq 3 ]; then
   <%= $base_dir %>/aws-tools/update_hiera.py --file "${tmp_dir}/local.yaml" \
-    --parameter "aem_orchestrator::scheduled_jobs::enable::${scheduled_job_name}" \
+    --parameter "${aem_component}::scheduled_jobs::enable::${scheduled_job_name}" \
     --parameter-value ${scheduled_job_state} \
     --action add \
     --dest-file "${tmp_dir}/local.yaml"
@@ -107,6 +134,14 @@ translate_puppet_exit_code "$?"
 case "$scheduled_job_state" in
   True)
     case "$scheduled_job_name" in
+      live_snapshot)
+        echo "Testing if scheduled job live-snapshot is enabled using InSpec..."
+        cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
+        HOME=/root \
+          inspec exec . --controls aws-scheduled-job-live-snapshot-enabled
+
+        translate_exit_code "$?"
+      ;;
       offline_snapshot)
         echo "Testing if scheduled job offline-snapshot is enabled using InSpec..."
         cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
@@ -130,6 +165,14 @@ case "$scheduled_job_state" in
     ;;
   False)
     case "$scheduled_job_name" in
+      live_snapshot)
+        echo "Testing if scheduled job live-snapshot is disabled using InSpec..."
+        cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
+        HOME=/root \
+          inspec exec . --controls aws-scheduled-job-live-snapshot-disabled
+
+        translate_exit_code "$?"
+      ;;
       offline_snapshot)
         echo "Testing if scheduled job offline-snapshot is disabled using InSpec..."
         cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
