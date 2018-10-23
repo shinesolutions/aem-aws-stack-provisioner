@@ -1,6 +1,6 @@
 ### 3.2.1
 * Extend schedule snapshot script to un/schedule live snapshots shinesolutions/aem-aws-stack-builder#212
-
+* Renamed Consolidated offline-snapshot & offline-compaction-snapshot scripts shinesolutions/aem-aws-stack-builder#182
 ### 3.2.0
 * Disable package management for simianarmy shinesolutions/puppet-simianarmy#6
 * Enable InSpec test for Chaos Monkey

@@ -123,7 +123,7 @@ class author_publish_dispatcher (
   # Offline snapshot backup
   ##############################################################################
 
-  file { "${base_dir}/aem-tools/offline-snapshot-backup.sh":
+  file { "${base_dir}/aem-tools/stack-offline-snapshot.sh":
     ensure  => present,
     mode    => '0775',
     owner   => 'root',
@@ -144,7 +144,7 @@ class author_publish_dispatcher (
   # Offline Compaction snapshot backup
   ##############################################################################
 
-  file { "${base_dir}/aem-tools/offline-compaction-snapshot-backup.sh":
+  file { "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh":
     ensure  => present,
     mode    => '0775',
     owner   => 'root',
