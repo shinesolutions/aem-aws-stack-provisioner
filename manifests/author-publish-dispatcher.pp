@@ -234,7 +234,7 @@ class deploy_on_init (
 
 class update_awslogs (
   $config_file_path,
-  $awslogs_service_name,
+  $awslogs_service_name = lookup('common::awslogs_service_name')
 ) {
   service { $awslogs_service_name:
     ensure => 'running',
