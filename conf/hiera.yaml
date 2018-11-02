@@ -4,6 +4,10 @@ defaults:
   datadir: /opt/shinesolutions/aem-aws-stack-provisioner/data
   data_hash: yaml_data
 hierarchy:
+  - name: "OS release specific overrides"
+    path: "%{::os.family}/%{::os.name}-%{::os.release.major}.yaml"
+  - name: "OS family overrides"
+    path: "%{::os.family}/%{::os.name}.yaml"
   - name: "User defined hiera file"
     path: local.yaml
   - name: "Event hiera"

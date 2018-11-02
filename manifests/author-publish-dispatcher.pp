@@ -55,7 +55,7 @@ class author_publish_dispatcher (
     base_dir              => $base_dir,
     log_dir               => $log_dir,
     tmp_dir               => $tmp_dir,
-    exec_path             => $exec_path,
+    exec_path             => ['/bin', '/usr/local/bin', '/usr/bin'],
     enable_deploy_on_init => $enable_deploy_on_init,
   } -> class { 'aem_curator::config_collectd':
     component       => $component,
@@ -215,7 +215,7 @@ class deploy_on_init (
   $base_dir,
   $log_dir,
   $tmp_dir,
-  $exec_path             = ['/bin', '/usr/local/bin', '/usr/bin'],
+  $exec_path,
   $enable_deploy_on_init = false,
 ) {
 
@@ -234,8 +234,9 @@ class deploy_on_init (
 
 class update_awslogs (
   $config_file_path,
+  $awslogs_service_name,
 ) {
-  service { 'awslogs':
+  service { $awslogs_service_name:
     ensure => 'running',
     enable => true
   }
@@ -246,7 +247,7 @@ class update_awslogs (
     ensure  => file,
     content => $new_awslogs_content,
     path    => $config_file_path,
-    notify  => Service['awslogs'],
+    notify  => Service[$awslogs_service_name],
   }
 }
 
