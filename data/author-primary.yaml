@@ -76,7 +76,7 @@ aem_curator::config_author_primary::aem_password_reset_source: "s3://%{::data_bu
 aem_curator::config_author_primary::aem_password_reset_version: '1.0.2'
 aem_curator::config_author_primary::aem_healthcheck_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/aem-healthcheck-content-%{hiera('aem_curator::config_author_primary::aem_healthcheck_version')}.zip"
 aem_curator::config_author_primary::aem_healthcheck_version: "%{hiera('common::aem_healthcheck_version')}"
-aem_curator::config_author_primary::aem_keystore_password: "%{hiera('common::aem_keystore_password')}"
+aem_curator::config_author_primary::aem_ssl_keystore_password: "%{hiera('common::aem_ssl_keystore_password')}"
 aem_curator::config_author_primary::enable_aem_reconfiguration: "%{alias('common::enable_aem_reconfiguration')}"
 aem_curator::config_author_primary::cert_base_url: "%{hiera('common::cert_base_url')}"
 aem_curator::config_author_primary::enable_create_system_users: "%{alias('common::enable_create_system_users')}"
@@ -89,3 +89,16 @@ aem_curator::config_aem_scheduled_jobs::offline_compaction_minute: "%{hiera('aut
 # Logrotation configuration
 aem_curator::config_logrotate::config: "%{alias('author_primary::logrotation::config')}"
 aem_curator::config_logrotate::rules: "%{alias('author_primary::logrotation::rules')}"
+
+# AEM authorizable keystore configuration parameters
+aem_curator::config_author_primary::enable_authorizable_keystore_creation: "%{alias('common::authorizable_keystore::enable_creation')}"
+aem_curator::config_author_primary::enable_authorizable_keystore_certificate_chain_upload: "%{alias('common::authorizable_keystore::enable_certificate_chain_upload')}"
+
+# AEM truststore configuration parameters
+aem_curator::config_author_primary::enable_truststore_creation: "%{alias('common::truststore::enable_creation')}"
+aem_curator::config_author_primary::truststore_password: "%{hiera('common::truststore::password')}"
+
+# SAML configuration
+aem_curator::config_author_primary::enable_saml: "%{alias('common::saml::enable')}"
+aem_curator::config_author_primary::saml_configuration: "%{alias('common::saml::configuration')}"
+aem_curator::config_author_primary::enable_saml_certificate_upload: "%{alias('common::saml::enable_saml_certificate_upload')}"
