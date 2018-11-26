@@ -55,7 +55,7 @@ class author_publish_dispatcher (
     base_dir              => $base_dir,
     log_dir               => $log_dir,
     tmp_dir               => $tmp_dir,
-    exec_path             => $exec_path,
+    exec_path             => ['/bin', '/usr/local/bin', '/usr/bin'],
     enable_deploy_on_init => $enable_deploy_on_init,
   } -> class { 'aem_curator::config_collectd':
     component       => $component,
@@ -123,7 +123,7 @@ class author_publish_dispatcher (
   # Offline snapshot backup
   ##############################################################################
 
-  file { "${base_dir}/aem-tools/offline-snapshot-backup.sh":
+  file { "${base_dir}/aem-tools/stack-offline-snapshot.sh":
     ensure  => present,
     mode    => '0775',
     owner   => 'root',
@@ -144,7 +144,7 @@ class author_publish_dispatcher (
   # Offline Compaction snapshot backup
   ##############################################################################
 
-  file { "${base_dir}/aem-tools/offline-compaction-snapshot-backup.sh":
+  file { "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh":
     ensure  => present,
     mode    => '0775',
     owner   => 'root',
@@ -215,7 +215,7 @@ class deploy_on_init (
   $base_dir,
   $log_dir,
   $tmp_dir,
-  $exec_path             = ['/bin', '/usr/local/bin', '/usr/bin'],
+  $exec_path,
   $enable_deploy_on_init = false,
 ) {
 
@@ -234,8 +234,9 @@ class deploy_on_init (
 
 class update_awslogs (
   $config_file_path,
+  $awslogs_service_name = lookup('common::awslogs_service_name')
 ) {
-  service { 'awslogs':
+  service { $awslogs_service_name:
     ensure => 'running',
     enable => true
   }
@@ -246,7 +247,7 @@ class update_awslogs (
     ensure  => file,
     content => $new_awslogs_content,
     path    => $config_file_path,
-    notify  => Service['awslogs'],
+    notify  => Service[$awslogs_service_name],
   }
 }
 

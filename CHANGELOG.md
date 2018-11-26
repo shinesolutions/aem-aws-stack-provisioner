@@ -3,6 +3,7 @@
 * Update Hiera configuration for Author & Consolidated to support SAML configuration
 * Update Hiera configuration for Author & Consolidated to support creation of Truststore
 * Update Hiera parameter naming for AEM HTTPS SSL keystore
+* Renamed Consolidated offline-snapshot & offline-compaction-snapshot scripts shinesolutions/aem-aws-stack-builder#182
 
 ### 3.2.0
 * Disable package management for simianarmy shinesolutions/puppet-simianarmy#6
