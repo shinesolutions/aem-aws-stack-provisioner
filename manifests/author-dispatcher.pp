@@ -61,8 +61,9 @@ class author_dispatcher (
 
 class update_awslogs (
   $config_file_path,
+  $awslogs_service_name = lookup('common::awslogs_service_name')
 ) {
-  service { 'awslogs':
+  service { $awslogs_service_name:
     ensure => 'running',
     enable => true
   }
@@ -73,7 +74,7 @@ class update_awslogs (
     ensure  => file,
     content => $new_awslogs_content,
     path    => $config_file_path,
-    notify  => Service['awslogs'],
+    notify  => Service[$awslogs_service_name],
   }
 }
 
