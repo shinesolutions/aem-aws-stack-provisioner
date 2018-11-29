@@ -1,9 +1,10 @@
-### 3.2.1
+### 3.3.0
 * Extend schedule snapshot script to un/schedule live snapshots shinesolutions/aem-aws-stack-builder#212
 * Update Hiera configuration for Author & Consolidated to support SAML configuration
 * Update Hiera configuration for Author & Consolidated to support creation of Truststore
 * Update Hiera parameter naming for AEM HTTPS SSL keystore
 * Renamed Consolidated offline-snapshot & offline-compaction-snapshot scripts shinesolutions/aem-aws-stack-builder#182
+* Add common::awslogs_service_name configuration property
 
 ### 3.2.0
 * Disable package management for simianarmy shinesolutions/puppet-simianarmy#6
