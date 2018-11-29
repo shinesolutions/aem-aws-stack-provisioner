@@ -1,3 +1,6 @@
+### 3.3.1
+*
+
 ### 3.3.0
 * Extend schedule snapshot script to un/schedule live snapshots shinesolutions/aem-aws-stack-builder#212
 * Update Hiera configuration for Author & Consolidated to support SAML configuration
