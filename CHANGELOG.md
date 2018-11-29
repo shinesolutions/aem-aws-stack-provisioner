@@ -5,6 +5,7 @@
 * Update Hiera parameter naming for AEM HTTPS SSL keystore
 * Renamed Consolidated offline-snapshot & offline-compaction-snapshot scripts shinesolutions/aem-aws-stack-builder#182
 * Add common::awslogs_service_name configuration property
+* Upgrade aem_curator to 1.3.0, aem_resources to 3.3.0
 
 ### 3.2.0
 * Disable package management for simianarmy shinesolutions/puppet-simianarmy#6
