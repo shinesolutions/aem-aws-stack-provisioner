@@ -9,8 +9,16 @@ describe port(4503) do
   it { should be_listening }
 end
 
+describe ssl(port: 4503) do
+  it { should_not be_enabled }
+end
+
 describe port(5433) do
   it { should be_listening }
+end
+
+describe ssl(port: 5433) do
+  it { should be_enabled }
 end
 
 describe command('java -version') do
