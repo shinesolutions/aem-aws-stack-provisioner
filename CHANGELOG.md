@@ -1,5 +1,5 @@
 ### 3.3.1
-*
+* Extend components Inspec Test to test SSL communication for each port shinesolutions/aem-aws-stack-builder#225
 
 ### 3.3.0
 * Extend schedule snapshot script to un/schedule live snapshots shinesolutions/aem-aws-stack-builder#212
