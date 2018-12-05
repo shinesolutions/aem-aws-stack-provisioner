@@ -9,6 +9,14 @@ describe port(4502) do
   it { should be_listening }
 end
 
+describe ssl(port: 4502) do
+  it { should_not be_enabled }
+end
+
 describe port(5432) do
   it { should be_listening }
+end
+
+describe ssl(port: 5432) do
+  it { should be_enabled }
 end
