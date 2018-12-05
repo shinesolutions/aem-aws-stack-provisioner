@@ -10,12 +10,13 @@ class pre_common (
   $user,
   $group,
   $credentials_file,
-  $extra_packages    = [],
-  $template_dir      = undef,
-  $file_dir          = undef,
-  $stack_prefix      = $::stack_prefix,
-  $data_bucket_name  = $::data_bucket_name,
-  $log_dir           = '/var/log/shinesolutions',
+  $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
+  $extra_packages     = [],
+  $template_dir       = undef,
+  $file_dir           = undef,
+  $stack_prefix       = $::stack_prefix,
+  $data_bucket_name   = $::data_bucket_name,
+  $log_dir            = '/var/log/shinesolutions',
 ) {
   $template_dir_final = pick(
     $template_dir,
@@ -192,6 +193,24 @@ class pre_common (
   archive { "${tmp_dir}/${credentials_file}":
     ensure => present,
     source => "s3://${data_bucket_name}/${stack_prefix}/${credentials_file}"
+  }
+
+  ##############################################################################
+  # AEM Readiness test
+  ##############################################################################
+
+  file { "${base_dir}/aem-tools/test-readiness.sh":
+    ensure  => present,
+    mode    => '0775',
+    owner   => 'root',
+    group   => 'root',
+    content => epp(
+      "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/test-readiness.sh.epp",
+      {
+        'aem_tools_env_path' => $aem_tools_env_path,
+        'base_dir'           => $base_dir,
+      }
+    ),
   }
 }
 
