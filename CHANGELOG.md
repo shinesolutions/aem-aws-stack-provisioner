@@ -1,3 +1,7 @@
+### 3.3.2
+* Add new manifest dependency to author, publish & consolidated for AEM Upgrade tools
+* Add new parameters to author, publish & consolidated hiera file for AEM Upgrade automation
+
 ### 3.3.1
 * Extend components Inspec Test to test SSL communication for each port shinesolutions/aem-aws-stack-builder#225
 * Provision readiness check script to all components

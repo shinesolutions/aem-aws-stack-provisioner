@@ -26,6 +26,8 @@ class author_publish_dispatcher (
 
   class { 'aem_curator::config_aem_tools':
     aem_tools_env_path => $aem_tools_env_path
+  } -> class { 'aem_curator::config_aem_upgrade_tools':
+    aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_tools_dispatcher':
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':
