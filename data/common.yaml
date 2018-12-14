@@ -25,7 +25,6 @@ exec_path:
 common::base_dir: /opt/shinesolutions
 common::log_dir: /var/log/shinesolutions
 
-common::aws_region: ap-southeast-2
 common::user: ec2-user
 common::group: ec2-user
 
