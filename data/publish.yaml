@@ -53,6 +53,10 @@ aem_curator::config_aem_tools::aem_instances:
     user: aem-publish
     aem_id: "%{hiera('publish::aem_id')}"
 
+aem_curator::config_aem_upgrade_tools::aem_instances:
+  - aem_port: 4503
+    aem_id: publish
+
 aem_curator::config_collectd::aem_instances:
   - aem_id: "%{hiera('publish::aem_id')}"
     jmxremote_port: "%{hiera('aem_curator::config_publish::jmxremote_port')}"

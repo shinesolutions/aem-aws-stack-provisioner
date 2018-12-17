@@ -53,6 +53,10 @@ aem_curator::config_aem_tools::aem_instances:
     user: aem-author
     aem_id: "%{hiera('author_primary::aem_id')}"
 
+aem_curator::config_aem_upgrade_tools::aem_instances:
+  - aem_port: 4502
+    aem_id: author
+
 aem_curator::config_collectd::aem_instances:
   - aem_id: "%{hiera('author_primary::aem_id')}"
     jmxremote_port: "%{hiera('aem_curator::config_author_primary::jmxremote_port')}"

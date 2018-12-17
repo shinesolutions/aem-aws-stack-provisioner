@@ -1,4 +1,6 @@
 ### 3.3.2
+* Add new manifest dependency to author, publish & consolidated for AEM Upgrade tools
+* Add new parameters to author, publish & consolidated hiera file for AEM Upgrade automation
 * Move hiera parameter common::aws_region to aem-aws-stack-builder shinesolutions/aem-aws-stack-builder#187
 * Add Hiera configuration to enable feature truststore migration shinesolutions/aem-aws-stack-builder#229
 

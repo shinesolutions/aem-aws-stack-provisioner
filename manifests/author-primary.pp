@@ -15,6 +15,8 @@ class author_primary (
 
   class { 'aem_curator::config_aem_tools':
     aem_tools_env_path => $aem_tools_env_path
+  } -> class { 'aem_curator::config_aem_upgrade_tools':
+    aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_author_primary':

@@ -115,6 +115,10 @@ aem_curator::config_aem_tools::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_aem_tools::aem_repo_device: /dev/sdb
 aem_curator::config_aem_tools_dispatcher::base_dir: "%{hiera('common::base_dir')}"
 
+# AEM Upgrade Tools
+aem_curator::config_aem_upgrade_tools::base_dir: "%{hiera('common::base_dir')}"
+aem_curator::config_aem_upgrade_tools::tmp_dir: "%{hiera('common::tmp_dir')}"
+
 # AEM Deployer
 aem_curator::config_aem_deployer::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_aem_deployer::tmp_dir: "%{hiera('common::tmp_dir')}"
@@ -136,6 +140,30 @@ aem_curator::action_deploy_artifacts::publish_secure: "%{hiera('common::publish_
 aem_curator::action_deploy_artifacts::ssl_cert: "%{hiera('common::dispatcher_ssl_cert')}"
 aem_curator::action_deploy_artifacts::static_assets_dir: "%{hiera('common::docroot_dir')}"
 aem_curator::action_deploy_artifacts::virtual_hosts_dir: "%{hiera('common::virtual_hosts_dir')}"
+
+# Upgrade-Tool AEM Unpack JAR
+aem_curator::action_upgrade_aem_unpack_jar::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_upgrade_aem_unpack_jar::aem_base: /opt/aem
+aem_curator::action_upgrade_aem_unpack_jar::post_stop_sleep_secs: 120
+aem_curator::action_upgrade_aem_unpack_jar::retries_max_tries: 60
+aem_curator::action_upgrade_aem_unpack_jar::retries_base_sleep_seconds: 5
+aem_curator::action_upgrade_aem_unpack_jar::retries_max_sleep_seconds: 5
+aem_curator::action_upgrade_aem_unpack_jar::puppet_binary: /opt/puppetlabs/bin/puppet
+
+# Upgrade-Tool AEM Repository migration
+aem_curator::action_upgrade_repo_migration::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_upgrade_repo_migration::aem_base: /opt/aem
+aem_curator::action_upgrade_repo_migration::retries_max_tries: 60
+aem_curator::action_upgrade_repo_migration::retries_base_sleep_seconds: 5
+aem_curator::action_upgrade_repo_migration::retries_max_sleep_seconds: 5
+
+# Upgrade-Tool AEM Upgrade
+aem_curator::action_upgrade_aem::aem_base: /opt/aem
+aem_curator::action_upgrade_aem::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_upgrade_aem::base_dir: "%{hiera('common::base_dir')}"
+aem_curator::action_upgrade_aem::login_ready_max_tries: "%{hiera('common::login_ready_max_tries')}"
+aem_curator::action_upgrade_aem::login_ready_base_sleep_seconds: "%{hiera('common::login_ready_base_sleep_seconds')}"
+aem_curator::action_upgrade_aem::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max_sleep_seconds')}"
 
 # AEM-Tool Flush-Dispatcher-cache
 aem_curator::action_flush_dispatcher_cache::docroot_dir: "%{hiera('common::docroot_dir')}"
