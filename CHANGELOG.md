@@ -1,5 +1,6 @@
 ### 3.3.2
 * Move hiera parameter common::aws_region to aem-aws-stack-builder shinesolutions/aem-aws-stack-builder#187
+* Add Hiera configuration to enable feature truststore migration shinesolutions/aem-aws-stack-builder#229
 
 ### 3.3.1
 * Extend components Inspec Test to test SSL communication for each port shinesolutions/aem-aws-stack-builder#225
