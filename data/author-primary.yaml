@@ -107,3 +107,11 @@ aem_curator::config_author_primary::truststore_password: "%{hiera('common::trust
 aem_curator::config_author_primary::enable_saml: "%{alias('common::saml::enable')}"
 aem_curator::config_author_primary::saml_configuration: "%{alias('common::saml::configuration')}"
 aem_curator::config_author_primary::enable_saml_certificate_upload: "%{alias('common::saml::enable_saml_certificate_upload')}"
+
+# AEM Bundle configuration
+aem_curator::config_author_primary::proxy_enabled: "%{alias('common::proxy_enabled')}"
+aem_curator::config_author_primary::proxy_host: "%{hiera('common::proxy_host')}"
+aem_curator::config_author_primary::proxy_port: "%{hiera('common::proxy_port')}"
+aem_curator::config_author_primary::proxy_user: "%{hiera('common::proxy_user')}"
+aem_curator::config_author_primary::proxy_password: "%{hiera('common::proxy_password')}"
+aem_curator::config_author_primary::proxy_exceptions: "%{alias('common::proxy_exceptions')}"
