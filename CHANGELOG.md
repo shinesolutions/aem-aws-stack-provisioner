@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add new manifest dependency to author, publish & consolidated for AEM Upgrade tools
 - Add new parameters to author, publish & consolidated hiera file for AEM Upgrade automation
 - Add Hiera configuration to enable feature truststore migration shinesolutions/aem-aws-stack-builder#229
+- Adding new component tests
 
 ### Changed
 - Upgrade aem_curator to 1.4.0, aem_resources to 3.4.0

@@ -1,5 +1,14 @@
 require_relative './spec_helper'
 
+describe group('aem-orchestrator') do
+  it { should exist }
+end
+
+describe user('aem-orchestrator') do
+  it { should exist }
+  # its('group') { should eq 'orchestrator' }
+end
+
 if !os[:family].eql? 'amazon'
   describe service('aem-orchestrator') do
     # This check doesn't work on Amazon Linux because it doesn't check for
