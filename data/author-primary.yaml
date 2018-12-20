@@ -2,9 +2,10 @@
 author_primary::aem_id: author
 author_primary::base_dir: "%{hiera('common::base_dir')}"
 
+# device_alias <- used by snapshot_attach.py Depending on the block device driver of the kernel, the device could be attached with a different name than you specified.
 author_primary::aem_repo_devices:
-  - device_name: /dev/sdb
-    device_alias: /dev/xvdb
+  - device_name: "%{hiera('common::ami::device_name')}"
+    device_alias: "%{hiera('common::ami::device_alias')}"
     aem_id: "%{hiera('author_primary::aem_id')}"
 
 author_primary::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
