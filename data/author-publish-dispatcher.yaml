@@ -7,12 +7,14 @@ author_publish_dispatcher::docroot_dir: "%{hiera('common::docroot_dir')}"
 author_publish_dispatcher::credentials_file: "%{hiera('common::credentials_file')}"
 author_publish_dispatcher::publish_protocol: http
 author_publish_dispatcher::publish_port: 4503
+
+# device_alias <- used by snapshot_attach.py Depending on the block device driver of the kernel, the device could be attached with a different name than you specified.
 author_publish_dispatcher::aem_repo_devices:
-  - device_name: /dev/sdb
-    device_alias: /dev/xvdb
+  - device_name: "%{hiera('common::ami::author_device_name')}"
+    device_alias: "%{hiera('common::ami::author_device_alias')}"
     aem_id: author
-  - device_name: /dev/sdc
-    device_alias: /dev/xvdc
+  - device_name: "%{hiera('common::ami::publish_device_name')}"
+    device_alias: "%{hiera('common::ami::publish_device_alias')}"
     aem_id: publish
 author_publish_dispatcher::volume_type: gp2
 
