@@ -1,4 +1,4 @@
-version ?= 3.3.1
+version ?= 3.4.0-pre
 
 ci: clean deps lint validate package
 
