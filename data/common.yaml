@@ -112,7 +112,7 @@ aem_curator::config_aem_tools::oak_run_version: '1.4.15'
 aem_curator::config_aem_tools::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
 aem_curator::config_aem_tools::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_aem_tools::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::config_aem_tools::aem_repo_device: /dev/sdb
+aem_curator::config_aem_tools::aem_repo_device: "%{hiera('common::ami::device_name')}"
 aem_curator::config_aem_tools_dispatcher::base_dir: "%{hiera('common::base_dir')}"
 
 # AEM Upgrade Tools
