@@ -1,6 +1,6 @@
 version ?= 3.4.0-pre
 
-ci: clean deps lint validate package
+ci: clean deps lint package
 
 clean:
 	rm -rf .tmp Puppetfile.lock Gemfile.lock modules stage vendor files/test
@@ -17,10 +17,6 @@ deps:
 	# TODO: remove when switching back to bstopp/puppet-aem
 	rm -rf modules/aem/.git
 
-validate:
-	bundle exec puppet parser validate manifests/*.pp
-	bundle exec puppet epp validate templates/**/*.epp
-
 lint:
 	bundle exec puppet-lint \
 		--fail-on-warnings \
@@ -33,6 +29,8 @@ lint:
 		--log-format "%{path} (%{check}) L%{line} %{message}" \
 		manifests/*.pp
 	shellcheck files/*/*.sh
+	bundle exec puppet parser validate manifests/*.pp
+	bundle exec puppet epp validate templates/**/*.epp
 
 package:
 	rm -rf stage
@@ -49,7 +47,4 @@ package:
 		stage/aem-aws-stack-provisioner-$(version).tar ./
 	gzip stage/aem-aws-stack-provisioner-$(version).tar
 
-tools:
-	gem install bundler
-
-.PHONY: ci clean deps lint package validate tools
+.PHONY: ci clean deps lint package
