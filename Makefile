@@ -56,6 +56,7 @@ lint:
 	shellcheck files/*/*.sh
 	bundle exec puppet parser validate manifests/*.pp
 	bundle exec puppet epp validate templates/**/*.epp
+	bundle exec rubocop test/inspec/*.rb
 	bundle exec yaml-lint .*.yml conf/*.yaml data/*.yaml data/*/*.yaml
 
 package:
