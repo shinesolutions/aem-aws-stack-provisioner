@@ -39,5 +39,5 @@ describe ssl(port: 5432) do
 end
 
 describe command('java -version') do
-  its('stdout') { should_not match /openjdk/i }
+  its('stdout') { should_not match(/openjdk/i) }
 end

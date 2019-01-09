@@ -1,6 +1,5 @@
 require_relative './spec_helper'
 
-
 # inspec version 1.51.6. doesn't support Amazon Linux 2. It assumes it uses Upstart.
 # inspec version is locked to 1.51.6 to use train version 0.32 because it doesn't have an aws-sdk dependency:
 # https://github.com/inspec/inspec/blob/v1.51.6/inspec.gemspec#L29
@@ -104,5 +103,5 @@ describe ssl(port: 443) do
 end
 
 describe command('java -version') do
-  its('stdout') { should_not match /openjdk/i }
+  its('stdout') { should_not match(/openjdk/i) }
 end
