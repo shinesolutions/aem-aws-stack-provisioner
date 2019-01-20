@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add proxy configuration for configuring AEM Bundle Apache HTTP Components Proxy Configuration shinesolutions/aem-aws-stack-builder#235
 
 ### Changed
-- Upgrade aem_curator to 1.4.0, aem_resources to 3.4.0
+- Upgrade aem_curator to 1.4.0, aem_resources to 3.4.0, aem_orchestrator to 1.3.0
 - The device name and device alias (aka attached device name) are now configurable via hieradata.
 
 ### Removed
