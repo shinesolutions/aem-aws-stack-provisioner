@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add new parameters to author, publish & consolidated hiera file for AEM Upgrade automation
 - Add Hiera configuration to enable feature truststore migration shinesolutions/aem-aws-stack-builder#229
 - Add proxy configuration for configuring AEM Bundle Apache HTTP Components Proxy Configuration shinesolutions/aem-aws-stack-builder#235
+- Add parameters for post start sleep timer to give the AEM service more time to start before configuring AEM shinesolutions/aem-aws-stack-builder#214
 
 ### Changed
 - Upgrade aem_curator to 1.4.0, aem_resources to 3.4.0, aem_orchestrator to 1.3.1
