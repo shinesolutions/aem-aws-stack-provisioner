@@ -5,6 +5,7 @@ File {
 class author_standby (
   $base_dir,
   $aem_repo_devices,
+  $tmp_dir,
   $awslogs_config_path,
   $author_primary_host        = $::authorprimaryhost,
   $component                  = $::component,

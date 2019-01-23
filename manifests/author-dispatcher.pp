@@ -6,6 +6,7 @@ class author_dispatcher (
   $base_dir,
   $docroot_dir,
   $awslogs_config_path,
+  $tmp_dir,
   $author_host        = $::authorhost,
   $component          = $::component,
   $stack_prefix       = $::stack_prefix,
