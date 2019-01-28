@@ -96,3 +96,7 @@ aem_curator::config_aem_scheduled_jobs::offline_compaction_minute: "%{hiera('pub
 # Logrotation configuration
 aem_curator::config_logrotate::config: "%{alias('publish::logrotation::config')}"
 aem_curator::config_logrotate::rules: "%{alias('publish::logrotation::rules')}"
+
+# Service start Post sleep configuration
+aem_curator::config_publish::enable_post_start_sleep: "%{alias('common::enable_post_start_sleep')}"
+aem_curator::config_publish::post_start_sleep_seconds: "%{hiera('common::post_start_sleep_seconds')}"
