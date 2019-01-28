@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Upgrade aem_curator to 1.4.0, aem_resources to 3.4.0, aem_orchestrator to 1.3.1
 - The device name and device alias (aka attached device name) are now configurable via hieradata.
+- Add missing parameter tmp_dir passing for AEM Author & Publish components
 
 ### Removed
 - Move hiera parameter common::aws_region to aem-aws-stack-builder shinesolutions/aem-aws-stack-builder#187
