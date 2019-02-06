@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### added
+- Add new parameter to remove the AEM Global Trusttore during reconfiguration
+
 ## [3.5.0] - 2019-02-03
 
 ### Changed
