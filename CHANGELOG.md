@@ -6,8 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### added
+### Added
 - Add new parameter to remove the AEM Global Trusttore during reconfiguration
+
+### Changed
+- Renamed proxy_exceptions parameter to proxy_noproxy
 
 ## [3.5.0] - 2019-02-03
 
