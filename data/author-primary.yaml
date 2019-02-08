@@ -105,6 +105,9 @@ aem_curator::config_author_primary::enable_truststore_creation: "%{alias('common
 aem_curator::config_author_primary::enable_truststore_migration: "%{alias('common::truststore::enable_migration')}"
 aem_curator::config_author_primary::truststore_password: "%{hiera('common::truststore::password')}"
 
+# AEM reconfiguration parameter
+aem_curator::config_author_primary::enable_truststore_removal: "%{alias('common::enable_truststore_removal')}"
+
 # SAML configuration
 aem_curator::config_author_primary::enable_saml: "%{alias('common::saml::enable')}"
 aem_curator::config_author_primary::saml_configuration: "%{alias('common::saml::configuration')}"
