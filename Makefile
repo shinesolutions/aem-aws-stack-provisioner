@@ -74,4 +74,7 @@ package:
 		stage/aem-aws-stack-provisioner-$(version).tar ./
 	gzip stage/aem-aws-stack-provisioner-$(version).tar
 
-.PHONY: ci clean deps deps-local lint package
+release:
+	rtk release
+
+.PHONY: ci clean deps deps-local lint package release
