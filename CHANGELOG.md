@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Renamed proxy_exceptions parameter to proxy_noproxy
 - Upgrade aem_curator to 1.10.0
+- Fix failing snapshot by increasing the max_attempts for boto3 client to 120 tries #121
 
 ## [3.5.0] - 2019-02-03
 
