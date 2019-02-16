@@ -311,7 +311,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rename artifacts deployment log to puppet-deploy-artifacts.log
 - Replace Serverspec with InSpec for testing
 
-## [2.0.0] - unknown
+## [2.0.0] - 2017-08-01
 
 ### Added
 - Add provisioning for AuthorPublishDispatcher component
