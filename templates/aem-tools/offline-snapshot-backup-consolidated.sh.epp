@@ -8,6 +8,7 @@ instance_id=$(facter ec2_metadata.instance-id)
 component=$(facter component)
 stack_prefix=$(facter stack_prefix)
 pid_file="crx-quickstart/conf/cq.pid"
+java_run=true
 
 translate_exit_code() {
 
