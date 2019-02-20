@@ -91,7 +91,7 @@ else
     echo "[${stack_prefix}-${component}/${instance_id}] Stopping: aem-<%= $aem_repo_device['aem_id'] %>"
     service aem-<%= $aem_repo_device['aem_id'] %> stop
     java_run=true
-    wait_<%= $aem_repo_device['aem_id']_stopped
+    wait_<%= $aem_repo_device['aem_id'] %>_stopped
 
     if [ -f /opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file} ]; then
       echo "Warning: AEM PID file /opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file} still exists when AEM is already stopped"
@@ -120,7 +120,7 @@ else
     echo "[${stack_prefix}-${component}/${instance_id}] Starting: aem-<%= $aem_repo_device['aem_id'] %>"
     service aem-<%= $aem_repo_device['aem_id'] %> start
     java_run=false
-    wait_<%= $aem_repo_device['aem_id']_started
+    wait_<%= $aem_repo_device['aem_id'] %>_started
 
     echo "[${stack_prefix}-${component}/${instance_id}] Start testing if offline snapshot exists using InSpec ..."
     cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
