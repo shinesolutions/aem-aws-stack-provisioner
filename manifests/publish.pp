@@ -5,6 +5,7 @@ File {
 class publish (
   $base_dir,
   $exec_path,
+  $tmp_dir,
   $aem_repo_devices,
   $aem_password_retrieval_command,
   $volume_type,

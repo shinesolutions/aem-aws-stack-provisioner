@@ -5,6 +5,7 @@ File {
 class author_standby (
   $base_dir,
   $aem_repo_devices,
+  $tmp_dir,
   $awslogs_config_path,
   $author_primary_host        = $::authorprimaryhost,
   $component                  = $::component,
@@ -14,8 +15,6 @@ class author_standby (
 ) {
 
   class { 'aem_curator::config_aem_tools':
-    aem_tools_env_path => $aem_tools_env_path
-  } -> class { 'aem_curator::config_aem_upgrade_tools':
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':
     aem_tools_env_path => $aem_tools_env_path

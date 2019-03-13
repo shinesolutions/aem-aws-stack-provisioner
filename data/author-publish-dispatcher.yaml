@@ -170,7 +170,25 @@ aem_curator::config_author_primary::enable_truststore_creation: "%{alias('common
 aem_curator::config_author_primary::enable_truststore_migration: "%{alias('common::truststore::enable_migration')}"
 aem_curator::config_author_primary::truststore_password: "%{hiera('common::truststore::password')}"
 
+# AEM reconfiguration parameter
+aem_curator::config_author_primary::enable_truststore_removal: "%{alias('common::enable_truststore_removal')}"
+aem_curator::config_publish::enable_truststore_removal: "%{alias('common::enable_truststore_removal')}"
+
 # SAML configuration
 aem_curator::config_author_primary::enable_saml: "%{alias('common::saml::enable')}"
 aem_curator::config_author_primary::saml_configuration: "%{alias('common::saml::configuration')}"
 aem_curator::config_author_primary::enable_saml_certificate_upload: "%{alias('common::saml::enable_saml_certificate_upload')}"
+
+# AEM Bundle configuration
+aem_curator::config_author_primary::proxy_enabled: "%{alias('common::proxy_enabled')}"
+aem_curator::config_author_primary::proxy_host: "%{hiera('common::proxy_host')}"
+aem_curator::config_author_primary::proxy_port: "%{hiera('common::proxy_port')}"
+aem_curator::config_author_primary::proxy_user: "%{hiera('common::proxy_user')}"
+aem_curator::config_author_primary::proxy_password: "%{hiera('common::proxy_password')}"
+aem_curator::config_author_primary::proxy_noproxy: "%{alias('common::proxy_noproxy')}"
+
+# Service start Post sleep configuration
+aem_curator::config_author_primary::enable_post_start_sleep: "%{alias('common::enable_post_start_sleep')}"
+aem_curator::config_author_primary::post_start_sleep_seconds: "%{hiera('common::post_start_sleep_seconds')}"
+aem_curator::config_publish::enable_post_start_sleep: "%{alias('common::enable_post_start_sleep')}"
+aem_curator::config_publish::post_start_sleep_seconds: "%{hiera('common::post_start_sleep_seconds')}"

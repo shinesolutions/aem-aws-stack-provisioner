@@ -2,3 +2,9 @@
 
 common::awslogs_service_name: awslogsd
 common::awslogs_config_path: /etc/awslogs/awslogs.conf
+
+simianarmy::tomcat_pkg_name: tomcat
+simianarmy::tomcat_srv_name: tomcat
+simianarmy::installdir: /var/lib/tomcat/webapps
+
+aem_orchestrator::application_properties::aws_device_name: /dev/xvdb

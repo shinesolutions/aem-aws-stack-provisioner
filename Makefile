@@ -1,10 +1,19 @@
-version ?= 3.3.1
+version ?= 3.7.0-pre.0
 
-ci: clean deps lint validate package
+ci: clean deps lint package
 
 clean:
 	rm -rf .tmp Puppetfile.lock Gemfile.lock modules stage vendor files/test
 
+################################################################################
+# Dependencies resolution targets.
+# For deps-local target, the local dependencies must be
+# available on the same directory level where aem-aws-stack-provisioner is at.
+# The idea is that you can package AEM AWS Stack Provisioner for AEM AWS stack
+# Builder testing while also developing those dependencies locally.
+################################################################################
+
+# resolve dependencies from remote artifact registries
 deps:
 	gem install bundler
 	bundle install --binstubs
@@ -17,9 +26,21 @@ deps:
 	# TODO: remove when switching back to bstopp/puppet-aem
 	rm -rf modules/aem/.git
 
-validate:
-	bundle exec puppet parser validate manifests/*.pp
-	bundle exec puppet epp validate templates/**/*.epp
+# resolve AEM OpenCloud's Puppet module dependencies from local directories
+# TODO: include local InSpec modules
+deps-local:
+	rm -rf modules/aem/*
+	rm -rf modules/aem_orchestrator/*
+	rm -rf modules/aem_resources/*
+	rm -rf modules/aem_curator/*
+	rm -rf modules/simianarmy/*
+	cp -R ../puppet-aem/* modules/aem/
+	cp -R ../puppet-aem-resources/* modules/aem_resources/
+	cp -R ../puppet-aem-curator/* modules/aem_curator/
+	cp -R ../puppet-simianarmy/* modules/simianarmy/
+	# only needed while using shinesolutions/puppet-aem fork
+	# TODO: remove when switching back to bstopp/puppet-aem
+	rm -rf modules/aem/.git
 
 lint:
 	bundle exec puppet-lint \
@@ -33,6 +54,10 @@ lint:
 		--log-format "%{path} (%{check}) L%{line} %{message}" \
 		manifests/*.pp
 	shellcheck files/*/*.sh
+	bundle exec puppet parser validate manifests/*.pp
+	bundle exec puppet epp validate templates/**/*.epp
+	bundle exec rubocop test/inspec/*.rb
+	bundle exec yaml-lint .*.yml conf/*.yaml data/*.yaml data/*/*.yaml
 
 package:
 	rm -rf stage
@@ -49,7 +74,7 @@ package:
 		stage/aem-aws-stack-provisioner-$(version).tar ./
 	gzip stage/aem-aws-stack-provisioner-$(version).tar
 
-tools:
-	gem install bundler
+release:
+	rtk release
 
-.PHONY: ci clean deps lint package validate tools
+.PHONY: ci clean deps deps-local lint package release

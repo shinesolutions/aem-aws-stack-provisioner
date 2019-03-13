@@ -7,14 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Add more author, publish, and orchestrator tests
+
+### Changed
+- Improved offline-snpahost & offline-compaction-snapshot for consolidated #153
+
+## [3.6.0] - 2019-02-16
+
+### Added
+- Add new parameter to remove the AEM Global Trusttore during reconfiguration
+
+### Changed
+- Renamed proxy_exceptions parameter to proxy_noproxy
+- Upgrade aem_curator to 1.11.0, aem_resources to 3.8.0
+- Fix failing snapshot by increasing the max_attempts for boto3 client to 120 tries #121
+
+## [3.5.0] - 2019-02-03
+
+### Changed
+- Upgrade aem_curator to 1.9.0, aem_resources to 3.6.0
+
+## [3.4.0] - 2019-01-29
+
+### Added
 - Add new manifest dependency to author, publish & consolidated for AEM Upgrade tools
 - Add new parameters to author, publish & consolidated hiera file for AEM Upgrade automation
 - Add Hiera configuration to enable feature truststore migration shinesolutions/aem-aws-stack-builder#229
-- Adding new component tests
+- Add proxy configuration for configuring AEM Bundle Apache HTTP Components Proxy Configuration shinesolutions/aem-aws-stack-builder#235
+- Add parameters for post start sleep timer to give the AEM service more time to start before configuring AEM shinesolutions/aem-aws-stack-builder#214
 
 ### Changed
-- Upgrade aem_curator to 1.4.0, aem_resources to 3.4.0
+- Upgrade aem_curator to 1.4.0, aem_resources to 3.4.0, aem_orchestrator to 1.3.1
 - The device name and device alias (aka attached device name) are now configurable via hieradata.
+- Add missing parameter tmp_dir passing for AEM Author & Publish components
 
 ### Removed
 - Move hiera parameter common::aws_region to aem-aws-stack-builder shinesolutions/aem-aws-stack-builder#187
@@ -294,7 +319,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rename artifacts deployment log to puppet-deploy-artifacts.log
 - Replace Serverspec with InSpec for testing
 
-## [2.0.0] - unknown
+## [2.0.0] - 2017-08-01
 
 ### Added
 - Add provisioning for AuthorPublishDispatcher component
@@ -330,3 +355,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Initial version
+
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/3.5.0...HEAD
+[3.5.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/3.4.0...3.5.0
+[3.4.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/3.3.1...3.4.0
+[3.3.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/3.3.0...3.3.1
+[3.3.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/3.2.0...3.3.0
+[3.2.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/3.1.2...3.2.0
+[3.1.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/3.1.1...3.1.2
+[3.1.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/3.1.0...3.1.1
+[3.1.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/3.0.2...3.1.0
+[3.0.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/3.0.1...3.0.2
+[3.0.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/3.0.0...3.0.1
+[3.0.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.6.1...3.0.0
+[2.6.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.6.0...2.6.1
+[2.6.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.5.2...2.6.0
+[2.5.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.5.1...2.5.2
+[2.5.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.5.0...2.5.1
+[2.5.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.18...2.5.0
+[2.4.18]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.17...2.4.18
+[2.4.17]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.16...2.4.17
+[2.4.16]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.15...2.4.16
+[2.4.15]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.14...2.4.15
+[2.4.14]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.13...2.4.14
+[2.4.13]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.12...2.4.13
+[2.4.12]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.11...2.4.12
+[2.4.11]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.10...2.4.11
+[2.4.10]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.9...2.4.10
+[2.4.9]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.8...2.4.9
+[2.4.8]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.7...2.4.8
+[2.4.7]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.6...2.4.7
+[2.4.6]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.5...2.4.6
+[2.4.5]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.4...2.4.5
+[2.4.4]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.3...2.4.4
+[2.4.3]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.2...2.4.3
+[2.4.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.1...2.4.2
+[2.4.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.4.0...2.4.1
+[2.4.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.3.0...2.4.0
+[2.3.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.2.1...2.3.0
+[2.2.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.2.0...2.2.1
+[2.2.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.1.0...2.2.0
+[2.1.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/2.0.0...2.1.0
+[2.0.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/1.1.2...2.0.0
+[1.1.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/1.1.1...1.1.2
+[1.1.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/1.1.0...1.1.1
+[1.1.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/1.0.0...1.1.0

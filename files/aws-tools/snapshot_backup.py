@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import sys, os, logging, boto3, requests, textwrap
+from botocore.config import Config
 from time import sleep
 from ctypes import CDLL
 from socket import gethostname
@@ -243,6 +244,12 @@ if __name__ == '__main__':
     args = parse_args()
     set_logging_level(args.quiet, args.verbose, log)
     log.debug('Args: %r', args)
+
+    boto3_config = Config(
+        retries = {
+            'max_attempts': 120
+            }
+        )
 
     ec2      = boto3.resource('ec2')
     instance = ec2_instance()
