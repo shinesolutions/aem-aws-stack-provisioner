@@ -9,9 +9,10 @@ describe user('aem-author') do
   its('group') { should eq 'aem-author' }
 end
 
-describe etc_fstab.where { device_name == '/dev/xvdb' } do
-  its('mount_point') { should cmp '/mnt/ebs1' }
-end
+# TODO: re-add this test after device name can be retrieved from a configuration
+# describe etc_fstab.where { device_name == '/dev/xvdb' } do
+#   its('mount_point') { should cmp '/mnt/ebs1' }
+# end
 
 describe file('/opt/aem/author/crx-quickstart/repository') do
   its('type') { should eq :symlink }
