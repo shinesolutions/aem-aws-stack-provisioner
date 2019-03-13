@@ -56,9 +56,10 @@ describe ssl(port: 5432) do
   it { should be_enabled }
 end
 
-describe etc_fstab.where { device_name == '/dev/xvdb' } do
-  its('mount_point') { should cmp '/mnt/ebs1' }
-end
+# TODO: re-add this test after device name can be retrieved from a configuration
+# describe etc_fstab.where { device_name == '/dev/xvdb' } do
+#   its('mount_point') { should cmp '/mnt/ebs1' }
+# end
 
 describe file('/opt/aem/author/crx-quickstart/repository') do
   its('type') { should eq :symlink }
@@ -106,9 +107,10 @@ describe file('/opt/aem/publish/crx-quickstart/repository') do
   its('group') { should eq 'aem-publish' }
 end
 
-describe etc_fstab.where { device_name == '/dev/xvdc' } do
-  its('mount_point') { should cmp '/mnt/ebs2' }
-end
+# TODO: re-add this test after device name can be retrieved from a configuration
+# describe etc_fstab.where { device_name == '/dev/xvdc' } do
+#   its('mount_point') { should cmp '/mnt/ebs2' }
+# end
 
 if %w[amazon].include?(os[:name]) && !os[:release].start_with?('20\d\d')
 
