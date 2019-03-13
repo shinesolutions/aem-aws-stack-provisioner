@@ -1,5 +1,14 @@
 require_relative './spec_helper'
 
+describe group('aem-orchestrator') do
+  it { should exist }
+end
+
+describe user('aem-orchestrator') do
+  it { should exist }
+  # its('group') { should eq 'orchestrator' }
+end
+
 # inspec version 1.51.6. doesn't support Amazon Linux 2. It assumes it uses Upstart.
 # inspec version is locked to 1.51.6 to use train version 0.32 because it doesn't have an aws-sdk dependency:
 # https://github.com/inspec/inspec/blob/v1.51.6/inspec.gemspec#L29
