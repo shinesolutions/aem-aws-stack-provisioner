@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Improved offline-snpahost & offline-compaction-snapshot for consolidated #153
+
 ## [3.6.0] - 2019-02-16
 
 ### Added

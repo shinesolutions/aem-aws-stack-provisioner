@@ -7,6 +7,7 @@ instance_id=$(facter ec2_metadata.instance-id)
 component=$(facter component)
 stack_prefix=$(facter stack_prefix)
 pid_file="crx-quickstart/conf/cq.pid"
+java_run=true
 
 translate_exit_code() {
 
@@ -19,6 +20,58 @@ translate_exit_code() {
   fi
 
   return "$exit_code"
+}
+
+wait_author_started () {
+  while [ $java_run == 'false' ] || [ $java_run == 'False' ] ; do
+    if (( $(ps -ef | grep -v grep | grep java | grep author | wc -l) > 0 )); then
+      echo "Author instance is started."
+      java_run=true
+    else
+      echo "Wait till Author instance is started."
+      sleep 10
+      java_run=false
+    fi
+  done
+}
+
+wait_publish_started () {
+  while [ $java_run == 'false' ] || [ $java_run == 'False' ] ; do
+    if (( $(ps -ef | grep -v grep | grep java | grep publish | wc -l) > 0 )); then
+      echo "Publish instance is started"
+      java_run=true
+    else
+      echo "Wait till Publish instance is started."
+      sleep 10
+      java_run=false
+    fi
+  done
+}
+
+wait_author_stopped () {
+  while [ $java_run == 'true' ] || [ $java_run == 'True' ] ; do
+    if (( $(ps -ef | grep -v grep | grep java | grep author | wc -l) > 0 )); then
+      echo "Wait till Author process is stopped"
+      sleep 10
+      java_run=true
+    else
+      echo "Author process is stopped"
+      java_run=false
+    fi
+  done
+}
+
+wait_publish_stopped () {
+  while [ $java_run == 'true' ] || [ $java_run == 'True' ] ; do
+    if (( $(ps -ef | grep -v grep | grep java | grep publish | wc -l) > 0 )); then
+      echo "Wait till Publish process is stopped"
+      sleep 10
+      java_run=true
+    else
+      echo "Publish process is stopped"
+      java_run=false
+    fi
+  done
 }
 
 if (( $(ps -ef | grep -v grep | grep python | grep snapshot_backup | wc -l) > 0 )); then
@@ -37,6 +90,8 @@ else
 
     echo "[${stack_prefix}-${component}/${instance_id}] Stopping: aem-<%= $aem_repo_device['aem_id'] %>"
     service aem-<%= $aem_repo_device['aem_id'] %> stop
+    java_run=true
+    wait_<%= $aem_repo_device['aem_id'] %>_stopped
 
     if [ -f /opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file} ]; then
       echo "Warning: AEM PID file /opt/aem/<%= $aem_repo_device['aem_id'] %>/${pid_file} still exists when AEM is already stopped"
@@ -73,6 +128,8 @@ else
 
     echo "[${stack_prefix}-${component}/${instance_id}] Starting: aem-<%= $aem_repo_device['aem_id'] %>"
     service aem-<%= $aem_repo_device['aem_id'] %> start
+    java_run=false
+    wait_<%= $aem_repo_device['aem_id'] %>_started
 
     echo "[${stack_prefix}-${component}/${instance_id}] Start testing if offline snapshot exists using InSpec ..."
     cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
