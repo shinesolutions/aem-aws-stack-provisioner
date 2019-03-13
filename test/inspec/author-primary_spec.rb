@@ -40,7 +40,7 @@ else
     it { should be_enabled }
     it { should be_running }
   end
-  
+
 end
 
 describe port(4502) do
