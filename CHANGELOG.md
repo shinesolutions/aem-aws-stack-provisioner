@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+- Remove example descriptors since they have been migrated to aem-helloworld-config
+
 ## [3.7.0] - 2019-03-13
 
 ### Added

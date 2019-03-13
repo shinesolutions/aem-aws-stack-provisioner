@@ -68,7 +68,6 @@ package:
 		--exclude='stage*' \
 		--exclude='.idea*' \
 		--exclude='.DS_Store*' \
-		--exclude='examples' \
 		--exclude='*.tar' \
 		-cvf \
 		stage/aem-aws-stack-provisioner-$(version).tar ./
