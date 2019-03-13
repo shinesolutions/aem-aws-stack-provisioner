@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Improved offline-snpahost & offline-compaction-snapshot for consolidated #153
+- Upgrade aem_curator to 1.13.0
 
 ## [3.6.0] - 2019-02-16
 
