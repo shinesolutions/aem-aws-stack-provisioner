@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Install AEM Health Check package as part of AEM start up to handle repository without the package or with an older version of the package
+
+### Changed
+- Upgrade aem_curator to 1.14.0
+
 ### Removed
 - Remove example descriptors since they have been migrated to aem-helloworld-config
 
