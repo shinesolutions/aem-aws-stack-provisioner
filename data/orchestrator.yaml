@@ -13,8 +13,11 @@ action_scheduled_jobs::offline_snapshot_weekday: "%{hiera('aem_orchestrator::sch
 action_scheduled_jobs::offline_snapshot_hour: "%{hiera('aem_orchestrator::scheduled_jobs::hour::offline_snapshot')}"
 action_scheduled_jobs::offline_snapshot_minute: "%{hiera('aem_orchestrator::scheduled_jobs::minute::offline_snapshot')}"
 
+aem_orchestrator::user: aem-orchestrator
 aem_orchestrator::jarfile_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/aem-orchestrator-%{hiera('orchestrator::aem_orchestrator_version')}.jar"
 aem_orchestrator::manage_installdir: true
+aem_orchestrator::basedir_mode: '0755'
+aem_orchestrator::installdir_mode: '0750'
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_messaging: "%{::stack_prefix}-aem-messaging-stack"
 aem_orchestrator::application_properties::aws_client_use_proxy: "%{hiera('common::proxy_enabled')}"
 aem_orchestrator::application_properties::aws_client_proxy_host: "%{hiera('common::proxy_host')}"
