@@ -4,6 +4,10 @@ chaos_monkey::awslogs_config_path: "%{hiera('common::awslogs_config_path')}"
 
 simianarmy::warfile_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/simianarmy-%{hiera('chaos_monkey::simian_army_version')}.war"
 simianarmy::manage_package: false
+simianarmy::manage_installdir: true
+simianarmy::user: simianarmy
+simianarmy::basedir_mode: '0755'
+simianarmy::installdir_mode: '0750'
 
 # simianarmy.properties
 # https://github.com/Netflix/SimianArmy/wiki/Global-Settings

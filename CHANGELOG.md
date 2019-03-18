@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Manage AEM Orchestrator directories permission and ownership shinesolutions/aem-aws-stack-builder#269
+- Manage Simian Army directories permission and ownership shinesolutions/aem-aws-stack-builder#268
 - Upgrade puppet-aem-orchestrator to 1.4.0, puppet-simianarmy to 1.1.3
 
 ## [3.8.0] - 2019-03-15
