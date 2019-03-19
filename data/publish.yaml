@@ -103,3 +103,6 @@ aem_curator::config_publish::post_start_sleep_seconds: "%{hiera('common::post_st
 
 # AEM reconfiguration parameter
 aem_curator::config_publish::enable_truststore_removal: "%{alias('common::enable_truststore_removal')}"
+
+# Removal of crx-quickstart/launchpad directory
+aem_curator::config_publish::enable_launchpad_dir_cleanup: "%{alias('common::aem::enable_launchpad_dir_cleanup')}"

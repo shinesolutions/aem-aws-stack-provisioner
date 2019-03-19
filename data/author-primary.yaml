@@ -124,3 +124,6 @@ aem_curator::config_author_primary::proxy_noproxy: "%{alias('common::proxy_nopro
 # Service start Post sleep configuration
 aem_curator::config_author_primary::enable_post_start_sleep: "%{alias('common::enable_post_start_sleep')}"
 aem_curator::config_author_primary::post_start_sleep_seconds: "%{hiera('common::post_start_sleep_seconds')}"
+
+# Removal of crx-quickstart/launchpad directory
+aem_curator::config_author_primary::enable_launchpad_dir_cleanup: "%{alias('common::aem::enable_launchpad_dir_cleanup')}"

@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Add parameter to remove the directory crx-quickstart/launchpad at provisioning shinesolutions/packer-aem#270
+
 ## [3.9.0] - 2019-03-19
 
 ### Changed
