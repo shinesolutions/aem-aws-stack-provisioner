@@ -51,7 +51,7 @@ aem_curator::action_promote_author_standby_to_primary::base_dir: "%{hiera('commo
 aem_curator::action_promote_author_standby_to_primary::tmp_dir: "%{hiera('common::tmp_dir')}"
 
 aem_curator::config_aem_tools::aem_instances:
-  - crx_quickstart_dir: /opt/aem/author/crx-quickstart
+  - crx_quickstart_dir: "%{hiera('common::author::crx_quickstart_dir')}"
     user: aem-author
     aem_id: "%{hiera('author_primary::aem_id')}"
 
@@ -67,7 +67,7 @@ aem_curator::config_collectd::aem_instances:
 
 aem_curator::config_author_primary::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_author_primary::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
-aem_curator::config_author_primary::crx_quickstart_dir: /opt/aem/author/crx-quickstart
+aem_curator::config_author_primary::crx_quickstart_dir: "%{hiera('common::author::crx_quickstart_dir')}"
 aem_curator::config_author_primary::author_protocol: http
 aem_curator::config_author_primary::author_port: 4502
 aem_curator::config_author_primary::author_ssl_port: 5432

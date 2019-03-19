@@ -28,12 +28,16 @@ common::log_dir: /var/log/shinesolutions
 common::user: ec2-user
 common::group: ec2-user
 
+common::aem_base_dir: /opt/aem
 common::tmp_base_dir: /tmp/shinesolutions
 common::tmp_dir: /tmp/shinesolutions/aem-aws-stack-provisioner
 common::puppet_conf_dir: /etc/puppetlabs/puppet/
 common::credentials_file: system-users-credentials.json
 common::awslogs_service_name: awslogs
 common::awslogs_config_path: /etc/awslogs/awslogs.conf
+
+common::author::crx_quickstart_dir: "%{hiera('common::aem_base_dir')}/author/crx-quickstart"
+common::publish::crx_quickstart_dir: "%{hiera('common::aem_base_dir')}/author/crx-quickstart"
 
 common::aem_password_retrieval_command: "aws s3 cp s3://%{::data_bucket_name}/%{::stack_prefix}/system-users-credentials.json - | jq --raw-output .$aem_username"
 
@@ -143,7 +147,7 @@ aem_curator::action_deploy_artifacts::virtual_hosts_dir: "%{hiera('common::virtu
 
 # Upgrade-Tool AEM Unpack JAR
 aem_curator::action_upgrade_aem_unpack_jar::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::action_upgrade_aem_unpack_jar::aem_base: /opt/aem
+aem_curator::action_upgrade_aem_unpack_jar::aem_base: "%{hiera('common::aem_base_dir')}"
 aem_curator::action_upgrade_aem_unpack_jar::post_stop_sleep_secs: 120
 aem_curator::action_upgrade_aem_unpack_jar::retries_max_tries: 60
 aem_curator::action_upgrade_aem_unpack_jar::retries_base_sleep_seconds: 5
@@ -152,13 +156,13 @@ aem_curator::action_upgrade_aem_unpack_jar::puppet_binary: /opt/puppetlabs/bin/p
 
 # Upgrade-Tool AEM Repository migration
 aem_curator::action_upgrade_repo_migration::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::action_upgrade_repo_migration::aem_base: /opt/aem
+aem_curator::action_upgrade_repo_migration::aem_base: "%{hiera('common::aem_base_dir')}"
 aem_curator::action_upgrade_repo_migration::retries_max_tries: 60
 aem_curator::action_upgrade_repo_migration::retries_base_sleep_seconds: 5
 aem_curator::action_upgrade_repo_migration::retries_max_sleep_seconds: 5
 
 # Upgrade-Tool AEM Upgrade
-aem_curator::action_upgrade_aem::aem_base: /opt/aem
+aem_curator::action_upgrade_aem::aem_base: "%{hiera('common::aem_base_dir')}"
 aem_curator::action_upgrade_aem::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::action_upgrade_aem::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::action_upgrade_aem::login_ready_max_tries: "%{hiera('common::login_ready_max_tries')}"

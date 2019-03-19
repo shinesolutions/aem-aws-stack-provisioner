@@ -68,10 +68,10 @@ aem_curator::action_export_backups::download_descriptor::tmp_dir: "%{hiera('comm
 aem_curator::action_import_backup::tmp_dir: "%{hiera('common::tmp_dir')}"
 
 aem_curator::config_aem_tools::aem_instances:
-  - crx_quickstart_dir: /opt/aem/author/crx-quickstart
+  - crx_quickstart_dir: "%{hiera('common::author::crx_quickstart_dir')}"
     user: aem-author
     aem_id: author
-  - crx_quickstart_dir: /opt/aem/publish/crx-quickstart
+  - crx_quickstart_dir: "%{hiera('common::publish::crx_quickstart_dir')}"
     user: aem-publish
     aem_id: publish
 
@@ -94,7 +94,7 @@ aem_curator::config_collectd::aem_instances:
 # AEM Author
 aem_curator::config_author_primary::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_author_primary::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
-aem_curator::config_author_primary::crx_quickstart_dir: /opt/aem/author/crx-quickstart
+aem_curator::config_author_primary::crx_quickstart_dir: "%{hiera('common::author::crx_quickstart_dir')}"
 aem_curator::config_author_primary::author_protocol: http
 aem_curator::config_author_primary::author_port: 4502
 aem_curator::config_author_primary::author_ssl_port: 5432
@@ -120,7 +120,7 @@ aem_curator::config_publish::publish_dispatcher_host: localhost
 aem_curator::config_publish::publish_dispatcher_id: localhost
 aem_curator::config_publish::tmp_dir: "%{hiera('common::tmp_dir')}"
 aem_curator::config_publish::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
-aem_curator::config_publish::crx_quickstart_dir: /opt/aem/publish/crx-quickstart
+aem_curator::config_publish::crx_quickstart_dir: "%{hiera('common::publish::crx_quickstart_dir')}"
 aem_curator::config_publish::publish_protocol: http
 aem_curator::config_publish::publish_port: 4503
 aem_curator::config_publish::publish_ssl_port: 5433
