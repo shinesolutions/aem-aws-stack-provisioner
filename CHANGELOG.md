@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Add parameter to remove the directory crx-quickstart/launchpad at provisioning shinesolutions/packer-aem#270
+- Add parameter to remove the directory crx-quickstart/launchpad at provisioning shinesolutions/aem-aws-stack-builder#270
 
 ### Changed
 - Consolidated hiera parameter for AEM base directory
