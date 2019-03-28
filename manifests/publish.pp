@@ -25,19 +25,22 @@ class publish (
   if $snapshotid != undef and $snapshotid != '' {
     # In the future we maybe disable services like awslogs
     # during baking and activate them during provisioning
-    exec { "Stopping all access to mounted FS":
-      command => "systemctl stop awslogs",
+    exec { 'Stopping all access to mounted FS':
+      command => 'systemctl stop awslogs',
       path    => $exec_path,
     } -> exec { "Attach volume from snapshot ID ${snapshotid}":
       command => "${base_dir}/aws-tools/snapshot_attach.py --device ${aem_repo_devices[0][device_name]} --device-alias ${aem_repo_devices[0][device_alias]} --volume-type ${volume_type} --snapshot-id ${snapshotid} -vvvv",
       path    => $exec_path,
     }
 
-    exec { "Sleep 15 seconds before allowing access the mounted FS":
-      command => "sleep 15",
+    exec { 'Sleep 15 seconds before allowing access the mounted FS':
+      command => 'sleep 15',
       path    => $exec_path,
       require => Exec["Attach volume from snapshot ID ${snapshotid}"],
-      before  => Class['aem_curator::config_publish']
+      before  => [
+        Class['aem_curator::config_publish'],
+        Class['update_awslogs']
+      ]
     }
   }
 
@@ -50,7 +53,6 @@ class publish (
   } -> class { 'aem_curator::config_publish':
     publish_dispatcher_id   => $publish_dispatcher_id,
     publish_dispatcher_host => $publish_dispatcher_host,
-    require                 => Exec["Attach volume from snapshot ID ${snapshotid}"]
   } -> class { 'aem_curator::config_logrotate':
   } -> class { 'aem_curator::config_collectd':
     component       => $component,
@@ -182,7 +184,8 @@ class publish (
   ##############################################################################
 
   class { 'update_awslogs':
-    config_file_path => $awslogs_config_path
+    config_file_path => $awslogs_config_path,
+    before           => Class['aem_curator::config_publish']
   }
 }
 
@@ -192,8 +195,7 @@ class update_awslogs (
 ) {
   service { $awslogs_service_name:
     ensure => 'running',
-    enable  => true,
-    require => Exec["Attach volume from snapshot ID ${snapshotid}"]
+    enable => true,
   }
   $old_awslogs_content = file($config_file_path)
   $mod_awslogs_content = regsubst($old_awslogs_content, '^log_group_name = ', "log_group_name = ${$stack_prefix}", 'G' )
