@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Setting default value for data_volume_mount_point parameter, needed for reconfiguration.
 
+### Changed
+- Extend the relationship around mounting the publish snapshot to the OS
+
 ## [3.6.0] - 2019-02-16
 
 ### Added
