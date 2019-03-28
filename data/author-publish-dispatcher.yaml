@@ -114,6 +114,7 @@ aem_curator::config_author_primary::enable_aem_reconfiguration: "%{alias('common
 aem_curator::config_author_primary::cert_base_url: "%{hiera('common::cert_base_url')}"
 aem_curator::config_author_primary::enable_create_system_users: "%{alias('common::enable_create_system_users')}"
 aem_curator::config_author_primary::aem_system_users: "%{alias('common::aem_system_users')}"
+aem_curator::config_author_primary::data_volume_mount_point: /mnt/ebs1
 
 # AEM Publish
 aem_curator::config_publish::publish_dispatcher_host: localhost
@@ -140,6 +141,7 @@ aem_curator::config_publish::enable_aem_reconfiguration: "%{alias('common::enabl
 aem_curator::config_publish::cert_base_url: "%{hiera('common::cert_base_url')}"
 aem_curator::config_publish::enable_create_system_users: "%{alias('common::enable_create_system_users')}"
 aem_curator::config_publish::aem_system_users: "%{alias('common::aem_system_users')}"
+aem_curator::config_publish::data_volume_mount_point: /mnt/ebs2
 
 # AEM Publish-Dispatcher
 aem_curator::config_publish_dispatcher::dispatcher_conf_dir: "%{hiera('common::dispatcher_conf_dir')}"
