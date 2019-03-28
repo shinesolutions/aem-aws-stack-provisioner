@@ -10,10 +10,22 @@ if [ "$#" -ne 0 ]; then
 fi
 
 # translate puppet exit code to follow convention
-translate_exit_code() {
+translate_puppet_exit_code() {
 
   exit_code="$1"
   if [ "$exit_code" -eq 0 ] || [ "$exit_code" -eq 2 ]; then
+    exit_code=0
+  else
+    exit "$exit_code"
+  fi
+
+  return "$exit_code"
+}
+
+translate_exit_code() {
+
+  exit_code="$1"
+  if [ "$exit_code" -eq 0 ]; then
     exit_code=0
   else
     exit "$exit_code"
@@ -30,11 +42,22 @@ component=author-primary
 
 instance_id=$(curl --silent http://169.254.169.254/latest/meta-data/instance-id)
 aws ec2 create-tags --tags Key=Component,Value=${component} --resources ${instance_id}
+
+translate_exit_code "$?"
+
+
 aws ec2 create-tags --tags Key=Name,Value="AEM Author - Primary - Promoted from Standby" --resources ${instance_id}
+
+translate_exit_code "$?"
 
 <%= $base_dir %>/aws-tools/set-facts.sh "${data_bucket_name}" "${stack_prefix}"
 
+translate_exit_code "$?"
+
 <%= $base_dir %>/aem-tools/promote-author-standby-to-primary.sh
+
+translate_puppet_exit_code "$?"
+
 
 cd <%= $base_dir %>/aem-aws-stack-provisioner/
 echo "Applying scheduled-job Puppet manifest for all components..."
@@ -45,4 +68,4 @@ puppet apply \
   --hiera_config conf/hiera.yaml \
   manifests/action-scheduled-jobs.pp
 
-translate_exit_code "$?"
+translate_puppet_exit_code "$?"
