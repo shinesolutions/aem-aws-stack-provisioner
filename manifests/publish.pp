@@ -25,7 +25,10 @@ class publish (
   if $snapshotid != undef and $snapshotid != '' {
     # In the future we maybe disable services like awslogs
     # during baking and activate them during provisioning
-    exec { 'Stopping all access to mounted FS':
+    exec { 'Prevent awslogs service from restart':
+      command => 'systemctl disable awslogs',
+      path    => $exec_path,
+    } -> exec { 'Stopping all access to mounted FS':
       command => 'systemctl stop awslogs',
       path    => $exec_path,
     } -> exec { "Attach volume from snapshot ID ${snapshotid}":
