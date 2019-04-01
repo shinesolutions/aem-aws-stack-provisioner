@@ -87,8 +87,8 @@ aem_curator::config_author_primary::enable_aem_reconfiguration: "%{alias('common
 aem_curator::config_author_primary::cert_base_url: "%{hiera('common::cert_base_url')}"
 aem_curator::config_author_primary::enable_create_system_users: "%{alias('common::enable_create_system_users')}"
 aem_curator::config_author_primary::aem_system_users: "%{alias('common::aem_system_users')}"
- aem_curator::config_author_primary::data_volume_mount_point: /mnt/ebs1
- 
+aem_curator::config_author_primary::data_volume_mount_point: /mnt/ebs1
+
 aem_curator::config_aem_scheduled_jobs::offline_compaction_enable: "%{alias('author_primary::scheduled_jobs::enable::offline_compaction')}"
 aem_curator::config_aem_scheduled_jobs::offline_compaction_weekday: "%{hiera('author_primary::scheduled_jobs::weekday::offline_compaction')}"
 aem_curator::config_aem_scheduled_jobs::offline_compaction_hour: "%{hiera('author_primary::scheduled_jobs::hour::offline_compaction')}"
