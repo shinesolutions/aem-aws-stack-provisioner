@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Setting default value for data_volume_mount_point parameter, needed for reconfiguration.
+
+### Changed
+- Extend the relationship around mounting the publish snapshot to the OS
 
 ### Changed
 - Changed the aws-tools/promote-author-standby-to-primary.sh to check the exit codes of all commands it executes #155
