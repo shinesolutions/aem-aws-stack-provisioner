@@ -1,5 +1,26 @@
 require_relative './spec_helper'
 
+describe group('aem-author') do
+  it { should exist }
+end
+
+describe user('aem-author') do
+  it { should exist }
+  its('group') { should eq 'aem-author' }
+end
+
+# TODO: re-add this test after device name can be retrieved from a configuration
+# describe etc_fstab.where { device_name == '/dev/xvdb' } do
+#   its('mount_point') { should cmp '/mnt/ebs1' }
+# end
+
+describe file('/opt/aem/author') do
+  its('type') { should eq :symlink }
+  its('link_path') { should eq '/mnt/ebs1/author' }
+  its('owner') { should eq 'aem-author' }
+  its('group') { should eq 'aem-author' }
+end
+
 # inspec version 1.51.6. doesn't support Amazon Linux 2. It assumes it uses Upstart.
 # inspec version is locked to 1.51.6 to use train version 0.32 because it doesn't have an aws-sdk dependency:
 # https://github.com/inspec/inspec/blob/v1.51.6/inspec.gemspec#L29
