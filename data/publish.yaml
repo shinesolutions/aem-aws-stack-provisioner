@@ -87,6 +87,7 @@ aem_curator::config_publish::enable_aem_reconfiguration: "%{alias('common::enabl
 aem_curator::config_publish::cert_base_url: "%{hiera('common::cert_base_url')}"
 aem_curator::config_publish::enable_create_system_users: "%{alias('common::enable_create_system_users')}"
 aem_curator::config_publish::aem_system_users: "%{alias('common::aem_system_users')}"
+aem_curator::config_publish::data_volume_mount_point: /mnt/ebs1
 
 aem_curator::config_aem_scheduled_jobs::offline_compaction_enable: "%{alias('publish::scheduled_jobs::enable::offline_compaction')}"
 aem_curator::config_aem_scheduled_jobs::offline_compaction_weekday: "%{hiera('publish::scheduled_jobs::weekday::offline_compaction')}"

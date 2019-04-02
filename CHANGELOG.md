@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix AEM Author and AEM Publish symlink to check installation path instead of repository path
 
+### Added
+- Setting default value for data_volume_mount_point parameter, needed for reconfiguration.
+
+### Changed
+- Extend the relationship around mounting the publish snapshot to the OS
+- Changed the aws-tools/promote-author-standby-to-primary.sh to check the exit codes of all commands it executes #155
+- Pass hiera parameters for promote-author-standby-to-primary.sh
+
 ## [3.6.0] - 2019-02-16
 
 ### Added
