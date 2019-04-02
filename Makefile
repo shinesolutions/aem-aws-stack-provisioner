@@ -76,4 +76,12 @@ package:
 release:
 	rtk release
 
-.PHONY: ci clean deps deps-local lint package release
+publish:
+	putasset \
+	  --owner shinesolutions \
+	  --repo aem-aws-stack-provisioner \
+	  --tag $(version) \
+	  --file stage/aem-aws-stack-provisioner-$(version).tar \
+	  --show-url
+
+.PHONY: ci clean deps deps-local lint package release publish
