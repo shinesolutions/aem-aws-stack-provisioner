@@ -81,7 +81,7 @@ publish:
 	  --owner shinesolutions \
 	  --repo aem-aws-stack-provisioner \
 	  --tag $(version) \
-	  --filename stage/aem-aws-stack-provisioner-$(version).tar \
+	  --filename stage/aem-aws-stack-provisioner-$(version).tar.gz \
 	  --loud \
 	  --show-url
 
