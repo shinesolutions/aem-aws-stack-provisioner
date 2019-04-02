@@ -81,7 +81,8 @@ publish:
 	  --owner shinesolutions \
 	  --repo aem-aws-stack-provisioner \
 	  --tag $(version) \
-	  --file stage/aem-aws-stack-provisioner-$(version).tar \
+	  --filename stage/aem-aws-stack-provisioner-$(version).tar \
+	  --loud \
 	  --show-url
 
 .PHONY: ci clean deps deps-local lint package release publish
