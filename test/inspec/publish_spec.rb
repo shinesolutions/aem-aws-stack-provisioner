@@ -14,9 +14,9 @@ end
 #   its('mount_point') { should cmp '/mnt/ebs1' }
 # end
 
-describe file('/opt/aem/publish/crx-quickstart/repository') do
+describe file('/opt/aem/publish') do
   its('type') { should eq :symlink }
-  its('link_path') { should eq '/mnt/ebs1' }
+  its('link_path') { should eq '/mnt/ebs1/publish' }
   its('owner') { should eq 'aem-publish' }
   its('group') { should eq 'aem-publish' }
 end
