@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Extend the relationship around mounting the publish snapshot to the OS
+- Upgrade inspec-aem-aws to 0.12.0
 
 ### Changed
 - Changed the aws-tools/promote-author-standby-to-primary.sh to check the exit codes of all commands it executes #155
