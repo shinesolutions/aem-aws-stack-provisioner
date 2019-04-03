@@ -19,4 +19,9 @@ elif [ ${component} = 'orchestrator' ]; then
   HOME=/root \
     aem_stack_prefix="${stack_prefix}" \
     make test-readiness
+else
+  echo "Readiness testing cannot be run from this component..."
+  echo "It can only be executed from:"
+  echo "* author-publish-dispatcher component for AEM Consolidated environment"
+  echo "* orchestrator component for AEM Full-Set environment"
 fi
