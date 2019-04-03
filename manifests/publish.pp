@@ -26,7 +26,10 @@ class publish (
   if $snapshotid != undef and $snapshotid != '' {
     # In the future we maybe disable services like awslogs
     # during baking and activate them during provisioning
-    exec { 'Prevent awslogs service from restart':
+    exec { 'Disable awslogs CronJobs':
+      command => 'mv /etc/cron.d/awslogs* /tmp/',
+      path    => $exec_path,
+    } -> exec { 'Prevent awslogs service from restart':
       command => "systemctl disable ${$awslogs_service_name}",
       path    => $exec_path,
     } -> exec { 'Stopping all access to mounted FS':
@@ -201,7 +204,10 @@ class update_awslogs (
   service { $awslogs_service_name:
     ensure => 'running',
     enable => true,
-  }
+  } -> exec { 'Enable awslogs CronJobs':
+    command => 'mv /tmp/awslogs* /etc/cron.d/',
+    path    => $exec_path,
+    }
   $old_awslogs_content = file($config_file_path)
   $mod_awslogs_content = regsubst($old_awslogs_content, '^log_group_name = ', "log_group_name = ${$stack_prefix}", 'G' )
   $new_awslogs_content = regsubst($mod_awslogs_content, '^log_stream_name = ', "log_stream_name = ${$component}/", 'G' )

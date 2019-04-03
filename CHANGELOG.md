@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - Fix parameter passing for awslogs service name when provision publish instance
 
+### Added
+
+- Temporary disabling all awslogs cronjobs during publisher provisioning
+
 ## [3.12.1] - 2019-04-02
 
 ### Fixed
