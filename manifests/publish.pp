@@ -25,7 +25,15 @@ class publish (
   if $snapshotid != undef and $snapshotid != '' {
     # In the future we maybe disable services like awslogs
     # during baking and activate them during provisioning
-    exec { 'Prevent awslogs service from restart':
+
+    exec { 'create awslogs temp dir':
+      command => 'mkdir /tmp/awslogs',
+      path    => $exec_path,
+      before  => Exec['Enable awslogs CronJobs']
+    } -> exec { 'Disable awslogs CronJobs':
+      command => 'mv /etc/cron.d/awslogs* /tmp/awslogs/',
+      path    => $exec_path,
+    } -> exec { 'Prevent awslogs service from restart':
       command => 'systemctl disable awslogs',
       path    => $exec_path,
     } -> exec { 'Stopping all access to mounted FS':
@@ -188,18 +196,28 @@ class publish (
 
   class { 'update_awslogs':
     config_file_path => $awslogs_config_path,
+    exec_path        => $exec_path,
     before           => Class['aem_curator::config_publish']
   }
 }
 
 class update_awslogs (
   $config_file_path,
+  $exec_path,
   $awslogs_service_name = lookup('common::awslogs_service_name')
 ) {
+  exec { 'Enable awslogs CronJobs':
+    command => 'mv /tmp/awslogs/* /etc/cron.d/',
+    path    => $exec_path,
+    onlyif  => '/usr/bin/test -e /tmp/awslogs',
+    before  => Service[$awslogs_service_name]
+  }
+
   service { $awslogs_service_name:
     ensure => 'running',
     enable => true,
   }
+
   $old_awslogs_content = file($config_file_path)
   $mod_awslogs_content = regsubst($old_awslogs_content, '^log_group_name = ', "log_group_name = ${$stack_prefix}", 'G' )
   $new_awslogs_content = regsubst($mod_awslogs_content, '^log_stream_name = ', "log_stream_name = ${$component}/", 'G' )
