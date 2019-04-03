@@ -14,6 +14,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - Temporary disabling all awslogs cronjobs during publisher provisioning
 
+### Changed
+- Upgrade inspec-aem-aws to 0.13.0 for executing inspec outside of bundler
+
 ## [3.12.1] - 2019-04-02
 
 ### Fixed
