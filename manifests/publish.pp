@@ -11,6 +11,7 @@ class publish (
   $volume_type,
   $revert_snapshot_type,
   $awslogs_config_path,
+  $awslogs_service_name    = lookup('common::awslogs_service_name'),
   $publish_dispatcher_id   = $::pairinstanceid,
   $publish_dispatcher_host = $::publishdispatcherhost,
   $stack_prefix            = $::stack_prefix,
@@ -26,10 +27,10 @@ class publish (
     # In the future we maybe disable services like awslogs
     # during baking and activate them during provisioning
     exec { 'Prevent awslogs service from restart':
-      command => 'systemctl disable awslogs',
+      command => "systemctl disable ${$awslogs_service_name}",
       path    => $exec_path,
     } -> exec { 'Stopping all access to mounted FS':
-      command => 'systemctl stop awslogs',
+      command => "systemctl stop ${$awslogs_service_name}",
       path    => $exec_path,
     } -> exec { "Attach volume from snapshot ID ${snapshotid}":
       command => "${base_dir}/aws-tools/snapshot_attach.py --device ${aem_repo_devices[0][device_name]} --device-alias ${aem_repo_devices[0][device_alias]} --volume-type ${volume_type} --snapshot-id ${snapshotid} -vvvv",
@@ -187,14 +188,15 @@ class publish (
   ##############################################################################
 
   class { 'update_awslogs':
-    config_file_path => $awslogs_config_path,
-    before           => Class['aem_curator::config_publish']
+    awslogs_service_name => $awslogs_service_name,
+    config_file_path     => $awslogs_config_path,
+    before               => Class['aem_curator::config_publish']
   }
 }
 
 class update_awslogs (
   $config_file_path,
-  $awslogs_service_name = lookup('common::awslogs_service_name')
+  $awslogs_service_name,
 ) {
   service { $awslogs_service_name:
     ensure => 'running',
