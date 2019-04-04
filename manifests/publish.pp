@@ -27,12 +27,14 @@ class publish (
     # In the future we maybe disable services like awslogs
     # during baking and activate them during provisioning
     exec { 'create awslogs temp dir':
-      command => 'mkdir /tmp/awslogs',
+      command => 'mkdir -p /tmp/shinesolutions/crons/awslogs',
       path    => $exec_path,
-      before  => Exec['Enable awslogs CronJobs']
+      before  => Exec['Enable awslogs CronJobs'],
+      onlyif  => '/usr/bin/test -f /etc/cron.d/awslogs*'
     } -> exec { 'Disable awslogs CronJobs':
-      command => 'mv /etc/cron.d/awslogs* /tmp/awslogs/',
+      command => 'mv /etc/cron.d/awslogs* /tmp/shinesolutions/crons/awslogs/',
       path    => $exec_path,
+      onlyif  => '/usr/bin/test -f /etc/cron.d/awslogs*'
     } -> exec { 'Prevent awslogs service from restart':
       command => "systemctl disable ${$awslogs_service_name}",
       path    => $exec_path,
@@ -208,9 +210,9 @@ class update_awslogs (
   $awslogs_service_name,
 ) {
   exec { 'Enable awslogs CronJobs':
-    command => 'mv /tmp/awslogs/* /etc/cron.d/',
+    command => 'mv /tmp/shinesolutions/crons/awslogs/* /etc/cron.d/',
     path    => $exec_path,
-    onlyif  => '/usr/bin/test -e /tmp/awslogs',
+    onlyif  => '/usr/bin/test -e /tmp/shinesolutions/crons/awslogs',
     before  => Service[$awslogs_service_name]
   }
 

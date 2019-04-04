@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+### Fixed
+- Fixed logic error while disabling awslogs cronjobs
+
 ## [3.13.0] - 2019-04-03
 
 ### Fixed
