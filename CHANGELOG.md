@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [3.6.3] - 2019-04-07
+
 ### Added
 
 - Temporary disabling all awslogs cronjobs during publisher provisioning
