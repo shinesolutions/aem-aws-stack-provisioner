@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
-- Fixed failure with disabling awslogs cronjobs when config doesn't exist
+- Fix parameter passing for action_promote_author_standby_to_primary
 
 ## [3.15.0]
 
