@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix parameter passing for action_promote_author_standby_to_primary
+
 ## [3.6.3] - 2019-04-07
 
 ### Added
