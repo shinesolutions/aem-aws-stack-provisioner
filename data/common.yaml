@@ -100,9 +100,9 @@ author_primary::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max
 publish::login_ready_max_tries: "%{hiera('common::login_ready_max_tries')}"
 publish::login_ready_base_sleep_seconds: "%{hiera('common::login_ready_base_sleep_seconds')}"
 publish::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max_sleep_seconds')}"
-aem_curator::action_promote_author_standby_to_primarypublish::login_ready_max_tries: "%{hiera('common::login_ready_max_tries')}"
-aem_curator::action_promote_author_standby_to_primarypublish::login_ready_base_sleep_seconds: "%{hiera('common::login_ready_base_sleep_seconds')}"
-aem_curator::action_promote_author_standby_to_primarypublish::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max_sleep_seconds')}"
+aem_curator::action_promote_author_standby_to_primary::login_ready_max_tries: "%{hiera('common::login_ready_max_tries')}"
+aem_curator::action_promote_author_standby_to_primary::login_ready_base_sleep_seconds: "%{hiera('common::login_ready_base_sleep_seconds')}"
+aem_curator::action_promote_author_standby_to_primary::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max_sleep_seconds')}"
 
 
 # AEM Scheduled jobs
