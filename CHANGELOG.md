@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+### Changed
+
+- Upgrade puppet-aem-curator to 1.22.0, puppet-aem-resources to 3.10.0
+
 ### Fixed
 
 - Fix parameter passing for action_promote_author_standby_to_primary
