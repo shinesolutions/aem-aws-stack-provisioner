@@ -34,9 +34,13 @@ deps-local:
 	rm -rf modules/aem_resources/*
 	rm -rf modules/aem_curator/*
 	rm -rf modules/simianarmy/*
+	if [ ! -d ./modules/aem ]; then mkdir ./modules/aem; fi
 	cp -R ../puppet-aem/* modules/aem/
+	if [ ! -d ./modules/aem_resources ]; then mkdir ./modules/aem_resources; fi
 	cp -R ../puppet-aem-resources/* modules/aem_resources/
+	if [ ! -d ./modules/aem_curator ]; then mkdir ./modules/aem_curator; fi
 	cp -R ../puppet-aem-curator/* modules/aem_curator/
+	if [ ! -d ./modules/simianarmy ]; then mkdir ./modules/simianarmy; fi
 	cp -R ../puppet-simianarmy/* modules/simianarmy/
 	# only needed while using shinesolutions/puppet-aem fork
 	# TODO: remove when switching back to bstopp/puppet-aem
