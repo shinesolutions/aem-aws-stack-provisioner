@@ -13,14 +13,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Increased timeout for wait_for_ec2tags.py to 15 minutes
 
 ## [3.18.0] - 2019-05-22
-
-## [3.17.0] - 2019-05-03
 ### Changed
-- Upgrade puppet-aem-curator to 1.23.0
+- Upgrade puppet-aem-curator to 1.24.1
 - Upgrade puppet-aem-resources to 3.10.1
 - Upgrade puppet-simianarmy to 1.1.4
 - Upgrade inspec-aem-aws to 0.14.1
 - Lock down dependencies versions
+
+## [3.17.0] - 2019-05-03
+### Changed
+- Upgrade puppet-aem-curator to 1.23.0
 
 ## [3.16.0] - 2019-04-17
 ### Changed
