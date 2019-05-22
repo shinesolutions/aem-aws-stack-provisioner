@@ -1,4 +1,4 @@
-version ?= 3.18.0-pre.0
+version ?= 3.19.0-pre.0
 
 ci: clean deps lint package
 
@@ -15,7 +15,7 @@ clean:
 
 # resolve dependencies from remote artifact registries
 deps:
-	gem install bundler
+	gem install bundler --version=1.17.3
 	bundle install --binstubs
 	bundle exec r10k puppetfile install --verbose --moduledir modules
 	bundle exec inspec vendor --overwrite
