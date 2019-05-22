@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+- awslogs service disable prior to snapshot attaching should now be non-blocking
+
 ## [4.0.0] - 2019-05-22
 ### Added
 - Add new component tag ComponentInitStatus in wait_for_ec2tags.py
