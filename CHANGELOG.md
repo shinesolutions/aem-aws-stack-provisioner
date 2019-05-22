@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Add new component tag ComponentInitStatus in wait_for_ec2tags.py
+
+### Changed
+- Increased timeout for wait_for_ec2tags.py to 15 minutes
+
 ## [3.6.4] - 2019-04-14
 
 ### Changed
