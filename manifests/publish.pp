@@ -36,7 +36,7 @@ class publish (
       path    => $exec_path,
       onlyif  => '/usr/bin/test -f /etc/cron.d/awslogs*'
     } -> exec { 'Prevent awslogs service from restart':
-      command => "systemctl disable ${$awslogs_service_name}",
+      command => "systemctl disable --now --no-block ${$awslogs_service_name}",
       path    => $exec_path,
     } -> exec { 'Stopping all access to mounted FS':
       command => "systemctl stop ${$awslogs_service_name}",
