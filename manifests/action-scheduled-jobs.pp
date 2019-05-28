@@ -33,8 +33,13 @@ class action_scheduled_jobs (
 
   cron { 'set-proxies':
     ensure      => present,
-    command     => '',
+    command     => '/bin/true # dummy job',
     user        => 'root',
+    hour        => 23,
+    minute      => 59,
+    month       => 12,
+    monthday    => 30,
+    weekday     => 0,
     environment => ["PATH=${env_path}", "http_proxy=\"${http_proxy}\"", "https_proxy=\"${https_proxy}\"", "no_proxy=\"${no_proxy}\""]
   }
 
