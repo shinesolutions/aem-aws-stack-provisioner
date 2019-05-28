@@ -34,7 +34,7 @@ class action_scheduled_jobs (
   cron { 'set-proxies':
     ensure        => present,
     command       => '',
-    user          => 'root'
+    user          => 'root',
     environment   => ["PATH=${env_path}", "http_proxy=\"${http_proxy}\"", "https_proxy=\"${https_proxy}\"", "no_proxy=\"${no_proxy}\""]
   }
 
