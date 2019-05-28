@@ -32,10 +32,10 @@ class action_scheduled_jobs (
 ) {
 
   cron { 'set-proxies':
-    ensure        => present,
-    command       => '',
-    user          => 'root',
-    environment   => ["PATH=${env_path}", "http_proxy=\"${http_proxy}\"", "https_proxy=\"${https_proxy}\"", "no_proxy=\"${no_proxy}\""]
+    ensure      => present,
+    command     => '',
+    user        => 'root',
+    environment => ["PATH=${env_path}", "http_proxy=\"${http_proxy}\"", "https_proxy=\"${https_proxy}\"", "no_proxy=\"${no_proxy}\""]
   }
 
   if $offline_snapshot_enable == true {
