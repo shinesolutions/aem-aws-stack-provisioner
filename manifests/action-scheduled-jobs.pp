@@ -31,9 +31,11 @@ class action_scheduled_jobs (
   $log_dir                             = '/var/log/shinesolutions'
 ) {
 
+  # This dummy job is a placeholder just to import proxy environment variables once off
+  # all jobs after this do not need to set proxies unless overriding is required
   cron { 'set-proxies':
     ensure      => present,
-    command     => '/bin/true # dummy job',
+    command     => '/bin/true # dummy job just to import proxy environment variables once',
     user        => 'root',
     hour        => 23,
     minute      => 59,
