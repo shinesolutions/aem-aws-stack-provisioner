@@ -10,13 +10,14 @@ class pre_common (
   $user,
   $group,
   $credentials_file,
-  $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
-  $extra_packages     = [],
-  $template_dir       = undef,
-  $file_dir           = undef,
-  $stack_prefix       = $::stack_prefix,
-  $data_bucket_name   = $::data_bucket_name,
-  $log_dir            = '/var/log/shinesolutions',
+  $aem_tools_env_path  = '$PATH:/opt/puppetlabs/puppet/bin',
+  $extra_packages      = [],
+  $enable_chaos_monkey = true,
+  $template_dir        = undef,
+  $file_dir            = undef,
+  $stack_prefix        = $::stack_prefix,
+  $data_bucket_name    = $::data_bucket_name,
+  $log_dir             = '/var/log/shinesolutions',
 ) {
   $template_dir_final = pick(
     $template_dir,
@@ -207,8 +208,9 @@ class pre_common (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/test-readiness.sh.epp",
       {
-        'aem_tools_env_path' => $aem_tools_env_path,
-        'base_dir'           => $base_dir,
+        'aem_tools_env_path'  => $aem_tools_env_path,
+        'base_dir'            => $base_dir,
+        'enable_chaos_monkey' => $enable_chaos_monkey,
       }
     ),
   }

@@ -79,6 +79,7 @@ pre_common::user: "%{hiera('common::user')}"
 pre_common::group: "%{hiera('common::group')}"
 pre_common::credentials_file: "%{hiera('common::credentials_file')}"
 pre_common::log_dir: "%{hiera('common::log_dir')}"
+pre_common::enable_chaos_monkey: "%{hiera('chaos_monkey::include_stack')}"
 
 # post-common
 action_scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
