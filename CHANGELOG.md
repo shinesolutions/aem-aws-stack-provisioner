@@ -5,8 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
 ### Added
 - Extend readiness check to check FS stacks with disabled chaos monkey shinesolutions/aem-aws-stack-builder#290
+
+### Changed
+- Upgrade inspec-aem-aws to 1.1.0
+- Upgrade puppet-aem-curator to 2.0.0
+- Upgrade puppet-aem-resources to 4.0.0
 
 ## [4.2.0] - 2019-05-23
 ### Changed

@@ -6,7 +6,6 @@ bin/
 modules/
 stage
 .idea/
-Gemfile.lock
 Puppetfile.lock
 inspec.lock
 vendor/
