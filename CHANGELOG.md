@@ -14,6 +14,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Upgrade puppet-aem-curator to 2.0.0
 - Upgrade puppet-aem-resources to 4.0.0
 
+### Fixed
+- Fix cron environment variables (create dummy job that adds proxy environment variables once only).  Address issue #171
+
 ## [4.2.0] - 2019-05-23
 ### Changed
 - Upgrade inspec-aem-aws to 1.0.0

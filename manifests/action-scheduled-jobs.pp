@@ -28,101 +28,105 @@ class action_scheduled_jobs (
   $offline_snapshot_hour               = '1',
   $offline_snapshot_minute             = '15',
   $offline_snapshot_weekday            = '2-7',
-  $log_dir                             = '/var/log/shinesolutions',
+  $log_dir                             = '/var/log/shinesolutions'
 ) {
+
+  # This dummy job is a placeholder just to import proxy environment variables once off
+  # all jobs after this do not need to set proxies unless overriding is required
+  cron { 'set-proxies':
+    ensure      => present,
+    command     => '/bin/true # dummy job just to import proxy environment variables once',
+    user        => 'root',
+    hour        => 23,
+    minute      => 59,
+    month       => 12,
+    monthday    => 30,
+    weekday     => 0,
+    environment => ["PATH=${env_path}", "http_proxy=\"${http_proxy}\"", "https_proxy=\"${https_proxy}\"", "no_proxy=\"${no_proxy}\""]
+  }
 
   if $offline_snapshot_enable == true {
     cron { 'stack-offline-snapshot':
-      ensure      => present,
-      command     => "${base_dir}/aem-tools/stack-offline-snapshot.sh >>${log_dir}/cron-stack-offline-snapshot.log 2>&1",
-      user        => 'root',
-      hour        => $offline_snapshot_hour,
-      minute      => $offline_snapshot_minute,
-      weekday     => $offline_snapshot_weekday,
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
+      ensure  => present,
+      command => "${base_dir}/aem-tools/stack-offline-snapshot.sh >>${log_dir}/cron-stack-offline-snapshot.log 2>&1",
+      user    => 'root',
+      hour    => $offline_snapshot_hour,
+      minute  => $offline_snapshot_minute,
+      weekday => $offline_snapshot_weekday
     }
   } else {
     cron { 'stack-offline-snapshot':
-      ensure      => absent,
-      command     => "${base_dir}/aem-tools/stack-offline-snapshot.sh >>${log_dir}/cron-stack-offline-snapshot.log 2>&1",
-      user        => 'root',
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
+      ensure  => absent,
+      command => "${base_dir}/aem-tools/stack-offline-snapshot.sh >>${log_dir}/cron-stack-offline-snapshot.log 2>&1",
+      user    => 'root'
     }
   }
 
   if $offline_compaction_snapshot_enable == true {
     cron { 'stack-offline-compaction-snapshot':
-      ensure      => present,
-      command     => "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh >>${log_dir}/cron-stack-offline-compaction-snapshot.log 2>&1",
-      user        => 'root',
-      hour        => $offline_compaction_snapshot_hour,
-      minute      => $offline_compaction_snapshot_minute,
-      weekday     => $offline_compaction_snapshot_weekday,
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
+      ensure  => present,
+      command => "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh >>${log_dir}/cron-stack-offline-compaction-snapshot.log 2>&1",
+      user    => 'root',
+      hour    => $offline_compaction_snapshot_hour,
+      minute  => $offline_compaction_snapshot_minute,
+      weekday => $offline_compaction_snapshot_weekday
     }
   } else {
     cron { 'stack-offline-compaction-snapshot':
-      ensure      => absent,
-      command     => "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh >>${log_dir}/cron-stack-offline-compaction-snapshot.log 2>&1",
-      user        => 'root',
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
+      ensure  => absent,
+      command => "${base_dir}/aem-tools/stack-offline-compaction-snapshot.sh >>${log_dir}/cron-stack-offline-compaction-snapshot.log 2>&1",
+      user    => 'root'
     }
   }
 
   if $live_snapshot_enable == true {
     cron { 'live-snapshot-backup':
-      ensure      => present,
-      command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>${log_dir}/cron-live-snapshot-backup.log 2>&1",
-      user        => 'root',
-      hour        => $live_snapshot_hour,
-      minute      => $live_snapshot_minute,
-      weekday     => $live_snapshot_weekday,
-      environment => ["PATH=${env_path}", "http_proxy=\"${http_proxy}\"", "https_proxy=\"${https_proxy}\"", "no_proxy=\"${no_proxy}\""],
+      ensure  => present,
+      command => "${base_dir}/aem-tools/live-snapshot-backup.sh >>${log_dir}/cron-live-snapshot-backup.log 2>&1",
+      user    => 'root',
+      hour    => $live_snapshot_hour,
+      minute  => $live_snapshot_minute,
+      weekday => $live_snapshot_weekday
     }
   } else {
     cron { 'live-snapshot-backup':
-    ensure      => absent,
-    command     => "${base_dir}/aem-tools/live-snapshot-backup.sh >>${log_dir}/cron-live-snapshot-backup.log 2>&1",
-    user        => 'root',
-    environment => ["PATH=${env_path}", "http_proxy=\"${http_proxy}\"", "https_proxy=\"${https_proxy}\"", "no_proxy=\"${no_proxy}\""]
+    ensure  => absent,
+    command => "${base_dir}/aem-tools/live-snapshot-backup.sh >>${log_dir}/cron-live-snapshot-backup.log 2>&1",
+    user    => 'root'
     }
   }
 
   if $export_enable == true {
     cron { 'export-backups':
-      ensure      => present,
-      command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>${log_dir}/cron-export-backups.log 2>&1",
-      user        => 'root',
-      hour        => $export_hour,
-      minute      => $export_minute,
-      weekday     => $export_weekday,
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
+      ensure  => present,
+      command => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>${log_dir}/cron-export-backups.log 2>&1",
+      user    => 'root',
+      hour    => $export_hour,
+      minute  => $export_minute,
+      weekday => $export_weekday
     }
   } else {
     cron { 'export-backups':
-      ensure      => absent,
-      command     => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>${log_dir}/cron-export-backups.log 2>&1",
-      user        => 'root',
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
+      ensure  => absent,
+      command => "${base_dir}/aem-tools/export-backups.sh export-backups-descriptor.json >>${log_dir}/cron-export-backups.log 2>&1",
+      user    => 'root'
     }
   }
 
   if $content_health_check_enable == true {
     cron { 'content-health-check':
-      ensure      => present,
-      command     => "${base_dir}/aem-tools/content-healthcheck.py >>${log_dir}/cron-content-health-check.log 2>&1",
-      user        => 'root',
-      hour        => $content_health_check_hour,
-      minute      => $content_health_check_minute,
-      weekday     => $content_health_check_weekday,
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""],
+      ensure  => present,
+      command => "${base_dir}/aem-tools/content-healthcheck.py >>${log_dir}/cron-content-health-check.log 2>&1",
+      user    => 'root',
+      hour    => $content_health_check_hour,
+      minute  => $content_health_check_minute,
+      weekday => $content_health_check_weekday
     }
   } else {
     cron { 'content-health-check':
-      ensure      => absent,
-      command     => "${base_dir}/aem-tools/content-healthcheck.py >>${log_dir}/cron-content-health-check.log 2>&1",
-      user        => 'root',
-      environment => ["PATH=${env_path}", "https_proxy=\"${https_proxy}\""]
+      ensure  => absent,
+      command => "${base_dir}/aem-tools/content-healthcheck.py >>${log_dir}/cron-content-health-check.log 2>&1",
+      user    => 'root'
     }
   }
 }

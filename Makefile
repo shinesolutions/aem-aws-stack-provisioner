@@ -16,6 +16,7 @@ clean:
 # resolve dependencies from remote artifact registries
 deps:
 	gem install bundler --version=1.17.3
+	rm -rf .bundle
 	bundle install --binstubs
 	bundle exec r10k puppetfile install --verbose --moduledir modules
 	bundle exec inspec vendor --overwrite
