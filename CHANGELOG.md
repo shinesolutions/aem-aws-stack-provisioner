@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### Changed
+- Upgrade inspec-aem-aws to 1.1.0
+- Upgrade puppet-aem-curator to 2.0.0
+- Upgrade puppet-aem-resources to 4.0.0
+
+### Fixed
 - Fix cron environment variables (create dummy job that adds proxy environment variables once only).  Address issue #171
 
 ## [4.2.0] - 2019-05-23
