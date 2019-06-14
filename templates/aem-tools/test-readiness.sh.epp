@@ -5,6 +5,8 @@ set -o errexit
 PATH=<%= $aem_tools_env_path %>
 stack_prefix=$(/opt/puppetlabs/bin/facter stack_prefix)
 component=$(/opt/puppetlabs/bin/facter component)
+enable_chaos_monkey=<%= $enable_chaos_monkey %>
+
 
 if [ ${component} = 'author-publish-dispatcher' ]; then
   echo "Testing if AEM Consolidated is ready using InSpec..."
@@ -14,11 +16,21 @@ if [ ${component} = 'author-publish-dispatcher' ]; then
   #   aem_stack_prefix="${stack_prefix}" \
   #   make test-readiness-consolidated
 elif [ ${component} = 'orchestrator' ]; then
-  echo "Testing if AEM Full-Set is ready using InSpec..."
-  cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
-  HOME=/root \
-    aem_stack_prefix="${stack_prefix}" \
-    make test-readiness
+  case $enable_chaos_monkey in
+    'false')
+      echo "Testing if AEM Full-Set with disabled Chaos Chaos Monkey instance is ready using InSpec..."
+      cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
+      HOME=/root \
+        aem_stack_prefix="${stack_prefix}" \
+        make test-readiness-with-disabled-chaosmonkey
+    ;;
+    *)
+      echo "Testing if AEM Full-Set is ready using InSpec..."
+      cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
+      HOME=/root \
+        aem_stack_prefix="${stack_prefix}" \
+        make test-readiness
+  esac
 else
   echo "Readiness testing cannot be run from this component..."
   echo "It can only be executed from:"

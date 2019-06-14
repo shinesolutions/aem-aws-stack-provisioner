@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Extend readiness check to check FS stacks with disabled chaos monkey shinesolutions/aem-aws-stack-builder#290
+
 ### Changed
 - Upgrade inspec-aem-aws to 1.1.0
 - Upgrade puppet-aem-curator to 2.0.0
