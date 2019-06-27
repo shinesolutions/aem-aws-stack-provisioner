@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Add new hiera fact for action_enable_saml
+
 ## [4.3.0] - 2019-06-14
 ### Added
 - Extend readiness check to check FS stacks with disabled chaos monkey shinesolutions/aem-aws-stack-builder#290

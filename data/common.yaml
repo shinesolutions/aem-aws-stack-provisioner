@@ -169,6 +169,9 @@ aem_curator::action_upgrade_aem::login_ready_max_tries: "%{hiera('common::login_
 aem_curator::action_upgrade_aem::login_ready_base_sleep_seconds: "%{hiera('common::login_ready_base_sleep_seconds')}"
 aem_curator::action_upgrade_aem::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max_sleep_seconds')}"
 
+# SAML tool
+aem_curator::action_enable_saml::tmp_dir: "%{hiera('common::tmp_dir')}"
+
 # AEM-Tool Flush-Dispatcher-cache
 aem_curator::action_flush_dispatcher_cache::docroot_dir: "%{hiera('common::docroot_dir')}"
 
