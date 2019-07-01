@@ -20,7 +20,7 @@ class author_publish_dispatcher (
   $aem_id_author_primary = 'author-primary',
   $ec2_id                = $::ec2_metadata['instance-id'],
   $log_dir               = '/var/log/shinesolutions',
-  $deploy_timeout        = 600,
+  $deploy_timeout        = 1200,
 ) {
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
@@ -212,7 +212,6 @@ class deploy_on_init (
       timeout     => $deploy_timeout,
       command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>${log_dir}/puppet-deploy-artifacts-init.log 2>&1",
       onlyif      => "test `aws s3 ls s3://${data_bucket_name}/${stack_prefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
-      timeout     => 0,
     }
   }
 

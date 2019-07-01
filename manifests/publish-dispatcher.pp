@@ -22,7 +22,7 @@ class publish_dispatcher (
   $exec_path                  = ['/bin', '/usr/local/bin', '/usr/bin'],
   $aem_tools_env_path         = '$PATH:/opt/puppetlabs/puppet/bin',
   $log_dir                    = '/var/log/shinesolutions',
-  $deploy_timeout             = 600,
+  $deploy_timeout             = 900,
 ) {
 
   class { 'aem_curator::config_aem_tools_dispatcher':
