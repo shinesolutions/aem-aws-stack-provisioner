@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 ### Changed
-- Upgrade puppet-aem-curator to 2.2.0
+- Upgrade puppet-aem-curator to 2.3.0
 - Parameterise Dispatcher artifacts deployment timeout, defaults to 10 minutes
 
 ## [4.3.0] - 2019-06-14
