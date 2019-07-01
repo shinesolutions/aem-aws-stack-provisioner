@@ -15,6 +15,7 @@ class author_dispatcher (
   $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
   $https_proxy        = $::cron_https_proxy,
   $log_dir            = '/var/log/shinesolutions',
+  $deploy_timeout     = 600,
 ) {
 
   class { 'aem_curator::config_aem_tools_dispatcher':
@@ -29,6 +30,7 @@ class author_dispatcher (
     path        => $exec_path,
     environment => ["https_proxy=${https_proxy}"],
     cwd         => $tmp_dir,
+    timeout     => $deploy_timeout,
     command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>${log_dir}/puppet-deploy-artifacts-init.log 2>&1",
     onlyif      => "test `aws s3 ls s3://${data_bucket_name}/${stack_prefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
   }
