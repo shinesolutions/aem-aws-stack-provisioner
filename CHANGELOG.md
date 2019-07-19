@@ -9,6 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 - Add new hiera fact for action_enable_saml
 
+### Changed
+- Upgrade puppet-aem-curator to 2.4.0
+- Upgrade puppet-aem-resources to 4.1.0
+
 ## [4.5.0] - 2019-07-01
 ### Changed
 - Upgrade puppet-aem-curator to 2.3.0
