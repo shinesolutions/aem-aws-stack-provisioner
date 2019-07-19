@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
 ## [4.6.0] - 2019-07-19
 ### Added
 - Add new hiera fact for action_enable_saml
@@ -443,6 +445,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#155]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/155
 [#171]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/171
 
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.6.0...HEAD
 [4.6.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.5.0...4.6.0
 [4.5.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.3.0...4.5.0
 [4.3.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.2.0...4.3.0
