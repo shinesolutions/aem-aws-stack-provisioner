@@ -9,6 +9,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 - Add new hiera fact for action_enable_saml
 
+## [4.5.0] - 2019-07-01
+### Changed
+- Upgrade puppet-aem-curator to 2.3.0
+- Parameterise Dispatcher artifacts deployment timeout, defaults to 15 minutes
+- Parameterise Author-Publish-Dispatcher artifacts deployment timeout, defaults to 0 due to possibility of extremely large AEM packages
+
 ## [4.3.0] - 2019-06-14
 ### Added
 - Extend readiness check to check FS stacks with disabled chaos monkey shinesolutions/aem-aws-stack-builder#290
@@ -434,7 +440,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#155]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/155
 [#171]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/171
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.3.0...HEAD
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.5.0...HEAD
+[4.5.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.3.0...4.5.0
 [4.3.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.2.0...4.3.0
 [4.2.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.1.0...4.2.0
 [4.1.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.0.0...4.1.0
