@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Add new hiera fact for action_enable_saml
+
 ## [4.5.0] - 2019-07-01
 ### Changed
 - Upgrade puppet-aem-curator to 2.3.0
