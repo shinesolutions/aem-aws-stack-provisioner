@@ -39,7 +39,7 @@ class publish (
     } -> exec { 'Prevent awslogs service from restart':
       command => "systemctl disable --now --no-block ${$awslogs_service_name}",
       path    => $exec_path,
-    } -> exec { 'Stopping all access to mounted FS':
+    } -> exec { 'Stopping awslogs service to prevent it from accessing mounted FS':
       command => "systemctl stop ${$awslogs_service_name}",
       path    => $exec_path,
     } -> exec { "Attach volume from snapshot ID ${snapshotid}":
