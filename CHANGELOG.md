@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Increase snapshot waiting timeout to 1 hour
 
+### Added
+- Add boto config to snapshot_attach.py with max_attempts set to 360 to handle 500Gb EBS volume
+
 ## [4.8.0] - 2019-08-05
 ### Added
 - Add publish::snapshot_attach_timeout parameter defaults to 900 seconds
