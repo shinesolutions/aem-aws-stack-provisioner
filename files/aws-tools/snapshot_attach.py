@@ -429,7 +429,16 @@ if __name__ == '__main__':
     needs_format = False
     if args.snapshot_id:
         snapshot = ec2.Snapshot(args.snapshot_id)
-        snapshot.wait_until_completed()
+        ec2.meta.client.get_waiter('snapshot_completed').wait(
+            SnapshotIds=[
+                snapshot.id,
+            ],
+            WaiterConfig={
+                'Delay': 15,
+                'MaxAttempts': 240
+            }
+        )
+        #snapshot.wait_until_completed()
         log.debug('Using snapshot %r', snapshot)
         volume_args['SnapshotId'] = snapshot.id
         snapshot_tags = dict(( (t['Key'], t['Value']) for t in snapshot.tags or () ))
