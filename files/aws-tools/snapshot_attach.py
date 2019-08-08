@@ -438,7 +438,6 @@ if __name__ == '__main__':
                 'MaxAttempts': 240
             }
         )
-        #snapshot.wait_until_completed()
         log.debug('Using snapshot %r', snapshot)
         volume_args['SnapshotId'] = snapshot.id
         snapshot_tags = dict(( (t['Key'], t['Value']) for t in snapshot.tags or () ))
