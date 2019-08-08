@@ -6,10 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 ### Changed
-- Increase snapshot waiting timeout to 1 hour
-
-### Added
-- Add boto config to snapshot_attach.py with max_attempts set to 360 to handle 500Gb EBS volume
+- Increase snapshot waiting timeout to 1 hour in snapshot_attach.py to handle 500Gb EBS volume
 
 ### Fixed
 - Fix description on stopping awslogs service prior to attaching snapshot volume
