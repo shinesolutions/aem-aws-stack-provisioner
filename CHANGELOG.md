@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 - Update test-readiness to use the new provisioning-readiness test #178
+- Upgrade inspec-aem-aws to 1.2.0
 
 ## [4.9.0] - 2019-08-08
 ### Changed
