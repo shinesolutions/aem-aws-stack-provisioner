@@ -14,7 +14,7 @@ if [ ${component} = 'author-publish-dispatcher' ]; then
   # # TODO: not yet supported
   # HOME=/root \
   #   aem_stack_prefix="${stack_prefix}" \
-  #   make test-readiness-consolidated
+  #   test-successful-provisioning-author-publish-dispatcher
 elif [ ${component} = 'orchestrator' ]; then
   case $enable_chaos_monkey in
     'false')
@@ -22,14 +22,14 @@ elif [ ${component} = 'orchestrator' ]; then
       cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
       HOME=/root \
         aem_stack_prefix="${stack_prefix}" \
-        make test-readiness-with-disabled-chaosmonkey
+        make test-provisioning-readiness-with-disabled-chaosmonkey
     ;;
     *)
       echo "Testing if AEM Full-Set is ready using InSpec..."
       cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
       HOME=/root \
         aem_stack_prefix="${stack_prefix}" \
-        make test-readiness
+        make test-provisioning-readiness
   esac
 else
   echo "Readiness testing cannot be run from this component..."
