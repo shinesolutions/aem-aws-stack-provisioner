@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+- Update test-readiness to use the new provisioning-readiness test #178
+
 ## [4.9.0] - 2019-08-08
 ### Changed
 - Increase snapshot waiting timeout to 1 hour in snapshot_attach.py to handle 500Gb EBS volume
