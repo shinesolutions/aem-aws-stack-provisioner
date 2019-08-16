@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 - Change wait_for_ec2tags total retry timeout to 30 minutes
+- Upgrade puppet-aem-curator to 2.9.0
 
 ## [4.12.0] - 2019-08-15
 ### Changed
