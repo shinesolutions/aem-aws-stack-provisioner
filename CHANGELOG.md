@@ -4,8 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
+## [4.13.0] - 2019-08-16
 ### Added
 - Add new Hiera parameters for Aem-healthcheck-content package installation shinesolutions/puppet-aem-curator#181
 
@@ -482,7 +481,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#171]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/171
 [#178]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/178
 
-[Unreleased]:https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.12.0...HEAD
+[4.13.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.12.0...4.13.0
 [4.12.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.11.0...4.12.0
 [4.11.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.10.0...4.11.0
 [4.10.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.9.0...4.10.0
