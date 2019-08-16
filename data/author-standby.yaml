@@ -57,6 +57,7 @@ aem_curator::config_collectd::aem_instances:
       - standby-status
 
 aem_curator::config_author_standby::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::config_author_standby::aem_base: "%{hiera('common::aem_base')}"
 aem_curator::config_author_standby::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
 aem_curator::config_author_standby::crx_quickstart_dir: /opt/aem/author/crx-quickstart
 aem_curator::config_author_standby::author_protocol: http
@@ -69,3 +70,4 @@ aem_curator::config_author_standby::enable_default_passwords: false
 # Logrotation configuration
 aem_curator::config_logrotate::config: "%{alias('author_standby::logrotation::config')}"
 aem_curator::config_logrotate::rules: "%{alias('author_standby::logrotation::rules')}"
+

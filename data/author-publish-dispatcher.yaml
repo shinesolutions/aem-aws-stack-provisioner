@@ -93,6 +93,7 @@ aem_curator::config_collectd::aem_instances:
 
 # AEM Author
 aem_curator::config_author_primary::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::config_author_primary::aem_base: "%{hiera('common::aem_base')}"
 aem_curator::config_author_primary::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
 aem_curator::config_author_primary::crx_quickstart_dir: /opt/aem/author/crx-quickstart
 aem_curator::config_author_primary::author_protocol: http
@@ -120,6 +121,7 @@ aem_curator::config_author_primary::data_volume_mount_point: /mnt/ebs1
 aem_curator::config_publish::publish_dispatcher_host: localhost
 aem_curator::config_publish::publish_dispatcher_id: localhost
 aem_curator::config_publish::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::config_publish::aem_base: "%{hiera('common::aem_base')}"
 aem_curator::config_publish::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
 aem_curator::config_publish::crx_quickstart_dir: /opt/aem/publish/crx-quickstart
 aem_curator::config_publish::publish_protocol: http
