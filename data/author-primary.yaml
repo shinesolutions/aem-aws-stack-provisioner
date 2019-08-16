@@ -66,6 +66,7 @@ aem_curator::config_collectd::aem_instances:
       - memory-heap
 
 aem_curator::config_author_primary::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::config_author_primary::aem_base: "%{hiera('common::aem_base')}"
 aem_curator::config_author_primary::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
 aem_curator::config_author_primary::crx_quickstart_dir: /opt/aem/author/crx-quickstart
 aem_curator::config_author_primary::author_protocol: http
@@ -125,3 +126,4 @@ aem_curator::config_author_primary::proxy_noproxy: "%{alias('common::proxy_nopro
 # Service start Post sleep configuration
 aem_curator::config_author_primary::enable_post_start_sleep: "%{alias('common::enable_post_start_sleep')}"
 aem_curator::config_author_primary::post_start_sleep_seconds: "%{hiera('common::post_start_sleep_seconds')}"
+

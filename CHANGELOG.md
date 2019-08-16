@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Add new Hiera parameters for Aem-healthcheck-content package installation shinesolutions/puppet-aem-curator#181
+
 ### Changed
 - Change wait_for_ec2tags total retry timeout to 30 minutes
 
