@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys, os, logging, argparse, jmespath, boto3, requests, json, logging, socket, sh, textwrap
 from retrying import retry
+from botocore.config import Config
 from itertools import imap, repeat
 from collections import namedtuple
 
@@ -412,6 +413,12 @@ if __name__ == '__main__':
     set_logging_level(args.quiet, args.verbose)
     log.debug('Args: %r', args)
 
+    boto3_config = Config(
+        retries = {
+            'max_attempts': 360
+            }
+        )
+
     ec2         = boto3.resource('ec2')
     instance    = ec2_instance()
     devices     = [ args.device ]
@@ -429,7 +436,15 @@ if __name__ == '__main__':
     needs_format = False
     if args.snapshot_id:
         snapshot = ec2.Snapshot(args.snapshot_id)
-        snapshot.wait_until_completed()
+        ec2.meta.client.get_waiter('snapshot_completed').wait(
+            SnapshotIds=[
+                snapshot.id,
+            ],
+            WaiterConfig={
+                'Delay': 15,
+                'MaxAttempts': 240
+            }
+        )
         log.debug('Using snapshot %r', snapshot)
         volume_args['SnapshotId'] = snapshot.id
         snapshot_tags = dict(( (t['Key'], t['Value']) for t in snapshot.tags or () ))
