@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Add new Hiera parameters for Aem-healthcheck-content package installation shinesolutions/puppet-aem-curator#181
 - Add boto config to snapshot_attach.py with max_attempts set to 360 to handle 500Gb EBS volume
 - Add publish::snapshot_attach_timeout parameter defaults to 900 seconds
+
+### Changed
+- Upgrade inspec-aem-aws to 1.2.0
+
 ## [4.2.0] - 2019-05-23
 ### Changed
 - Upgrade inspec-aem-aws to 1.0.0
