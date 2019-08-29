@@ -37,6 +37,8 @@ common::awslogs_config_path: /etc/awslogs/awslogs.conf
 
 common::aem_password_retrieval_command: "aws s3 cp s3://%{::data_bucket_name}/%{::stack_prefix}/system-users-credentials.json - | jq --raw-output .$aem_username"
 
+common::aem_base: /opt
+
 # Dispatcher configuration
 common::publish_host: localhost
 common::publish_port: 5433
