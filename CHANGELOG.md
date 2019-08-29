@@ -15,6 +15,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Update test-readiness to use the new provisioning-readiness test #178
 - Upgrade inspec-aem-aws to 1.2.0
 
+### Fixed
+- Fixed error while disabling awslogs daemon cronjobs to prevent awslogs from restart [shinesolutions/aem-aws-stack-builder#311]
+
 ## [4.2.0] - 2019-05-23
 ### Changed
 - Upgrade inspec-aem-aws to 1.0.0

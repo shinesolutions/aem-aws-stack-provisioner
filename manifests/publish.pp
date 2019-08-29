@@ -31,11 +31,11 @@ class publish (
       command => 'mkdir -p /tmp/shinesolutions/crons/awslogs',
       path    => $exec_path,
       before  => Exec['Enable awslogs CronJobs'],
-      onlyif  => '/usr/bin/test -f /etc/cron.d/awslogs*'
+      onlyif  => 'ls /etc/cron.d/awslogs*'
     } -> exec { 'Disable awslogs CronJobs':
       command => 'mv /etc/cron.d/awslogs* /tmp/shinesolutions/crons/awslogs/',
       path    => $exec_path,
-      onlyif  => '/usr/bin/test -f /etc/cron.d/awslogs*'
+      onlyif  => 'ls /etc/cron.d/awslogs*'
     } -> exec { 'Prevent awslogs service from restart':
       command => "systemctl disable --now --no-block ${$awslogs_service_name}",
       path    => $exec_path,
@@ -214,7 +214,7 @@ class update_awslogs (
   exec { 'Enable awslogs CronJobs':
     command => 'mv /tmp/shinesolutions/crons/awslogs/* /etc/cron.d/',
     path    => $exec_path,
-    onlyif  => '/usr/bin/test -e /tmp/shinesolutions/crons/awslogs',
+    onlyif  => 'ls /tmp/shinesolutions/crons/awslogs*',
     before  => Service[$awslogs_service_name]
   }
 
