@@ -12,8 +12,24 @@ class author_standby (
   $stack_prefix               = $::stack_prefix,
   $aem_tools_env_path         = '$PATH:/opt/puppetlabs/puppet/bin',
   $ec2_id                     = $::ec2_metadata['instance-id'],
+  $ssh_public_keys,
 ) {
 
+  $ssh_public_keys.each | String $name, Hash $ssh_details| {
+    $ssh_public_key      = $ssh_details['public_key']
+    $ssh_public_key_type = $ssh_details['public_key_type']
+
+      notify{"ssh details: ${ssh_public_key}":}
+
+    ssh_authorized_key { "Adding public key for user ${name} to authorized_keys":
+      ensure   => present,
+      user     => $aws_user,
+      provider => 'parsed',
+      name     => $name,
+      key      => $ssh_public_key,
+      type     => $ssh_public_key_type,
+    }
+  }
   class { 'aem_curator::config_aem_tools':
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':

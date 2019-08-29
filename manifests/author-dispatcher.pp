@@ -16,8 +16,25 @@ class author_dispatcher (
   $https_proxy        = $::cron_https_proxy,
   $log_dir            = '/var/log/shinesolutions',
   $deploy_timeout     = 900,
+  $ssh_public_keys,
+  $aws_user = 'ec2-user',
 ) {
 
+  $ssh_public_keys.each | String $name, Hash $ssh_details| {
+    $ssh_public_key      = $ssh_details['public_key']
+    $ssh_public_key_type = $ssh_details['public_key_type']
+
+      notify{"ssh details: ${ssh_public_key}":}
+
+    ssh_authorized_key { "Adding public key for user ${name} to authorized_keys":
+      ensure   => present,
+      user     => $aws_user,
+      provider => 'parsed',
+      name     => $name,
+      key      => $ssh_public_key,
+      type     => $ssh_public_key_type,
+    }
+  }
   class { 'aem_curator::config_aem_tools_dispatcher':
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':

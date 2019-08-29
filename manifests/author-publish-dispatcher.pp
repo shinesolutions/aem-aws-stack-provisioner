@@ -21,8 +21,25 @@ class author_publish_dispatcher (
   $ec2_id                = $::ec2_metadata['instance-id'],
   $log_dir               = '/var/log/shinesolutions',
   $deploy_timeout        = 1200,
+  $ssh_public_keys,
+  $aws_user = 'ec2-user',
 ) {
 
+  $ssh_public_keys.each | String $name, Hash $ssh_details| {
+    $ssh_public_key      = $ssh_details['public_key']
+    $ssh_public_key_type = $ssh_details['public_key_type']
+
+      notify{"ssh details: ${ssh_public_key}":}
+
+    ssh_authorized_key { "Adding public key for user ${name} to authorized_keys":
+      ensure   => present,
+      user     => $aws_user,
+      provider => 'parsed',
+      name     => $name,
+      key      => $ssh_public_key,
+      type     => $ssh_public_key_type,
+    }
+  }
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
 
   class { 'aem_curator::config_aem_tools':

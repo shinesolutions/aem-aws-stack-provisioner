@@ -17,8 +17,25 @@ class chaos_monkey (
   $author_dispatcher_asg                        = $::authordispatcherasg,
   $asg_probability                              = $::asg_probability,
   $asg_max_terminations_per_day                 = $::asg_max_terminations_per_day,
+  $ssh_public_keys,
+  $aws_user = 'ec2-user',
 ) {
 
+  $ssh_public_keys.each | String $name, Hash $ssh_details| {
+    $ssh_public_key      = $ssh_details['public_key']
+    $ssh_public_key_type = $ssh_details['public_key_type']
+
+      notify{"ssh details: ${ssh_public_key}":}
+
+    ssh_authorized_key { "Adding public key for user ${name} to authorized_keys":
+      ensure   => present,
+      user     => $aws_user,
+      provider => 'parsed',
+      name     => $name,
+      key      => $ssh_public_key,
+      type     => $ssh_public_key_type,
+    }
+  }
   class { 'simianarmy':
   } -> simianarmy::chaos_properties::asg { $::orchestratorasg:
     enabled                  => $orchestrator_enable_random_termination,

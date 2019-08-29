@@ -22,8 +22,25 @@ class publish (
   $ec2_id                  = $::ec2_metadata['instance-id'],
   $snapshotid              = $::snapshotid,
   $snapshot_attach_timeout = 900,
+  $aws_user = 'ec2-user',
+  $ssh_public_keys,
 ) {
 
+  $ssh_public_keys.each | String $name, Hash $ssh_details| {
+    $ssh_public_key      = $ssh_details['public_key']
+    $ssh_public_key_type = $ssh_details['public_key_type']
+
+      notify{"ssh details: ${ssh_public_key}":}
+
+    ssh_authorized_key { "Adding public key for user ${name} to authorized_keys":
+      ensure   => present,
+      user     => $aws_user,
+      provider => 'parsed',
+      name     => $name,
+      key      => $ssh_public_key,
+      type     => $ssh_public_key_type,
+    }
+  }
   if $snapshotid != undef and $snapshotid != '' {
     # In the future we maybe disable services like awslogs
     # during baking and activate them during provisioning

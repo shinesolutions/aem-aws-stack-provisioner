@@ -11,8 +11,25 @@ class orchestrator (
   $data_bucket_name         = $::data_bucket_name,
   $stack_prefix             = $::stack_prefix,
   $component                = $::component,
+  $ssh_public_keys,
+  $aws_user = 'ec2-user',
 ) {
 
+  $ssh_public_keys.each | String $name, Hash $ssh_details| {
+    $ssh_public_key      = $ssh_details['public_key']
+    $ssh_public_key_type = $ssh_details['public_key_type']
+
+      notify{"ssh details: ${ssh_public_key}":}
+
+    ssh_authorized_key { "Adding public key for user ${name} to authorized_keys":
+      ensure   => present,
+      user     => $aws_user,
+      provider => 'parsed',
+      name     => $name,
+      key      => $ssh_public_key,
+      type     => $ssh_public_key_type,
+    }
+  }
   Archive {
     checksum_verify => false,
   }
