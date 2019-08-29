@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Update test-readiness to use the new provisioning-readiness test #178
 - Upgrade inspec-aem-aws to 1.2.0
+- Update puppet-aem-curator to 1.25.1
 
 ### Fixed
 - Fixed error while disabling awslogs daemon cronjobs to prevent awslogs from restart [shinesolutions/aem-aws-stack-builder#311]
