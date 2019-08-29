@@ -21,6 +21,7 @@ class publish (
   $https_proxy             = $::cron_https_proxy,
   $ec2_id                  = $::ec2_metadata['instance-id'],
   $snapshotid              = $::snapshotid,
+  $snapshot_attach_timeout = 900,
 ) {
 
   if $snapshotid != undef and $snapshotid != '' {
@@ -43,6 +44,7 @@ class publish (
       path    => $exec_path,
     } -> exec { "Attach volume from snapshot ID ${snapshotid}":
       command => "${base_dir}/aws-tools/snapshot_attach.py --device ${aem_repo_devices[0][device_name]} --device-alias ${aem_repo_devices[0][device_alias]} --volume-type ${volume_type} --snapshot-id ${snapshotid} -vvvv",
+      timeout => $snapshot_attach_timeout,
       path    => $exec_path,
     }
 
