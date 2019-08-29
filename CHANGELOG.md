@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Add publish::snapshot_attach_timeout parameter defaults to 900 seconds
 
 ### Changed
+- Update test-readiness to use the new provisioning-readiness test #178
 - Upgrade inspec-aem-aws to 1.2.0
 
 ## [4.2.0] - 2019-05-23

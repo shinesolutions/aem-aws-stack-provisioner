@@ -18,7 +18,7 @@ elif [ ${component} = 'orchestrator' ]; then
   cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
   HOME=/root \
     aem_stack_prefix="${stack_prefix}" \
-    make test-readiness
+    make test-provisioning-readiness
 else
   echo "Readiness testing cannot be run from this component..."
   echo "It can only be executed from:"
