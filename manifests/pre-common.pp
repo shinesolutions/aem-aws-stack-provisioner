@@ -19,6 +19,49 @@ class pre_common (
   $data_bucket_name    = $::data_bucket_name,
   $log_dir             = '/var/log/shinesolutions',
 ) {
+class my_fw::pre {
+  Firewall {
+      require => undef,
+  }
+# Default firewall rules
+  firewall { '000 accept all icmp':
+    proto => 'icmp',
+    action => 'accept',
+  }
+  firewall { '001 accept all to lo interface':
+    proto => 'all',
+    iniface => 'lo',
+    action => 'accept',
+  }
+  firewall {'002 reject local traffic not on loopback interface':
+    iniface => '! lo',
+    proto => 'all',
+    destination => '127.0.0.1/8',
+    action => 'reject',
+  }
+  firewall { '003 accept related established rules':
+    proto => 'all',
+    state => ['RELATED', 'ESTABLISHED'],
+    action => 'accept',
+  }
+  firewall { '100 allow ssh port 22 access':
+    port => '22',
+    proto => tcp,
+    action => accept,
+  }
+  firewall { '101 allow NTP IN':
+    chain => 'INPUT',
+    port => '123',
+    proto => udp,
+    action => accept,
+  }
+  firewall { '102 allow NTP OUT':
+    chain => 'OUTPUT',
+    port => '123',
+    proto => udp,
+    action => accept,
+    }
+}
   $template_dir_final = pick(
     $template_dir,
     "${base_dir}/aem-aws-stack-provisioner/templates"

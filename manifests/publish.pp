@@ -24,6 +24,67 @@ class publish (
   $snapshot_attach_timeout = 900,
 ) {
 
+  class anzinfra::fwrules::publish {
+    Firewall {
+      require => undef,
+    }
+    firewall { '010 AEM SSL port':
+      chain => 'INPUT',
+      port => '4503',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '011 AEM SSL port':
+      chain => 'INPUT',
+      port => '5433',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '012 SSL port':
+      chain => 'OUTPUT',
+      port => '443',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '013 AEM port':
+      chain => 'OUTPUT',
+      port => '8080',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '014 PROXY port':
+      chain => 'OUTPUT',
+      port => '3128',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '015 SMTP port':
+      chain => 'OUTPUT',
+      port => '25',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '016 PUPPET port':
+      chain => 'OUTPUT',
+      port => '61613-61614',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '017 SPLUNK port':
+      chain => 'OUTPUT',
+      port => '9997',
+      proto => tcp,
+      action => accept,
+    }
+    class my_fw::post {
+        firewall { '999 drop all':
+          proto  => 'all',
+          action => 'drop',
+          before => undef,
+        }
+    }  
+  }
+
   if $snapshotid != undef and $snapshotid != '' {
     # In the future we maybe disable services like awslogs
     # during baking and activate them during provisioning

@@ -14,6 +14,13 @@ class author_standby (
   $ec2_id                     = $::ec2_metadata['instance-id'],
 ) {
 
+  class my_fw::post {
+      firewall { '999 drop all':
+        proto  => 'all',
+        action => 'drop',
+        before => undef,
+      }
+  }  
   class { 'aem_curator::config_aem_tools':
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':

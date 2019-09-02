@@ -19,6 +19,18 @@ class chaos_monkey (
   $asg_max_terminations_per_day                 = $::asg_max_terminations_per_day,
 ) {
 
+  class fwrules::chaosmonkey {
+    Firewall {
+      require => undef,
+    }
+  }
+  class my_fw::post {
+      firewall { '999 drop all':
+        proto  => 'all',
+        action => 'drop',
+        before => undef,
+      }
+  }  
   class { 'simianarmy':
   } -> simianarmy::chaos_properties::asg { $::orchestratorasg:
     enabled                  => $orchestrator_enable_random_termination,

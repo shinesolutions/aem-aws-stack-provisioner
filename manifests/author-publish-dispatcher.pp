@@ -22,6 +22,13 @@ class author_publish_dispatcher (
   $log_dir               = '/var/log/shinesolutions',
   $deploy_timeout        = 1200,
 ) {
+  class my_fw::post {
+      firewall { '999 drop all':
+        proto  => 'all',
+        action => 'drop',
+        before => undef,
+      }
+  }
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
 

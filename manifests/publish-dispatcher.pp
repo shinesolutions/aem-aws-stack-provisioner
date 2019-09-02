@@ -24,7 +24,13 @@ class publish_dispatcher (
   $log_dir                    = '/var/log/shinesolutions',
   $deploy_timeout             = 900,
 ) {
-
+  class my_fw::post {
+      firewall { '999 drop all':
+        proto  => 'all',
+        action => 'drop',
+        before => undef,
+      }
+  }
   class { 'aem_curator::config_aem_tools_dispatcher':
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':

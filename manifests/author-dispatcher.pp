@@ -18,6 +18,60 @@ class author_dispatcher (
   $deploy_timeout     = 900,
 ) {
 
+    class fwrules::dispatcher {
+      Firewall {
+        require => undef,
+      }
+      firewall { '010 aem port':
+        chain => 'INPUT',
+        port => '8080',
+        proto => tcp,
+        action => accept,
+      }
+      firewall { '011 ssl port':
+        chain => 'INPUT',
+        port => '443',
+        proto => tcp,
+        action => accept,
+      }
+      firewall { '012 aem ssl port':
+        chain => 'OUTPUT',
+        port => '5433',
+        proto => tcp,
+        action => accept,
+      }
+      firewall { '013 PUPPET port':
+        chain => 'OUTPUT',
+        port => '61613-61614',
+        proto => tcp,
+        action => accept,
+      }
+      firewall { '014 SPLUNK port':
+        chain => 'OUTPUT',
+        port => '9997',
+        proto => tcp,
+        action => accept,
+      }
+      firewall { '015 PROXY port':
+        chain => 'OUTPUT',
+        port => '3128',
+        proto => tcp,
+        action => accept,
+      }
+      firewall { '016 AEM SSL port':
+        chain => 'OUTPUT',
+        port => '4503',
+        proto => tcp,
+        action => accept,
+      }
+      class my_fw::post {
+          firewall { '999 drop all':
+            proto  => 'all',
+            action => 'drop',
+            before => undef,
+          }
+      }
+    }
   class { 'aem_curator::config_aem_tools_dispatcher':
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':

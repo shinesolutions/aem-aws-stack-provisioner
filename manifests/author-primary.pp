@@ -29,6 +29,79 @@ class author_primary (
   } -> class { 'aem_curator::config_aem_scheduled_jobs':
   }
 
+  class afwrules::author {
+    Firewall {
+      require => undef,
+    }
+    firewall { '010 AEM SSL port':
+      chain => 'INPUT',
+      port => '4502',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '011 AEM comms port':
+      chain => 'INPUT',
+      port => '8023',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '012 AEM SSL port':
+      chain => 'INPUT',
+      port => '5432',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '013 AEM SSL port':
+      chain => 'OUTPUT',
+      port => '5432',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '014 AEM SSL port':
+      chain => 'OUTPUT',
+      port => '4503',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '015 AEM SSL port':
+      chain => 'OUTPUT',
+      port => '8023',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '016 PROXY port':
+      chain => 'OUTPUT',
+      port => '3128',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '017 SMTP port':
+      chain => 'OUTPUT',
+      port => '25',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '018 PUPPET port':
+      chain => 'OUTPUT',
+      port => '61613-61614',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '019 SPLUNK port':
+      chain => 'OUTPUT',
+      port => '9997',
+      proto => tcp,
+      action => accept,
+    }
+    class my_fw::post {
+        firewall { '999 drop all':
+          proto  => 'all',
+          action => 'drop',
+          before => undef,
+        }
+    }
+  }
+
   ##############################################################################
   # Export backups to S3
   ##############################################################################

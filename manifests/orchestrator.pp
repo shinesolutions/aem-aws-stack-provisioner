@@ -13,6 +13,66 @@ class orchestrator (
   $component                = $::component,
 ) {
 
+  class fwrules::orchestrator {
+    Firewall {
+    require => undef,
+    }
+    firewall { '010 aem ssl port':
+      chain => 'OUTPUT',
+      port => '5433',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '011 http port':
+      chain => 'OUTPUT',
+      port => '80',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '012 https port':
+      chain => 'OUTPUT',
+      port => '443',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '013 aem ssl port':
+      chain => 'OUTPUT',
+      port => '4503',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '014 aem ssl port':
+      chain => 'OUTPUT',
+      port => '4502',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '015 PUPPET port':
+      chain => 'OUTPUT',
+      port => '61613-61614',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '016 SPLUNK port':
+      chain => 'OUTPUT',
+      port => '9997',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '017 PROXY port':
+      chain => 'OUTPUT',
+      port => '3128',
+      proto => tcp,
+      action => accept,
+    }
+    class my_fw::post {
+        firewall { '999 drop all':
+          proto  => 'all',
+          action => 'drop',
+          before => undef,
+        }
+    }  
+  }
   Archive {
     checksum_verify => false,
   }
