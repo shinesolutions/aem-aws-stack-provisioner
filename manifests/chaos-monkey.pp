@@ -30,7 +30,7 @@ class chaos_monkey (
         action => 'drop',
         before => undef,
       }
-  }  
+  }
   class { 'simianarmy':
   } -> simianarmy::chaos_properties::asg { $::orchestratorasg:
     enabled                  => $orchestrator_enable_random_termination,
