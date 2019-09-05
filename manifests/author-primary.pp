@@ -29,30 +29,25 @@ class author_primary (
   } -> class { 'aem_curator::config_aem_scheduled_jobs':
   }
 
-      class fwrules::dispatcher {
-        Firewall {
-          require => undef,
-        }
-        firewall { '110 Author port':
-          chain => 'INPUT',
-          port => '4502',
-          proto => tcp,
-          action => accept,
-        }
-        firewall { '111 Author port2':
-          chain => 'INPUT',
-          port => '5432',
-          proto => tcp,
-          action => accept,
-        }
-        class my_fw::post {
-            firewall { '999 drop all':
-              proto  => 'all',
-              action => 'drop',
-              before => undef,
-            }
-        }
-      }
+    firewall { '110 Http port':
+      chain => 'INPUT',
+      port => '4502',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '111 Https port2':
+      chain => 'INPUT',
+      port => '4532',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '112 Https port3':
+      chain => 'INPUT',
+      port => '8023',
+      proto => tcp,
+      action => accept,
+    }
+    
   ##############################################################################
   # Export backups to S3
   ##############################################################################

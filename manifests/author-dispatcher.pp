@@ -18,30 +18,6 @@ class author_dispatcher (
   $deploy_timeout     = 900,
 ) {
 
-    class fwrules::dispatcher {
-      Firewall {
-        require => undef,
-      }
-      firewall { '114 Http port':
-        chain => 'INPUT',
-        port => '80',
-        proto => tcp,
-        action => accept,
-      }
-      firewall { '115 Https port2':
-        chain => 'INPUT',
-        port => '443',
-        proto => tcp,
-        action => accept,
-      }
-      class my_fw::post {
-          firewall { '999 drop all':
-            proto  => 'all',
-            action => 'drop',
-            before => undef,
-          }
-      }
-    }
   class { 'aem_curator::config_aem_tools_dispatcher':
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':
@@ -57,6 +33,18 @@ class author_dispatcher (
     timeout     => $deploy_timeout,
     command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>${log_dir}/puppet-deploy-artifacts-init.log 2>&1",
     onlyif      => "test `aws s3 ls s3://${data_bucket_name}/${stack_prefix}/deploy-artifacts-descriptor.json | wc -l` -eq 1",
+  }
+  firewall { '110 Http port':
+    chain  => 'INPUT',
+    port   => '80',
+    proto  => tcp,
+    action => accept,
+  }
+  firewall { '111 Https port2':
+    chain  => 'INPUT',
+    port   => '443',
+    proto  => tcp,
+    action => accept,
   }
 
   ##############################################################################

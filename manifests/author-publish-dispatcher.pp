@@ -22,31 +22,19 @@ class author_publish_dispatcher (
   $log_dir               = '/var/log/shinesolutions',
   $deploy_timeout        = 1200,
 ) {
+  firewall { '110 Http port':
+    chain  => 'INPUT',
+    port   => '80',
+    proto  => tcp,
+    action => accept,
+  }
+  firewall { '111 Https port2':
+    chain  => 'INPUT',
+    port   => '443',
+    proto  => tcp,
+    action => accept,
+  }
 
-class fwrules::dispatcher {
-  Firewall {
-    require => undef,
-  }
-  firewall { '114 Http port':
-    chain => 'INPUT',
-    port => '80',
-    proto => tcp,
-    action => accept,
-  }
-  firewall { '115 Https port':
-    chain => 'INPUT',
-    port => '443',
-    proto => tcp,
-    action => accept,
-  }
-  class my_fw::post {
-      firewall { '999 drop all':
-        proto  => 'all',
-        action => 'drop',
-        before => undef,
-      }
-  }
-}
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
 
   class { 'aem_curator::config_aem_tools':

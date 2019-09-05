@@ -24,31 +24,18 @@ class publish (
   $snapshot_attach_timeout = 900,
 ) {
 
-    class fwrules::dispatcher {
-      Firewall {
-        require => undef,
-      }
-      firewall { '112 Publish port':
-        chain => 'INPUT',
-        port => '4503',
-        proto => tcp,
-        action => accept,
-      }
-      firewall { '113 Publish port2':
-        chain => 'INPUT',
-        port => '5433',
-        proto => tcp,
-        action => accept,
-      }
-      class my_fw::post {
-          firewall { '999 drop all':
-            proto  => 'all',
-            action => 'drop',
-            before => undef,
-          }
-      }
-    }
-
+  firewall { '110 Http port':
+    chain => 'INPUT',
+    port => '4503',
+    proto => tcp,
+    action => accept,
+  }
+  firewall { '111 Https port2':
+    chain => 'INPUT',
+    port => '5433',
+    proto => tcp,
+    action => accept,
+  }
   if $snapshotid != undef and $snapshotid != '' {
     # In the future we maybe disable services like awslogs
     # during baking and activate them during provisioning

@@ -13,18 +13,6 @@ class orchestrator (
   $component                = $::component,
 ) {
 
-class fwrules::orchestrator {
-  Firewall {
-    require => undef,
-  }
-}
-class my_fw::post {
-    firewall { '999 drop all':
-      proto  => 'all',
-      action => 'drop',
-      before => undef,
-    }
-}
   Archive {
     checksum_verify => false,
   }

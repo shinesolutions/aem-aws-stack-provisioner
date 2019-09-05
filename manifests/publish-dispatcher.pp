@@ -25,30 +25,6 @@ class publish_dispatcher (
   $deploy_timeout             = 900,
 ) {
 
-      class fwrules::dispatcher {
-        Firewall {
-          require => undef,
-        }
-        firewall { '110 Author port':
-          chain => 'INPUT',
-          port => '4502',
-          proto => tcp,
-          action => accept,
-        }
-        firewall { '111 Author port2':
-          chain => 'INPUT',
-          port => '5432',
-          proto => tcp,
-          action => accept,
-        }
-        class my_fw::post {
-            firewall { '999 drop all':
-              proto  => 'all',
-              action => 'drop',
-              before => undef,
-            }
-        }
-      }
   class { 'aem_curator::config_aem_tools_dispatcher':
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':
@@ -106,6 +82,18 @@ class publish_dispatcher (
     mode   => '0775',
     owner  => 'root',
     group  => 'root',
+  }
+  firewall { '110 Http port':
+    chain  => 'INPUT',
+    port   => '80',
+    proto  => tcp,
+    action => accept,
+  }
+  firewall { '111 Https port2':
+    chain  => 'INPUT',
+    port   => '443',
+    proto  => tcp,
+    action => accept,
   }
 
   ##############################################################################

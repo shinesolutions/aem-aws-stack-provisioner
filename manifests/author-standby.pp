@@ -14,30 +14,6 @@ class author_standby (
   $ec2_id                     = $::ec2_metadata['instance-id'],
 ) {
 
-    class fwrules::dispatcher {
-      Firewall {
-        require => undef,
-      }
-      firewall { '110 Author port':
-        chain => 'INPUT',
-        port => '4502',
-        proto => tcp,
-        action => accept,
-      }
-      firewall { '111 Author port2':
-        chain => 'INPUT',
-        port => '5432',
-        proto => tcp,
-        action => accept,
-      }
-      class my_fw::post {
-          firewall { '999 drop all':
-            proto  => 'all',
-            action => 'drop',
-            before => undef,
-          }
-      }
-    }
   class { 'aem_curator::config_aem_tools':
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':
@@ -50,6 +26,25 @@ class author_standby (
     collectd_prefix => "${stack_prefix}-${component}",
     ec2_id          => "${ec2_id}"
   }
+
+    firewall { '110 Http port':
+      chain => 'INPUT',
+      port => '4502',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '111 Https port2':
+      chain => 'INPUT',
+      port => '4532',
+      proto => tcp,
+      action => accept,
+    }
+    firewall { '112 Https port3':
+      chain => 'INPUT',
+      port => '8023',
+      proto => tcp,
+      action => accept,
+    }
 
   ##############################################################################
   # Live snapshot backup
