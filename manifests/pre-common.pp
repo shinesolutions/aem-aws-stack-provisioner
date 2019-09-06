@@ -57,6 +57,12 @@ class pre_common (
     proto => udp,
     action => accept,
   }
+  firewall { '999 drop all':
+    chain  => 'INPUT',
+    proto   => 'all',
+    action  => 'drop',
+    before  => undef,
+  }
   $template_dir_final = pick(
     $template_dir,
     "${base_dir}/aem-aws-stack-provisioner/templates"
