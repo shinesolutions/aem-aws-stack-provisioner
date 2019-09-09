@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 - Added new hiera parameter for component author-standby [shinesolutions/puppet-aem-curator#141]
 
+### Changed
+- Upgrade puppet-aem-curator to 2.10.0
+
 ### Fixed
 - Fix webapps permission for tomcat user which caused Simian Army webapp not getting started by Tomcat app
 
