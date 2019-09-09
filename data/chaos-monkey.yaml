@@ -6,6 +6,7 @@ simianarmy::warfile_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/simian
 simianarmy::manage_package: false
 simianarmy::manage_installdir: true
 simianarmy::user: simianarmy
+simianarmy::group: tomcat
 simianarmy::basedir_mode: '0755'
 simianarmy::installdir_mode: '0750'
 
