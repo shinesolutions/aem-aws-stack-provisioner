@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 ### Added
 - Added new hiera parameter for component author-standby [shinesolutions/puppet-aem-curator#141]
+- Add inspec check to ensure Simian Army log is created
 
 ### Changed
 - Upgrade puppet-aem-curator to 2.10.0

@@ -26,6 +26,10 @@ else
     it { should be_running }
   end
 
+  describe file('/var/log/tomcat/simianarmy.log') do
+    it { should exist }
+  end
+
 end
 
 describe command('java -version') do
