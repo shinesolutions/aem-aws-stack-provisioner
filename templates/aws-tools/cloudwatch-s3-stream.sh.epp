@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+set -o nounset
+set -o errexit
+
+if [ "$#" -ne 2 ]; then
+  echo 'Usage: ./cloudwatch-s3-stream.sh <stack_prefix> <subscription_arn>'
+  exit 1
+fi
+
+# translate exit code to follow convention
+translate_exit_code() {
+  exit_code="$1"
+  if [ "$exit_code" -eq 0 ]; then
+    exit_code=0
+  else
+    exit "$exit_code"
+  fi
+
+  return "$exit_code"
+}
+
+stack_prefix=$1
+subscription_arn=$2
+
+PATH=<%= $aem_tools_env_path %>
+
+set +o errexit
+
+<%= $base_dir %>/aws-tools/cloudwatch_logs_subscription.py \
+  --stack_prefix "${stack_prefix}" \
+  --subscription_arn "${subscription_arn}" \
+
+translate_exit_code "$?"

@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Add new CronJob to subscribe all Cloudwatch log groups of the stack to the provided Lambda function
+
 ## [4.16.0] - 2019-09-10
 ### Added
 - Added new hiera parameter for component author-standby [shinesolutions/puppet-aem-curator#141]
