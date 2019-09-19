@@ -21,7 +21,7 @@ class author_publish_dispatcher (
   $ec2_id                      = $::ec2_metadata['instance-id'],
   $log_dir                     = '/var/log/shinesolutions',
   $deploy_timeout              = 1200,
-  $enable_cloudwatch_s3_Stream = false,
+  $enable_cloudwatch_s3_stream = false,
 ) {
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
@@ -187,9 +187,9 @@ class author_publish_dispatcher (
   }
 
   ##############################################################################
-  # Cloudwatch to S3 Stream shell script
+  # Cloudwatch to S3 stream shell script
   ##############################################################################
-  if $enable_cloudwatch_s3_Stream {
+  if $enable_cloudwatch_s3_stream {
     file { "${base_dir}/aws-tools/cloudwatch-s3-stream.sh":
       ensure  => present,
       content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aws-tools/cloudwatch-s3-stream.sh.epp",
@@ -204,7 +204,7 @@ class author_publish_dispatcher (
     }
 
     ##############################################################################
-    # Cloudwatch to S3 Stream python script
+    # Cloudwatch to S3 stream python script
     ##############################################################################
     file { "${base_dir}/aws-tools/cloudwatch_logs_subscription.py":
       ensure => present,

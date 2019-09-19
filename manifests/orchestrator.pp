@@ -11,7 +11,7 @@ class orchestrator (
   $data_bucket_name            = $::data_bucket_name,
   $stack_prefix                = $::stack_prefix,
   $component                   = $::component,
-  $enable_cloudwatch_s3_Stream = false,
+  $enable_cloudwatch_s3_stream = false,
 ) {
 
   Archive {
@@ -83,9 +83,9 @@ class orchestrator (
   }
 
   ##############################################################################
-  # Cloudwatch to S3 Stream shell script
+  # Cloudwatch to S3 stream shell script
   ##############################################################################
-  if $enable_cloudwatch_s3_Stream {
+  if $enable_cloudwatch_s3_stream {
     file { "${base_dir}/aws-tools/cloudwatch-s3-stream.sh":
       ensure  => present,
       content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aws-tools/cloudwatch-s3-stream.sh.epp",
@@ -100,7 +100,7 @@ class orchestrator (
     }
 
     ##############################################################################
-    # Cloudwatch to S3 Stream python script
+    # Cloudwatch to S3 stream python script
     ##############################################################################
     file { "${base_dir}/aws-tools/cloudwatch_logs_subscription.py":
       ensure => present,

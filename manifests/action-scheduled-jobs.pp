@@ -14,9 +14,9 @@ class action_scheduled_jobs (
   $offline_compaction_snapshot_enable  = false,
   $offline_snapshot_enable             = false,
   $content_health_check_enable         = false,
-  $cloudwatch_s3_Stream_weekday        = '*',
-  $cloudwatch_s3_Stream_hour           = '*',
-  $cloudwatch_s3_Stream_minute         = '30',
+  $cloudwatch_s3_stream_weekday        = '*',
+  $cloudwatch_s3_stream_hour           = '*',
+  $cloudwatch_s3_stream_minute         = '30',
   $cloudwatch_log_subscription_arn     = '',
   $content_health_check_weekday        = '*',
   $content_health_check_hour           = '*',
@@ -142,9 +142,9 @@ class action_scheduled_jobs (
       ensure  => present,
       command => "${base_dir}/aws-tools/cloudwatch-s3-stream.sh ${stack_prefix} ${cloudwatch_log_subscription_arn} >>${log_dir}/cron-clouddwatch-log-s3-stream.log 2>&1",
       user    => 'root',
-      hour    => $cloudwatch_s3_Stream_hour,
-      minute  => $cloudwatch_s3_Stream_minute,
-      weekday => $cloudwatch_s3_Stream_weekday
+      hour    => $cloudwatch_s3_stream_hour,
+      minute  => $cloudwatch_s3_stream_minute,
+      weekday => $cloudwatch_s3_stream_weekday
     }
   } else {
     cron { 'clouddwatch-s3-stream':
