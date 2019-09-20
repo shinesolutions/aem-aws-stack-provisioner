@@ -4,8 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
+## [4.17.0] - 2019-09-20
 ### Added
 - Add new CronJob to subscribe all Cloudwatch log groups of the stack to the provided Lambda function
 
@@ -505,7 +504,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#171]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/171
 [#178]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/178
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.16.0...HEAD
+[4.17.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.16.0...4.17.0
 [4.16.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.15.0...4.16.0
 [4.15.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.14.0...4.15.0
 [4.14.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.13.0...4.14.0
