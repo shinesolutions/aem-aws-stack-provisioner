@@ -13,14 +13,15 @@ class author_publish_dispatcher (
   $enable_deploy_on_init,
   $aem_repo_devices,
   $awslogs_config_path,
-  $component             = $::component,
-  $data_bucket_name      = $::data_bucket_name,
-  $stack_prefix          = $::stack_prefix,
-  $aem_tools_env_path    = '$PATH:/opt/puppetlabs/puppet/bin',
-  $aem_id_author_primary = 'author-primary',
-  $ec2_id                = $::ec2_metadata['instance-id'],
-  $log_dir               = '/var/log/shinesolutions',
-  $deploy_timeout        = 1200,
+  $component                   = $::component,
+  $data_bucket_name            = $::data_bucket_name,
+  $stack_prefix                = $::stack_prefix,
+  $aem_tools_env_path          = '$PATH:/opt/puppetlabs/puppet/bin',
+  $aem_id_author_primary       = 'author-primary',
+  $ec2_id                      = $::ec2_metadata['instance-id'],
+  $log_dir                     = '/var/log/shinesolutions',
+  $deploy_timeout              = 1200,
+  $enable_cloudwatch_s3_stream = false,
 ) {
 
   $credentials_hash = loadjson("${tmp_dir}/${credentials_file}")
@@ -183,6 +184,35 @@ class author_publish_dispatcher (
       'tmp_dir'            => $tmp_dir
       }
     ),
+  }
+
+  ##############################################################################
+  # Cloudwatch to S3 stream shell script
+  ##############################################################################
+  if $enable_cloudwatch_s3_stream {
+    file { "${base_dir}/aws-tools/cloudwatch-s3-stream.sh":
+      ensure  => present,
+      content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aws-tools/cloudwatch-s3-stream.sh.epp",
+      {
+        'aem_tools_env_path' => $aem_tools_env_path,
+        'base_dir'           => $base_dir,
+        }
+      ),
+      mode    => '0750',
+      owner   => 'root',
+      group   => 'root',
+    }
+
+    ##############################################################################
+    # Cloudwatch to S3 stream python script
+    ##############################################################################
+    file { "${base_dir}/aws-tools/cloudwatch_logs_subscription.py":
+      ensure => present,
+      source => "file://${base_dir}/aem-aws-stack-provisioner/files/aws-tools/cloudwatch_logs_subscription.py",
+      mode   => '0750',
+      owner  => 'root',
+      group  => 'root',
+    }
   }
 
   ##############################################################################

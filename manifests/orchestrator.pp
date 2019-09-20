@@ -6,11 +6,12 @@ class orchestrator (
   $base_dir,
   $tmp_dir,
   $awslogs_config_path,
-  $aem_tools_env_path       = '$PATH:/opt/puppetlabs/puppet/bin',
-  $stack_manager_stack_name = undef,
-  $data_bucket_name         = $::data_bucket_name,
-  $stack_prefix             = $::stack_prefix,
-  $component                = $::component,
+  $aem_tools_env_path          = '$PATH:/opt/puppetlabs/puppet/bin',
+  $stack_manager_stack_name    = undef,
+  $data_bucket_name            = $::data_bucket_name,
+  $stack_prefix                = $::stack_prefix,
+  $component                   = $::component,
+  $enable_cloudwatch_s3_stream = false,
 ) {
 
   Archive {
@@ -79,6 +80,35 @@ class orchestrator (
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
+  }
+
+  ##############################################################################
+  # Cloudwatch to S3 stream shell script
+  ##############################################################################
+  if $enable_cloudwatch_s3_stream {
+    file { "${base_dir}/aws-tools/cloudwatch-s3-stream.sh":
+      ensure  => present,
+      content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aws-tools/cloudwatch-s3-stream.sh.epp",
+      {
+        'aem_tools_env_path' => $aem_tools_env_path,
+        'base_dir'           => $base_dir,
+        }
+      ),
+      mode    => '0750',
+      owner   => 'root',
+      group   => 'root',
+    }
+
+    ##############################################################################
+    # Cloudwatch to S3 stream python script
+    ##############################################################################
+    file { "${base_dir}/aws-tools/cloudwatch_logs_subscription.py":
+      ensure => present,
+      source => "file://${base_dir}/aem-aws-stack-provisioner/files/aws-tools/cloudwatch_logs_subscription.py",
+      mode   => '0750',
+      owner  => 'root',
+      group  => 'root',
+    }
   }
 
   ##############################################################################
