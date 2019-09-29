@@ -86,7 +86,6 @@ aem_curator::config_publish::aem_healthcheck_version: "%{hiera('common::aem_heal
 aem_curator::config_publish::aem_ssl_keystore_password: "%{hiera('common::aem_ssl_keystore_password')}"
 aem_curator::config_publish::enable_aem_reconfiguration: "%{alias('common::enable_aem_reconfiguration')}"
 aem_curator::config_publish::cert_base_url: "%{hiera('common::cert_base_url')}"
-aem_curator::config_publish::enable_create_system_users: "%{alias('common::enable_create_system_users')}"
 aem_curator::config_publish::aem_system_users: "%{alias('common::aem_system_users')}"
 aem_curator::config_publish::data_volume_mount_point: /mnt/ebs1
 

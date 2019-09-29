@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Removed
+- Removed hiera configuration for deprecated reconfiguration parameters
+
 ## [4.17.0] - 2019-09-20
 ### Added
 - Add new CronJob to subscribe all Cloudwatch log groups of the stack to the provided Lambda function
