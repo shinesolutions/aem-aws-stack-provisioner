@@ -20,7 +20,7 @@ author_publish_dispatcher::volume_type: gp2
 
 author_publish_dispatcher::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
 author_publish_dispatcher::awslogs_config_path: "%{hiera('common::awslogs_config_path')}"
-author_publish_dispatcher::enable_cloudwatch_s3_Stream: "%{alias('orchestrator::enable_cloudwatch_s3_Stream')}"
+author_publish_dispatcher::enable_cloudwatch_s3_stream: "%{alias('orchestrator::enable_cloudwatch_s3_stream')}"
 # Scheduled jobs
 action_scheduled_jobs::offline_compaction_snapshot_enable: "%{alias('aem_orchestrator::scheduled_jobs::enable::offline_compaction_snapshot')}"
 action_scheduled_jobs::offline_compaction_snapshot_weekday: "%{hiera('aem_orchestrator::scheduled_jobs::weekday::offline_compaction_snapshot')}"
@@ -38,10 +38,10 @@ action_scheduled_jobs::live_snapshot_enable: "%{alias('publish::scheduled_jobs::
 action_scheduled_jobs::live_snapshot_weekday: "%{hiera('publish::scheduled_jobs::weekday::live_snapshot')}"
 action_scheduled_jobs::live_snapshot_hour: "%{hiera('publish::scheduled_jobs::hour::live_snapshot')}"
 action_scheduled_jobs::live_snapshot_minute: "%{hiera('publish::scheduled_jobs::minute::live_snapshot')}"
-action_scheduled_jobs::cloudwatch_s3_stream_enable: "%{alias('orchestrator::enable_cloudwatch_s3_Stream')}"
-action_scheduled_jobs::cloudwatch_s3_Stream_weekday: "%{hiera('aem_orchestrator::scheduled_jobs::weekday::cloudwatch_s3_Stream')}"
-action_scheduled_jobs::cloudwatch_s3_Stream_hour: "%{hiera('aem_orchestrator::scheduled_jobs::hour::cloudwatch_s3_Stream')}"
-action_scheduled_jobs::cloudwatch_s3_Stream_minute: "%{hiera('aem_orchestrator::scheduled_jobs::minute::cloudwatch_s3_Stream')}"
+action_scheduled_jobs::cloudwatch_s3_stream_enable: "%{alias('orchestrator::enable_cloudwatch_s3_stream')}"
+action_scheduled_jobs::cloudwatch_s3_stream_weekday: "%{hiera('aem_orchestrator::scheduled_jobs::weekday::cloudwatch_s3_stream')}"
+action_scheduled_jobs::cloudwatch_s3_stream_hour: "%{hiera('aem_orchestrator::scheduled_jobs::hour::cloudwatch_s3_stream')}"
+action_scheduled_jobs::cloudwatch_s3_stream_minute: "%{hiera('aem_orchestrator::scheduled_jobs::minute::cloudwatch_s3_stream')}"
 
 aem_curator::action_enable_crxde::aem_instances:
   - run_mode: author
