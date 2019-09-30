@@ -6,8 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+- Replaced reconfiguration hiera parameter `cert_base` with new paremeters
+
 ### Removed
-- Removed hiera configuration for deprecated reconfiguration parameters
+- Removed hiera configuration for deprecated reconfiguration parameter `enable_create_system_users`
 
 ## [4.17.0] - 2019-09-20
 ### Added
