@@ -298,7 +298,17 @@ if __name__ == '__main__':
 
     snapshot = start_snapshot(volume, log)
     tag_snapshot(snapshot, snapshot_tags)
+    
+    # TODO: extract all Python logic here to a separate library, which can then be re-used along with snapshot attach logic
+    ec2.meta.client.get_waiter('snapshot_completed').wait(
+        SnapshotIds=[
+            snapshot.id,
+        ],
+        WaiterConfig={
+            'Delay': 15,
+            'MaxAttempts': 240
+        }
+    )
 
-    snapshot.wait_until_completed()
     log.info('Snapshot %s complete.', snapshot.id)
     print(snapshot.id)
