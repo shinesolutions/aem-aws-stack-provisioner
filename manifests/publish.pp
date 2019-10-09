@@ -27,25 +27,71 @@ class publish (
   if $snapshotid != undef and $snapshotid != '' {
     # In the future we maybe disable services like awslogs
     # during baking and activate them during provisioning
-    exec { 'create awslogs temp dir':
+    exec { 'create awslogs cron temp dir':
       command => 'mkdir -p /tmp/shinesolutions/crons/awslogs',
       path    => $exec_path,
-      before  => Exec['Enable awslogs CronJobs'],
+      before  => [
+                    Exec['Enable awslogs CronJobs'],
+                    Exec['Disable awslogs CronJobs'],
+                  ],
       onlyif  => 'ls /etc/cron.d/awslogs*'
     } -> exec { 'Disable awslogs CronJobs':
       command => 'mv /etc/cron.d/awslogs* /tmp/shinesolutions/crons/awslogs/',
       path    => $exec_path,
-      onlyif  => 'ls /etc/cron.d/awslogs*'
+      onlyif  => 'ls /etc/cron.d/awslogs*',
+      require => Exec['create awslogs cron temp dir'],
+      before  => [
+                  Exec['Enable awslogs CronJobs'],
+                  Exec['Prevent awslogs service from restart'],
+                  Exec['Stopping awslogs service to prevent it from accessing mounted FS']
+                ],
+    } -> exec { 'create awslogs logrotation temp dir':
+      command => 'mkdir -p /tmp/shinesolutions/logrotate/awslogs',
+      path    => $exec_path,
+      before  => [
+                    Exec['Enable awslogs logrotation'],
+                    Exec['Disable awslogs logrotation'],
+                  ],
+      onlyif  => 'ls /etc/logrotate.d/awslogs*'
+    } -> exec { 'Disable awslogs logrotation':
+      command => 'mv /etc/logrotate.d/awslogs* /tmp/shinesolutions/logrotate/awslogs/',
+      path    => $exec_path,
+      onlyif  => 'ls /etc/logrotate.d/awslogs*',
+      require => Exec['create awslogs logrotation temp dir'],
+      before  => [
+                  Exec['Enable awslogs logrotation'],
+                  Exec['Prevent awslogs service from restart'],
+                  Exec['Stopping awslogs service to prevent it from accessing mounted FS']
+                ],
     } -> exec { 'Prevent awslogs service from restart':
       command => "systemctl disable --now --no-block ${$awslogs_service_name}",
       path    => $exec_path,
+      require => [
+                  Exec['Disable awslogs CronJobs'],
+                  Exec['Disable awslogs logrotation'],
+                ],
+      before  => [
+                  Exec['Enable awslogs CronJobs'],
+                  Exec['Enable awslogs logrotation'],
+                  Exec["Attach volume from snapshot ID ${snapshotid}"]
+                  ],
     } -> exec { 'Stopping awslogs service to prevent it from accessing mounted FS':
       command => "systemctl stop ${$awslogs_service_name}",
       path    => $exec_path,
+      require => Exec['Disable awslogs CronJobs'],
+      before  => [
+                  Exec['Enable awslogs CronJobs'],
+                  Exec['Enable awslogs logrotation'],
+                  Exec["Attach volume from snapshot ID ${snapshotid}"]
+                  ],
     } -> exec { "Attach volume from snapshot ID ${snapshotid}":
       command => "${base_dir}/aws-tools/snapshot_attach.py --device ${aem_repo_devices[0][device_name]} --device-alias ${aem_repo_devices[0][device_alias]} --volume-type ${volume_type} --snapshot-id ${snapshotid} -vvvv",
       timeout => $snapshot_attach_timeout,
       path    => $exec_path,
+      before  => [
+                  Exec['Enable awslogs CronJobs'],
+                  Exec['Enable awslogs logrotation'],
+                  ]
     }
 
     exec { 'Sleep 15 seconds before allowing access the mounted FS':
@@ -214,7 +260,14 @@ class update_awslogs (
   exec { 'Enable awslogs CronJobs':
     command => 'mv /tmp/shinesolutions/crons/awslogs/* /etc/cron.d/',
     path    => $exec_path,
-    onlyif  => 'ls /tmp/shinesolutions/crons/awslogs*',
+    onlyif  => 'ls /tmp/shinesolutions/crons/awslogs/*',
+    before  => Service[$awslogs_service_name]
+  }
+
+  exec { 'Enable awslogs logrotation':
+    command => 'mv /tmp/shinesolutions/logrotate/awslogs/* /etc/logrotate.d/',
+    path    => $exec_path,
+    onlyif  => 'ls /tmp/shinesolutions/logrotate/awslogs/*',
     before  => Service[$awslogs_service_name]
   }
 
