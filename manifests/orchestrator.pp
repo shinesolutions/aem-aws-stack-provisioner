@@ -14,6 +14,17 @@ class orchestrator (
   $enable_cloudwatch_s3_stream = false,
 ) {
 
+  # A simple check for checking if the awslogs(Cloudwatch Agent)
+  # configuration file exists or not.
+  #
+  # We are using this to determine if the cloudwatch agent installation
+  # was enabled or disabled while baking the AMIs with packer-aem
+  #
+  # More information about the find_file function can be found here:
+  # https://puppet.com/docs/puppet/5.5/function.html#findfile
+  #
+  $awslogs_exists = find_file($awslogs_config_path)
+
   Archive {
     checksum_verify => false,
   }
@@ -116,8 +127,12 @@ class orchestrator (
   # to contain stack_prefix and component name
   ##############################################################################
 
-  class { 'update_awslogs':
-    config_file_path => $awslogs_config_path
+  # There is only a need to call the update_awslogs class
+  # if awslogs is installed.
+  if $awslogs_exists {
+    class { 'update_awslogs':
+      config_file_path => $awslogs_config_path
+    }
   }
 
   ##############################################################################

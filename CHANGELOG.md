@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Add check if awslogs is installed to skip awslogs specific tasks [shinesolutions/aem-aws-stack-builder#333]
+
 ### Changed
 - Disable logrotation for awslogs logfiles on publisher during snapshot_attach process #194
 

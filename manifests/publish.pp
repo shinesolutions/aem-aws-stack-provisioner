@@ -24,69 +24,85 @@ class publish (
   $snapshot_attach_timeout = 900,
 ) {
 
+  # A simple check for checking if the awslogs(Cloudwatch Agent)
+  # configuration file exists or not.
+  #
+  # We are using this to determine if the cloudwatch agent installation
+  # was enabled or disabled while baking the AMIs with packer-aem
+  #
+  # More information about the find_file function can be found here:
+  # https://puppet.com/docs/puppet/5.5/function.html#findfile
+  #
+  $awslogs_exists = find_file($awslogs_config_path)
+
   if $snapshotid != undef and $snapshotid != '' {
     # In the future we maybe disable services like awslogs
     # during baking and activate them during provisioning
-    exec { 'create awslogs cron temp dir':
-      command => 'mkdir -p /tmp/shinesolutions/crons/awslogs',
-      path    => $exec_path,
-      before  => [
+
+    # there is only a need to make sure cloudwatch agent is
+    # not running when awslogs service is installed.
+    if $awslogs_exists {
+      exec { 'create awslogs cron temp dir':
+        command => 'mkdir -p /tmp/shinesolutions/crons/awslogs',
+        path    => $exec_path,
+        before  => [
+                      Exec['Enable awslogs CronJobs'],
+                      Exec['Disable awslogs CronJobs'],
+                    ],
+        onlyif  => 'ls /etc/cron.d/awslogs*'
+      } -> exec { 'Disable awslogs CronJobs':
+        command => 'mv /etc/cron.d/awslogs* /tmp/shinesolutions/crons/awslogs/',
+        path    => $exec_path,
+        onlyif  => 'ls /etc/cron.d/awslogs*',
+        require => Exec['create awslogs cron temp dir'],
+        before  => [
                     Exec['Enable awslogs CronJobs'],
-                    Exec['Disable awslogs CronJobs'],
+                    Exec['Prevent awslogs service from restart'],
+                    Exec['Stopping awslogs service to prevent it from accessing mounted FS']
                   ],
-      onlyif  => 'ls /etc/cron.d/awslogs*'
-    } -> exec { 'Disable awslogs CronJobs':
-      command => 'mv /etc/cron.d/awslogs* /tmp/shinesolutions/crons/awslogs/',
-      path    => $exec_path,
-      onlyif  => 'ls /etc/cron.d/awslogs*',
-      require => Exec['create awslogs cron temp dir'],
-      before  => [
-                  Exec['Enable awslogs CronJobs'],
-                  Exec['Prevent awslogs service from restart'],
-                  Exec['Stopping awslogs service to prevent it from accessing mounted FS']
-                ],
-    } -> exec { 'create awslogs logrotation temp dir':
-      command => 'mkdir -p /tmp/shinesolutions/logrotate/awslogs',
-      path    => $exec_path,
-      before  => [
+      } -> exec { 'create awslogs logrotation temp dir':
+        command => 'mkdir -p /tmp/shinesolutions/logrotate/awslogs',
+        path    => $exec_path,
+        before  => [
+                      Exec['Enable awslogs logrotation'],
+                      Exec['Disable awslogs logrotation'],
+                    ],
+        onlyif  => 'ls /etc/logrotate.d/awslogs*'
+      } -> exec { 'Disable awslogs logrotation':
+        command => 'mv /etc/logrotate.d/awslogs* /tmp/shinesolutions/logrotate/awslogs/',
+        path    => $exec_path,
+        onlyif  => 'ls /etc/logrotate.d/awslogs*',
+        require => Exec['create awslogs logrotation temp dir'],
+        before  => [
                     Exec['Enable awslogs logrotation'],
+                    Exec['Prevent awslogs service from restart'],
+                    Exec['Stopping awslogs service to prevent it from accessing mounted FS']
+                  ],
+      } -> exec { 'Prevent awslogs service from restart':
+        command => "systemctl disable --now --no-block ${$awslogs_service_name}",
+        path    => $exec_path,
+        require => [
+                    Exec['Disable awslogs CronJobs'],
                     Exec['Disable awslogs logrotation'],
                   ],
-      onlyif  => 'ls /etc/logrotate.d/awslogs*'
-    } -> exec { 'Disable awslogs logrotation':
-      command => 'mv /etc/logrotate.d/awslogs* /tmp/shinesolutions/logrotate/awslogs/',
-      path    => $exec_path,
-      onlyif  => 'ls /etc/logrotate.d/awslogs*',
-      require => Exec['create awslogs logrotation temp dir'],
-      before  => [
-                  Exec['Enable awslogs logrotation'],
-                  Exec['Prevent awslogs service from restart'],
-                  Exec['Stopping awslogs service to prevent it from accessing mounted FS']
-                ],
-    } -> exec { 'Prevent awslogs service from restart':
-      command => "systemctl disable --now --no-block ${$awslogs_service_name}",
-      path    => $exec_path,
-      require => [
-                  Exec['Disable awslogs CronJobs'],
-                  Exec['Disable awslogs logrotation'],
-                ],
-      before  => [
-                  Exec['Enable awslogs CronJobs'],
-                  Exec['Enable awslogs logrotation'],
-                  Exec["Attach volume from snapshot ID ${snapshotid}"]
+        before  => [
+                    Exec['Enable awslogs CronJobs'],
+                    Exec['Enable awslogs logrotation'],
+                    Exec["Attach volume from snapshot ID ${snapshotid}"]
+                    ],
+      } -> exec { 'Stopping awslogs service to prevent it from accessing mounted FS':
+        command => "systemctl stop ${$awslogs_service_name}",
+        path    => $exec_path,
+        require => [
+                    Exec['Disable awslogs CronJobs'],
+                    Exec['Disable awslogs logrotation'],
                   ],
-    } -> exec { 'Stopping awslogs service to prevent it from accessing mounted FS':
-      command => "systemctl stop ${$awslogs_service_name}",
-      path    => $exec_path,
-      require => [
-                  Exec['Disable awslogs CronJobs'],
-                  Exec['Disable awslogs logrotation'],
-                ],
-      before  => [
-                  Exec['Enable awslogs CronJobs'],
-                  Exec['Enable awslogs logrotation'],
-                  Exec["Attach volume from snapshot ID ${snapshotid}"]
-                  ],
+        before  => [
+                    Exec['Enable awslogs CronJobs'],
+                    Exec['Enable awslogs logrotation'],
+                    Exec["Attach volume from snapshot ID ${snapshotid}"]
+                    ],
+      }
     }
 
     exec { "Attach volume from snapshot ID ${snapshotid}":
@@ -245,11 +261,15 @@ class publish (
   # to contain stack_prefix and component name
   ##############################################################################
 
-  class { 'update_awslogs':
-    awslogs_service_name => $awslogs_service_name,
-    config_file_path     => $awslogs_config_path,
-    exec_path            => $exec_path,
-    before               => Class['aem_curator::config_publish']
+  # There is only a need to call the update_awslogs class
+  # if awslogs is installed.
+  if $awslogs_exists {
+    class { 'update_awslogs':
+      awslogs_service_name => $awslogs_service_name,
+      config_file_path     => $awslogs_config_path,
+      exec_path            => $exec_path,
+      before               => Class['aem_curator::config_publish']
+    }
   }
 }
 
