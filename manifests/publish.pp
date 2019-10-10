@@ -78,20 +78,22 @@ class publish (
     } -> exec { 'Stopping awslogs service to prevent it from accessing mounted FS':
       command => "systemctl stop ${$awslogs_service_name}",
       path    => $exec_path,
-      require => Exec['Disable awslogs CronJobs'],
+      require => [
+                  Exec['Disable awslogs CronJobs'],
+                  Exec['Disable awslogs logrotation'],
+                ],
       before  => [
                   Exec['Enable awslogs CronJobs'],
                   Exec['Enable awslogs logrotation'],
                   Exec["Attach volume from snapshot ID ${snapshotid}"]
                   ],
-    } -> exec { "Attach volume from snapshot ID ${snapshotid}":
+    }
+
+    exec { "Attach volume from snapshot ID ${snapshotid}":
       command => "${base_dir}/aws-tools/snapshot_attach.py --device ${aem_repo_devices[0][device_name]} --device-alias ${aem_repo_devices[0][device_alias]} --volume-type ${volume_type} --snapshot-id ${snapshotid} -vvvv",
       timeout => $snapshot_attach_timeout,
       path    => $exec_path,
-      before  => [
-                  Exec['Enable awslogs CronJobs'],
-                  Exec['Enable awslogs logrotation'],
-                  ]
+      before  => Exec['Sleep 15 seconds before allowing access the mounted FS']
     }
 
     exec { 'Sleep 15 seconds before allowing access the mounted FS':
@@ -99,8 +101,7 @@ class publish (
       path    => $exec_path,
       require => Exec["Attach volume from snapshot ID ${snapshotid}"],
       before  => [
-        Class['aem_curator::config_publish'],
-        Class['update_awslogs']
+        Class['aem_curator::config_publish']
       ]
     }
   }
