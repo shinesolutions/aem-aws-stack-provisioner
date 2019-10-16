@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
 ## [4.20.0] - 2019-10-16
 ### Added
 - Add check if awslogs is installed to skip awslogs specific tasks [shinesolutions/aem-aws-stack-builder#333]
@@ -525,6 +527,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#178]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/178
 [#194]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/194
 
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.20.0...HEAD
 [4.20.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.19.0...4.20.0
 [4.19.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.18.0...4.19.0
 [4.18.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.17.0...4.18.0
