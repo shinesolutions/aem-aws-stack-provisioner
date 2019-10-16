@@ -6,11 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Add check if awslogs is installed to skip awslogs specific tasks [shinesolutions/aem-aws-stack-builder#333]
+
 ### Changed
+- Disable logrotation for awslogs logfiles on publisher during snapshot_attach process #194
 - Replaced reconfiguration hiera parameter `cert_base` with new paremeters
 
 ### Removed
 - Removed hiera configuration for deprecated reconfiguration parameter `enable_create_system_users`
+
+## [4.19.0] - 2019-10-07
+### Changed
+- Increase snapshot waiting timeout to 1 hour in snapshot_backup.py to handle encrypted volume
+
+## [4.18.0] - 2019-10-01
+### Changed
+- Rename cloudwatch_s3_Stream param to cloudwatch_s3_stream
 
 ## [4.17.0] - 2019-09-20
 ### Added
@@ -512,7 +524,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#171]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/171
 [#178]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/178
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.17.0...HEAD
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.19.0...HEAD
+[4.19.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.18.0...4.19.0
+[4.18.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.17.0...4.18.0
 [4.17.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.16.0...4.17.0
 [4.16.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.15.0...4.16.0
 [4.15.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.14.0...4.15.0

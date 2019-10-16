@@ -12,10 +12,10 @@ action_scheduled_jobs::offline_snapshot_enable: "%{alias('aem_orchestrator::sche
 action_scheduled_jobs::offline_snapshot_weekday: "%{hiera('aem_orchestrator::scheduled_jobs::weekday::offline_snapshot')}"
 action_scheduled_jobs::offline_snapshot_hour: "%{hiera('aem_orchestrator::scheduled_jobs::hour::offline_snapshot')}"
 action_scheduled_jobs::offline_snapshot_minute: "%{hiera('aem_orchestrator::scheduled_jobs::minute::offline_snapshot')}"
-action_scheduled_jobs::cloudwatch_s3_stream_enable: "%{alias('orchestrator::enable_cloudwatch_s3_Stream')}"
-action_scheduled_jobs::cloudwatch_s3_Stream_weekday: "%{hiera('aem_orchestrator::scheduled_jobs::weekday::cloudwatch_s3_Stream')}"
-action_scheduled_jobs::cloudwatch_s3_Stream_hour: "%{hiera('aem_orchestrator::scheduled_jobs::hour::cloudwatch_s3_Stream')}"
-action_scheduled_jobs::cloudwatch_s3_Stream_minute: "%{hiera('aem_orchestrator::scheduled_jobs::minute::cloudwatch_s3_Stream')}"
+action_scheduled_jobs::cloudwatch_s3_stream_enable: "%{alias('orchestrator::enable_cloudwatch_s3_stream')}"
+action_scheduled_jobs::cloudwatch_s3_stream_weekday: "%{hiera('aem_orchestrator::scheduled_jobs::weekday::cloudwatch_s3_stream')}"
+action_scheduled_jobs::cloudwatch_s3_stream_hour: "%{hiera('aem_orchestrator::scheduled_jobs::hour::cloudwatch_s3_stream')}"
+action_scheduled_jobs::cloudwatch_s3_stream_minute: "%{hiera('aem_orchestrator::scheduled_jobs::minute::cloudwatch_s3_stream')}"
 
 aem_orchestrator::user: aem-orchestrator
 aem_orchestrator::jarfile_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/aem-orchestrator-%{hiera('orchestrator::aem_orchestrator_version')}.jar"
