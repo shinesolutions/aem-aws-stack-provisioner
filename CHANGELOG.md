@@ -11,6 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 - Disable logrotation for awslogs logfiles on publisher during snapshot_attach process #194
+- Replaced reconfiguration hiera parameter `cert_base` with new paremeters
+
+### Removed
+- Removed hiera configuration for deprecated reconfiguration parameter `enable_create_system_users`
 
 ## [4.19.0] - 2019-10-07
 ### Changed
