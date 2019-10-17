@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+- Upgrade puppet-aem-curator to 3.0.1
+
 ### Fixed
 - Fixed bug when provisioning aem upgrade tools [#196]
 
