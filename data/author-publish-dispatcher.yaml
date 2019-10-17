@@ -121,6 +121,9 @@ aem_curator::config_author_primary::certificate_key_arn: "%{hiera('common::certi
 aem_curator::config_author_primary::aem_system_users: "%{alias('common::aem_system_users')}"
 aem_curator::config_author_primary::data_volume_mount_point: /mnt/ebs1
 
+# Configure AEM Author Agents
+aem_curator::config_author_primary::enable_remove_all_agents: true
+
 # AEM Publish
 aem_curator::config_publish::publish_dispatcher_host: localhost
 aem_curator::config_publish::publish_dispatcher_id: localhost
@@ -148,6 +151,11 @@ aem_curator::config_publish::certificate_arn: "%{hiera('common::certificate_arn'
 aem_curator::config_publish::certificate_key_arn: "%{hiera('common::certificate_key_arn')}"
 aem_curator::config_publish::aem_system_users: "%{alias('common::aem_system_users')}"
 aem_curator::config_publish::data_volume_mount_point: /mnt/ebs2
+
+# Configure AEM Publish Agents
+aem_curator::config_publish::enable_create_flush_agents: true
+aem_curator::config_publish::enable_create_outbox_replication_agents: true
+aem_curator::config_publish::enable_remove_all_agents: true
 
 # AEM Publish-Dispatcher
 aem_curator::config_publish_dispatcher::dispatcher_conf_dir: "%{hiera('common::dispatcher_conf_dir')}"
