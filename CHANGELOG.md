@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+- Fixed bug when provisioning aem upgrade tools [#196]
+
 ## [4.20.0] - 2019-10-16
 ### Added
 - Add check if awslogs is installed to skip awslogs specific tasks [shinesolutions/aem-aws-stack-builder#333]
