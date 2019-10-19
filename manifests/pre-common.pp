@@ -20,6 +20,12 @@ class pre_common (
   $log_dir             = '/var/log/shinesolutions',
   $ssh_public_keys     = undef,
 ) {
+  unless $include_monitoring_stack == true {
+    file { '/var/tmp/aws-mon/':
+      ensure => absent,
+      force  => yes,
+    }
+  }
   $template_dir_final = pick(
     $template_dir,
     "${base_dir}/aem-aws-stack-provisioner/templates"
