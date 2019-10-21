@@ -6,8 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 ### Added
-- New Hiera item related to status of monitoring defined
-- New condition defined to remove CloudWatch metadata which been created in baking
+- Add provisioning step for clearing up AWS CloudWatch Metric Agent AMI to remove baking environment metadata
 
 ## [4.19.0] - 2019-10-07
 ### Changed
