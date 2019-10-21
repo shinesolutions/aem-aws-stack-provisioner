@@ -20,7 +20,7 @@ class pre_common (
   $log_dir             = '/var/log/shinesolutions',
   $ssh_public_keys     = undef,
 ) {
-  # AWS CloudWatch Agent creates some instance ID and VPC metadata
+  # AWS CloudWatch Metric Agent creates some instance ID and VPC metadata
   # during AMI baking phase, which are stored in `/var/tmp/aws-mon`.
   # We need to clean up the metadata in order to use it during env
   # runtime, which would have different metadata.
