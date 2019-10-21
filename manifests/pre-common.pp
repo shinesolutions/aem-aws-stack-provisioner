@@ -20,9 +20,10 @@ class pre_common (
   $log_dir             = '/var/log/shinesolutions',
   $ssh_public_keys     = undef,
 ) {
-# AWS CloudWatch will create metadata related to instance ID and VPC in
-# `/var/tmp/aws-mon` and this information should be deleted as they are
-# related to baking stage.
+  # AWS CloudWatch Agent creates some instance ID and VPC metadata
+  # during AMI baking phase, which are stored in `/var/tmp/aws-mon`.
+  # We need to clean up the metadata in order to use it during env
+  # runtime, which would have different metadata.
   unless $include_monitoring_stack == true {
     file { '/var/tmp/aws-mon/':
       ensure => absent,
