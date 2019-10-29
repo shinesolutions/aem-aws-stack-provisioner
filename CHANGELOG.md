@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
 ## [4.2.2] - 2019-08-30
 
 ### Changed
@@ -435,7 +437,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#122]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/122
 [#153]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/153
 [#155]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/155
+[#178]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/178
 
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.2.2...HEAD
+[4.2.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.2.1...4.2.2
+[4.2.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.2.0...4.2.1
 [4.2.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.1.0...4.2.0
 [4.1.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/3.18.0...4.0.0
