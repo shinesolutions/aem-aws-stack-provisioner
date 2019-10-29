@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Unreleased
 
+### Changed
+- Renamed hiera parameter for resolving the aem_system_users from `common::aem_system_users` to component specific hiera parameter `[author|publish]::aem_system_users` [shinesolutions/aem-aws-stack-builder#352]
+
 ## [4.20.1] - 2019-10-17
 
 ### Changed

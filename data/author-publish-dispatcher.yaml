@@ -118,7 +118,7 @@ aem_curator::config_author_primary::aem_ssl_keystore_password: "%{hiera('common:
 aem_curator::config_author_primary::enable_aem_reconfiguration: "%{alias('common::enable_aem_reconfiguration')}"
 aem_curator::config_author_primary::certificate_arn: "%{hiera('common::certificate_arn')}"
 aem_curator::config_author_primary::certificate_key_arn: "%{hiera('common::certificate_key_arn')}"
-aem_curator::config_author_primary::aem_system_users: "%{alias('common::aem_system_users')}"
+aem_curator::config_author_primary::aem_system_users: "%{alias('author::aem_system_users')}"
 aem_curator::config_author_primary::data_volume_mount_point: /mnt/ebs1
 
 # AEM Publish
@@ -146,7 +146,7 @@ aem_curator::config_publish::aem_ssl_keystore_password: "%{hiera('common::aem_ss
 aem_curator::config_publish::enable_aem_reconfiguration: "%{alias('common::enable_aem_reconfiguration')}"
 aem_curator::config_publish::certificate_arn: "%{hiera('common::certificate_arn')}"
 aem_curator::config_publish::certificate_key_arn: "%{hiera('common::certificate_key_arn')}"
-aem_curator::config_publish::aem_system_users: "%{alias('common::aem_system_users')}"
+aem_curator::config_publish::aem_system_users: "%{alias('publish::aem_system_users')}"
 aem_curator::config_publish::data_volume_mount_point: /mnt/ebs2
 
 # AEM Publish-Dispatcher
