@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [4.2.3] - 2019-10-29
 
 ### Changed
 - Upgrade puppet-aem-curator to version 1.25.2
@@ -443,7 +443,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#155]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/155
 [#178]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/178
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.2.2...HEAD
+[4.2.3]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.2.2...4.2.3
 [4.2.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.2.1...4.2.2
 [4.2.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.2.0...4.2.1
 [4.2.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.1.0...4.2.0
