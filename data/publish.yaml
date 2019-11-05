@@ -90,6 +90,11 @@ aem_curator::config_publish::certificate_key_arn: "%{hiera('common::certificate_
 aem_curator::config_publish::aem_system_users: "%{alias('common::aem_system_users')}"
 aem_curator::config_publish::data_volume_mount_point: /mnt/ebs1
 
+# Configure AEM Publish Agents
+aem_curator::config_publish::enable_create_flush_agents: true
+aem_curator::config_publish::enable_create_outbox_replication_agents: true
+aem_curator::config_publish::enable_remove_all_agents: true
+
 aem_curator::config_aem_scheduled_jobs::offline_compaction_enable: "%{alias('publish::scheduled_jobs::enable::offline_compaction')}"
 aem_curator::config_aem_scheduled_jobs::offline_compaction_weekday: "%{hiera('publish::scheduled_jobs::weekday::offline_compaction')}"
 aem_curator::config_aem_scheduled_jobs::offline_compaction_hour: "%{hiera('publish::scheduled_jobs::hour::offline_compaction')}"

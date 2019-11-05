@@ -94,6 +94,9 @@ aem_curator::config_aem_scheduled_jobs::offline_compaction_weekday: "%{hiera('au
 aem_curator::config_aem_scheduled_jobs::offline_compaction_hour: "%{hiera('author_primary::scheduled_jobs::hour::offline_compaction')}"
 aem_curator::config_aem_scheduled_jobs::offline_compaction_minute: "%{hiera('author_primary::scheduled_jobs::minute::offline_compaction')}"
 
+# Configure AEM Author Agents
+aem_curator::config_author_primary::enable_remove_all_agents: true
+
 # Logrotation configuration
 aem_curator::config_logrotate::config: "%{alias('author_primary::logrotation::config')}"
 aem_curator::config_logrotate::rules: "%{alias('author_primary::logrotation::rules')}"
@@ -126,4 +129,3 @@ aem_curator::config_author_primary::proxy_noproxy: "%{alias('common::proxy_nopro
 # Service start Post sleep configuration
 aem_curator::config_author_primary::enable_post_start_sleep: "%{alias('common::enable_post_start_sleep')}"
 aem_curator::config_author_primary::post_start_sleep_seconds: "%{hiera('common::post_start_sleep_seconds')}"
-
