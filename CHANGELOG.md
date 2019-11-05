@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added new hiera parameter `enable_create_outbox_replication_agents` with default value `true` to enable creation of the dispatcher replication agents while configuring `publish` [shinesolutions/puppet-aem-curator#149] [shinesolutions/puppet-aem-curator#150]
 
 ### Changed
+- Upgrade puppet-aem-curator to 3.2.0
 - Renamed hiera parameter for resolving the aem_system_users from `common::aem_system_users` to component specific hiera parameter `[author|publish]::aem_system_users` [shinesolutions/aem-aws-stack-builder#352]
 
 ## [4.20.1] - 2019-10-17
