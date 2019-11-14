@@ -239,11 +239,11 @@ class author_publish_dispatcher (
     }
   }
 
-  exec { 'Refresh data volume size of author':
+  exec { 'Resize data volume size of author':
     command => "resize2fs ${aem_repo_devices[0][device_name]}",
     path    => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/sbin'],
   }
-  exec { 'Refresh data volume size of publish':
+  exec { 'Resize data volume size of publish':
     command => "resize2fs ${aem_repo_devices[1][device_name]}",
     path    => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/sbin'],
   }
