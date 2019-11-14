@@ -151,7 +151,7 @@ class author_primary (
   }
 
   exec { 'Refresh data volume size':
-    command => 'resize2fs ${aem_repo_devices[0][device_name]}',
+    command => "resize2fs ${aem_repo_devices[0][device_name]}",
     path    => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/sbin'],
   }
 }
