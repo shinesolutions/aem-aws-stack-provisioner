@@ -20,6 +20,9 @@ translate_exit_code() {
   return "$exit_code"
 }
 
+# "snapshot_backup" is used for checking the processes in order to
+# avoid offline_snapshot_backup and live_snapshot_backup running at the same time
+
 if (( $(ps -ef | grep -v grep | grep python | grep snapshot_backup | wc -l) > 0 )); then
 
   echo “snapshot_backup is running!!! Snapshots can hang when snapshoting the volume at the same time. Exiting”
