@@ -13,7 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Resize data volume on AEM Author and Publish in order to handle data volume in the AEM instances is larger than that set in the AMI
 
 ### Changed
-- Upgrade puppet-aem-curator to 3.2.0
+- Upgrade puppet-aem-curator to 3.3.0
 - Renamed hiera parameter for resolving the aem_system_users from `common::aem_system_users` to component specific hiera parameter `[author|publish]::aem_system_users` [shinesolutions/aem-aws-stack-builder#352]
 - Upgrade inspec-aem-aws to 1.5.0
 
