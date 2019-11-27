@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
 ## [4.21.0] - 2019-11-27
 ### Added
 - Added new hiera parameter `enable_remove_all_agents` with default value `true` to enable the removal of all AEM agents while configuring `author-primary` & `publish` [shinesolutions/puppet-aem-curator#149] [shinesolutions/puppet-aem-curator#150]
@@ -545,6 +547,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#194]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/194
 [#196]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/196
 
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.21.0...HEAD
 [4.21.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.20.1...4.21.0
 [4.20.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.20.0...4.20.1
 [4.20.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.19.0...4.20.0
