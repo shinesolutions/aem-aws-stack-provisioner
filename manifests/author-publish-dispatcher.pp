@@ -238,6 +238,15 @@ class author_publish_dispatcher (
       config_file_path => $awslogs_config_path
     }
   }
+
+  exec { 'Resize data volume size of author':
+    command => "resize2fs ${aem_repo_devices[0][device_name]}",
+    path    => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/sbin'],
+  }
+  exec { 'Resize data volume size of publish':
+    command => "resize2fs ${aem_repo_devices[1][device_name]}",
+    path    => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/sbin'],
+  }
 }
 
 class deploy_on_init (

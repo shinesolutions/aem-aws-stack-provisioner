@@ -271,6 +271,11 @@ class publish (
       before               => Class['aem_curator::config_publish']
     }
   }
+
+  exec { 'Resize data volume size':
+    command => "resize2fs ${aem_repo_devices[0][device_name]}",
+    path    => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/sbin'],
+  }
 }
 
 class update_awslogs (

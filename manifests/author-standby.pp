@@ -130,6 +130,11 @@ class author_standby (
       config_file_path => $awslogs_config_path
     }
   }
+
+  exec { 'Resize data volume size':
+    command => "resize2fs ${aem_repo_devices[0][device_name]}",
+    path    => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/sbin'],
+  }
 }
 
 class update_awslogs (
