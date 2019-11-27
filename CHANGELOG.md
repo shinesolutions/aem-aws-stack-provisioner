@@ -5,12 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
-- Resize data volume on AEM Author and Publish in order to handle data volume in the AEM instances is larger than that set in the AMI
 
 ### Added
 - Added new hiera parameter `enable_remove_all_agents` with default value `true` to enable the removal of all AEM agents while configuring `author-primary` & `publish` [shinesolutions/puppet-aem-curator#149] [shinesolutions/puppet-aem-curator#150]
 - Added new hiera parameter `enable_create_flush_agents` with default value `true` to enable creation of the dispatcher flush agents while configuring `publish` [shinesolutions/puppet-aem-curator#149] [shinesolutions/puppet-aem-curator#150]
 - Added new hiera parameter `enable_create_outbox_replication_agents` with default value `true` to enable creation of the dispatcher replication agents while configuring `publish` [shinesolutions/puppet-aem-curator#149] [shinesolutions/puppet-aem-curator#150]
+- Resize data volume on AEM Author and Publish in order to handle data volume in the AEM instances is larger than that set in the AMI
 
 ### Changed
 - Upgrade puppet-aem-curator to 3.2.0
