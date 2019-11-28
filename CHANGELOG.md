@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+- Upgrade puppet-aem-resources to 5.1.0
+
 ## [4.21.0] - 2019-11-27
 ### Added
 - Added new hiera parameter `enable_remove_all_agents` with default value `true` to enable the removal of all AEM agents while configuring `author-primary` & `publish` [shinesolutions/puppet-aem-curator#149] [shinesolutions/puppet-aem-curator#150]
