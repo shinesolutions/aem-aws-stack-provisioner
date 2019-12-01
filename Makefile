@@ -30,18 +30,13 @@ deps:
 # resolve AEM OpenCloud's Puppet module dependencies from local directories
 # TODO: include local InSpec modules
 deps-local:
-	rm -rf modules/aem/*
 	rm -rf modules/aem_orchestrator/*
 	rm -rf modules/aem_resources/*
 	rm -rf modules/aem_curator/*
 	rm -rf modules/simianarmy/*
-	cp -R ../puppet-aem/* modules/aem/
 	cp -R ../puppet-aem-resources/* modules/aem_resources/
 	cp -R ../puppet-aem-curator/* modules/aem_curator/
 	cp -R ../puppet-simianarmy/* modules/simianarmy/
-	# only needed while using shinesolutions/puppet-aem fork
-	# TODO: remove when switching back to bstopp/puppet-aem
-	rm -rf modules/aem/.git
 
 lint:
 	bundle exec puppet-lint \

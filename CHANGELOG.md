@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Removed
+- Remove puppet-aem local provisioning in Makefile deps-local target due  to the switch back to bstopp/puppet-aem in aem-aws-stack-provisioner 4.7.0
+
 ## [4.22.0] - 2019-11-28
 ### Changed
 - Upgrade puppet-aem-resources to 5.1.0
