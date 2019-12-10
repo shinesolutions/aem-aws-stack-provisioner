@@ -89,6 +89,7 @@ aem_curator::config_author_primary::certificate_arn: "%{hiera('common::certifica
 aem_curator::config_author_primary::certificate_key_arn: "%{hiera('common::certificate_key_arn')}"
 aem_curator::config_author_primary::aem_system_users: "%{alias('author::aem_system_users')}"
 aem_curator::config_author_primary::data_volume_mount_point: /mnt/ebs1
+aem_curator::config_author_primary::enable_aem_installation_migration: true
 aem_curator::config_aem_scheduled_jobs::offline_compaction_enable: "%{alias('author_primary::scheduled_jobs::enable::offline_compaction')}"
 aem_curator::config_aem_scheduled_jobs::offline_compaction_weekday: "%{hiera('author_primary::scheduled_jobs::weekday::offline_compaction')}"
 aem_curator::config_aem_scheduled_jobs::offline_compaction_hour: "%{hiera('author_primary::scheduled_jobs::hour::offline_compaction')}"
