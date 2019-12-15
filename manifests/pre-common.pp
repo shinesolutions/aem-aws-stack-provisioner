@@ -10,6 +10,7 @@ class pre_common (
   $user,
   $group,
   $credentials_file,
+  $awslogs_service_name,
   $aem_tools_env_path  = '$PATH:/opt/puppetlabs/puppet/bin',
   $extra_packages      = [],
   $enable_chaos_monkey = true,
@@ -213,6 +214,12 @@ class pre_common (
   archive { "${tmp_dir}/${credentials_file}":
     ensure => present,
     source => "s3://${data_bucket_name}/${stack_prefix}/${credentials_file}"
+  }
+
+  # Ensure that awslogs is enabled and running
+  service { $awslogs_service_name:
+    ensure => running,
+    enable => true,
   }
 
   ##############################################################################
