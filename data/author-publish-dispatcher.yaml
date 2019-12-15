@@ -116,11 +116,11 @@ aem_curator::config_author_primary::aem_healthcheck_source: "s3://%{::data_bucke
 aem_curator::config_author_primary::aem_healthcheck_version: "%{hiera('common::aem_healthcheck_version')}"
 aem_curator::config_author_primary::aem_ssl_keystore_password: "%{hiera('common::aem_ssl_keystore_password')}"
 aem_curator::config_author_primary::enable_aem_reconfiguration: "%{alias('common::enable_aem_reconfiguration')}"
+aem_curator::config_author_primary::enable_aem_installation_migration: "%{alias('common::enable_aem_reconfiguration')}"
 aem_curator::config_author_primary::certificate_arn: "%{hiera('common::certificate_arn')}"
 aem_curator::config_author_primary::certificate_key_arn: "%{hiera('common::certificate_key_arn')}"
 aem_curator::config_author_primary::aem_system_users: "%{alias('author::aem_system_users')}"
 aem_curator::config_author_primary::data_volume_mount_point: /mnt/ebs1
-aem_curator::config_author_primary::enable_aem_installation_migration: true
 
 # Configure AEM Author Agents
 aem_curator::config_author_primary::enable_remove_all_agents: true
@@ -148,11 +148,11 @@ aem_curator::config_publish::aem_healthcheck_source: "s3://%{::data_bucket_name}
 aem_curator::config_publish::aem_healthcheck_version: "%{hiera('common::aem_healthcheck_version')}"
 aem_curator::config_publish::aem_ssl_keystore_password: "%{hiera('common::aem_ssl_keystore_password')}"
 aem_curator::config_publish::enable_aem_reconfiguration: "%{alias('common::enable_aem_reconfiguration')}"
+aem_curator::config_publish::enable_aem_installation_migration: "%{alias('common::enable_aem_reconfiguration')}"
 aem_curator::config_publish::certificate_arn: "%{hiera('common::certificate_arn')}"
 aem_curator::config_publish::certificate_key_arn: "%{hiera('common::certificate_key_arn')}"
 aem_curator::config_publish::aem_system_users: "%{alias('publish::aem_system_users')}"
 aem_curator::config_publish::data_volume_mount_point: /mnt/ebs2
-aem_curator::config_publish::enable_aem_installation_migration: true
 
 # Configure AEM Publish Agents
 aem_curator::config_publish::enable_create_flush_agents: true
