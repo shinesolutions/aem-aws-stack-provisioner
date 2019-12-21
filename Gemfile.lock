@@ -13,7 +13,7 @@ GEM
       excon (>= 0.47.0)
       multi_json
     erubi (1.9.0)
-    excon (0.69.1)
+    excon (0.71.0)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)

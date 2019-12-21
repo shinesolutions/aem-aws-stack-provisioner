@@ -9,6 +9,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 - Added new hiera parameter `enable_aem_installation_migration` [shinesolutions/puppet-aem-curator#167]
 
+## [4.26.0] - 2019-12-15
+### Changed
+- Upgrade puppet-aem-curator to 3.5.0
+- Upgrade puppet-aem-resources to 5.3.0
+- Enable awslogs on pre-common step for all components [shinesolutions/packer-aem#192]
+
 ## [4.25.0] - 2019-12-02
 ### Changed
 - Upgrade puppet-aem-resources to 5.2.0
@@ -566,7 +572,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#194]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/194
 [#196]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/196
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.25.0...HEAD
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.26.0...HEAD
+[4.26.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.25.0...4.26.0
 [4.25.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.24.0...4.25.0
 [4.24.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.23.0...4.24.0
 [4.23.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.22.0...4.23.0
