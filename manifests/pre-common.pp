@@ -28,7 +28,7 @@ class pre_common (
     ensure => absent,
     force  => yes,
   }
-  
+
   $template_dir_final = pick(
     $template_dir,
     "${base_dir}/aem-aws-stack-provisioner/templates"
