@@ -23,9 +23,6 @@ deps:
 	cd vendor && find . -name "*.tar.gz" -exec tar -xzvf '{}' \; -exec rm '{}' \;
 	cd vendor && mv inspec-aem-aws-*.*.* inspec-aem-aws
 	rm -rf files/test/inspec/ && mkdir -p files/test/inspec/ && cp -R vendor/* files/test/inspec/
-	# only needed while using shinesolutions/puppet-aem fork
-	# TODO: remove when switching back to bstopp/puppet-aem
-	rm -rf modules/aem/.git
 
 # resolve AEM OpenCloud's Puppet module dependencies from local directories
 # TODO: include local InSpec modules
