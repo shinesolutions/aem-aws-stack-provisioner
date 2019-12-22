@@ -1,4 +1,4 @@
-version ?= 4.27.0
+version ?= 4.28.0-pre.0
 
 ci: clean deps lint package
 
