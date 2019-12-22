@@ -21,10 +21,14 @@ class pre_common (
   $log_dir             = '/var/log/shinesolutions',
   $ssh_public_keys     = undef,
 ) {
+
+  # New instance requires CloudWatch Metric Agent metadata to be cleaned up
+  # Any remaining metadata from AMI baking would cause the agent to fail
   file {'/var/tmp/aws-mon/':
     ensure => absent,
     force  => yes,
   }
+  
   $template_dir_final = pick(
     $template_dir,
     "${base_dir}/aem-aws-stack-provisioner/templates"
