@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Added new hiera parameter `enable_aem_installation_migration` [shinesolutions/puppet-aem-curator#167]
+
 ## [4.26.0] - 2019-12-15
 ### Changed
 - Upgrade puppet-aem-curator to 3.5.0
