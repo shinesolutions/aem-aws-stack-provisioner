@@ -94,9 +94,9 @@ class pre_common (
     mode   => '0775',
     owner  => 'root',
     group  => 'root',
-  } -> file { '/root/.aws/credentials':
+  } -> file { '/root/.aws/config':
     ensure  => file,
-    content => epp("${template_dir_final}/aws/credentials.epp", { 'region' => "${aws_region}" }),
+    content => epp("${template_dir_final}/aws/config.epp", { 'region' => "${aws_region}" }),
     mode    => '0664',
     owner   => 'root',
     group   => 'root',
@@ -108,9 +108,9 @@ class pre_common (
     mode   => '0775',
     owner  => "${user}",
     group  => "${group}",
-  } -> file { "/home/${user}/.aws/credentials":
+  } -> file { "/home/${user}/.aws/config":
     ensure  => file,
-    content => epp("${template_dir_final}/aws/credentials.epp", { 'region' => "${aws_region}" }),
+    content => epp("${template_dir_final}/aws/config.epp", { 'region' => "${aws_region}" }),
     mode    => '0664',
     owner   => "${user}",
     group   => "${group}",
