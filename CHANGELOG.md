@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Fixed
+- Fix issue with the interaction of the aws-sdk on the OS #205
+
 ## [4.27.0] - 2019-12-22
 ### Added
 - Added new hiera parameter `enable_aem_installation_migration` [shinesolutions/puppet-aem-curator#167]
