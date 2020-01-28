@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+- Upgrade puppet-aem-curator to 3.8.0
+
 ### Fixed
 - Fix issue with the interaction of the aws-sdk on the OS #205
 
