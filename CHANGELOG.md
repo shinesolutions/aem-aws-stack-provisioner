@@ -4,13 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
+## [4.28.0] - 2020-01-28
 ### Changed
 - Upgrade puppet-aem-curator to 3.8.0
 
 ### Fixed
-- Fix issue with the interaction of the aws-sdk on the OS #205
+- Fix issue with the interaction of the aws-sdk on the OS [#205]
 
 ## [4.27.0] - 2019-12-22
 ### Added
@@ -584,8 +583,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#178]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/178
 [#194]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/194
 [#196]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/196
+[#205]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/205
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.27.0...HEAD
+[4.28.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.27.0...4.28.0
 [4.27.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.26.0...4.27.0
 [4.26.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.25.0...4.26.0
 [4.25.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.24.0...4.25.0
