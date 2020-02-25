@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Add support for Dispatcher data volume [shinesolutions/aem-aws-stack-builder#379]
+
 ## [4.28.0] - 2020-01-28
 ### Changed
 - Upgrade puppet-aem-curator to 3.8.0

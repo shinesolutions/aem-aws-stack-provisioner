@@ -7,6 +7,7 @@ class author_dispatcher (
   $docroot_dir,
   $awslogs_config_path,
   $tmp_dir,
+  $dispatcher_data_devices,
   $author_host        = $::authorhost,
   $component          = $::component,
   $stack_prefix       = $::stack_prefix,
@@ -74,6 +75,11 @@ class author_dispatcher (
     class { 'update_awslogs':
       config_file_path => $awslogs_config_path
     }
+  }
+
+  exec { 'Resize data volume size of dispatcher':
+    command => "resize2fs ${dispatcher_data_devices[0][device_name]}",
+    path    => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/sbin'],
   }
 }
 

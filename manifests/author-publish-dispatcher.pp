@@ -12,6 +12,7 @@ class author_publish_dispatcher (
   $aem_password_retrieval_command,
   $enable_deploy_on_init,
   $aem_repo_devices,
+  $dispatcher_data_devices,
   $awslogs_config_path,
   $component                   = $::component,
   $data_bucket_name            = $::data_bucket_name,
@@ -245,6 +246,10 @@ class author_publish_dispatcher (
   }
   exec { 'Resize data volume size of publish':
     command => "resize2fs ${aem_repo_devices[1][device_name]}",
+    path    => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/sbin'],
+  }
+  exec { 'Resize data volume size of dispatcher':
+    command => "resize2fs ${dispatcher_data_devices[0][device_name]}",
     path    => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/sbin'],
   }
 }
