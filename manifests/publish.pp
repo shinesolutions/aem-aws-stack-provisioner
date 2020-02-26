@@ -102,6 +102,16 @@ class publish (
                     Exec['Enable awslogs logrotation'],
                     Exec["Attach volume from snapshot ID ${snapshotid}"]
                     ],
+      } -> file { '/var/awslogs/state/awslogs.lock':
+        ensure  => absent,
+        require => [
+                    Exec['Stopping awslogs service to prevent it from accessing mounted FS'],
+                  ],
+        before  => [
+                    Exec['Enable awslogs CronJobs'],
+                    Exec['Enable awslogs logrotation'],
+                    Exec["Attach volume from snapshot ID ${snapshotid}"]
+                    ],
       }
     }
 
