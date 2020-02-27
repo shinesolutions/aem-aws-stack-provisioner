@@ -20,8 +20,7 @@ class publish (
   $aem_tools_env_path      = '$PATH:/opt/puppetlabs/puppet/bin',
   $https_proxy             = $::cron_https_proxy,
   $ec2_id                  = $::ec2_metadata['instance-id'],
-  $snapshotid              = $::snapshotid,
-  $snapshot_attach_timeout = 900,
+  $snapshotid              = $::snapshotid
 ) {
 
   # A simple check for checking if the awslogs(Cloudwatch Agent)
@@ -107,7 +106,7 @@ class publish (
 
     exec { "Attach volume from snapshot ID ${snapshotid}":
       command => "${base_dir}/aws-tools/snapshot_attach.py --device ${aem_repo_devices[0][device_name]} --device-alias ${aem_repo_devices[0][device_alias]} --volume-type ${volume_type} --snapshot-id ${snapshotid} -vvvv",
-      timeout => $snapshot_attach_timeout,
+      timeout => 0,
       path    => $exec_path,
       before  => Exec['Sleep 15 seconds before allowing access the mounted FS']
     }
