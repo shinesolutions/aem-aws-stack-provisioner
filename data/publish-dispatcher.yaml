@@ -24,3 +24,8 @@ action_scheduled_jobs::content_health_check_enable: "%{alias('publish_dispatcher
 action_scheduled_jobs::content_health_check_weekday: "%{hiera('publish_dispatcher::scheduled_jobs::weekday::content_health_check')}"
 action_scheduled_jobs::content_health_check_hour: "%{hiera('publish_dispatcher::scheduled_jobs::hour::content_health_check')}"
 action_scheduled_jobs::content_health_check_minute: "%{hiera('publish_dispatcher::scheduled_jobs::minute::content_health_check')}"
+
+# device_alias <- used by snapshot_attach.py Depending on the block device driver of the kernel, the device could be attached with a different name than you specified.
+publish_dispatcher::dispatcher_data_devices:
+  - device_name: "%{hiera('common::ami::device_name')}"
+    device_alias: "%{hiera('common::ami::device_alias')}"

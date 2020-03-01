@@ -8,6 +8,7 @@ class publish_dispatcher (
   $tmp_dir,
   $aws_region,
   $awslogs_config_path,
+  $dispatcher_data_devices,
   $allowed_client             = $::publish_dispatcher_allowed_client,
   $publish_host               = $::publishhost,
   $component                  = $::component,
@@ -106,6 +107,11 @@ class publish_dispatcher (
     class { 'update_awslogs':
       config_file_path => $awslogs_config_path
     }
+  }
+
+  exec { 'Resize data volume size of dispatcher':
+    command => "resize2fs ${dispatcher_data_devices[0][device_name]}",
+    path    => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/sbin'],
   }
 }
 

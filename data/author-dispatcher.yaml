@@ -19,3 +19,8 @@ aem_curator::config_author_dispatcher::enable_deploy_flag: false
 # Logrotation configuration
 aem_curator::config_logrotate::config: "%{alias('author_dispatcher::logrotation::config')}"
 aem_curator::config_logrotate::rules: "%{alias('author_dispatcher::logrotation::rules')}"
+
+# device_alias <- used by snapshot_attach.py Depending on the block device driver of the kernel, the device could be attached with a different name than you specified.
+author_dispatcher::dispatcher_data_devices:
+  - device_name: "%{hiera('common::ami::device_name')}"
+    device_alias: "%{hiera('common::ami::device_alias')}"
