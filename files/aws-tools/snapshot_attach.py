@@ -415,7 +415,7 @@ if __name__ == '__main__':
 
     boto3_config = Config(
         retries = {
-            'max_attempts': 360
+            'max_attempts': 2880
             }
         )
 
@@ -441,8 +441,8 @@ if __name__ == '__main__':
                 snapshot.id,
             ],
             WaiterConfig={
-                'Delay': 15,
-                'MaxAttempts': 240
+                'Delay': 30,
+                'MaxAttempts': 480
             }
         )
         log.debug('Using snapshot %r', snapshot)

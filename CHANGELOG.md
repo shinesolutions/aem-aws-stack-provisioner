@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+- Set exec timeout for attaching publish snapshot to the EC2 instance to `0`
+- Increase `snapshot_attach` timeout to 4h
+- Increase `snapshot_backup` timeout to 4h
+- Increase `wait_for_ec2tags` timeout to 720 retries
+
+### Removed
+- Remove parameter `snapshot_attach_timeout` in publish manifest
+
 ## [4.28.0] - 2020-01-28
 ### Changed
 - Upgrade puppet-aem-curator to 3.8.0

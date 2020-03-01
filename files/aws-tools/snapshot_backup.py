@@ -247,7 +247,7 @@ if __name__ == '__main__':
 
     boto3_config = Config(
         retries = {
-            'max_attempts': 120
+            'max_attempts': 2880
             }
         )
 
@@ -298,15 +298,15 @@ if __name__ == '__main__':
 
     snapshot = start_snapshot(volume, log)
     tag_snapshot(snapshot, snapshot_tags)
-    
+
     # TODO: extract all Python logic here to a separate library, which can then be re-used along with snapshot attach logic
     ec2.meta.client.get_waiter('snapshot_completed').wait(
         SnapshotIds=[
             snapshot.id,
         ],
         WaiterConfig={
-            'Delay': 15,
-            'MaxAttempts': 240
+            'Delay': 30,
+            'MaxAttempts': 480
         }
     )
 
