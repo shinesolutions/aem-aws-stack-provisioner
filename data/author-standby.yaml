@@ -63,6 +63,7 @@ aem_curator::config_author_standby::crx_quickstart_dir: /opt/aem/author/crx-quic
 aem_curator::config_author_standby::author_protocol: http
 aem_curator::config_author_standby::author_port: 4502
 aem_curator::config_author_standby::credentials_file: "%{hiera('common::credentials_file')}"
+aem_curator::config_author_standby::enable_aem_clean_directories: true
 aem_curator::config_author_standby::enable_deploy_flag: false
 aem_curator::config_author_standby::enable_crxde: false
 aem_curator::config_author_standby::enable_default_passwords: false

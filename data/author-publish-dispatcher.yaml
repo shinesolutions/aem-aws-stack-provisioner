@@ -121,6 +121,7 @@ aem_curator::config_author_primary::aem_healthcheck_source: "s3://%{::data_bucke
 aem_curator::config_author_primary::aem_healthcheck_version: "%{hiera('common::aem_healthcheck_version')}"
 aem_curator::config_author_primary::aem_ssl_keystore_password: "%{hiera('common::aem_ssl_keystore_password')}"
 aem_curator::config_author_primary::enable_aem_reconfiguration: "%{alias('common::enable_aem_reconfiguration')}"
+aem_curator::config_author_primary::enable_aem_clean_directories: true
 aem_curator::config_author_primary::enable_aem_installation_migration: "%{alias('common::enable_aem_reconfiguration')}"
 aem_curator::config_author_primary::certificate_arn: "%{hiera('common::certificate_arn')}"
 aem_curator::config_author_primary::certificate_key_arn: "%{hiera('common::certificate_key_arn')}"
@@ -145,6 +146,7 @@ aem_curator::config_publish::enable_deploy_flag: false
 aem_curator::config_publish::login_ready_max_tries: "%{hiera('publish::login_ready_max_tries')}"
 aem_curator::config_publish::login_ready_base_sleep_seconds: "%{hiera('publish::login_ready_base_sleep_seconds')}"
 aem_curator::config_publish::login_ready_max_sleep_seconds: "%{hiera('publish::login_ready_max_sleep_seconds')}"
+aem_curator::config_publish::enable_aem_clean_directories: true
 aem_curator::config_publish::enable_crxde: false
 aem_curator::config_publish::enable_default_passwords: false
 aem_curator::config_publish::aem_password_reset_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/aem-password-reset-content-%{hiera('aem_curator::config_publish::aem_password_reset_version')}.zip"

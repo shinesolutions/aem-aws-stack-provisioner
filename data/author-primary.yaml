@@ -85,6 +85,7 @@ aem_curator::config_author_primary::aem_healthcheck_source: "s3://%{::data_bucke
 aem_curator::config_author_primary::aem_healthcheck_version: "%{hiera('common::aem_healthcheck_version')}"
 aem_curator::config_author_primary::aem_ssl_keystore_password: "%{hiera('common::aem_ssl_keystore_password')}"
 aem_curator::config_author_primary::enable_aem_reconfiguration: "%{alias('common::enable_aem_reconfiguration')}"
+aem_curator::config_author_primary::enable_aem_clean_directories: true
 aem_curator::config_author_primary::enable_aem_installation_migration: "%{alias('common::enable_aem_reconfiguration')}"
 aem_curator::config_author_primary::certificate_arn: "%{hiera('common::certificate_arn')}"
 aem_curator::config_author_primary::certificate_key_arn: "%{hiera('common::certificate_key_arn')}"

@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 ### Added
 - Add awslogs.lock file removal to ensure awslogs nanny script does not start the service
+- Add support for Dispatcher data volume [shinesolutions/aem-aws-stack-builder#379]
+- Add hiera parameter to enable aem directory cleanup while provisioning
 
 ### Changed
 - Set exec timeout for attaching publish snapshot to the EC2 instance to `0`
@@ -14,12 +16,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Increase `snapshot_backup` timeout to 4h
 - Increase `wait_for_ec2tags` timeout to 720 retries
 - Upgrade inspec-aem-aws to 1.10.0
+- Upgrade puppet-aem-curator to 3.9.0
 
 ### Removed
 - Remove parameter `snapshot_attach_timeout` in publish manifest
-
-### Added
-- Add support for Dispatcher data volume [shinesolutions/aem-aws-stack-builder#379]
 
 ## [4.28.0] - 2020-01-28
 ### Changed
