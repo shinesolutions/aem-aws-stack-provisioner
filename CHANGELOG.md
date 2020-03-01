@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Increase `snapshot_attach` timeout to 4h
 - Increase `snapshot_backup` timeout to 4h
 - Increase `wait_for_ec2tags` timeout to 720 retries
+- Upgrade inspec-aem-aws to 1.10.0
 
 ### Removed
 - Remove parameter `snapshot_attach_timeout` in publish manifest
@@ -69,7 +70,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Upgrade puppet-aem-curator to 3.3.0
 - Renamed hiera parameter for resolving the aem_system_users from `common::aem_system_users` to component specific hiera parameter `[author|publish]::aem_system_users` [shinesolutions/aem-aws-stack-builder#352]
-- Upgrade inspec-aem-aws to 1.5.0
+- Upgrade inspec-aem-aws to 1.10.0
 
 ## [4.20.1] - 2019-10-17
 ### Changed
