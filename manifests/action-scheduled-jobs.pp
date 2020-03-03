@@ -90,7 +90,7 @@ class action_scheduled_jobs (
       ensure  => present,
       command => "${base_dir}/aem-tools/live-snapshot-backup.sh >>${log_dir}/cron-live-snapshot-backup.log 2>&1",
       user    => 'root',
-      hour    => $live_snapshot_hour,
+      hour    => split($live_snapshot_hour, ','),
       minute  => $live_snapshot_minute,
       weekday => $live_snapshot_weekday
     }
