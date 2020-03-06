@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 
 ### Changed
-- Support multi hours in the live-snaphsot scheduler
+- Add support for multi hours in the live-snaphsot scheduler
 
 ## [4.29.0] - 2020-03-01
 ### Added
