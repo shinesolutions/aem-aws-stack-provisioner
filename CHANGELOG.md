@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
 ## [4.31.0] - 2020-03-06
 ### Changed
 - Add support for multi hours in the live-snaphsot scheduler
@@ -606,6 +608,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#196]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/196
 [#205]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/205
 
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.31.0...HEAD
 [4.31.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.29.0...4.31.0
 [4.29.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.28.0...4.29.0
 [4.28.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.27.0...4.28.0
