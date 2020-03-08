@@ -163,6 +163,7 @@ class publish (
         'aem_tools_env_path'             => $aem_tools_env_path,
         'base_dir'                       => $base_dir,
         'aem_password_retrieval_command' => $aem_password_retrieval_command,
+        'aws_region'                     => $aws_region,
       }
     ),
   }
@@ -178,6 +179,7 @@ class publish (
         'aem_tools_env_path'             => $aem_tools_env_path,
         'base_dir'                       => $base_dir,
         'aem_password_retrieval_command' => $aem_password_retrieval_command,
+        'aws_region'                     => $aws_region,
       }
     ),
   }
@@ -200,6 +202,7 @@ class publish (
         'component'            => $component,
         'stack_prefix'         => $stack_prefix,
         'revert_snapshot_type' => $revert_snapshot_type,
+        'aws_region'           => $aws_region,
       }
     )
   }
@@ -222,6 +225,7 @@ class publish (
         'component'            => $component,
         'stack_prefix'         => $stack_prefix,
         'revert_snapshot_type' => $revert_snapshot_type,
+        'aws_region'           => $aws_region,
       }
     ),
   }
@@ -242,7 +246,8 @@ class publish (
       'base_dir'           => $base_dir,
       'data_bucket_name'   => $data_bucket_name,
       'stack_prefix'       => $stack_prefix,
-      'tmp_dir'            => $tmp_dir
+      'tmp_dir'            => $tmp_dir,
+      'aws_region'         => $aws_region,
       }
     ),
   }

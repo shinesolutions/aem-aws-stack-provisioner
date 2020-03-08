@@ -55,6 +55,7 @@ class author_standby (
         'aem_repo_devices'   => $aem_repo_devices,
         'component'          => $component,
         'stack_prefix'       => $stack_prefix,
+        'aws_region'         => $aws_region,
       }
     ),
   }
@@ -76,6 +77,7 @@ class author_standby (
         'aem_repo_devices'   => $aem_repo_devices,
         'component'          => $component,
         'stack_prefix'       => $stack_prefix,
+        'aws_region'         => $aws_region,
       }
     ),
   }
@@ -113,7 +115,8 @@ class author_standby (
       'base_dir'           => $base_dir,
       'data_bucket_name'   => $data_bucket_name,
       'stack_prefix'       => $stack_prefix,
-      'tmp_dir'            => $tmp_dir
+      'tmp_dir'            => $tmp_dir,
+      'aws_region'         => $aws_region,
       }
     ),
   }

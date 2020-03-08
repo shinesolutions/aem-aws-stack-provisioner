@@ -96,7 +96,7 @@ class pre_common (
     group  => 'root',
   } -> file { '/root/.aws/config':
     ensure  => file,
-    content => epp("${template_dir_final}/aws/config.epp", { 'region' => "${aws_region}" }),
+    content => epp("${template_dir_final}/aws/config.epp", { 'aws_region' => "${aws_region}" }),
     mode    => '0664',
     owner   => 'root',
     group   => 'root',
@@ -110,7 +110,7 @@ class pre_common (
     group  => "${group}",
   } -> file { "/home/${user}/.aws/config":
     ensure  => file,
-    content => epp("${template_dir_final}/aws/config.epp", { 'region' => "${aws_region}" }),
+    content => epp("${template_dir_final}/aws/config.epp", { 'aws_region' => "${aws_region}" }),
     mode    => '0664',
     owner   => "${user}",
     group   => "${group}",
@@ -134,8 +134,8 @@ class pre_common (
   }
 
   file { "${base_dir}/aws-tools/set-facts.sh":
-    ensure  => present,
-    source  => "${file_dir_final}/aws-tools/set-facts.sh",
+    ensure  => file,
+    content => epp("${template_dir_final}/aws/set-facts.sh.epp", { 'aws_region' => "${aws_region}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
@@ -245,6 +245,7 @@ class pre_common (
         'aem_tools_env_path'  => $aem_tools_env_path,
         'base_dir'            => $base_dir,
         'enable_chaos_monkey' => $enable_chaos_monkey,
+        'aws_region'          => $aws_region,
       }
     ),
   }

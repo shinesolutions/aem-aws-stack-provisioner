@@ -22,6 +22,10 @@ translate_exit_code() {
 
 stack_prefix=$1
 subscription_arn=$2
+aws_region=<%= $aws_region %>
+
+export AWS_DEFAULT_REGION="${aws_region}"
+echo "AWS Region: ${AWS_DEFAULT_REGION}"
 
 PATH=<%= $aem_tools_env_path %>
 

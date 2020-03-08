@@ -39,6 +39,10 @@ set +o errexit
 data_bucket_name=$(facter data_bucket_name)
 stack_prefix=$(facter stack_prefix)
 component=author-primary
+aws_region=<%= $aws_region %>
+
+export AWS_DEFAULT_REGION="${aws_region}"
+echo "AWS Region: ${AWS_DEFAULT_REGION}"
 
 instance_id=$(curl --silent http://169.254.169.254/latest/meta-data/instance-id)
 aws ec2 create-tags --tags Key=Component,Value=${component} --resources ${instance_id}

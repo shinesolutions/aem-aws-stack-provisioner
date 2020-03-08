@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Add support `aws_region` support to cloud scripts [shinesolutions/aem-opencloud-manager#65]
+
 ## [4.31.0] - 2020-03-06
 ### Changed
 - Add support for multi hours in the live-snaphsot scheduler

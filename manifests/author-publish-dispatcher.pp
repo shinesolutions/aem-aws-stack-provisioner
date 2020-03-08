@@ -95,6 +95,7 @@ class author_publish_dispatcher (
         'base_dir'                       => $base_dir,
         'aem_tools_env_path'             => $aem_tools_env_path,
         'aem_password_retrieval_command' => $aem_password_retrieval_command,
+        'aws_region'                     => $aws_region,
       }
     ),
   }
@@ -110,6 +111,7 @@ class author_publish_dispatcher (
         'base_dir'                       => $base_dir,
         'aem_tools_env_path'             => $aem_tools_env_path,
         'aem_password_retrieval_command' => $aem_password_retrieval_command,
+        'aws_region'                     => $aws_region,
       }
     ),
   }
@@ -131,6 +133,7 @@ class author_publish_dispatcher (
         'aem_repo_devices'   => $aem_repo_devices,
         'component'          => $component,
         'stack_prefix'       => $stack_prefix,
+        'aws_region'         => $aws_region,
       }
     ),
   }
@@ -152,6 +155,7 @@ class author_publish_dispatcher (
         'aem_repo_devices'   => $aem_repo_devices,
         'component'          => $component,
         'stack_prefix'       => $stack_prefix,
+        'aws_region'         => $aws_region,
       }
     ),
   }
@@ -173,6 +177,7 @@ class author_publish_dispatcher (
         'aem_repo_devices'   => $aem_repo_devices,
         'component'          => $component,
         'stack_prefix'       => $stack_prefix,
+        'aws_region'         => $aws_region,
       }
     ),
   }
@@ -193,7 +198,8 @@ class author_publish_dispatcher (
       'base_dir'           => $base_dir,
       'data_bucket_name'   => $data_bucket_name,
       'stack_prefix'       => $stack_prefix,
-      'tmp_dir'            => $tmp_dir
+      'tmp_dir'            => $tmp_dir,
+      'aws_region'         => $aws_region,
       }
     ),
   }

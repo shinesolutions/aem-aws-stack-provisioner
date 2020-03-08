@@ -10,6 +10,10 @@ if [ "$#" -ne 1 ]; then
 fi
 
 component=$1
+aws_region=<%= $aws_region %>
+
+export AWS_DEFAULT_REGION="${aws_region}"
+echo "AWS Region: ${AWS_DEFAULT_REGION}"
 
 data_bucket_name=$(facter data_bucket_name)
 stack_prefix=$(facter stack_prefix)

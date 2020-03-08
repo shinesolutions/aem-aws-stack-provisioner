@@ -2,6 +2,11 @@
 set -o nounset
 set -o errexit
 
+
+aws_region=<%= $aws_region %>
+
+export AWS_DEFAULT_REGION="${aws_region}"
+
 echo "Triggering offline compaction snapshot using Stack Manager stack name <%= $stack_manager_stack_name %>..."
 
 stack_manager_stack_arn=$(aws cloudformation describe-stacks --stack-name "<%= $stack_manager_stack_name %>" --query 'Stacks[0].Outputs[?OutputKey==`StackManagerStackArn`].OutputValue' --output text)
