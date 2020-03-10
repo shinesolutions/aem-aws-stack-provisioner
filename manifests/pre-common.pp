@@ -135,7 +135,7 @@ class pre_common (
 
   file { "${base_dir}/aws-tools/set-facts.sh":
     ensure  => file,
-    content => epp("${template_dir_final}/aws/set-facts.sh.epp", { 'aws_region' => "${aws_region}" }),
+    content => epp("${template_dir_final}/aws-tools/set-facts.sh.epp", { 'aws_region' => "${aws_region}" }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
