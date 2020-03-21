@@ -5,8 +5,8 @@ author_publish_dispatcher::log_dir: "%{hiera('common::log_dir')}"
 author_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
 author_publish_dispatcher::docroot_dir: "%{hiera('common::docroot_dir')}"
 author_publish_dispatcher::credentials_file: "%{hiera('common::credentials_file')}"
-author_publish_dispatcher::publish_protocol: http
-author_publish_dispatcher::publish_port: 4503
+author_publish_dispatcher::publish_protocol: https
+author_publish_dispatcher::publish_port: 5433
 
 # device_alias <- used by snapshot_attach.py Depending on the block device driver of the kernel, the device could be attached with a different name than you specified.
 author_publish_dispatcher::aem_repo_devices:
