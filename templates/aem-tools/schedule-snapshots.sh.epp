@@ -43,6 +43,10 @@ tmp_dir=<%= $tmp_dir %>/schedule_snapshot
 component=$(facter component)
 scheduled_job_name=$1
 scheduled_job_state=$2
+aws_region=<%= $aws_region %>
+
+export AWS_DEFAULT_REGION="${aws_region}"
+echo "AWS Region: ${AWS_DEFAULT_REGION}"
 
 case "$scheduled_job_state" in
   enable)

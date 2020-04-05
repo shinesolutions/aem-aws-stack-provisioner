@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Add support `aws_region` support to cloud scripts [shinesolutions/aem-opencloud-manager#65]
+
 ## [4.33.0] - 2020-03-19
 ### Changed
 - Upgrade puppet-aem-curator to 3.10.1

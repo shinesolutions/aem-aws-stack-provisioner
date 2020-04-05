@@ -46,6 +46,7 @@ class orchestrator (
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-snapshot-full-set.sh.epp", {
       'base_dir'                 => $base_dir,
       'stack_manager_stack_name' => $stack_manager_stack_name,
+      'aws_region'               => $aws_region,
     }),
     mode    => '0775',
     owner   => 'root',
@@ -67,6 +68,7 @@ class orchestrator (
     content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-compaction-snapshot-full-set.sh.epp", {
       'base_dir'                 => $base_dir,
       'stack_manager_stack_name' => $stack_manager_stack_name,
+      'aws_region'               => $aws_region,
     }),
     mode    => '0775',
     owner   => 'root',
@@ -85,7 +87,8 @@ class orchestrator (
       'base_dir'           => $base_dir,
       'data_bucket_name'   => $data_bucket_name,
       'stack_prefix'       => $stack_prefix,
-      'tmp_dir'            => $tmp_dir
+      'tmp_dir'            => $tmp_dir,
+      'aws_region'         => $aws_region,
       }
     ),
     mode    => '0775',

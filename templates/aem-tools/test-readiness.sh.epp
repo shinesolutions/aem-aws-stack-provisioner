@@ -7,6 +7,10 @@ stack_prefix=$(/opt/puppetlabs/bin/facter stack_prefix)
 component=$(/opt/puppetlabs/bin/facter component)
 enable_chaos_monkey=<%= $enable_chaos_monkey %>
 
+aws_region=<%= $aws_region %>
+
+export AWS_DEFAULT_REGION="${aws_region}"
+echo "AWS Region: ${AWS_DEFAULT_REGION}"
 
 if [ ${component} = 'author-publish-dispatcher' ]; then
   echo "Testing if AEM Consolidated is ready using InSpec..."

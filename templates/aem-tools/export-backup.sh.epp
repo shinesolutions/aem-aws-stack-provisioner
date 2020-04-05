@@ -20,6 +20,7 @@ aem_username=exporter
 aem_password=$(<%= $aem_password_retrieval_command %>)
 data_bucket_name=$(facter data_bucket_name)
 event=export-backup
+aws_region=<%= $aws_region %>
 
 year=$(date +%Y)
 month=$(date +%m)
@@ -51,6 +52,8 @@ export FACTER_event="${event}"
 export FACTER_package_group="${package_group}"
 export FACTER_package_name="${package_name}"
 export FACTER_package_filter="${package_filter}"
+export AWS_DEFAULT_REGION="${aws_region}"
+echo "AWS Region: ${AWS_DEFAULT_REGION}"
 
 FACTER_aem_username="${aem_username}" \
   FACTER_aem_password="${aem_password}" \

@@ -12,6 +12,10 @@ fi
 
 data_bucket_name=$1
 stack_prefix=$2
+aws_region=<%= $aws_region %>
+
+export AWS_DEFAULT_REGION="${aws_region}"
+echo "AWS Region: ${AWS_DEFAULT_REGION}"
 
 # Set EC2 instance tags as Facter facts.
 # These facts are cached in /opt/puppetlabs/facter/facts.d/ on cloud-init,
