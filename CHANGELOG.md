@@ -5,11 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Changed
-- Changed author-publish-dispatcher replication agent to https [#212]
-
 ### Added
 - Add support `aws_region` support to cloud scripts [shinesolutions/aem-opencloud-manager#65]
+
+### Changed
+- Changed author-publish-dispatcher replication agent to https [#212]
+- Upgrade puppet-aem-curator to 3.11.0
 
 ## [4.33.0] - 2020-03-19
 ### Changed
