@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Add new hiera parameters to support new puppet-aem-curator version
+
 ## [4.34.0] - 2020-04-05
 ### Added
 - Add support `aws_region` support to cloud scripts [shinesolutions/aem-opencloud-manager#65]
