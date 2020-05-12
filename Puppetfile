@@ -9,7 +9,7 @@ mod 'puppet-logrotate', :git => 'https://github.com/voxpupuli/puppet-logrotate',
 mod 'puppet-yum', '0.10.0'
 mod 'puppetlabs-concat', '2.2.1'
 mod 'shinesolutions/aem_orchestrator', '1.4.0'
-mod 'shinesolutions/aem_resources', '5.3.0'
+mod 'shinesolutions/aem_resources', '6.0.0'
 mod 'shinesolutions/aem_curator', '3.12.0'
 mod 'shinesolutions/simianarmy', '1.1.4'
 mod 'bstopp/aem', '3.0.0'
