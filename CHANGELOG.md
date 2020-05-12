@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
 ## [4.35.0] - 2020-05-12
 ### Added
 - Add new hiera parameters to support new puppet-aem-curator version
@@ -631,6 +633,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#205]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/205
 [#212]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/212
 
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.35.0...HEAD
 [4.35.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.34.0...4.35.0
 [4.34.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.33.0...4.34.0
 [4.33.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.32.0...4.33.0
