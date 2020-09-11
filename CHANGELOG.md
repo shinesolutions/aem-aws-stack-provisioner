@@ -6,7 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 ### Changed
-- Remvoed SSL verification test for Author-Standby [shinesolutions/puppet-aem-curator#220]
+- Upgrade puppet-aem-resources to 7.1.0
+- Upgrade puppet-aem-curator to 3.14.0
+
+### Removed
+- Removed SSL verification test for Author-Standby [shinesolutions/puppet-aem-curator#220]
 
 ## [4.36.2] - 2020-05-13
 ### Changed
@@ -652,6 +656,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#205]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/205
 [#212]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/212
 
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.36.2...HEAD
 [4.36.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.36.1...4.36.2
 [4.36.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.36.0...4.36.1
 [4.36.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.35.0...4.36.0
