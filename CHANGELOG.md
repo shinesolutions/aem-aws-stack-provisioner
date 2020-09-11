@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 ### Changed
 - Upgrade puppet-aem-resources to 7.1.0
-- Upgrade puppet-aem-curator to 3.14.0
+- Upgrade puppet-aem-curator to 3.15.0
 
 ### Removed
 - Removed SSL verification test for Author-Standby [shinesolutions/puppet-aem-curator#220]
