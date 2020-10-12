@@ -35,14 +35,14 @@ aem_orchestrator::application_properties::aem_credentials_s3_use: 'true'
 aem_orchestrator::application_properties::aem_credentials_s3_file_uri: "s3://%{::data_bucket_name}/%{::stack_prefix}/system-users-credentials.json"
 aem_orchestrator::application_properties::aem_client_api_debug: 'true'
 
-aem_orchestrator::application_properties::aem_protocol_author: 'http'
-aem_orchestrator::application_properties::aem_port_author: '80'
+aem_orchestrator::application_properties::aem_protocol_author: 'https'
+aem_orchestrator::application_properties::aem_port_author: '443'
 aem_orchestrator::application_properties::aem_protocol_author_dispatcher: 'https'
 aem_orchestrator::application_properties::aem_port_author_dispatcher: '443'
 aem_orchestrator::application_properties::aem_protocol_publish: 'https'
 aem_orchestrator::application_properties::aem_port_publish: '5433'
-aem_orchestrator::application_properties::aem_protocol_publish_dispatcher: 'http'
-aem_orchestrator::application_properties::aem_port_publish_dispatcher: '80'
+aem_orchestrator::application_properties::aem_protocol_publish_dispatcher: 'https'
+aem_orchestrator::application_properties::aem_port_publish_dispatcher: '443'
 
 aem_orchestrator::application_properties::aem_reverse_replication_enable: 'true'
 
