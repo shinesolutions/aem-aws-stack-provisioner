@@ -1,4 +1,4 @@
-version ?= 4.38.1-pre.0
+version ?= 4.38.0-pre.0-aem-65
 
 ci: clean deps lint package
 
