@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import sys, os, logging, argparse, jmespath, boto3, requests, json, logging, socket, sh, textwrap
 from botocore.config import Config
 from retrying import retry
-from itertools import imap, repeat
+from itertools import repeat
 from collections import namedtuple
 
 __version__='0.1'
@@ -282,7 +282,7 @@ class ec2_instance(object):
     @retry(**_retry_params)
     def unmount(self, devices, sudo = False):
         log.debug('unmount(%r, %r)', devices, sudo)
-        mounted = filter(lambda mount: mount.spec in devices, self._mounts)
+        mounted = [mount for mount in self._mounts if mount.spec in devices]
         if mounted:
             if len(mounted) > 1:
                 for m in mounted:
@@ -387,7 +387,7 @@ class ec2_instance(object):
 
     @property
     def _mounts(self, mounts_path = '/proc/mounts'):
-        return imap(lambda line: fs_line(*(line.strip().split())), open(mounts_path, 'r'))
+        return map(lambda line: fs_line(*(line.strip().split())), open(mounts_path, 'r'))
 
 def parse_volume_args(volume_args, args):
     volume_args = volume_args.copy()
@@ -475,7 +475,7 @@ if __name__ == '__main__':
     log.info('Volume %r created.', new_volume)
     ec2.meta.client.get_waiter('volume_available').wait( VolumeIds = (new_volume.id,) )
     if volume_tags:
-        new_volume.create_tags(Tags = [ dict(Key=k, Value=v) for k, v in volume_tags.iteritems() ])
+        new_volume.create_tags(Tags = [ dict(Key=k, Value=v) for k, v in volume_tags.items() ])
 
     attach = instance.attach(new_volume, args.device, args.no_delete_on_termination)
     if needs_format:

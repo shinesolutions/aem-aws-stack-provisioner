@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # update_snapshot_id_in_launch_conf.py is used to update the snapshot_id in the launch configuration
 #

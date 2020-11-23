@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # update_hiera.py is used to updates parameters in the hiera YAML file.
 #
