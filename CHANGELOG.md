@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Change orchestrator application setting to HTTPS [#220]
 - Upgrade puppet-aem-resources to 7.2.1
 - Upgrade puppet-aem-curator to 3.18.1
-- Upgrade AEM Orchestrator to 3.0.0
+- Upgrade AEM Orchestrator to 3.0.0 [#225]
 
 ### Changed
 - Upgrade inspec-aem-aws to 2.0.0
@@ -671,6 +671,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#205]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/205
 [#212]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/212
 [#220]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/220
+[#225]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/225
 
 [Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.38.0...HEAD
 [4.38.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.37.0...4.38.0
