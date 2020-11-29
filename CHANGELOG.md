@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Change orchestrator application setting to HTTPS [#220]
 
+### Changed
+- Upgrade inspec-aem-aws to 2.0.0
+
 ## [4.38.0] - 2020-09-27
 ### Changed
 - Upgrade puppet-aem-resources to 7.2.0
