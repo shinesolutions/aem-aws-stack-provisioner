@@ -6,10 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 ### Changed
-- Upgrade AEM Orchestrator to 3.0.0
-
-### Changed
 - Change orchestrator application setting to HTTPS [#220]
+- Upgrade puppet-aem-resources to 7.2.1
+- Upgrade puppet-aem-curator to 3.18.1
+- Upgrade AEM Orchestrator to 3.0.0
 
 ### Changed
 - Upgrade inspec-aem-aws to 2.0.0
