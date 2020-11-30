@@ -4,14 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [5.0.0] - 2020-11-30
 ### Changed
 - Change orchestrator application setting to HTTPS [#220]
 - Upgrade puppet-aem-resources to 7.2.1
 - Upgrade puppet-aem-curator to 3.18.1
 - Upgrade AEM Orchestrator to 3.0.0 [#225]
-
-### Changed
 - Upgrade inspec-aem-aws to 2.0.0
 
 ## [4.38.0] - 2020-09-27
@@ -673,7 +671,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#220]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/220
 [#225]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/225
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.38.0...HEAD
+[5.0.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.38.0...5.0.0
 [4.38.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.37.0...4.38.0
 [4.37.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.36.2...4.37.0
 [4.36.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.36.1...4.36.2
