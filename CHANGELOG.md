@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+- Convert python scripts to be executed using Python 3
+
 ## [4.38.0] - 2020-09-27
 ### Changed
 - Upgrade puppet-aem-resources to 7.2.0

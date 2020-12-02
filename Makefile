@@ -31,6 +31,7 @@ deps-local:
 	rm -rf modules/aem_resources/*
 	rm -rf modules/aem_curator/*
 	rm -rf modules/simianarmy/*
+	cp -R ../puppet-aem-orchestrator/* modules/aem_orchestrator/
 	cp -R ../puppet-aem-resources/* modules/aem_resources/
 	cp -R ../puppet-aem-curator/* modules/aem_curator/
 	cp -R ../puppet-simianarmy/* modules/simianarmy/
