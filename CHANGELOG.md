@@ -9,6 +9,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Convert python scripts to be executed using Python 3
 
+## [5.0.0] - 2020-11-30
+### Changed
+- Change orchestrator application setting to HTTPS [#220]
+- Upgrade puppet-aem-resources to 7.2.1
+- Upgrade puppet-aem-curator to 3.18.1
+- Upgrade AEM Orchestrator to 3.0.0 [#225]
+- Upgrade inspec-aem-aws to 2.0.0
+
 ## [4.38.0] - 2020-09-27
 ### Changed
 - Upgrade puppet-aem-resources to 7.2.0
@@ -665,8 +673,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#196]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/196
 [#205]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/205
 [#212]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/212
+[#220]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/220
+[#225]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/225
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.38.0...HEAD
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/5.0.0...HEAD
+[5.0.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.38.0...5.0.0
 [4.38.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.37.0...4.38.0
 [4.37.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.36.2...4.37.0
 [4.36.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/4.36.1...4.36.2
