@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import sys, os, logging, boto3, requests, textwrap
 from botocore.config import Config
 from time import sleep
@@ -237,7 +237,7 @@ def start_snapshot(volume, log):
 
 @retry(**_retry_params)
 def tag_snapshot(snapshot, snapshot_tags):
-    snapshot.create_tags(Tags = [ dict(Key=k, Value=v) for k, v in snapshot_tags.iteritems() ])
+    snapshot.create_tags(Tags = [ dict(Key=k, Value=v) for k, v in snapshot_tags.items() ])
 
 if __name__ == '__main__':
     log = logging.getLogger(os.path.basename(sys.argv[0]))
@@ -311,4 +311,4 @@ if __name__ == '__main__':
     )
 
     log.info('Snapshot %s complete.', snapshot.id)
-    print(snapshot.id)
+    print((snapshot.id))

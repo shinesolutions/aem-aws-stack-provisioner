@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+- Convert python scripts to be executed using Python 3
+
 ## [5.0.0] - 2020-11-30
 ### Changed
 - Change orchestrator application setting to HTTPS [#220]
