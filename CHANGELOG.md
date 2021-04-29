@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+- Upgrade puppet-aem-curator to 3.19.0
+
 ## [5.1.0] - 2021-03-02
 ### Changed
 - Convert python scripts to be executed using Python 3
