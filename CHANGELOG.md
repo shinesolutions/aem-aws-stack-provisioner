@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 ### Changed
 - Upgrade puppet-aem-curator to 3.22.0
+- Upgrade puppet-aem-resources to 7.4.0
 
 ## [5.3.0] - 2021-06-18
 ### Changed
