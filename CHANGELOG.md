@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Add release-major, release-minor, release-patch, and publish Makefile targets and GitHub Actions
+
 ### Changed
 - Upgrade puppet-aem-curator to 3.22.0
 - Upgrade puppet-aem-resources to 7.4.0

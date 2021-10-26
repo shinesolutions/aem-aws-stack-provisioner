@@ -67,8 +67,16 @@ package:
 		stage/aem-aws-stack-provisioner-$(version).tar ./
 	gzip stage/aem-aws-stack-provisioner-$(version).tar
 
-release:
-	rtk release
+release-major:
+	rtk release --release-increment-type major
+
+release-minor:
+	rtk release --release-increment-type minor
+
+release-patch:
+	rtk release --release-increment-type patch
+
+release: release-minor
 
 publish:
 	putasset \
@@ -79,4 +87,4 @@ publish:
 	  --loud \
 	  --show-url
 
-.PHONY: ci clean deps deps-local lint package release publish
+.PHONY: ci clean deps deps-local lint package release release-major release-minor release-patch publish
