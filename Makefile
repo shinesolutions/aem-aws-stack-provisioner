@@ -79,12 +79,7 @@ release-patch:
 release: release-minor
 
 publish:
-	putasset \
-	  --owner shinesolutions \
-	  --repo aem-aws-stack-provisioner \
-	  --tag $(version) \
-	  --filename stage/aem-aws-stack-provisioner-$(version).tar.gz \
-	  --loud \
-	  --show-url
+	gh release create $(version) --title $(version) --notes "" || echo "Release $(version) has been created on GitHub"
+	gh release upload $(version) stage/aem-aws-stack-provisioner-$(version).tar.gz
 
 .PHONY: ci clean deps deps-local lint package release release-major release-minor release-patch publish
