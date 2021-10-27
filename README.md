@@ -11,3 +11,7 @@ This library's artifact will be uploaded to S3 and retrieved by each EC2 instanc
 AEM AWS Stack Provisioner is currently a set of Puppet manifests, templates, configurations, and tests, where the corresponding component manifest will be applied directly. It is not (yet) used as a Puppet module.
 
 AEM AWS Stack Provisioner is part of [AEM OpenCloud](https://aemopencloud.io) platform.
+
+Learn more about AEM AWS Stack Provisioner:
+
+* [Frequently Asked Questions](https://github.com/shinesolutions/aem-aws-stack-provisioner/blob/main/docs/faq.md)
