@@ -73,6 +73,7 @@ class author_publish_dispatcher (
     tmp_dir               => $tmp_dir,
     exec_path             => ['/bin', '/usr/local/bin', '/usr/bin'],
     enable_deploy_on_init => $enable_deploy_on_init,
+    deploy_timeout        => $deploy_timeout,
   } -> class { 'aem_curator::config_collectd':
     component       => $component,
     collectd_prefix => "${stack_prefix}-${component}",
@@ -266,6 +267,7 @@ class deploy_on_init (
   $log_dir,
   $tmp_dir,
   $exec_path,
+  $deploy_timeout,
   $enable_deploy_on_init = false,
 ) {
 

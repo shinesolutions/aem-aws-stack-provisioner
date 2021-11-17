@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 - Added FAQ section
 
+### Fixed
+- Fix Author Publish Dispatcher's deploy on init timeout variable not being propagated
+
 ## [5.5.0] - 2021-10-26
 ### Changed
 - Upgrade inspec-aem-aws to 2.0.2
