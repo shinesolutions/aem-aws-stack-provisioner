@@ -58,18 +58,19 @@ except:
 log = logging.getLogger(__name__)
 
 local_path = '<%= $tmp_dir %>/content-healthcheck-descriptor.json'
+local_path_url_format = 'file://<%= $tmp_dir %>/content-healthcheck-descriptor.json'
 
 region = '<%= $aws_region %>'
 session = boto3.session.Session(region_name=region)
 
 # Get arguments for protocol and port number.
-# If these are not passed, http and 4503 will be used by default.
+# If these are not passed, Protocol: https and Port: 5433 will be used by default.
 parser = argparse.ArgumentParser(description='Process the protocol and port number.')
 parser.add_argument('protocol', nargs='?',
-                    type=str, default='http',
+                    type=str, default='https',
                     help='a protocol of type http or https.',
                     choices=['https', 'http'])
-parser.add_argument('port', nargs='?', type=str, default='4503', help='a port number. e.g. 4503')
+parser.add_argument('port', nargs='?', type=str, default='5433', help='a port number. e.g. 5433')
 args = parser.parse_args()
 
 #create HTMlParser class
@@ -88,7 +89,7 @@ class LinkExtractor(HTMLParser):
 
 def main():
     download_file_from_s3()
-    response = urllib.request.urlopen(local_path)
+    response = urllib.request.urlopen(local_path_url_format)
     try:
         resp_str = json.loads(response.read())
         traverse_descriptor(resp_str)
@@ -147,6 +148,8 @@ def download_file_from_s3():
 def traverse_descriptor(instances):
     for packages in instances["publish-dispatcher"]["packages"]:
         for content in packages["content"]:
+            # clear array of any content before use
+            metric_data.clear()
             if content:
                 check_content(content)
             else:
