@@ -1,4 +1,4 @@
-version ?= 5.8.2-pre.0
+version ?= 5.8.2
 
 ci: clean deps lint package
 
