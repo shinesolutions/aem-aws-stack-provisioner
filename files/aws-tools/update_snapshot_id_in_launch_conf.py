@@ -6,6 +6,7 @@
 #
 import sys, os, logging, argparse, socket, textwrap, boto3
 import base64
+import string, random
 
 __version__='0.1'
 try:
@@ -180,7 +181,11 @@ def get_sanitized_launch_conf(client, launch_conf_name):
   return launch_conf
 
 def delete_launch_conf(client, launch_conf_name):
-  client.delete_launch_configuration(LaunchConfigurationName=launch_conf_name)
+  try:
+    if len(client.describe_launch_configurations(LaunchConfigurationNames=[launch_conf_name])['LaunchConfigurations']) == 1:
+      client.delete_launch_configuration(LaunchConfigurationName=launch_conf_name)
+  except:
+    log.debug('Cannot delete Launch Configuration to update: %r', launch_conf_name)
 
 def repoint_autoscaling_group(client, group_name, launch_conf, new_launch_conf_name):
   """
@@ -195,6 +200,9 @@ def repoint_autoscaling_group(client, group_name, launch_conf, new_launch_conf_n
     LaunchConfigurationName=new_launch_conf_name
   )
 
+def random_string(size=6, chars=string.ascii_uppercase + string.digits):
+  return ''.join(random.choice(chars) for _ in range(size))
+
 def update_snapshot_id_to_launch_conf(snapshot_id, component, stack_prefix, device_name):
   """
     Updates the autoscaling group's launch configuration with a new snapshot id
@@ -207,13 +215,11 @@ def update_snapshot_id_to_launch_conf(snapshot_id, component, stack_prefix, devi
   group = get_autoscaling_group(client, component, stack_prefix)
   group_name = group['AutoScalingGroupName']
   launch_conf_name = group['LaunchConfigurationName'] # get the current name
-  temp_launch_conf_name = launch_conf_name + "-temp"  # create a temporary version
-
-  # Delete temp_launch_conf_name, if any (due to previous failed executions)
-  if len(client.describe_launch_configurations(LaunchConfigurationNames=[temp_launch_conf_name])['LaunchConfigurations']) == 1:
-    client.delete_launch_configuration(LaunchConfigurationName=temp_launch_conf_name)
+  temp_launch_conf_name = launch_conf_name + "-" + random_string()  # create a temporary version
 
   if snapshot_id_exists(snapshot_id):
+
+    try:
       # Create a sanitized launch configuration using the existing launch configuration
       launch_conf = get_sanitized_launch_conf(client, launch_conf_name)
       # Update the snapshot_id in this launch configuration
@@ -227,6 +233,10 @@ def update_snapshot_id_to_launch_conf(snapshot_id, component, stack_prefix, devi
       repoint_autoscaling_group(client, group_name, launch_conf, launch_conf_name)
       # Delete the temporary launch configuration
       delete_launch_conf(client, temp_launch_conf_name)
+    except:
+      # Delete the temporary launch configuration
+      delete_launch_conf(client, temp_launch_conf_name)
+  
   else:
     raise ValueError('Snapshot Id cannot be found: \'{}\''.format(snapshot_id))
 
