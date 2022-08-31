@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Upgrade ruby dependencies to most recent working version
 - Upgrade puppet-aem-curator to 3.29.0
 - Update Github Action Publish Docker image to `shinesolutions/aem-platform-buildenv:3.1.0`
+- Update Gemfile with missing dependencies
 
 ## [5.9.3] - 2022-03-11
 ### Changed
