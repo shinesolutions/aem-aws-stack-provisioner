@@ -7,8 +7,6 @@ class author_publish_dispatcher (
   $tmp_dir,
   $docroot_dir,
   $credentials_file,
-  $publish_protocol,
-  $publish_port,
   $publish_replication_agent_protocol,
   $publish_replication_agent_port,
   $aem_password_retrieval_command,
@@ -61,23 +59,6 @@ class author_publish_dispatcher (
     run_mode           => 'author',
     title              => 'Replication agent for publish localhost',
     description        => 'Replication agent for publish localhost',
-    dest_base_url      => "${publish_protocol}://localhost:${publish_port}",
-    transport_user     => 'replicator',
-    transport_password => $credentials_hash['replicator'],
-    log_level          => 'info',
-    retry_delay        => 60000,
-    force              => true,
-    aem_id             => $aem_id_author_primary,
-  }
-
-  -> aem_replication_agent { 'Create replication agent':
-    ensure             => present,
-    aem_username       => 'admin',
-    aem_password       => $credentials_hash['admin'],
-    name               => 'replication-agent-localhost',
-    run_mode           => 'author',
-    title              => 'Replication agent for publish localhost',
-    description        => 'Replication agent for publish localhost',
     dest_base_url      => "${publish_replication_agent_protocol}://localhost:${publish_replication_agent_port}",
     transport_user     => 'replicator',
     transport_password => $credentials_hash['replicator'],
@@ -85,9 +66,7 @@ class author_publish_dispatcher (
     retry_delay        => 60000,
     force              => true,
     aem_id             => $aem_id_author_primary,
-  }
-
-  -> class { 'deploy_on_init':
+  } -> class { 'deploy_on_init':
     aem_id                => $aem_id_author_primary,
     base_dir              => $base_dir,
     log_dir               => $log_dir,
