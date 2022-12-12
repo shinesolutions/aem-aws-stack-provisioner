@@ -10,3 +10,4 @@ Puppetfile.lock
 inspec.lock
 vendor/
 files/test
+files/aws-tools/__pycache__
