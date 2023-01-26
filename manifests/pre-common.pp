@@ -178,9 +178,9 @@ class pre_common (
     require => File["${base_dir}/aws-tools/"],
   }
 
-  file { "${base_dir}/aws-tools/update_snapshot_id_in_launch_conf.py":
+  file { "${base_dir}/aws-tools/update_snapshot_id_in_launch_template.py":
     ensure  => present,
-    source  => "${file_dir_final}/aws-tools/update_snapshot_id_in_launch_conf.py",
+    source  => "${file_dir_final}/aws-tools/update_snapshot_id_in_launch_template.py",
     mode    => '0775',
     owner   => 'root',
     group   => 'root',

@@ -79,9 +79,9 @@ else
 
     <% if $revert_snapshot_type == 'offline' { %>
 
-      echo "[${stack_prefix}-${component}/${instance_id}] Start updating Launch Configuration: $(date)"
+      echo "[${stack_prefix}-${component}/${instance_id}] Start updating Launch Template: $(date)"
 
-      <%= $base_dir %>/aws-tools/update_snapshot_id_in_launch_conf.py \
+      <%= $base_dir %>/aws-tools/update_snapshot_id_in_launch_template.py \
               --stack-prefix ${stack_prefix} \
               --component ${component} \
               --device <%= $aem_repo_device['device_name'] %> \
@@ -89,7 +89,7 @@ else
 
       translate_exit_code "$?"
 
-      echo "[${stack_prefix}-${component}/${instance_id}] Finished updating Launch Configuration: $(date)"
+      echo "[${stack_prefix}-${component}/${instance_id}] Finished updating Launch Template: $(date)"
 
     <% } -%>
 
