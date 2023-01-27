@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'puppet', '7.19.0'
+gem 'puppet', '7.18.0'
 gem 'inspec', '1.51.6'
 gem 'puppetlabs_spec_helper', '4.0.1', require: false
 gem 'puppet-lint', '2.5.2', require: false
