@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [6.1.0] - 2023-02-10
 ### Added
 - Added hiera parameters to enabale SSL for JMX for AEM Author & AEM Publish  #RS-124
 
@@ -775,7 +775,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#225]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/225
 [#236]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/236
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/6.0.0...HEAD
+[6.1.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/6.0.0...6.1.0
 [6.0.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/5.11.0...6.0.0
 [5.11.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/5.10.0...5.11.0
 [5.10.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/5.9.3...5.10.0
