@@ -1,4 +1,4 @@
-version ?= 6.1.0
+version ?= 6.1.1-pre.0
 
 ci: clean deps lint package
 
