@@ -113,6 +113,9 @@ aem_curator::action_promote_author_standby_to_primary::login_ready_max_tries: "%
 aem_curator::action_promote_author_standby_to_primary::login_ready_base_sleep_seconds: "%{hiera('common::login_ready_base_sleep_seconds')}"
 aem_curator::action_promote_author_standby_to_primary::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max_sleep_seconds')}"
 
+# JMX Configuration
+aem_curator::action_promote_author_standby_to_primary::jmxremote_enable_ssl: true
+aem_curator::action_promote_author_standby_to_primary::jmxremote_keystore_path: /etc/ssl/aem-author/jmx.ks
 
 # AEM Scheduled jobs
 aem_curator::config_aem_scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"

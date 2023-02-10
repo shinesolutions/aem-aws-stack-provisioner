@@ -128,6 +128,8 @@ aem_curator::config_author_primary::certificate_arn: "%{hiera('common::certifica
 aem_curator::config_author_primary::certificate_key_arn: "%{hiera('common::certificate_key_arn')}"
 aem_curator::config_author_primary::aem_system_users: "%{alias('author::aem_system_users')}"
 aem_curator::config_author_primary::data_volume_mount_point: /mnt/ebs1
+aem_curator::config_author_primary::jmxremote_enable_ssl: true
+aem_curator::config_author_primary::jmxremote_keystore_path: /etc/ssl/aem-author/jmx.ks
 
 # Configure AEM Author Agents
 aem_curator::config_author_primary::enable_remove_all_agents: true
@@ -162,6 +164,8 @@ aem_curator::config_publish::certificate_arn: "%{hiera('common::certificate_arn'
 aem_curator::config_publish::certificate_key_arn: "%{hiera('common::certificate_key_arn')}"
 aem_curator::config_publish::aem_system_users: "%{alias('publish::aem_system_users')}"
 aem_curator::config_publish::data_volume_mount_point: /mnt/ebs2
+aem_curator::config_publish::jmxremote_enable_ssl: true
+aem_curator::config_publish::jmxremote_keystore_path: /etc/ssl/aem-publish/jmx.ks
 
 # Configure AEM Publish Agents
 aem_curator::config_publish::enable_create_flush_agents: true

@@ -92,6 +92,8 @@ aem_curator::config_publish::certificate_arn: "%{hiera('common::certificate_arn'
 aem_curator::config_publish::certificate_key_arn: "%{hiera('common::certificate_key_arn')}"
 aem_curator::config_publish::aem_system_users: "%{alias('publish::aem_system_users')}"
 aem_curator::config_publish::data_volume_mount_point: /mnt/ebs1
+aem_curator::config_publish::jmxremote_enable_ssl: true
+aem_curator::config_publish::jmxremote_keystore_path: /etc/ssl/aem-publish/jmx.ks
 
 # Configure AEM Publish Agents
 aem_curator::config_publish::enable_create_flush_agents: true

@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Added hiera parameters to enabale SSL for JMX for AEM Author & AEM Publish  #RS-124
+
+### Changed
+- Lockdowned version of `concurrent-ruby` to `1.1.9` #RS-126
+- Upgraded puppet-aem-curator to `3.32.0` #RS-124
 
 ## [6.0.0] - 2023-01-29
 ### Changed

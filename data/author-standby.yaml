@@ -72,6 +72,8 @@ aem_curator::config_author_standby::enable_deploy_flag: false
 aem_curator::config_author_standby::enable_crxde: false
 aem_curator::config_author_standby::enable_default_passwords: false
 aem_curator::config_author_standby::data_volume_mount_point: /mnt/ebs1
+aem_curator::config_author_standby::jmxremote_enable_ssl: true
+aem_curator::config_author_standby::jmxremote_keystore_path: /etc/ssl/aem-author/jmx.ks
 
 # Logrotation configuration
 aem_curator::config_logrotate::config: "%{alias('author_standby::logrotation::config')}"
