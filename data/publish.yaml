@@ -92,6 +92,9 @@ aem_curator::config_publish::certificate_arn: "%{hiera('common::certificate_arn'
 aem_curator::config_publish::certificate_key_arn: "%{hiera('common::certificate_key_arn')}"
 aem_curator::config_publish::aem_system_users: "%{alias('publish::aem_system_users')}"
 aem_curator::config_publish::data_volume_mount_point: /mnt/ebs1
+aem_curator::config_publish::jmxremote_enable_authentication: true
+aem_curator::config_publish::jmxremote_monitoring_username: "%{hiera('common::jmxremote::user')}"
+aem_curator::config_publish::jmxremote_monitoring_user_password: "%{hiera('common::jmxremote::user_password')}"
 aem_curator::config_publish::jmxremote_enable_ssl: true
 aem_curator::config_publish::jmxremote_keystore_path: /etc/ssl/aem-publish/jmx.ks
 

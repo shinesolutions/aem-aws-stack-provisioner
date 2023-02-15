@@ -114,8 +114,14 @@ aem_curator::action_promote_author_standby_to_primary::login_ready_base_sleep_se
 aem_curator::action_promote_author_standby_to_primary::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max_sleep_seconds')}"
 
 # JMX Configuration
+common::jmxremote::user: monitorOnly
 aem_curator::action_promote_author_standby_to_primary::jmxremote_enable_ssl: true
 aem_curator::action_promote_author_standby_to_primary::jmxremote_keystore_path: /etc/ssl/aem-author/jmx.ks
+aem_curator::action_promote_author_standby_to_primary::jmxremote_enable_authentication: true
+aem_curator::action_promote_author_standby_to_primary::jmxremote_monitoring_username: "%{hiera('common::jmxremote::user')}"
+aem_curator::action_promote_author_standby_to_primary::jmxremote_monitoring_user_password: "%{hiera('common::jmxremote::user_password')}"
+aem_curator::config_collectd::jmx_user: "%{hiera('common::jmxremote::user')}"
+aem_curator::config_collectd::jmx_user_password: "%{hiera('common::jmxremote::user_password')}"
 
 # AEM Scheduled jobs
 aem_curator::config_aem_scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
