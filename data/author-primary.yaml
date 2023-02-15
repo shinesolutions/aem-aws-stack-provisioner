@@ -95,6 +95,9 @@ aem_curator::config_author_primary::certificate_arn: "%{hiera('common::certifica
 aem_curator::config_author_primary::certificate_key_arn: "%{hiera('common::certificate_key_arn')}"
 aem_curator::config_author_primary::aem_system_users: "%{alias('author::aem_system_users')}"
 aem_curator::config_author_primary::data_volume_mount_point: /mnt/ebs1
+aem_curator::config_author_primary::jmxremote_enable_authentication: true
+aem_curator::config_author_primary::jmxremote_monitoring_username: "%{hiera('common::jmxremote::user')}"
+aem_curator::config_author_primary::jmxremote_monitoring_user_password: "%{hiera('common::jmxremote::user_password')}"
 aem_curator::config_author_primary::jmxremote_enable_ssl: true
 aem_curator::config_author_primary::jmxremote_keystore_path: /etc/ssl/aem-author/jmx.ks
 aem_curator::config_aem_scheduled_jobs::offline_compaction_enable: "%{alias('author_primary::scheduled_jobs::enable::offline_compaction')}"
