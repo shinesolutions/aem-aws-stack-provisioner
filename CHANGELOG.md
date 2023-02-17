@@ -5,13 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Upgraded puppet-aem-curator to `3.33.1` #RS-125
+
+### Fixed
+- Fixed syntax error in `action_promote_author_standby_to_primary` #RS-125
 
 ## [6.2.0] - 2023-02-15
 ### Added
 - Added hiera parameters to enable authentication for JMX on AEM Author & AEM Publish  #RS-125
 
 ### Changed
-- Upgraded puppet-aem-curator to `3.33.0` #RS-124
+- Upgraded puppet-aem-curator to `3.33.0` #RS-125
 
 ## [6.1.1] - 2023-02-14
 ### Fixed
