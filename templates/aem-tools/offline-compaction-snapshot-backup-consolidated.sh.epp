@@ -96,7 +96,7 @@ else
   <% $aem_repo_devices.each | Integer $index, Hash $aem_repo_device | { -%>
 
     echo "[${stack_prefix}-${component}/${instance_id}] Stopping: aem-<%= $aem_repo_device['aem_id'] %>"
-    service aem-<%= $aem_repo_device['aem_id'] %> stop
+    systemctl stop aem-<%= $aem_repo_device['aem_id'] %>
     java_run=true
     wait_<%= $aem_repo_device['aem_id'] %>_stopped
 
@@ -134,7 +134,7 @@ else
     echo "[${stack_prefix}-${component}/${instance_id}] Finished taking offline snapshot."
 
     echo "[${stack_prefix}-${component}/${instance_id}] Starting: aem-<%= $aem_repo_device['aem_id'] %>"
-    service aem-<%= $aem_repo_device['aem_id'] %> start
+    systemctl start aem-<%= $aem_repo_device['aem_id'] %>
     java_run=false
     wait_<%= $aem_repo_device['aem_id'] %>_started
 
