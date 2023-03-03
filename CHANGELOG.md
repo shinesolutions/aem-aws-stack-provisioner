@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 ### Changed
 - Changed aem service management to systemd #RS-40
-- Upgraded puppet-aem-curator to `3.40.0` #RS-40
+- Upgraded puppet-aem-curator to `3.34.0` #RS-40
 
 ## [6.3.0] - 2023-03-01
 ### Added
