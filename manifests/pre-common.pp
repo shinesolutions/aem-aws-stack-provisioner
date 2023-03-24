@@ -29,36 +29,6 @@ class pre_common (
     force  => yes,
   }
 
-  ########################################################################
-  ################################ RS-138 ################################
-  # Making sure that the default files of httpd do not exist,            #
-  # in case httpd got updated during bootup.                             #
-  # We do this to ensure that there is no correlation of the the httpd   #
-  # configuration files, set during AMI Baking & Package deployment.     #
-  # This ensures that httpd can be started successful.                   #
-  ########################################################################
-  file {'/etc/httpd/conf.d/ssl.conf':
-    ensure => absent,
-    force  => yes,
-  }
-  file {'/etc/httpd/conf.d/welcome.conf':
-    ensure => absent,
-    force  => yes,
-  }
-  file {'/etc/httpd/conf.d/userdir.conf':
-    ensure => absent,
-    force  => yes,
-  }
-  file {'/etc/httpd/conf.d/autoindex.conf':
-    ensure => absent,
-    force  => yes,
-  }
-  file {'/etc/httpd/conf.d/README':
-    ensure => absent,
-    force  => yes,
-  }
-
-
   $template_dir_final = pick(
     $template_dir,
     "${base_dir}/aem-aws-stack-provisioner/templates"
