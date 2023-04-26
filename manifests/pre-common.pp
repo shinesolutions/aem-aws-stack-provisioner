@@ -224,12 +224,6 @@ class pre_common (
     source => "s3://${data_bucket_name}/${stack_prefix}/${credentials_file}"
   }
 
-  # Ensure that awslogs is enabled and running
-  service { $awslogs_service_name:
-    ensure => running,
-    enable => true,
-  }
-
   ##############################################################################
   # AEM Readiness test
   ##############################################################################

@@ -311,10 +311,6 @@ class update_awslogs (
     before  => Service[$awslogs_service_name]
   }
 
-  service { $awslogs_service_name:
-    ensure => 'running',
-    enable => true,
-  }
   $old_awslogs_content = file($config_file_path)
   $mod_awslogs_content = regsubst($old_awslogs_content, '^log_group_name = ', "log_group_name = ${$stack_prefix}", 'G' )
   $new_awslogs_content = regsubst($mod_awslogs_content, '^log_stream_name = ', "log_stream_name = ${$component}/", 'G' )
@@ -322,7 +318,11 @@ class update_awslogs (
     ensure  => file,
     content => $new_awslogs_content,
     path    => $config_file_path,
-    notify  => Service[$awslogs_service_name],
+    before  => Service[$awslogs_service_name],
+  } -> service { $awslogs_service_name:
+    ensure  => 'running',
+    enable  => true,
+    require => File['Update AWS Logs proxy settings file'],
   }
 }
 
