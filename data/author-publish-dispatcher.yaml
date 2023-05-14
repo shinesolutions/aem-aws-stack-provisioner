@@ -194,6 +194,7 @@ aem_curator::config_author_primary::enable_authorizable_keystore_certificate_cha
 
 # AEM truststore configuration parameters
 aem_curator::config_author_primary::enable_truststore_creation: "%{alias('common::truststore::enable_creation')}"
+aem_curator::config_author_primary::enable_truststore_deletion_before_creation: "%{alias('common::truststore::enable_deletion_before_creation')}"
 aem_curator::config_author_primary::enable_truststore_migration: "%{alias('common::truststore::enable_migration')}"
 aem_curator::config_author_primary::truststore_password: "%{hiera('common::truststore::password')}"
 
