@@ -4,8 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
+## [6.6.0] - 2023-06-03
 ### Changed
 - Upgrade inspec-aem-aws to 2.6.0
 - Upgraded puppet-aem-curator to 3.36.0
@@ -824,7 +823,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#225]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/225
 [#236]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/236
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/6.5.1...HEAD
+[6.6.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/6.5.1...6.6.0
 [6.5.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/6.5.0...6.5.1
 [6.5.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/6.4.1...6.5.0
 [6.4.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/6.4.0...6.4.1
