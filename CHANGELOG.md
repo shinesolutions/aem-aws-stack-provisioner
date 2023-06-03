@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Changed
 - Upgrade inspec-aem-aws to 2.6.0
+- Upgraded puppet-aem-curator to 3.36.0
+- Upgrade Puppet module puppet-aem-resources to 7.9.0
 
 ## [6.5.1] - 2023-04-27
 ### Changed
