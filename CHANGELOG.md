@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+- Upgrade inspec-aem-aws to 2.6.0
+
 ## [6.5.1] - 2023-04-27
 ### Changed
 - CloudWatch Logs agent to start after files are reconfigured #RS-143
