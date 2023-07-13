@@ -2,15 +2,15 @@ File {
   backup => false,
 }
 
-class publish_dispatcher (
+class preview_publish_dispatcher (
   $base_dir,
   $docroot_dir,
   $tmp_dir,
   $aws_region,
   $awslogs_config_path,
   $dispatcher_data_devices,
-  $allowed_client             = $::publish_dispatcher_allowed_client,
-  $publish_host               = $::publishhost,
+  $allowed_client             = $::preview_publish_dispatcher_allowed_client,
+  $preview_publish_host       = $::previewpublishhost,
   $component                  = $::component,
   $stack_prefix               = $::stack_prefix,
   $stack_name                 = $facts['aws:cloudformation:stack-name'],
@@ -41,12 +41,12 @@ class publish_dispatcher (
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':
     aem_tools_env_path => $aem_tools_env_path
-  } -> class { 'aem_curator::config_publish_dispatcher':
-    allowed_client => $allowed_client,
-    publish_host   => $publish_host,
-    docroot_dir    => $docroot_dir,
+  } -> class { 'aem_curator::config_preview_publish_dispatcher':
+    allowed_client       => $allowed_client,
+    preview_publish_host => $preview_publish_host,
+    docroot_dir          => $docroot_dir,
   } -> class { 'aem_curator::config_logrotate':
-  } -> exec { 'Deploy Publish-Dispatcher artifacts':
+  } -> exec { 'Deploy Preview-Publish-Dispatcher artifacts':
     path        => $exec_path,
     environment => ["https_proxy=${https_proxy}"],
     cwd         => $tmp_dir,
@@ -67,13 +67,13 @@ class publish_dispatcher (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/content-healthcheck.py.epp",
       {
-        'tmp_dir'          => $tmp_dir,
-        'stack_prefix'     => $stack_prefix,
-        'data_bucket_name' => $data_bucket_name,
-        'aws_region'       => $aws_region,
-        'pair_instance_id' => $pair_instance_id,
-        'stack_name'       => $stack_name,
-        'publish_host'     => $publish_host,
+        'tmp_dir'              => $tmp_dir,
+        'stack_prefix'         => $stack_prefix,
+        'data_bucket_name'     => $data_bucket_name,
+        'aws_region'           => $aws_region,
+        'pair_instance_id'     => $pair_instance_id,
+        'stack_name'           => $stack_name,
+        'preview_publish_host' => $preview_publish_host,
       }
     ),
   }
@@ -134,4 +134,4 @@ class update_awslogs (
   }
 }
 
-include publish_dispatcher
+include preview_publish_dispatcher

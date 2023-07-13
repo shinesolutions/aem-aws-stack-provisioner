@@ -1,0 +1,120 @@
+---
+preview_publish::aem_id: publish
+preview_publish::base_dir: "%{hiera('common::base_dir')}"
+preview_publish::tmp_dir: "%{hiera('common::tmp_dir')}"
+
+# device_alias <- used by snapshot_attach.py Depending on the block device driver of the kernel, the device could be attached with a different name than you specified.
+preview_publish::aem_repo_devices:
+  - device_name: "%{hiera('common::ami::device_name')}"
+    device_alias: "%{hiera('common::ami::device_alias')}"
+    aem_id: "%{hiera('publish::aem_id')}"
+preview_publish::volume_type: gp2
+
+preview_publish::revert_snapshot_type: "%{hiera('publish::revert_snapshot_type')}"
+
+preview_publish::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
+preview_publish::awslogs_config_path: "%{hiera('common::awslogs_config_path')}"
+
+action_scheduled_jobs::export_enable: "%{alias('preview_publish::scheduled_jobs::enable::export')}"
+action_scheduled_jobs::export_weekday: "%{hiera('preview_publish::scheduled_jobs::weekday::export')}"
+action_scheduled_jobs::export_hour: "%{hiera('preview_publish::scheduled_jobs::hour::export')}"
+action_scheduled_jobs::export_minute: "%{hiera('preview_publish::scheduled_jobs::minute::export')}"
+action_scheduled_jobs::live_snapshot_enable: "%{alias('preview_publish::scheduled_jobs::enable::live_snapshot')}"
+action_scheduled_jobs::live_snapshot_weekday: "%{hiera('preview_publish::scheduled_jobs::weekday::live_snapshot')}"
+action_scheduled_jobs::live_snapshot_hour: "%{hiera('preview_publish::scheduled_jobs::hour::live_snapshot')}"
+action_scheduled_jobs::live_snapshot_minute: "%{hiera('preview_publish::scheduled_jobs::minute::live_snapshot')}"
+
+aem_curator::action_enable_crxde::aem_instances:
+  - run_mode: publish
+    aem_id: "%{hiera('preview_publish::aem_id')}"
+
+aem_curator::action_disable_crxde::aem_instances:
+  - run_mode: publish
+    aem_id: "%{hiera('preview_publish::aem_id')}"
+
+aem_curator::action_list_packages::aem_instances:
+  - run_mode: publish
+    aem_id: "%{hiera('preview_publish::aem_id')}"
+
+aem_curator::action_deploy_artifacts::aem_id: "%{hiera('preview_publish::aem_id')}"
+
+aem_curator::action_download_artifacts::aem_id: "%{hiera('preview_publish::aem_id')}"
+
+aem_curator::action_export_backup::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_export_backup::aem_id: "%{hiera('preview_publish::aem_id')}"
+
+aem_curator::action_export_backups::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_export_backups::download_descriptor::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_export_backups::aem_id: "%{hiera('preview_publish::aem_id')}"
+
+aem_curator::action_import_backup::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_import_backup::aem_id: "%{hiera('preview_publish::aem_id')}"
+
+aem_curator::config_aem_tools::aem_instances:
+  - crx_quickstart_dir: /opt/aem/publish/crx-quickstart
+    user: aem-publish
+    aem_id: "%{hiera('preview_publish::aem_id')}"
+
+aem_curator::config_aem_upgrade_tools::aem_instances:
+  - aem_port: 4503
+    aem_id: publish
+
+aem_curator::config_collectd::aem_instances:
+  - aem_id: "%{hiera('preview_publish::aem_id')}"
+    jmxremote_port: "%{hiera('aem_curator::config_publish::jmxremote_port')}"
+    instance_prefixes:
+      - memory-heap
+
+aem_curator::config_publish::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::config_publish::aem_base: "%{hiera('common::aem_base')}"
+aem_curator::config_publish::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
+aem_curator::config_publish::aem_home_dir: /opt/aem/publish
+aem_curator::config_publish::crx_quickstart_dir: /opt/aem/publish/crx-quickstart
+aem_curator::config_publish::publish_protocol: http
+aem_curator::config_publish::publish_port: 4503
+aem_curator::config_publish::publish_ssl_port: 5433
+aem_curator::config_publish::credentials_file: "%{hiera('common::credentials_file')}"
+aem_curator::config_publish::enable_deploy_flag: false
+aem_curator::config_publish::login_ready_max_tries: "%{hiera('preview_publish::login_ready_max_tries')}"
+aem_curator::config_publish::login_ready_base_sleep_seconds: "%{hiera('preview_publish::login_ready_base_sleep_seconds')}"
+aem_curator::config_publish::login_ready_max_sleep_seconds: "%{hiera('preview_publish::login_ready_max_sleep_seconds')}"
+aem_curator::config_publish::enable_crxde: false
+aem_curator::config_publish::enable_aem_clean_directories: true
+aem_curator::config_publish::enable_default_passwords: false
+aem_curator::config_publish::aem_password_reset_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/aem-password-reset-content-%{hiera('aem_curator::config_publish::aem_password_reset_version')}.zip"
+aem_curator::config_publish::aem_password_reset_version: '1.0.2'
+aem_curator::config_publish::aem_healthcheck_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/aem-healthcheck-content-%{hiera('aem_curator::config_publish::aem_healthcheck_version')}.zip"
+aem_curator::config_publish::aem_healthcheck_version: "%{hiera('common::aem_healthcheck_version')}"
+aem_curator::config_publish::aem_ssl_keystore_password: "%{hiera('common::aem_ssl_keystore_password')}"
+aem_curator::config_publish::enable_aem_reconfiguration: "%{alias('common::enable_aem_reconfiguration')}"
+aem_curator::config_publish::enable_aem_installation_migration: "%{alias('common::enable_aem_reconfiguration')}"
+aem_curator::config_publish::certificate_arn: "%{hiera('common::certificate_arn')}"
+aem_curator::config_publish::certificate_key_arn: "%{hiera('common::certificate_key_arn')}"
+aem_curator::config_publish::aem_system_users: "%{alias('publish::aem_system_users')}"
+aem_curator::config_publish::data_volume_mount_point: /mnt/ebs1
+aem_curator::config_publish::jmxremote_enable_authentication: true
+aem_curator::config_publish::jmxremote_monitoring_username: "%{hiera('common::jmxremote::user')}"
+aem_curator::config_publish::jmxremote_monitoring_user_password: "%{hiera('common::jmxremote::user_password')}"
+aem_curator::config_publish::jmxremote_enable_ssl: true
+aem_curator::config_publish::jmxremote_keystore_path: /etc/ssl/aem-publish/jmx.ks
+
+# Configure AEM Publish Agents
+aem_curator::config_publish::enable_create_flush_agents: true
+aem_curator::config_publish::enable_create_outbox_replication_agents: true
+aem_curator::config_publish::enable_remove_all_agents: true
+
+aem_curator::config_aem_scheduled_jobs::offline_compaction_enable: "%{alias('preview_publish::scheduled_jobs::enable::offline_compaction')}"
+aem_curator::config_aem_scheduled_jobs::offline_compaction_weekday: "%{hiera('preview_publish::scheduled_jobs::weekday::offline_compaction')}"
+aem_curator::config_aem_scheduled_jobs::offline_compaction_hour: "%{hiera('preview_publish::scheduled_jobs::hour::offline_compaction')}"
+aem_curator::config_aem_scheduled_jobs::offline_compaction_minute: "%{hiera('preview_publish::scheduled_jobs::minute::offline_compaction')}"
+
+# Logrotation configuration
+aem_curator::config_logrotate::config: "%{alias('preview_publish::logrotation::config')}"
+aem_curator::config_logrotate::rules: "%{alias('preview_publish::logrotation::rules')}"
+
+# Service start Post sleep configuration
+aem_curator::config_publish::enable_post_start_sleep: "%{alias('common::enable_post_start_sleep')}"
+aem_curator::config_publish::post_start_sleep_seconds: "%{hiera('common::post_start_sleep_seconds')}"
+
+# AEM reconfiguration parameter
+aem_curator::config_publish::enable_truststore_removal: "%{alias('common::enable_truststore_removal')}"

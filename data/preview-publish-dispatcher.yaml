@@ -1,0 +1,31 @@
+---
+preview_publish_dispatcher::base_dir: "%{hiera('common::base_dir')}"
+preview_publish_dispatcher::log_dir: "%{hiera('common::log_dir')}"
+preview_publish_dispatcher::docroot_dir: "%{hiera('common::docroot_dir')}"
+preview_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
+preview_publish_dispatcher::aws_region: "%{hiera('common::aws_region')}"
+preview_publish_dispatcher::awslogs_config_path: "%{hiera('common::awslogs_config_path')}"
+
+# Configure Publish Dispatcher
+aem_curator::config_publish_dispatcher::enable_deploy_flag: false
+aem_curator::config_publish_dispatcher::virtual_hosts_dir: "%{hiera('common::virtual_hosts_dir')}"
+aem_curator::config_publish_dispatcher::dispatcher_conf_dir: "%{hiera('common::dispatcher_conf_dir')}"
+aem_curator::config_publish_dispatcher::publish_port: "%{hiera('common::publish_port')}"
+aem_curator::config_publish_dispatcher::publish_secure: "%{hiera('common::publish_secure')}"
+aem_curator::config_publish_dispatcher::ssl_cert: "%{hiera('common::dispatcher_ssl_cert')}"
+aem_curator::config_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
+
+# Logrotation configuration
+aem_curator::config_logrotate::config: "%{alias('publish_dispatcher::logrotation::config')}"
+aem_curator::config_logrotate::rules: "%{alias('publish_dispatcher::logrotation::rules')}"
+
+# Schedule job configuration
+action_scheduled_jobs::content_health_check_enable: "%{alias('publish_dispatcher::scheduled_jobs::enable::content_health_check')}"
+action_scheduled_jobs::content_health_check_weekday: "%{hiera('publish_dispatcher::scheduled_jobs::weekday::content_health_check')}"
+action_scheduled_jobs::content_health_check_hour: "%{hiera('publish_dispatcher::scheduled_jobs::hour::content_health_check')}"
+action_scheduled_jobs::content_health_check_minute: "%{hiera('publish_dispatcher::scheduled_jobs::minute::content_health_check')}"
+
+# device_alias <- used by snapshot_attach.py Depending on the block device driver of the kernel, the device could be attached with a different name than you specified.
+preview_publish_dispatcher::dispatcher_data_devices:
+  - device_name: "%{hiera('common::ami::device_name')}"
+    device_alias: "%{hiera('common::ami::device_alias')}"

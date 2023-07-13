@@ -6,9 +6,11 @@ class author_standby (
   $base_dir,
   $aem_repo_devices,
   $tmp_dir,
+  $aws_region,
   $awslogs_config_path,
   $author_primary_host        = $::authorprimaryhost,
   $component                  = $::component,
+  $data_bucket_name           = $::data_bucket_name,
   $stack_prefix               = $::stack_prefix,
   $aem_tools_env_path         = '$PATH:/opt/puppetlabs/puppet/bin',
   $ec2_id                     = $::ec2_metadata['instance-id'],
@@ -35,7 +37,7 @@ class author_standby (
   } -> class { 'aem_curator::config_collectd':
     component       => $component,
     collectd_prefix => "${stack_prefix}-${component}",
-    ec2_id          => "${ec2_id}"
+    ec2_id          => $ec2_id
   }
 
   ##############################################################################

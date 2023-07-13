@@ -6,6 +6,7 @@ PATH=<%= $aem_tools_env_path %>
 stack_prefix=$(/opt/puppetlabs/bin/facter stack_prefix)
 component=$(/opt/puppetlabs/bin/facter component)
 enable_chaos_monkey=<%= $enable_chaos_monkey %>
+enable_preview_architecture=<%= $enable_preview_architecture %>
 
 aws_region=<%= $aws_region %>
 
@@ -22,18 +23,38 @@ if [ ${component} = 'author-publish-dispatcher' ]; then
 elif [ ${component} = 'orchestrator' ]; then
   case $enable_chaos_monkey in
     'false')
-      echo "Testing if AEM Full-Set with disabled Chaos Chaos Monkey instance is ready using InSpec..."
-      cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
-      HOME=/root \
-        aem_stack_prefix="${stack_prefix}" \
-        make test-provisioning-readiness-with-disabled-chaosmonkey
+      case $enable_preview_architecture in
+        'true')
+          echo "Testing if AEM Full-Set with disabled Chaos Chaos Monkey & enabled Preview components are ready using InSpec..."
+          cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
+          HOME=/root \
+            aem_stack_prefix="${stack_prefix}" \
+            make test-provisioning-readiness-with-disabled-chaosmonkey-with-enabled-preview-architecture
+          ;;
+          *)
+          echo "Testing if AEM Full-Set with disabled Chaos Chaos Monkey & Preview components are ready using InSpec..."
+          cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
+          HOME=/root \
+            aem_stack_prefix="${stack_prefix}" \
+            make test-provisioning-readiness-with-disabled-chaosmonkey
+          ;;
     ;;
     *)
-      echo "Testing if AEM Full-Set is ready using InSpec..."
-      cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
-      HOME=/root \
-        aem_stack_prefix="${stack_prefix}" \
-        make test-provisioning-readiness
+      case $enable_preview_architecture in
+        'true')
+          echo "Testing if AEM Full-Set with enabled Chaos Chaos Monkey & enabled Preview components are ready using InSpec..."
+          cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
+          HOME=/root \
+            aem_stack_prefix="${stack_prefix}" \
+            make test-provisioning-readiness-with-enabled-preview-architecture
+          ;;
+          *)
+          echo "Testing if default AEM Full-Set is ready using InSpec..."
+          cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
+          HOME=/root \
+            aem_stack_prefix="${stack_prefix}" \
+            make test-provisioning-readiness
+          ;;
   esac
 else
   echo "Readiness testing cannot be run from this component..."

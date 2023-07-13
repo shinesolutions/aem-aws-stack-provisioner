@@ -5,11 +5,13 @@ File {
 class author_primary (
   $base_dir,
   $tmp_dir,
+  $aws_region,
   $aem_repo_devices,
   $aem_password_retrieval_command,
   $awslogs_config_path,
   $component          = $::component,
   $stack_prefix       = $::stack_prefix,
+  $data_bucket_name   = $::data_bucket_name,
   $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
   $ec2_id             = $::ec2_metadata['instance-id'],
 ) {
