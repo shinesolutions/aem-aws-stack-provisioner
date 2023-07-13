@@ -97,6 +97,10 @@ aem_curator::config_publish::jmxremote_monitoring_username: "%{hiera('common::jm
 aem_curator::config_publish::jmxremote_monitoring_user_password: "%{hiera('common::jmxremote::user_password')}"
 aem_curator::config_publish::jmxremote_enable_ssl: true
 aem_curator::config_publish::jmxremote_keystore_path: /etc/ssl/aem-publish/jmx.ks
+aem_curator::config_publish::jvm_mem_opts: "%{hiera('publish::jvm_mem_opts')}"
+aem_curator::config_publish::jmxremote_port: "%{hiera('publish::jmxremote_port')}"
+aem_curator::config_publish::jvm_opts: "%{hiera('publish::jvm_opts')}"
+aem_curator::config_publish::aem_runmodes: "%{alias('publish::aem_runmodes')}"
 
 # Configure AEM Publish Agents
 aem_curator::config_publish::enable_create_flush_agents: true

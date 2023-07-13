@@ -68,8 +68,8 @@ author_standby::logrotation::config: "%{alias('author_standby::logrotation.confi
 author_standby::logrotation::rules: "%{alias('author_standby::logrotation.rules')}"
 publish::logrotation::config: "%{alias('publish::logrotation.config')}"
 publish::logrotation::rules: "%{alias('publish::logrotation.rules')}"
-preview_publish::logrotation::config: "%{alias('publish::logrotation.config')}"
-preview_publish::logrotation::rules: "%{alias('publish::logrotation.rules')}"
+preview_publish::logrotation::config: "%{alias('preview_publish::logrotation.config')}"
+preview_publish::logrotation::rules: "%{alias('preview_publish::logrotation.rules')}"
 aem_orchestrator::logrotation:::config: "%{alias('aem_orchestrator::logrotation.config')}"
 aem_orchestrator::logrotation:::rules: "%{alias('aem_orchestrator::logrotation.rules')}"
 simianarmy::logrotation::config: "%{alias('simianarmy::logrotation.config')}"
@@ -78,8 +78,8 @@ author_dispatcher::logrotation::config: "%{alias('author_dispatcher::logrotation
 author_dispatcher::logrotation::rules: "%{alias('author_dispatcher::logrotation.rules')}"
 publish_dispatcher::logrotation::config: "%{alias('publish_dispatcher::logrotation.config')}"
 publish_dispatcher::logrotation::rules: "%{alias('publish_dispatcher::logrotation.rules')}"
-preview_publish_dispatcher::logrotation::config: "%{alias('publish_dispatcher::logrotation.config')}"
-preview_publish_dispatcher::logrotation::rules: "%{alias('publish_dispatcher::logrotation.rules')}"
+preview_publish_dispatcher::logrotation::config: "%{alias('preview_publish_dispatcher::logrotation.config')}"
+preview_publish_dispatcher::logrotation::rules: "%{alias('preview_publish_dispatcher::logrotation.rules')}"
 
 # pre-common
 pre_common::base_dir: "%{hiera('common::base_dir')}"
