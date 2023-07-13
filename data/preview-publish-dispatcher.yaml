@@ -16,14 +16,14 @@ aem_curator::config_publish_dispatcher::ssl_cert: "%{hiera('common::dispatcher_s
 aem_curator::config_publish_dispatcher::tmp_dir: "%{hiera('common::tmp_dir')}"
 
 # Logrotation configuration
-aem_curator::config_logrotate::config: "%{alias('publish_dispatcher::logrotation::config')}"
-aem_curator::config_logrotate::rules: "%{alias('publish_dispatcher::logrotation::rules')}"
+aem_curator::config_logrotate::config: "%{alias('preview_publish_dispatcher::logrotation::config')}"
+aem_curator::config_logrotate::rules: "%{alias('preview_publish_dispatcher::logrotation::rules')}"
 
 # Schedule job configuration
-action_scheduled_jobs::content_health_check_enable: "%{alias('publish_dispatcher::scheduled_jobs::enable::content_health_check')}"
-action_scheduled_jobs::content_health_check_weekday: "%{hiera('publish_dispatcher::scheduled_jobs::weekday::content_health_check')}"
-action_scheduled_jobs::content_health_check_hour: "%{hiera('publish_dispatcher::scheduled_jobs::hour::content_health_check')}"
-action_scheduled_jobs::content_health_check_minute: "%{hiera('publish_dispatcher::scheduled_jobs::minute::content_health_check')}"
+action_scheduled_jobs::content_health_check_enable: "%{alias('preview_publish_dispatcher::scheduled_jobs::enable::content_health_check')}"
+action_scheduled_jobs::content_health_check_weekday: "%{hiera('preview_publish_dispatcher::scheduled_jobs::weekday::content_health_check')}"
+action_scheduled_jobs::content_health_check_hour: "%{hiera('preview_publish_dispatcher::scheduled_jobs::hour::content_health_check')}"
+action_scheduled_jobs::content_health_check_minute: "%{hiera('preview_publish_dispatcher::scheduled_jobs::minute::content_health_check')}"
 
 # device_alias <- used by snapshot_attach.py Depending on the block device driver of the kernel, the device could be attached with a different name than you specified.
 preview_publish_dispatcher::dispatcher_data_devices:

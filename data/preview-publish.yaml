@@ -10,7 +10,7 @@ preview_publish::aem_repo_devices:
     aem_id: "%{hiera('publish::aem_id')}"
 preview_publish::volume_type: gp2
 
-preview_publish::revert_snapshot_type: "%{hiera('publish::revert_snapshot_type')}"
+preview_publish::revert_snapshot_type: "%{hiera('preview_publish::revert_snapshot_type')}"
 
 preview_publish::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
 preview_publish::awslogs_config_path: "%{hiera('common::awslogs_config_path')}"
