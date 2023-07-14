@@ -71,6 +71,7 @@ class chaos_monkey (
       probability              => $asg_probability,
       max_terminations_per_day => $asg_max_terminations_per_day,
     }
+  }
 
   ##############################################################################
   # Update AWS Logs proxy settings file
