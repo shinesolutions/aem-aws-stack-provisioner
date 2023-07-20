@@ -38,6 +38,7 @@ elif [ ${component} = 'orchestrator' ]; then
             aem_stack_prefix="${stack_prefix}" \
             make test-provisioning-readiness-with-disabled-chaosmonkey
           ;;
+        esac
     ;;
     *)
       case $enable_preview_architecture in
@@ -55,6 +56,7 @@ elif [ ${component} = 'orchestrator' ]; then
             aem_stack_prefix="${stack_prefix}" \
             make test-provisioning-readiness
           ;;
+        esac
   esac
 else
   echo "Readiness testing cannot be run from this component..."

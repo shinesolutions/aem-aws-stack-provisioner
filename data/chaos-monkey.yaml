@@ -1,6 +1,7 @@
 ---
 
 chaos_monkey::awslogs_config_path: "%{hiera('common::awslogs_config_path')}"
+chaos_monkey::aws_region: "%{hiera('common::aws_region')}"
 
 simianarmy::warfile_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/simianarmy-%{hiera('chaos_monkey::simian_army_version')}.war"
 simianarmy::manage_package: false
