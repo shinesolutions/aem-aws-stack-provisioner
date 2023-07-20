@@ -41,9 +41,9 @@ class preview_publish_dispatcher (
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_aem_deployer':
     aem_tools_env_path => $aem_tools_env_path
-  } -> class { 'aem_curator::config_preview_publish_dispatcher':
+  } -> class { 'aem_curator::config_publish_dispatcher':
     allowed_client       => $allowed_client,
-    preview_publish_host => $preview_publish_host,
+    publish_host         => $preview_publish_host,
     docroot_dir          => $docroot_dir,
   } -> class { 'aem_curator::config_logrotate':
   } -> exec { 'Deploy Preview-Publish-Dispatcher artifacts':
