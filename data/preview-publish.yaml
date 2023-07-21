@@ -8,7 +8,7 @@ preview_publish::aws_region: "%{hiera('common::aws_region')}"
 preview_publish::aem_repo_devices:
   - device_name: "%{hiera('common::ami::device_name')}"
     device_alias: "%{hiera('common::ami::device_alias')}"
-    aem_id: "%{hiera('publish::aem_id')}"
+    aem_id: "%{hiera('preview_publish::aem_id')}"
 preview_publish::volume_type: gp2
 
 preview_publish::revert_snapshot_type: "%{hiera('preview_publish::revert_snapshot_type')}"
