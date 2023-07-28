@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 - Added provisioning manifests for preview Publish & preview publish-dispatcher RS-161
 
+### Changed
+- Upgrade inspec-aem-aws to 3.0.0
+
 ## [6.8.1] - 2023-06-30
 ### Changed
 - Upgraded puppet-aem-curator to 3.40.3
