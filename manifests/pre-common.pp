@@ -11,15 +11,16 @@ class pre_common (
   $group,
   $credentials_file,
   $awslogs_service_name,
-  $aem_tools_env_path  = '$PATH:/opt/puppetlabs/puppet/bin',
-  $extra_packages      = [],
-  $enable_chaos_monkey = true,
-  $template_dir        = undef,
-  $file_dir            = undef,
-  $stack_prefix        = $::stack_prefix,
-  $data_bucket_name    = $::data_bucket_name,
-  $log_dir             = '/var/log/shinesolutions',
-  $ssh_public_keys     = undef,
+  $aem_tools_env_path          = '$PATH:/opt/puppetlabs/puppet/bin',
+  $extra_packages              = [],
+  $enable_chaos_monkey         = true,
+  $enable_preview_architecture = false,
+  $template_dir                = undef,
+  $file_dir                    = undef,
+  $stack_prefix                = $::stack_prefix,
+  $data_bucket_name            = $::data_bucket_name,
+  $log_dir                     = '/var/log/shinesolutions',
+  $ssh_public_keys             = undef,
 ) {
 
   # New instance requires CloudWatch Metric Agent metadata to be cleaned up
@@ -68,12 +69,12 @@ class pre_common (
     ensure => present,
   }
 
-  file { "${tmp_base_dir}":
+  file { $tmp_base_dir:
     ensure => directory,
     mode   => '0775',
     owner  => 'root',
     group  => 'root',
-  } -> file { "${tmp_dir}":
+  } -> file { $tmp_dir:
     ensure => directory,
     mode   => '0775',
     owner  => 'root',
@@ -81,7 +82,7 @@ class pre_common (
   }
 
   # Create log directory
-  file { "${log_dir}":
+  file { $log_dir:
     ensure => directory,
     mode   => '0775',
     owner  => 'root',
@@ -96,7 +97,7 @@ class pre_common (
     group  => 'root',
   } -> file { '/root/.aws/config':
     ensure  => file,
-    content => epp("${template_dir_final}/aws/config.epp", { 'aws_region' => "${aws_region}" }),
+    content => epp("${template_dir_final}/aws/config.epp", { 'aws_region' => $aws_region }),
     mode    => '0664',
     owner   => 'root',
     group   => 'root',
@@ -106,14 +107,14 @@ class pre_common (
   file { "/home/${user}/.aws/":
     ensure => directory,
     mode   => '0775',
-    owner  => "${user}",
-    group  => "${group}",
+    owner  => $user,
+    group  => $group,
   } -> file { "/home/${user}/.aws/config":
     ensure  => file,
-    content => epp("${template_dir_final}/aws/config.epp", { 'aws_region' => "${aws_region}" }),
+    content => epp("${template_dir_final}/aws/config.epp", { 'aws_region' => $aws_region }),
     mode    => '0664',
-    owner   => "${user}",
-    group   => "${group}",
+    owner   => $user,
+    group   => $group,
   }
 
   # Set up AWS tools
@@ -126,7 +127,7 @@ class pre_common (
 
   file { "${base_dir}/aws-tools/set-component.sh":
     ensure  => file,
-    content => epp("${template_dir_final}/aws-tools/set-component.sh.epp", {'base_dir' => "${base_dir}",}),
+    content => epp("${template_dir_final}/aws-tools/set-component.sh.epp", {'base_dir' => $base_dir,}),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
@@ -135,7 +136,7 @@ class pre_common (
 
   file { "${base_dir}/aws-tools/set-facts.sh":
     ensure  => file,
-    content => epp("${template_dir_final}/aws-tools/set-facts.sh.epp", { 'aws_region' => "${aws_region}" }),
+    content => epp("${template_dir_final}/aws-tools/set-facts.sh.epp", { 'aws_region' => $aws_region }),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
@@ -236,10 +237,11 @@ class pre_common (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/test-readiness.sh.epp",
       {
-        'aem_tools_env_path'  => $aem_tools_env_path,
-        'base_dir'            => $base_dir,
-        'enable_chaos_monkey' => $enable_chaos_monkey,
-        'aws_region'          => $aws_region,
+        'aem_tools_env_path'          => $aem_tools_env_path,
+        'base_dir'                    => $base_dir,
+        'enable_chaos_monkey'         => $enable_chaos_monkey,
+        'enable_preview_architecture' => $enable_preview_architecture,
+        'aws_region'                  => $aws_region,
       }
     ),
   }

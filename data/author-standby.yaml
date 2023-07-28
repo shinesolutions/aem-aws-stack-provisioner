@@ -2,6 +2,7 @@
 author_standby::aem_id: author
 author_standby::base_dir: "%{hiera('common::base_dir')}"
 author_standby::tmp_dir: "%{hiera('common::tmp_dir')}"
+author_standby::aws_region: "%{hiera('common::aws_region')}"
 
 # device_alias <- used by snapshot_attach.py Depending on the block device driver of the kernel, the device could be attached with a different name than you specified.
 author_standby::aem_repo_devices:

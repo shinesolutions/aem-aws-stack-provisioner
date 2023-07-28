@@ -11,3 +11,4 @@ inspec.lock
 vendor/
 files/test
 files/aws-tools/__pycache__
+core

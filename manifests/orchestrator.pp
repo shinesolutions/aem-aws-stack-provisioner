@@ -5,6 +5,7 @@ File {
 class orchestrator (
   $base_dir,
   $tmp_dir,
+  $aws_region,
   $awslogs_config_path,
   $aem_tools_env_path          = '$PATH:/opt/puppetlabs/puppet/bin',
   $stack_manager_stack_name    = undef,
@@ -37,7 +38,7 @@ class orchestrator (
 
   file { "${base_dir}/aem-tools/stack-offline-snapshot-full-set-message.json":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-snapshot-full-set-message.json.epp", { 'stack_prefix' => "${stack_prefix}"}),
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-snapshot-full-set-message.json.epp", { 'stack_prefix' => $stack_prefix}),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',
@@ -59,7 +60,7 @@ class orchestrator (
 
   file { "${base_dir}/aem-tools/stack-offline-compaction-snapshot-full-set-message.json":
     ensure  => present,
-    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-compaction-snapshot-full-set-message.json.epp", { 'stack_prefix' => "${stack_prefix}"}),
+    content => epp("${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/stack-offline-compaction-snapshot-full-set-message.json.epp", { 'stack_prefix' => $stack_prefix}),
     mode    => '0775',
     owner   => 'root',
     group   => 'root',

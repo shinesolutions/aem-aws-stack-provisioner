@@ -13,7 +13,9 @@ tag_keys = {
   'chaos-monkey': ['Component', 'StackPrefix', 'ComponentInitStatus'],
   'orchestrator': ['Component', 'StackPrefix', 'ComponentInitStatus'],
   'publish': ['Component', 'StackPrefix', 'PairInstanceId', 'PublishDispatcherHost', 'SnapshotId', 'ComponentInitStatus'],
-  'publish-dispatcher': ['Component', 'StackPrefix', 'PairInstanceId', 'PublishHost', 'ComponentInitStatus']
+  'publish-dispatcher': ['Component', 'StackPrefix', 'PairInstanceId', 'PublishHost', 'ComponentInitStatus'],
+  'preview-publish': ['Component', 'StackPrefix', 'PreviewPairInstanceId', 'PreviewPublishDispatcherHost', 'SnapshotId', 'ComponentInitStatus'],
+  'preview-publish-dispatcher': ['Component', 'StackPrefix', 'PreviewPairInstanceId', 'PreviewPublishHost', 'ComponentInitStatus']
 }
 
 def get_instance_id():
