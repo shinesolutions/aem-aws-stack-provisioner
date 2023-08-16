@@ -82,7 +82,7 @@ case "$scheduled_job_name" in
         aem_component=publish
       ;;
       preview-publish)
-        aem_component=preview-publish
+        aem_component=preview_publish
       ;;
       author-publish-dispatcher)
         aem_component=publish
