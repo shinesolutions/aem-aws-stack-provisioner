@@ -204,6 +204,9 @@ aem_curator::action_enable_saml::tmp_dir: "%{hiera('common::tmp_dir')}"
 # AEM-Tool Flush-Dispatcher-cache
 aem_curator::action_flush_dispatcher_cache::docroot_dir: "%{hiera('common::docroot_dir')}"
 
+# AEM Vault CLI Config
+aem_curator::action_content_sync_vlt::vlt_dir: "%{hiera('common::base_dir')}/aem-tools/vault-cli-%{hiera('aem_curator::config_aem_tools::aem_vlt_version')}/bin"
+
 # AEM Author Primary and Standby configuration and promotion
 aem_curator::config_author_primary::aem_version: '6.2'
 aem_curator::config_author_standby::aem_version: '6.2'
