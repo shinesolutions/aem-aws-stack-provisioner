@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 ### Changed
-- Upgrade puppet-aem-curator to 4.1.0
+- Upgrade puppet-aem-curator to 4.1.3
 
 ### Added
 - Added aem_vlt_source, aem_vlt_version and vlt_dir config
