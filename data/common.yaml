@@ -140,6 +140,8 @@ aem_curator::config_aem_scheduled_jobs::log_dir: "%{hiera('common::log_dir')}"
 # AEM Tools
 aem_curator::config_aem_tools::oak_run_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/oak-run-%{hiera('aem_curator::config_aem_tools::oak_run_version')}.jar"
 aem_curator::config_aem_tools::oak_run_version: '1.4.15'
+aem_curator::config_aem_tools::aem_vlt_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/vault-cli-%{hiera('aem_curator::config_aem_tools::aem_vlt_version')}-bin.tar.gz"
+aem_curator::config_aem_tools::aem_vlt_version: '3.7.0'
 aem_curator::config_aem_tools::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
 aem_curator::config_aem_tools::base_dir: "%{hiera('common::base_dir')}"
 aem_curator::config_aem_tools::tmp_dir: "%{hiera('common::tmp_dir')}"
@@ -201,6 +203,9 @@ aem_curator::action_enable_saml::tmp_dir: "%{hiera('common::tmp_dir')}"
 
 # AEM-Tool Flush-Dispatcher-cache
 aem_curator::action_flush_dispatcher_cache::docroot_dir: "%{hiera('common::docroot_dir')}"
+
+# AEM Vault CLI Config
+aem_curator::action_content_sync_vlt::vlt_dir: "%{hiera('common::base_dir')}/aem-tools/vault-cli-%{hiera('aem_curator::config_aem_tools::aem_vlt_version')}/bin"
 
 # AEM Author Primary and Standby configuration and promotion
 aem_curator::config_author_primary::aem_version: '6.2'
