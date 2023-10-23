@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [7.1.1] - 2023-10-23
+### Changed
+- Upgraded puppet-aem-curator to 4.1.6
+
 ## [7.1.0] - 2023-10-12
 ### Added
 - Added aem_vlt_source, aem_vlt_version and vlt_dir config
