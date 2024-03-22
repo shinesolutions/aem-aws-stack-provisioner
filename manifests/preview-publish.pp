@@ -7,6 +7,7 @@ class preview_publish (
   $exec_path,
   $tmp_dir,
   $aws_region,
+  $aws_tags,
   $aem_repo_devices,
   $aem_password_retrieval_command,
   $volume_type,
@@ -205,6 +206,7 @@ class preview_publish (
         'stack_prefix'         => $stack_prefix,
         'revert_snapshot_type' => $revert_snapshot_type,
         'aws_region'           => $aws_region,
+        'aws_tags'             => $aws_tags,
       }
     )
   }
@@ -228,6 +230,7 @@ class preview_publish (
         'stack_prefix'         => $stack_prefix,
         'revert_snapshot_type' => $revert_snapshot_type,
         'aws_region'           => $aws_region,
+        'aws_tags'             => $aws_tags,
       }
     ),
   }

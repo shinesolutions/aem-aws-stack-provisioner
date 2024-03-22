@@ -136,6 +136,7 @@ class author_publish_dispatcher (
         'component'          => $component,
         'stack_prefix'       => $stack_prefix,
         'aws_region'         => $aws_region,
+        'aws_tags'           => $aws_tags,
       }
     ),
   }
@@ -158,6 +159,7 @@ class author_publish_dispatcher (
         'component'          => $component,
         'stack_prefix'       => $stack_prefix,
         'aws_region'         => $aws_region,
+        'aws_tags'           => $aws_tags,
       }
     ),
   }
@@ -180,6 +182,7 @@ class author_publish_dispatcher (
         'component'          => $component,
         'stack_prefix'       => $stack_prefix,
         'aws_region'         => $aws_region,
+        'aws_tags'           => $aws_tags,
       }
     ),
   }

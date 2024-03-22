@@ -7,6 +7,7 @@ class author_standby (
   $aem_repo_devices,
   $tmp_dir,
   $aws_region,
+  $aws_tags,
   $awslogs_config_path,
   $author_primary_host        = $::authorprimaryhost,
   $component                  = $::component,
@@ -58,6 +59,7 @@ class author_standby (
         'component'          => $component,
         'stack_prefix'       => $stack_prefix,
         'aws_region'         => $aws_region,
+        'aws_tags'           => $aws_tags,
       }
     ),
   }
@@ -80,6 +82,7 @@ class author_standby (
         'component'          => $component,
         'stack_prefix'       => $stack_prefix,
         'aws_region'         => $aws_region,
+        'aws_tags'           => $aws_tags,
       }
     ),
   }
