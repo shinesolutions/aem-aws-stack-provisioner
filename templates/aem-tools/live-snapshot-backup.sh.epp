@@ -24,11 +24,6 @@ translate_exit_code() {
   return "$exit_code"
 }
 
-<% $aws_tags.each | Integer $index, Hash $aws_tag | { -%>
-  echo "key: <%= $aws_tag['Key'] %>"
-  echo "value: <%= $aws_tag['Value'] %>"
-<% } -%>
-
 # "snapshot_backup" is used for checking the processes in order to
 # avoid offline_snapshot_backup and live_snapshot_backup running at the same time
 

@@ -126,6 +126,9 @@ else
                 --tag "StackPrefix=<%= $stack_prefix %>" \
                 --tag "SnapshotType=offline" \
                 --tag "AemId=<%= $aem_repo_device['aem_id'] %>" \
+                <%- $aws_tags.each | Integer $index, Hash $aws_tag | { -%>
+                --tag "<%= $aws_tag['Key'] %>=<%= $aws_tag['Value'] %>" \
+                <%- } -%>
                 <%= $aem_repo_device['device_name'] %>)
 
     translate_exit_code "$?"
