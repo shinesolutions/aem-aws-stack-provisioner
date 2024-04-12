@@ -206,7 +206,7 @@ class publish (
         'stack_prefix'         => $stack_prefix,
         'revert_snapshot_type' => $revert_snapshot_type,
         'aws_region'           => $aws_region,
-        'aws_tags',            => $aws_tags,
+        'aws_tags'             => $aws_tags,
       }
     )
   }
