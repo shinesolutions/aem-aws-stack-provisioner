@@ -12,3 +12,4 @@ vendor/
 files/test
 files/aws-tools/__pycache__
 core
+Gemfile.lock

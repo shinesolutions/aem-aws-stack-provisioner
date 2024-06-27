@@ -3,6 +3,7 @@ publish::aem_id: publish
 publish::base_dir: "%{hiera('common::base_dir')}"
 publish::tmp_dir: "%{hiera('common::tmp_dir')}"
 publish::aws_region: "%{hiera('common::aws_region')}"
+publish::aws_tags: "%{alias('common::aws_tags')}"
 
 # device_alias <- used by snapshot_attach.py Depending on the block device driver of the kernel, the device could be attached with a different name than you specified.
 publish::aem_repo_devices:

@@ -6,6 +6,7 @@ class author_primary (
   $base_dir,
   $tmp_dir,
   $aws_region,
+  $aws_tags,
   $aem_repo_devices,
   $aem_password_retrieval_command,
   $awslogs_config_path,
@@ -96,6 +97,7 @@ class author_primary (
         'component'          => $component,
         'stack_prefix'       => $stack_prefix,
         'aws_region'         => $aws_region,
+        'aws_tags'           => $aws_tags,
       }
     ),
   }
@@ -118,6 +120,7 @@ class author_primary (
         'component'          => $component,
         'stack_prefix'       => $stack_prefix,
         'aws_region'         => $aws_region,
+        'aws_tags'           => $aws_tags,
       }
     ),
   }
