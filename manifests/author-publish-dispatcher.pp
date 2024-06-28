@@ -6,6 +6,7 @@ class author_publish_dispatcher (
   $base_dir,
   $tmp_dir,
   $aws_region,
+  $aws_tags,
   $docroot_dir,
   $credentials_file,
   $publish_replication_agent_protocol,
