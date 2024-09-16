@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+- Upgraded puppet-aem-curator to 4.1.7
+
 ## [7.2.1] - 2024-06-28
 ### Fixed
 - Fixed tagging of snapshots from config #RS-165
