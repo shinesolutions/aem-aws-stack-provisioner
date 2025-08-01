@@ -10,7 +10,7 @@ publish::aem_repo_devices:
   - device_name: "%{hiera('common::ami::device_name')}"
     device_alias: "%{hiera('common::ami::device_alias')}"
     aem_id: "%{hiera('publish::aem_id')}"
-publish::volume_type: gp2
+publish::volume_type: "%{hiera('common::volume_type')"
 
 publish::revert_snapshot_type: "%{hiera('publish::revert_snapshot_type')}"
 
