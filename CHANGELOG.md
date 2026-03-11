@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 ### Changed
 - Upgraded puppet-aem-curator to 4.1.9
+### Fixed
+- Resolves broken GEM dependency gettext, gettext-setup and locale
 
 ## [7.2.2] - 2024-09-16
 ### Changed
