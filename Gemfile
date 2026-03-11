@@ -2,6 +2,9 @@ source "https://rubygems.org"
 
 gem 'inspec', '1.51.6'
 gem 'concurrent-ruby', '1.1.9', require: false
+gem 'gettext', '3.5.1', require: false
+gem 'gettext-setup', '0.31', require: false
+gem 'locale', '2.1.4', require: false
 gem 'puppet', '~> 7.18', require: false
 gem 'puppetlabs_spec_helper', '4.0.1', require: false
 gem 'puppet-lint', '2.5.2', require: false
