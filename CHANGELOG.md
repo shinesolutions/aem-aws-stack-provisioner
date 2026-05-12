@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 ### Changed
-- Upgrade puppet-aem-curator to 3.46.0
+- Upgrade puppet-aem-curator to 3.47.0
 - Upgrade aem-platform-buildenv to 4.0.2
 
 ## [6.9.0] - 2023-07-26
