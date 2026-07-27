@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Simplify GitHub Actions release workflows to not use custom action
 
+### Fixed
+- Fix .rtk.json jobs.build.steps property path to use array bracket notation (steps[0] instead of steps.0)
+
 ## [7.2.3] - 2026-03-11
 ### Changed
 - Upgraded puppet-aem-curator to 4.1.9
