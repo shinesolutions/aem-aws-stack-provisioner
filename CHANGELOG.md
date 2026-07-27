@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Simplify GitHub Actions release workflows to not use custom action
 
 ### Fixed
+- Fix release workflows to use SHINEOPENSOURCE_GITHUB_TOKEN instead of SHINEWORKS_GITHUB_TOKEN, matching this repo's original token
 - Fix .rtk.json jobs.build.steps property path to use array bracket notation (steps[0] instead of steps.0)
 
 ## [7.2.3] - 2026-03-11
