@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Changed
+- Simplify GitHub Actions release workflows to not use custom action
+
 ## [7.2.3] - 2026-03-11
 ### Changed
 - Upgraded puppet-aem-curator to 4.1.9
