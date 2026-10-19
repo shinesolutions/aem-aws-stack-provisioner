@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Added yamllint and markdownlint-cli2 to the lint target
+- Added puppet/systemd and puppetlabs/inifile modules, required by puppet-logrotate 9
+
+### Changed
+- Upgraded to Ruby 4.0.7 and OpenVox 9 with Vox Pupuli tooling, replacing the pinned Puppet 7 gems
+- Upgraded puppet-aem-orchestrator to 3.0.2
+- Upgraded third-party Puppet modules to their latest versions compatible with OpenVox 9
+- Moved InSpec profile vendoring to a separate deps-inspec target, as InSpec 1.51.6 does not run on Ruby 4
+- Replaced the deprecated hiera() interpolation function with lookup() in the hiera data
+- Changed the target platforms to Amazon Linux 2023 and Rocky Linux 10
+- Upgraded GitHub CI to actions/checkout v7
+- Simplify CI workflow to not use action files anymore
+- Upgrade aem-platform-buildenv to 6.4.1
+- Upgrade release workflows to cliffano/release-action 2.1.0
+
+### Fixed
+- Fixed the pre-common host entry for OpenVox 9, which no longer provides legacy facts
+- Fixed the author snapshot backup templates for OpenVox 9 strict variables
+- Fixed the publish target to run gh as root in the buildenv container
 
 ## [7.2.3] - 2026-03-11
 ### Changed

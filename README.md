@@ -16,3 +16,19 @@ AEM AWS Stack Provisioner is part of [AEM OpenCloud](https://aemopencloud.io) pl
 Learn more about AEM AWS Stack Provisioner:
 
 * [Frequently Asked Questions](https://github.com/shinesolutions/aem-aws-stack-provisioner/blob/main/docs/faq.md)
+
+Development
+-----------
+
+AEM AWS Stack Provisioner targets OpenVox 9 on Amazon Linux 2023 and Rocky Linux 10.
+
+Run the commands below in [AEM Platform BuildEnv](https://github.com/shinesolutions/aem-platform-buildenv), as CI does:
+
+| Command | Runs |
+| --- | --- |
+| `make deps` | Install the Ruby gems with Bundler and the Puppetfile modules into `modules/` with r10k |
+| `make deps-local` | Replace the AEM OpenCloud Puppet modules in `modules/` with local checkouts next to this repository |
+| `make deps-inspec` | Vendor the InSpec profile dependencies from `inspec.yml` into `files/test/inspec/`, needs an InSpec CLI |
+| `make lint` | puppet-lint, Puppet manifest and EPP template validation, ShellCheck, RuboCop, yamllint and markdownlint |
+| `make package` | Package the provisioner into `stage/aem-aws-stack-provisioner-<version>.tar.gz` |
+| `make ci` | Everything CI runs: clean, deps, lint and package |
