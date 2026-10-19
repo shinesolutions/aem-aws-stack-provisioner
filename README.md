@@ -21,14 +21,15 @@ Development
 -----------
 
 AEM AWS Stack Provisioner targets OpenVox 9 on Amazon Linux 2023 and Rocky Linux 10.
+The instances run the [InSpec AEM AWS](https://github.com/shinesolutions/inspec-aem-aws) 4.0.0 profile with Cinc InSpec 7.2.1 on Ruby 4,
+and the orchestrator instance runs AEM Orchestrator 5.0.0 on Java 21, with its jar taken from the stack's data bucket.
 
 Run the commands below in [AEM Platform BuildEnv](https://github.com/shinesolutions/aem-platform-buildenv), as CI does:
 
 | Command | Runs |
 | --- | --- |
-| `make deps` | Install the Ruby gems with Bundler and the Puppetfile modules into `modules/` with r10k |
+| `make deps` | Install the Ruby gems with Bundler, the Puppetfile modules into `modules/` with r10k, and download the InSpec AEM AWS profile from `inspec.yml` into `files/test/inspec/inspec-aem-aws` |
 | `make deps-local` | Replace the AEM OpenCloud Puppet modules in `modules/` with local checkouts next to this repository |
-| `make deps-inspec` | Vendor the InSpec profile dependencies from `inspec.yml` into `files/test/inspec/`, needs an InSpec CLI |
 | `make lint` | puppet-lint, Puppet manifest and EPP template validation, ShellCheck, RuboCop, yamllint and markdownlint |
 | `make package` | Package the provisioner into `stage/aem-aws-stack-provisioner-<version>.tar.gz` |
 | `make ci` | Everything CI runs: clean, deps, lint and package |

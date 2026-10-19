@@ -13,7 +13,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Upgraded to Ruby 4.0.7 and OpenVox 9 with Vox Pupuli tooling, replacing the pinned Puppet 7 gems
 - Upgraded puppet-aem-orchestrator to 3.0.2
 - Upgraded third-party Puppet modules to their latest versions compatible with OpenVox 9
-- Moved InSpec profile vendoring to a separate deps-inspec target, as InSpec 1.51.6 does not run on Ruby 4
+- Upgraded the InSpec AEM AWS profile to 4.0.0, the instances need Cinc InSpec 7.2.1 and Ruby 4
+- Replaced InSpec profile vendoring with a download of the profile tarball in the deps target, as InSpec 1.51.6 does not run on Ruby 4
+- Upgraded AEM Orchestrator to 5.0.0 with its jar checksum, the jar must be in the data bucket and the orchestrator instance needs Java 21
+- Added comments explaining the OpenVox 9 upgrade changes and the 4 minute AEM stop timeout in the offline snapshot scripts
 - Replaced the deprecated hiera() interpolation function with lookup() in the hiera data
 - Changed the target platforms to Amazon Linux 2023 and Rocky Linux 10
 - Upgraded GitHub CI to actions/checkout v7
