@@ -18,9 +18,9 @@ exec_path:
   - /usr/sbin
   - /usr/local/sbin
   - /opt/puppetlabs/bin
-  - "%{hiera('common::base_dir')}/aem-tools"
-  - "%{hiera('common::base_dir')}/aws-tools"
-  - "%{hiera('common::base_dir')}/common-tools"
+  - "%{lookup('common::base_dir')}/aem-tools"
+  - "%{lookup('common::base_dir')}/aws-tools"
+  - "%{lookup('common::base_dir')}/common-tools"
 
 common::base_dir: /opt/shinesolutions
 common::log_dir: /var/log/shinesolutions
@@ -83,21 +83,21 @@ preview_publish_dispatcher::logrotation::config: "%{alias('preview_publish_dispa
 preview_publish_dispatcher::logrotation::rules: "%{alias('preview_publish_dispatcher::logrotation.rules')}"
 
 # pre-common
-pre_common::base_dir: "%{hiera('common::base_dir')}"
-pre_common::tmp_base_dir: "%{hiera('common::tmp_base_dir')}"
-pre_common::tmp_dir: "%{hiera('common::tmp_dir')}"
-pre_common::aws_region: "%{hiera('common::aws_region')}"
-pre_common::awslogs_service_name: "%{hiera('common::awslogs_service_name')}"
-pre_common::user: "%{hiera('common::user')}"
-pre_common::group: "%{hiera('common::group')}"
-pre_common::credentials_file: "%{hiera('common::credentials_file')}"
-pre_common::log_dir: "%{hiera('common::log_dir')}"
-pre_common::enable_chaos_monkey: "%{hiera('chaos_monkey::include_stack')}"
-pre_common::enable_preview_architecture: "%{hiera('preview_publish::include_stack')}"
+pre_common::base_dir: "%{lookup('common::base_dir')}"
+pre_common::tmp_base_dir: "%{lookup('common::tmp_base_dir')}"
+pre_common::tmp_dir: "%{lookup('common::tmp_dir')}"
+pre_common::aws_region: "%{lookup('common::aws_region')}"
+pre_common::awslogs_service_name: "%{lookup('common::awslogs_service_name')}"
+pre_common::user: "%{lookup('common::user')}"
+pre_common::group: "%{lookup('common::group')}"
+pre_common::credentials_file: "%{lookup('common::credentials_file')}"
+pre_common::log_dir: "%{lookup('common::log_dir')}"
+pre_common::enable_chaos_monkey: "%{lookup('chaos_monkey::include_stack')}"
+pre_common::enable_preview_architecture: "%{lookup('preview_publish::include_stack')}"
 pre_common::ssh_public_keys: "%{alias('common::ssh_public_keys')}"
 # post-common
-action_scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
-action_scheduled_jobs::log_dir: "%{hiera('common::log_dir')}"
+action_scheduled_jobs::base_dir: "%{lookup('common::base_dir')}"
+action_scheduled_jobs::log_dir: "%{lookup('common::log_dir')}"
 
 author::exec_path: "%{alias('exec_path')}"
 publish::exec_path: "%{alias('exec_path')}"
@@ -111,72 +111,72 @@ aem_curator::config_author_dispatcher::exec_path: "%{alias('exec_path')}"
 aem_curator::config_publish_dispatcher::exec_path: "%{alias('exec_path')}"
 
 # Wait until login page is ready parameters
-author_primary::login_ready_max_tries: "%{hiera('common::login_ready_max_tries')}"
-author_primary::login_ready_base_sleep_seconds: "%{hiera('common::login_ready_base_sleep_seconds')}"
-author_primary::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max_sleep_seconds')}"
-publish::login_ready_max_tries: "%{hiera('common::login_ready_max_tries')}"
-publish::login_ready_base_sleep_seconds: "%{hiera('common::login_ready_base_sleep_seconds')}"
-publish::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max_sleep_seconds')}"
-preview_publish::login_ready_max_tries: "%{hiera('common::login_ready_max_tries')}"
-preview_publish::login_ready_base_sleep_seconds: "%{hiera('common::login_ready_base_sleep_seconds')}"
-preview_publish::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max_sleep_seconds')}"
-aem_curator::action_promote_author_standby_to_primary::login_ready_max_tries: "%{hiera('common::login_ready_max_tries')}"
-aem_curator::action_promote_author_standby_to_primary::login_ready_base_sleep_seconds: "%{hiera('common::login_ready_base_sleep_seconds')}"
-aem_curator::action_promote_author_standby_to_primary::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max_sleep_seconds')}"
+author_primary::login_ready_max_tries: "%{lookup('common::login_ready_max_tries')}"
+author_primary::login_ready_base_sleep_seconds: "%{lookup('common::login_ready_base_sleep_seconds')}"
+author_primary::login_ready_max_sleep_seconds: "%{lookup('common::login_ready_max_sleep_seconds')}"
+publish::login_ready_max_tries: "%{lookup('common::login_ready_max_tries')}"
+publish::login_ready_base_sleep_seconds: "%{lookup('common::login_ready_base_sleep_seconds')}"
+publish::login_ready_max_sleep_seconds: "%{lookup('common::login_ready_max_sleep_seconds')}"
+preview_publish::login_ready_max_tries: "%{lookup('common::login_ready_max_tries')}"
+preview_publish::login_ready_base_sleep_seconds: "%{lookup('common::login_ready_base_sleep_seconds')}"
+preview_publish::login_ready_max_sleep_seconds: "%{lookup('common::login_ready_max_sleep_seconds')}"
+aem_curator::action_promote_author_standby_to_primary::login_ready_max_tries: "%{lookup('common::login_ready_max_tries')}"
+aem_curator::action_promote_author_standby_to_primary::login_ready_base_sleep_seconds: "%{lookup('common::login_ready_base_sleep_seconds')}"
+aem_curator::action_promote_author_standby_to_primary::login_ready_max_sleep_seconds: "%{lookup('common::login_ready_max_sleep_seconds')}"
 
 # JMX Configuration
 common::jmxremote::user: monitorOnly
 aem_curator::action_promote_author_standby_to_primary::jmxremote_enable_ssl: true
 aem_curator::action_promote_author_standby_to_primary::jmxremote_keystore_path: /etc/ssl/aem-author/jmx.ks
 aem_curator::action_promote_author_standby_to_primary::jmxremote_enable_authentication: true
-aem_curator::action_promote_author_standby_to_primary::jmxremote_monitoring_username: "%{hiera('common::jmxremote::user')}"
-aem_curator::action_promote_author_standby_to_primary::jmxremote_monitoring_user_password: "%{hiera('common::jmxremote::user_password')}"
-aem_curator::config_collectd::jmx_user: "%{hiera('common::jmxremote::user')}"
-aem_curator::config_collectd::jmx_user_password: "%{hiera('common::jmxremote::user_password')}"
+aem_curator::action_promote_author_standby_to_primary::jmxremote_monitoring_username: "%{lookup('common::jmxremote::user')}"
+aem_curator::action_promote_author_standby_to_primary::jmxremote_monitoring_user_password: "%{lookup('common::jmxremote::user_password')}"
+aem_curator::config_collectd::jmx_user: "%{lookup('common::jmxremote::user')}"
+aem_curator::config_collectd::jmx_user_password: "%{lookup('common::jmxremote::user_password')}"
 
 # AEM Scheduled jobs
-aem_curator::config_aem_scheduled_jobs::base_dir: "%{hiera('common::base_dir')}"
-aem_curator::config_aem_scheduled_jobs::log_dir: "%{hiera('common::log_dir')}"
+aem_curator::config_aem_scheduled_jobs::base_dir: "%{lookup('common::base_dir')}"
+aem_curator::config_aem_scheduled_jobs::log_dir: "%{lookup('common::log_dir')}"
 
 # AEM Tools
-aem_curator::config_aem_tools::oak_run_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/oak-run-%{hiera('aem_curator::config_aem_tools::oak_run_version')}.jar"
+aem_curator::config_aem_tools::oak_run_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/oak-run-%{lookup('aem_curator::config_aem_tools::oak_run_version')}.jar"
 aem_curator::config_aem_tools::oak_run_version: '1.4.15'
-aem_curator::config_aem_tools::aem_vlt_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/vault-cli-%{hiera('aem_curator::config_aem_tools::aem_vlt_version')}-bin.tar.gz"
+aem_curator::config_aem_tools::aem_vlt_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/vault-cli-%{lookup('aem_curator::config_aem_tools::aem_vlt_version')}-bin.tar.gz"
 aem_curator::config_aem_tools::aem_vlt_version: '3.7.0'
-aem_curator::config_aem_tools::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
-aem_curator::config_aem_tools::base_dir: "%{hiera('common::base_dir')}"
-aem_curator::config_aem_tools::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::config_aem_tools::aem_repo_device: "%{hiera('common::ami::device_name')}"
-aem_curator::config_aem_tools_dispatcher::base_dir: "%{hiera('common::base_dir')}"
+aem_curator::config_aem_tools::aem_password_retrieval_command: "%{lookup('common::aem_password_retrieval_command')}"
+aem_curator::config_aem_tools::base_dir: "%{lookup('common::base_dir')}"
+aem_curator::config_aem_tools::tmp_dir: "%{lookup('common::tmp_dir')}"
+aem_curator::config_aem_tools::aem_repo_device: "%{lookup('common::ami::device_name')}"
+aem_curator::config_aem_tools_dispatcher::base_dir: "%{lookup('common::base_dir')}"
 
 # AEM Upgrade Tools
-aem_curator::config_aem_upgrade_tools::base_dir: "%{hiera('common::base_dir')}"
-aem_curator::config_aem_upgrade_tools::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::config_aem_upgrade_tools::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
+aem_curator::config_aem_upgrade_tools::base_dir: "%{lookup('common::base_dir')}"
+aem_curator::config_aem_upgrade_tools::tmp_dir: "%{lookup('common::tmp_dir')}"
+aem_curator::config_aem_upgrade_tools::aem_password_retrieval_command: "%{lookup('common::aem_password_retrieval_command')}"
 # AEM Deployer
-aem_curator::config_aem_deployer::base_dir: "%{hiera('common::base_dir')}"
-aem_curator::config_aem_deployer::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::config_aem_deployer::aem_password_retrieval_command: "%{hiera('common::aem_password_retrieval_command')}"
+aem_curator::config_aem_deployer::base_dir: "%{lookup('common::base_dir')}"
+aem_curator::config_aem_deployer::tmp_dir: "%{lookup('common::tmp_dir')}"
+aem_curator::config_aem_deployer::aem_password_retrieval_command: "%{lookup('common::aem_password_retrieval_command')}"
 
 # Deploy artifacts
-aem_curator::action_download_descriptor::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::action_download_artifacts::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::action_download_artifacts::base_dir: "%{hiera('common::base_dir')}"
-aem_curator::action_deploy_artifacts::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::action_deploy_artifacts::apache_conf_dir: "%{hiera('common::apache_conf_dir')}"
-aem_curator::action_deploy_artifacts::author_port: "%{hiera('common::author_port')}"
-aem_curator::action_deploy_artifacts::author_secure: "%{hiera('common::author_secure')}"
-aem_curator::action_deploy_artifacts::dispatcher_conf_dir: "%{hiera('common::dispatcher_conf_dir')}"
-aem_curator::action_deploy_artifacts::docroot_dir: "%{hiera('common::docroot_dir')}"
-aem_curator::action_deploy_artifacts::log_dir: "%{hiera('common::httpd::log_dir')}"
-aem_curator::action_deploy_artifacts::publish_port: "%{hiera('common::publish_port')}"
-aem_curator::action_deploy_artifacts::publish_secure: "%{hiera('common::publish_secure')}"
-aem_curator::action_deploy_artifacts::ssl_cert: "%{hiera('common::dispatcher_ssl_cert')}"
-aem_curator::action_deploy_artifacts::static_assets_dir: "%{hiera('common::docroot_dir')}"
-aem_curator::action_deploy_artifacts::virtual_hosts_dir: "%{hiera('common::virtual_hosts_dir')}"
+aem_curator::action_download_descriptor::tmp_dir: "%{lookup('common::tmp_dir')}"
+aem_curator::action_download_artifacts::tmp_dir: "%{lookup('common::tmp_dir')}"
+aem_curator::action_download_artifacts::base_dir: "%{lookup('common::base_dir')}"
+aem_curator::action_deploy_artifacts::tmp_dir: "%{lookup('common::tmp_dir')}"
+aem_curator::action_deploy_artifacts::apache_conf_dir: "%{lookup('common::apache_conf_dir')}"
+aem_curator::action_deploy_artifacts::author_port: "%{lookup('common::author_port')}"
+aem_curator::action_deploy_artifacts::author_secure: "%{lookup('common::author_secure')}"
+aem_curator::action_deploy_artifacts::dispatcher_conf_dir: "%{lookup('common::dispatcher_conf_dir')}"
+aem_curator::action_deploy_artifacts::docroot_dir: "%{lookup('common::docroot_dir')}"
+aem_curator::action_deploy_artifacts::log_dir: "%{lookup('common::httpd::log_dir')}"
+aem_curator::action_deploy_artifacts::publish_port: "%{lookup('common::publish_port')}"
+aem_curator::action_deploy_artifacts::publish_secure: "%{lookup('common::publish_secure')}"
+aem_curator::action_deploy_artifacts::ssl_cert: "%{lookup('common::dispatcher_ssl_cert')}"
+aem_curator::action_deploy_artifacts::static_assets_dir: "%{lookup('common::docroot_dir')}"
+aem_curator::action_deploy_artifacts::virtual_hosts_dir: "%{lookup('common::virtual_hosts_dir')}"
 
 # Upgrade-Tool AEM Unpack JAR
-aem_curator::action_upgrade_aem_unpack_jar::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_upgrade_aem_unpack_jar::tmp_dir: "%{lookup('common::tmp_dir')}"
 aem_curator::action_upgrade_aem_unpack_jar::aem_base: /opt/aem
 aem_curator::action_upgrade_aem_unpack_jar::post_stop_sleep_secs: 120
 aem_curator::action_upgrade_aem_unpack_jar::retries_max_tries: 60
@@ -185,7 +185,7 @@ aem_curator::action_upgrade_aem_unpack_jar::retries_max_sleep_seconds: 5
 aem_curator::action_upgrade_aem_unpack_jar::puppet_binary: /opt/puppetlabs/bin/puppet
 
 # Upgrade-Tool AEM Repository migration
-aem_curator::action_upgrade_repo_migration::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_upgrade_repo_migration::tmp_dir: "%{lookup('common::tmp_dir')}"
 aem_curator::action_upgrade_repo_migration::aem_base: /opt/aem
 aem_curator::action_upgrade_repo_migration::retries_max_tries: 60
 aem_curator::action_upgrade_repo_migration::retries_base_sleep_seconds: 5
@@ -193,20 +193,20 @@ aem_curator::action_upgrade_repo_migration::retries_max_sleep_seconds: 5
 
 # Upgrade-Tool AEM Upgrade
 aem_curator::action_upgrade_aem::aem_base: /opt/aem
-aem_curator::action_upgrade_aem::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::action_upgrade_aem::base_dir: "%{hiera('common::base_dir')}"
-aem_curator::action_upgrade_aem::login_ready_max_tries: "%{hiera('common::login_ready_max_tries')}"
-aem_curator::action_upgrade_aem::login_ready_base_sleep_seconds: "%{hiera('common::login_ready_base_sleep_seconds')}"
-aem_curator::action_upgrade_aem::login_ready_max_sleep_seconds: "%{hiera('common::login_ready_max_sleep_seconds')}"
+aem_curator::action_upgrade_aem::tmp_dir: "%{lookup('common::tmp_dir')}"
+aem_curator::action_upgrade_aem::base_dir: "%{lookup('common::base_dir')}"
+aem_curator::action_upgrade_aem::login_ready_max_tries: "%{lookup('common::login_ready_max_tries')}"
+aem_curator::action_upgrade_aem::login_ready_base_sleep_seconds: "%{lookup('common::login_ready_base_sleep_seconds')}"
+aem_curator::action_upgrade_aem::login_ready_max_sleep_seconds: "%{lookup('common::login_ready_max_sleep_seconds')}"
 
 # SAML tool
-aem_curator::action_enable_saml::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_enable_saml::tmp_dir: "%{lookup('common::tmp_dir')}"
 
 # AEM-Tool Flush-Dispatcher-cache
-aem_curator::action_flush_dispatcher_cache::docroot_dir: "%{hiera('common::docroot_dir')}"
+aem_curator::action_flush_dispatcher_cache::docroot_dir: "%{lookup('common::docroot_dir')}"
 
 # AEM Vault CLI Config
-aem_curator::action_content_sync_vlt::vlt_dir: "%{hiera('common::base_dir')}/aem-tools/vault-cli-%{hiera('aem_curator::config_aem_tools::aem_vlt_version')}/bin"
+aem_curator::action_content_sync_vlt::vlt_dir: "%{lookup('common::base_dir')}/aem-tools/vault-cli-%{lookup('aem_curator::config_aem_tools::aem_vlt_version')}/bin"
 
 # AEM Author Primary and Standby configuration and promotion
 aem_curator::config_author_primary::aem_version: '6.2'

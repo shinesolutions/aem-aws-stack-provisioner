@@ -5,9 +5,9 @@ defaults:
   data_hash: yaml_data
 hierarchy:
   - name: "OS release specific overrides"
-    path: "%{::os.family}/%{::os.name}-%{::os.release.major}.yaml"
+    path: "%{facts.os.family}/%{facts.os.name}-%{facts.os.release.major}.yaml"
   - name: "OS family overrides"
-    path: "%{::os.family}/%{::os.name}.yaml"
+    path: "%{facts.os.family}/%{facts.os.name}.yaml"
   - name: "User defined hiera file"
     path: local.yaml
   - name: "Event hiera"

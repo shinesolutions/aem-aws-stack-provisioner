@@ -1,74 +1,74 @@
 ---
 author_standby::aem_id: author
-author_standby::base_dir: "%{hiera('common::base_dir')}"
-author_standby::tmp_dir: "%{hiera('common::tmp_dir')}"
-author_standby::aws_region: "%{hiera('common::aws_region')}"
+author_standby::base_dir: "%{lookup('common::base_dir')}"
+author_standby::tmp_dir: "%{lookup('common::tmp_dir')}"
+author_standby::aws_region: "%{lookup('common::aws_region')}"
 author_standby::aws_tags: "%{alias('common::aws_tags')}"
 
 # device_alias <- used by snapshot_attach.py Depending on the block device driver of the kernel, the device could be attached with a different name than you specified.
 author_standby::aem_repo_devices:
-  - device_name: "%{hiera('common::ami::device_name')}"
-    device_alias: "%{hiera('common::ami::device_alias')}"
-    aem_id: "%{hiera('author_standby::aem_id')}"
+  - device_name: "%{lookup('common::ami::device_name')}"
+    device_alias: "%{lookup('common::ami::device_alias')}"
+    aem_id: "%{lookup('author_standby::aem_id')}"
 
-author_standby::awslogs_config_path: "%{hiera('common::awslogs_config_path')}"
+author_standby::awslogs_config_path: "%{lookup('common::awslogs_config_path')}"
 
 action_scheduled_jobs::live_snapshot_enable: "%{alias('author_standby::scheduled_jobs::enable::live_snapshot')}"
-action_scheduled_jobs::live_snapshot_weekday: "%{hiera('author_standby::scheduled_jobs::weekday::live_snapshot')}"
-action_scheduled_jobs::live_snapshot_hour: "%{hiera('author_standby::scheduled_jobs::hour::live_snapshot')}"
-action_scheduled_jobs::live_snapshot_minute: "%{hiera('author_standby::scheduled_jobs::minute::live_snapshot')}"
+action_scheduled_jobs::live_snapshot_weekday: "%{lookup('author_standby::scheduled_jobs::weekday::live_snapshot')}"
+action_scheduled_jobs::live_snapshot_hour: "%{lookup('author_standby::scheduled_jobs::hour::live_snapshot')}"
+action_scheduled_jobs::live_snapshot_minute: "%{lookup('author_standby::scheduled_jobs::minute::live_snapshot')}"
 
 aem_curator::action_enable_crxde::aem_instances:
   - run_mode: author
-    aem_id: "%{hiera('author_standby::aem_id')}"
+    aem_id: "%{lookup('author_standby::aem_id')}"
 
 aem_curator::action_disable_crxde::aem_instances:
   - run_mode: author
-    aem_id: "%{hiera('author_standby::aem_id')}"
+    aem_id: "%{lookup('author_standby::aem_id')}"
 
 aem_curator::action_list_packages::aem_instances:
   - run_mode: author
-    aem_id: "%{hiera('author_standby::aem_id')}"
+    aem_id: "%{lookup('author_standby::aem_id')}"
 
-aem_curator::action_deploy_artifacts::aem_id: "%{hiera('author_standby::aem_id')}"
+aem_curator::action_deploy_artifacts::aem_id: "%{lookup('author_standby::aem_id')}"
 
-aem_curator::action_download_artifacts::aem_id: "%{hiera('author_standby::aem_id')}"
+aem_curator::action_download_artifacts::aem_id: "%{lookup('author_standby::aem_id')}"
 
-aem_curator::action_export_backup::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::action_export_backup::aem_id: "%{hiera('author_standby::aem_id')}"
+aem_curator::action_export_backup::tmp_dir: "%{lookup('common::tmp_dir')}"
+aem_curator::action_export_backup::aem_id: "%{lookup('author_standby::aem_id')}"
 
-aem_curator::action_export_backups::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::action_export_backups::download_descriptor::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::action_export_backups::aem_id: "%{hiera('author_standby::aem_id')}"
+aem_curator::action_export_backups::tmp_dir: "%{lookup('common::tmp_dir')}"
+aem_curator::action_export_backups::download_descriptor::tmp_dir: "%{lookup('common::tmp_dir')}"
+aem_curator::action_export_backups::aem_id: "%{lookup('author_standby::aem_id')}"
 
-aem_curator::action_import_backup::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::action_import_backup::aem_id: "%{hiera('author_standby::aem_id')}"
+aem_curator::action_import_backup::tmp_dir: "%{lookup('common::tmp_dir')}"
+aem_curator::action_import_backup::aem_id: "%{lookup('author_standby::aem_id')}"
 
-aem_curator::action_promote_author_standby_to_primary::base_dir: "%{hiera('common::base_dir')}"
-aem_curator::action_promote_author_standby_to_primary::tmp_dir: "%{hiera('common::tmp_dir')}"
+aem_curator::action_promote_author_standby_to_primary::base_dir: "%{lookup('common::base_dir')}"
+aem_curator::action_promote_author_standby_to_primary::tmp_dir: "%{lookup('common::tmp_dir')}"
 aem_curator::action_promote_author_standby_to_primary::aem_home_dir: /opt/aem/author
-aem_curator::action_promote_author_standby_to_primary::aem_id: "%{hiera('author_standby::aem_id')}"
+aem_curator::action_promote_author_standby_to_primary::aem_id: "%{lookup('author_standby::aem_id')}"
 aem_curator::action_promote_author_standby_to_primary::author_port: 4502
 
 aem_curator::config_aem_tools::aem_instances:
   - crx_quickstart_dir: /opt/aem/author/crx-quickstart
     user: aem-author
-    aem_id:  "%{hiera('author_standby::aem_id')}"
+    aem_id:  "%{lookup('author_standby::aem_id')}"
 
 aem_curator::config_collectd::aem_instances:
-  - aem_id: "%{hiera('author_standby::aem_id')}"
-    jmxremote_port: "%{hiera('aem_curator::config_author_standby::jmxremote_port')}"
+  - aem_id: "%{lookup('author_standby::aem_id')}"
+    jmxremote_port: "%{lookup('aem_curator::config_author_standby::jmxremote_port')}"
     instance_prefixes:
       - standby-status
 
-aem_curator::config_author_standby::tmp_dir: "%{hiera('common::tmp_dir')}"
-aem_curator::config_author_standby::aem_base: "%{hiera('common::aem_base')}"
-aem_curator::config_author_standby::puppet_conf_dir: "%{hiera('common::puppet_conf_dir')}"
+aem_curator::config_author_standby::tmp_dir: "%{lookup('common::tmp_dir')}"
+aem_curator::config_author_standby::aem_base: "%{lookup('common::aem_base')}"
+aem_curator::config_author_standby::puppet_conf_dir: "%{lookup('common::puppet_conf_dir')}"
 aem_curator::config_author_standby::crx_quickstart_dir: /opt/aem/author/crx-quickstart
 aem_curator::config_author_standby::aem_home_dir: /opt/aem/author
 aem_curator::config_author_standby::author_protocol: http
 aem_curator::config_author_standby::author_port: 4502
-aem_curator::config_author_standby::credentials_file: "%{hiera('common::credentials_file')}"
+aem_curator::config_author_standby::credentials_file: "%{lookup('common::credentials_file')}"
 aem_curator::config_author_standby::enable_aem_clean_directories: true
 aem_curator::config_author_standby::enable_deploy_flag: false
 aem_curator::config_author_standby::enable_crxde: false
