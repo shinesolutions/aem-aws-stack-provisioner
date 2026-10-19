@@ -41,6 +41,11 @@ deps-local:
 	cp -R ../puppet-aem-curator/* modules/aem_curator/
 	cp -R ../puppet-simianarmy/* modules/simianarmy/
 
+# The puppet-lint checks added since puppet-lint 2.5.2 (mostly the Vox Pupuli
+# plugins installed by voxpupuli-test) that report warnings on the manifests
+# are disabled, from --no-exec_idempotency-check on, to keep the 2.5.2 checks.
+# The hiera data is checked with relaxed yamllint rules, without line lengths
+# and with duplicate keys as warnings, as yaml-lint only checked the syntax.
 lint:
 	bundle exec puppet-lint \
 		--fail-on-warnings \
@@ -50,13 +55,28 @@ lint:
 		--no-only_variable_string-check \
 		--no-selector_inside_resource-check \
 		--no-variable_scope-check \
+		--no-exec_idempotency-check \
+		--no-file_ensure-check \
+		--no-lookup_in_parameter-check \
+		--no-manifest_whitespace_closing_brace_before-check \
+		--no-manifest_whitespace_opening_brace_after-check \
+		--no-parameter_documentation-check \
+		--no-parameter_types-check \
+		--no-strict_indent-check \
+		--no-top_scope_facts-check \
+		--no-trailing_comma-check \
 		--log-format "%{path} (%{check}) L%{line} %{message}" \
 		manifests/*.pp
 	shellcheck files/*/*.sh
 	bundle exec puppet parser validate manifests/*.pp
 	bundle exec puppet epp validate templates/**/*.epp
 	bundle exec rubocop test/inspec/*.rb
-	bundle exec yaml-lint .*.yml conf/*.yaml data/*.yaml data/*/*.yaml
+	yamllint .markdownlint.yaml .github/workflows/*.yaml
+	yamllint \
+		-d "{extends: relaxed, rules: {line-length: disable, key-duplicates: {level: warning}}}" \
+		.*.yml conf/*.yaml data/*.yaml data/*/*.yaml
+	markdownlint-cli2 README.md
+	python3 -m json.tool .rtk.json
 
 package:
 	rm -rf stage
