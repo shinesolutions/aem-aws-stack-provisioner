@@ -13,6 +13,7 @@ mod 'puppet-logrotate', '9.0.0'
 mod 'puppetlabs/stdlib', '9.7.0'
 mod 'puppet/systemd', '10.3.0'
 mod 'puppet-yum', '8.3.0'
+# Needed by aem_curator 4.1.9; remove when aem_curator/aem_resources are bumped, as it moves into them
 mod 'bstopp/aem', '3.0.0'
 mod 'shinesolutions/aem_orchestrator', '3.0.2'
 mod 'shinesolutions/aem_resources', '7.10.2'
