@@ -96,6 +96,7 @@ else
   <% $aem_repo_devices.each | Integer $index, Hash $aem_repo_device | { -%>
 
     echo "[${stack_prefix}-${component}/${instance_id}] Stopping: aem-<%= $aem_repo_device['aem_id'] %>"
+    # Note: the AEM systemd unit sets TimeoutStopSec=4min, systemd kills AEM if a graceful stop takes longer
     systemctl stop aem-<%= $aem_repo_device['aem_id'] %>
     java_run=true
     wait_<%= $aem_repo_device['aem_id'] %>_stopped
