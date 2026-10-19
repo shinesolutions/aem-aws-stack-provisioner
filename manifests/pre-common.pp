@@ -41,10 +41,10 @@ class pre_common (
   )
 
   # Ensure we have a working FQDN <=> IP mapping.
-  host { $facts['fqdn']:
+  host { $facts['networking']['fqdn']:
     ensure       => present,
-    ip           => $facts['ipaddress'],
-    host_aliases => $facts['hostname'],
+    ip           => $facts['networking']['ip'],
+    host_aliases => $facts['networking']['hostname'],
   }
 
   if $ssh_public_keys {
