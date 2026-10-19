@@ -15,11 +15,16 @@ clean:
 
 # resolve dependencies from remote artifact registries
 deps:
-	gem install bundler --version=2.3.21
+	gem install bundler --version=4.0.22
 	rm -rf .bundle
-	bundle install --binstubs
+	bundle install
 	bundle exec r10k puppetfile install --verbose --moduledir modules
-	bundle exec inspec vendor --overwrite
+
+# vendor the InSpec profile dependencies from inspec.yml into files/test/inspec/
+# InSpec 1.51.6 does not run on Ruby 4 and no InSpec version can share a bundle
+# with OpenVox 9, so this needs an InSpec CLI on the PATH (pending decision)
+deps-inspec:
+	inspec vendor --overwrite
 	cd vendor && find . -name "*.tar.gz" -exec tar -xzvf '{}' \; -exec rm '{}' \;
 	cd vendor && mv inspec-aem-aws-*.*.* inspec-aem-aws
 	rm -rf files/test/inspec/ && mkdir -p files/test/inspec/ && cp -R vendor/* files/test/inspec/
@@ -82,4 +87,4 @@ publish:
 	gh release create $(version) --title $(version) --notes "" || echo "Release $(version) has been created on GitHub"
 	gh release upload $(version) stage/aem-aws-stack-provisioner-$(version).tar.gz
 
-.PHONY: ci clean deps deps-local lint package release release-major release-minor release-patch publish
+.PHONY: ci clean deps deps-inspec deps-local lint package release release-major release-minor release-patch publish

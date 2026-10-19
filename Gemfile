@@ -1,13 +1,12 @@
-source "https://rubygems.org"
+source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
-gem 'inspec', '1.51.6'
-gem 'concurrent-ruby', '1.1.9', require: false
-gem 'gettext', '3.5.1', require: false
-gem 'gettext-setup', '0.31', require: false
-gem 'locale', '2.1.4', require: false
-gem 'puppet', '~> 7.18', require: false
-gem 'puppetlabs_spec_helper', '4.0.1', require: false
-gem 'puppet-lint', '2.5.2', require: false
-gem 'r10k', '3.15.1', require: false
-gem 'rubocop', '1.35.1', require: false
-gem 'yaml-lint', '0.0.10', require: false
+group :development, :test do
+  # OpenVox 9 calls JSON.parse(string, options), which json 3 no longer accepts
+  gem 'json',                '~> 2.21'
+  # Installs the Puppetfile modules
+  gem 'r10k',                '~> 5.0', require: false
+  # Provides OpenVox, puppet-lint (with the Vox Pupuli plugins) and rubocop
+  gem 'voxpupuli-test',      '~> 15.0', require: false
+  # Loaded as a plugin in .rubocop.yml, not a dependency of voxpupuli-test
+  gem 'rubocop-performance', '~> 1.27', require: false
+end

@@ -2,7 +2,7 @@ inherit_mode:
   merge:
     - Exclude
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: '4.0'
   DisplayCopNames: true
   Exclude:
     - .bundle/*
@@ -14,7 +14,7 @@ Metrics/BlockLength:
     - "**/**/*_spec.rb"
 Metrics/ClassLength:
   Max: 300
-Metrics/LineLength:
+Layout/LineLength:
   Max: 280
 Metrics/MethodLength:
   Max: 30
@@ -29,8 +29,8 @@ Naming/AccessorMethodName:
 Naming/FileName:
   Exclude:
     - "**/**/*_spec.rb"
-# enable Naming/PredicateName as part of ruby_aem v2
-Naming/PredicateName:
+# enable Naming/PredicatePrefix (formerly Naming/PredicateName) as part of ruby_aem v2
+Naming/PredicatePrefix:
   Enabled: false
 # Style/BracesAroundHashParameters:
 #   EnforcedStyle: context_dependent
