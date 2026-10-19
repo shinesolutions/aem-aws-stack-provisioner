@@ -14,20 +14,18 @@ clean:
 ################################################################################
 
 # resolve dependencies from remote artifact registries
+# The InSpec AEM AWS profile is downloaded from the URL in inspec.yml into files/test/inspec/inspec-aem-aws
+# (run by the aem-tools scripts with `inspec exec`), replacing `inspec vendor`: no InSpec version can share
+# a bundle with OpenVox 9, and recent InSpec versions need a Chef licence
 deps:
 	gem install bundler --version=4.0.22
 	rm -rf .bundle
 	bundle install
 	bundle exec r10k puppetfile install --verbose --moduledir modules
-
-# vendor the InSpec profile dependencies from inspec.yml into files/test/inspec/
-# InSpec 1.51.6 does not run on Ruby 4 and no InSpec version can share a bundle
-# with OpenVox 9, so this needs an InSpec CLI on the PATH (pending decision)
-deps-inspec:
-	inspec vendor --overwrite
-	cd vendor && find . -name "*.tar.gz" -exec tar -xzvf '{}' \; -exec rm '{}' \;
-	cd vendor && mv inspec-aem-aws-*.*.* inspec-aem-aws
-	rm -rf files/test/inspec/ && mkdir -p files/test/inspec/ && cp -R vendor/* files/test/inspec/
+	rm -rf vendor/inspec/ && mkdir -p vendor/inspec/
+	curl -sfL "$$(ruby -ryaml -e "puts YAML.load_file('inspec.yml')['depends'][0]['url']")" | tar --no-same-owner -xz -C vendor/inspec/
+	rm -rf files/test/inspec/ && mkdir -p files/test/inspec/
+	mv vendor/inspec/inspec-aem-aws-* files/test/inspec/inspec-aem-aws
 
 # resolve AEM OpenCloud's Puppet module dependencies from local directories
 # TODO: include local InSpec modules
@@ -111,4 +109,4 @@ publish:
 	GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=safe.directory GIT_CONFIG_VALUE_0=$(CURDIR) \
 		gh release upload $(version) stage/aem-aws-stack-provisioner-$(version).tar.gz
 
-.PHONY: ci clean deps deps-inspec deps-local lint package release release-major release-minor release-patch publish
+.PHONY: ci clean deps deps-local lint package release release-major release-minor release-patch publish
