@@ -1,7 +1,9 @@
 ---
 orchestrator::base_dir: "%{lookup('common::base_dir')}"
 orchestrator::tmp_dir: "%{lookup('common::tmp_dir')}"
-orchestrator::aem_orchestrator_version: 3.0.0
+# aem_orchestrator 3.x verifies the jar checksum (its default is for 4.0.0), so the version and
+# aem_orchestrator::jarfile_checksum_value below must change together; 5.0.0 needs Java 21
+orchestrator::aem_orchestrator_version: 5.0.0
 orchestrator::awslogs_config_path: "%{lookup('common::awslogs_config_path')}"
 orchestrator::aws_region: "%{lookup('common::aws_region')}"
 
@@ -20,6 +22,8 @@ action_scheduled_jobs::cloudwatch_s3_stream_minute: "%{lookup('aem_orchestrator:
 
 aem_orchestrator::user: aem-orchestrator
 aem_orchestrator::jarfile_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/aem-orchestrator-%{lookup('orchestrator::aem_orchestrator_version')}.jar"
+# SHA-256 of aem-orchestrator-5.0.0.jar as published on Maven Central
+aem_orchestrator::jarfile_checksum_value: c42928026c73e733b3c9d70e372a9536b78afcb4187a2bf23ee394acaea86718
 aem_orchestrator::manage_installdir: true
 aem_orchestrator::basedir_mode: '0755'
 aem_orchestrator::installdir_mode: '0750'
