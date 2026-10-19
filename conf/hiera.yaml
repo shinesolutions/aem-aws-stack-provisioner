@@ -3,6 +3,8 @@ version: 5
 defaults:
   datadir: /opt/shinesolutions/aem-aws-stack-provisioner/data
   data_hash: yaml_data
+# facts.os.* replaces the top-scope ::os variables (recommended for hiera 5), and the data
+# uses %{lookup()} as the hiera() interpolation function is deprecated
 hierarchy:
   - name: "OS release specific overrides"
     path: "%{facts.os.family}/%{facts.os.name}-%{facts.os.release.major}.yaml"

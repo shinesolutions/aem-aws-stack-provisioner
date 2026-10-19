@@ -16,7 +16,8 @@ clean:
 # resolve dependencies from remote artifact registries
 # The InSpec AEM AWS profile is downloaded from the URL in inspec.yml into files/test/inspec/inspec-aem-aws
 # (run by the aem-tools scripts with `inspec exec`), replacing `inspec vendor`: no InSpec version can share
-# a bundle with OpenVox 9, and recent InSpec versions need a Chef licence
+# a bundle with OpenVox 9, and recent InSpec versions need a Chef licence.
+# bundle install has no --binstubs option anymore in Bundler 4
 deps:
 	gem install bundler --version=4.0.22
 	rm -rf .bundle
@@ -41,7 +42,8 @@ deps-local:
 
 # The puppet-lint checks added since puppet-lint 2.5.2 (mostly the Vox Pupuli
 # plugins installed by voxpupuli-test) that report warnings on the manifests
-# are disabled, from --no-exec_idempotency-check on, to keep the 2.5.2 checks.
+# are disabled, from --no-exec_idempotency-check on, to keep the 2.5.2 checks,
+# as fixing them needs code changes beyond the upgrade.
 # The hiera data is checked with relaxed yamllint rules, without line lengths
 # and with duplicate keys as warnings, as yaml-lint only checked the syntax.
 lint:
