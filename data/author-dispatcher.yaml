@@ -1,4 +1,6 @@
 ---
+# yamllint disable rule:line-length
+# (hiera keys with lookup() interpolations do not fit in 80 characters)
 author_dispatcher::base_dir: "%{lookup('common::base_dir')}"
 author_dispatcher::docroot_dir: "%{lookup('common::docroot_dir')}"
 author_dispatcher::log_dir: "%{lookup('common::log_dir')}"

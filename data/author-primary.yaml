@@ -1,4 +1,6 @@
 ---
+# yamllint disable rule:line-length
+# (hiera keys with lookup() interpolations do not fit in 80 characters)
 author_primary::aem_id: author
 author_primary::base_dir: "%{lookup('common::base_dir')}"
 author_primary::tmp_dir: "%{lookup('common::tmp_dir')}"

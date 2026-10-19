@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 ### Added
-- Added yamllint and markdownlint-cli2 to the lint target
+- Added yamllint and markdownlint-cli2 to the lint target, yamllint with its default rules and the exceptions as yamllint comments in the YAML files
 - Added puppet/systemd and puppetlabs/inifile modules, required by puppet-logrotate 9
 
 ### Changed

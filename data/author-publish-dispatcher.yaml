@@ -1,4 +1,6 @@
 ---
+# yamllint disable rule:line-length
+# (hiera keys with lookup() interpolations do not fit in 80 characters)
 # AEM Author Publish Dispatcher
 author_publish_dispatcher::base_dir: "%{lookup('common::base_dir')}"
 author_publish_dispatcher::log_dir: "%{lookup('common::log_dir')}"
@@ -196,9 +198,10 @@ aem_curator::config_aem_scheduled_jobs::offline_compaction_hour: "%{lookup('publ
 aem_curator::config_aem_scheduled_jobs::offline_compaction_minute: "%{lookup('publish::scheduled_jobs::minute::offline_compaction')}"
 
 # Logrotation configuration
+# Duplicate keys kept as before, only the last one takes effect (changing this changes behaviour)
 aem_curator::config_logrotate::rules: "%{alias('author_primary::logrotation::rules')}"
-aem_curator::config_logrotate::rules: "%{alias('publish::logrotation::rules')}"
-aem_curator::config_logrotate::rules: "%{alias('publish_dispatcher::logrotation::rules')}"
+aem_curator::config_logrotate::rules: "%{alias('publish::logrotation::rules')}"  # yamllint disable-line rule:key-duplicates
+aem_curator::config_logrotate::rules: "%{alias('publish_dispatcher::logrotation::rules')}"  # yamllint disable-line rule:key-duplicates
 
 # AEM authorizable keystore configuration parameters
 aem_curator::config_author_primary::enable_authorizable_keystore_creation: "%{alias('common::authorizable_keystore::enable_creation')}"

@@ -1,4 +1,6 @@
 ---
+# yamllint disable rule:line-length
+# (hiera keys with lookup() interpolations do not fit in 80 characters)
 author_standby::aem_id: author
 author_standby::base_dir: "%{lookup('common::base_dir')}"
 author_standby::tmp_dir: "%{lookup('common::tmp_dir')}"
@@ -53,7 +55,8 @@ aem_curator::action_promote_author_standby_to_primary::author_port: 4502
 aem_curator::config_aem_tools::aem_instances:
   - crx_quickstart_dir: /opt/aem/author/crx-quickstart
     user: aem-author
-    aem_id:  "%{lookup('author_standby::aem_id')}"
+    # Extra space after the colon kept as before, it does not change the value
+    aem_id:  "%{lookup('author_standby::aem_id')}"  # yamllint disable-line rule:colons
 
 aem_curator::config_collectd::aem_instances:
   - aem_id: "%{lookup('author_standby::aem_id')}"

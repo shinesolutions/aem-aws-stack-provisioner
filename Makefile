@@ -44,8 +44,7 @@ deps-local:
 # plugins installed by voxpupuli-test) that report warnings on the manifests
 # are disabled, from --no-exec_idempotency-check on, to keep the 2.5.2 checks,
 # as fixing them needs code changes beyond the upgrade.
-# The hiera data is checked with relaxed yamllint rules, without line lengths
-# and with duplicate keys as warnings, as yaml-lint only checked the syntax.
+# yamllint runs with its default rules, the exceptions are yamllint comments in the YAML files.
 lint:
 	bundle exec puppet-lint \
 		--fail-on-warnings \
@@ -71,10 +70,7 @@ lint:
 	bundle exec puppet parser validate manifests/*.pp
 	bundle exec puppet epp validate templates/**/*.epp
 	bundle exec rubocop test/inspec/*.rb
-	yamllint .markdownlint.yaml .github/workflows/*.yaml
-	yamllint \
-		-d "{extends: relaxed, rules: {line-length: disable, key-duplicates: {level: warning}}}" \
-		.*.yml conf/*.yaml data/*.yaml data/*/*.yaml
+	yamllint .markdownlint.yaml .github/workflows/*.yaml .*.yml conf/*.yaml data/*.yaml data/*/*.yaml
 	markdownlint-cli2 README.md
 	python3 -m json.tool .rtk.json
 

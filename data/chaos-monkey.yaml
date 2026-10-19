@@ -1,4 +1,6 @@
 ---
+# yamllint disable rule:line-length
+# (hiera keys with lookup() interpolations do not fit in 80 characters)
 
 chaos_monkey::awslogs_config_path: "%{lookup('common::awslogs_config_path')}"
 chaos_monkey::aws_region: "%{lookup('common::aws_region')}"

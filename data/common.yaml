@@ -1,4 +1,6 @@
 ---
+# yamllint disable rule:line-length
+# (hiera keys with lookup() interpolations do not fit in 80 characters)
 # Define lookup_options e.g. merge behaviours for specific parameters
 lookup_options:
   aem_curator::config_logrotate::rules:

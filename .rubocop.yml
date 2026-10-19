@@ -1,3 +1,6 @@
+---
+# yamllint disable rule:comments
+# (keeps RuboCop's generated '# new in <version>' comments as they are)
 inherit_mode:
   merge:
     - Exclude
@@ -29,7 +32,8 @@ Naming/AccessorMethodName:
 Naming/FileName:
   Exclude:
     - "**/**/*_spec.rb"
-# enable Naming/PredicatePrefix (formerly Naming/PredicateName) as part of ruby_aem v2
+# enable Naming/PredicatePrefix (formerly Naming/PredicateName)
+# as part of ruby_aem v2
 Naming/PredicatePrefix:
   Enabled: false
 # Style/BracesAroundHashParameters:

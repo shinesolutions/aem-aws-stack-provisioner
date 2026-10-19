@@ -1,4 +1,6 @@
 ---
+# yamllint disable rule:line-length
+# (hiera keys with lookup() interpolations do not fit in 80 characters)
 orchestrator::base_dir: "%{lookup('common::base_dir')}"
 orchestrator::tmp_dir: "%{lookup('common::tmp_dir')}"
 # aem_orchestrator 3.x verifies the jar checksum (its default is for 4.0.0), so the version and

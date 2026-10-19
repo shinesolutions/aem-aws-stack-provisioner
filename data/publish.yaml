@@ -1,4 +1,6 @@
 ---
+# yamllint disable rule:line-length
+# (hiera keys with lookup() interpolations do not fit in 80 characters)
 publish::aem_id: publish
 publish::base_dir: "%{lookup('common::base_dir')}"
 publish::tmp_dir: "%{lookup('common::tmp_dir')}"
