@@ -103,8 +103,12 @@ release-patch:
 
 release: release-minor
 
+# Create the GitHub release and upload the package, run by the publish workflow on a pushed tag.
+# safe.directory lets gh run git as root in the buildenv container
 publish:
-	gh release create $(version) --title $(version) --notes "" || echo "Release $(version) has been created on GitHub"
-	gh release upload $(version) stage/aem-aws-stack-provisioner-$(version).tar.gz
+	GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=safe.directory GIT_CONFIG_VALUE_0=$(CURDIR) \
+		gh release create $(version) --title $(version) --notes "" || echo "Release $(version) has been created on GitHub"
+	GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=safe.directory GIT_CONFIG_VALUE_0=$(CURDIR) \
+		gh release upload $(version) stage/aem-aws-stack-provisioner-$(version).tar.gz
 
 .PHONY: ci clean deps deps-inspec deps-local lint package release release-major release-minor release-patch publish
