@@ -38,6 +38,9 @@ translate_puppet_exit_code() {
 
 # execute the main.pp within the tar
 cd /tmp/aem-adhoc-puppet
+# TODO: errexit is still on here, so a run that applies changes (exit 2) ends the
+# script before translate_puppet_exit_code; turn errexit off around puppet apply
+# like the other scripts do
 puppet apply \
   --detailed-exitcodes \
   --logdest /tmp/adhoc_puppet_run.log \

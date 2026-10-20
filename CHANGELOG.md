@@ -7,7 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 <!-- rtk release rewrites this file in keep-a-changelog's own layout (no blank lines
 around headings and lists, Added/Changed/Fixed headings repeated per release, a link
 per release, and 7.1.1 is released twice). The directive is indented one space so
-rtk's parser keeps it as text. -->
+rtk's parser keeps it as text.
+TODO: merge the duplicate 7.1.1 release, then drop MD053. -->
  <!-- markdownlint-disable-file MD022 MD024 MD032 MD053 -->
 
 ## [Unreleased]

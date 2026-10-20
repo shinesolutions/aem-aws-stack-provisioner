@@ -2,7 +2,8 @@
 #
 # test_update_snapshot_id_in_launch_template.py is used to update the snapshot_id in the launch template
 #
-#
+# TODO: this test can't run: moto 5 removed mock_autoscaling and mock_ec2
+# (use mock_aws), and the repo pins no Python dependencies to run it with
 #
 import os
 import unittest

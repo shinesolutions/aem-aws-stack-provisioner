@@ -198,6 +198,7 @@ aem_curator::config_aem_scheduled_jobs::offline_compaction_hour: "%{lookup('publ
 aem_curator::config_aem_scheduled_jobs::offline_compaction_minute: "%{lookup('publish::scheduled_jobs::minute::offline_compaction')}"
 
 # Logrotation configuration
+# TODO: remove the duplicate keys once it is decided which rules should apply
 # Duplicate keys kept as before, only the last one takes effect (changing this changes behaviour)
 aem_curator::config_logrotate::rules: "%{alias('author_primary::logrotation::rules')}"
 aem_curator::config_logrotate::rules: "%{alias('publish::logrotation::rules')}"  # yamllint disable-line rule:key-duplicates

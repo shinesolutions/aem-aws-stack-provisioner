@@ -83,6 +83,9 @@ lint:
 
 # Package the working directory, then check the InSpec profile from deps is in it,
 # as pre_common copies files/test to the instances
+# TODO: this tars the whole working directory, so local leftovers (.vscode,
+# .upgrade-checkpoint, vendor) end up in a locally built package; package an
+# explicit list of paths instead
 package:
 	rm -rf stage
 	mkdir -p stage

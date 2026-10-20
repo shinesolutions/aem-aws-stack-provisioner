@@ -14,6 +14,7 @@ mod 'puppetlabs/selinux_core', '2.1.0'
 mod 'puppet-logrotate', '9.0.0'
 mod 'puppetlabs/stdlib', '9.7.0'
 # Required by puppet-logrotate 9, which manages hourly rotation with systemd::unit_file
+# TODO: puppet-logrotate 9.0.0 declares puppet/systemd < 10.0.0, align this pin
 mod 'puppet/systemd', '10.3.0'
 mod 'puppet-yum', '8.3.0'
 # Needed by aem_curator 4.1.9; remove when aem_curator/aem_resources are bumped, as it moves into them
