@@ -1,6 +1,14 @@
 version ?= 7.2.4-pre.0
 
-ci: clean deps lint package
+ci: clean deps lint test package
+
+# Run a command in the Python venv created by deps
+define python_venv
+	. .venv/bin/activate && $(1)
+endef
+
+rmdeps:
+	rm -rf .venv
 
 # Gemfile.lock is committed and kept, so CI installs the pinned gems
 clean:
@@ -20,10 +28,13 @@ clean:
 # a bundle with OpenVox 9, and recent InSpec versions need a Chef licence. It is saved to a file before
 # extracting it, so a failed download fails the build instead of being hidden by a pipe.
 # bundle install has no --binstubs option anymore in Bundler 4
+# requirements-dev.txt is installed too, so lint runs the pinned pylint, which sees the venv's packages
 deps:
 	gem install bundler --version=4.0.22
 	rm -rf .bundle
 	bundle install
+	python3 -m venv .venv
+	$(call python_venv,python3 -m pip install -r requirements.txt -r requirements-dev.txt)
 	bundle exec r10k puppetfile install --verbose --moduledir modules
 	rm -rf vendor/inspec/ && mkdir -p vendor/inspec/
 	curl -sSfL -o vendor/inspec/inspec-aem-aws.tar.gz "$$(ruby -ryaml -e "puts YAML.load_file('inspec.yml')['depends'][0]['url']")"
@@ -31,6 +42,12 @@ deps:
 	rm vendor/inspec/inspec-aem-aws.tar.gz
 	rm -rf files/test/inspec/ && mkdir -p files/test/inspec/
 	mv vendor/inspec/inspec-aem-aws-* files/test/inspec/inspec-aem-aws
+
+# Upgrade the Python dependencies in requirements.txt to the latest versions allowed by requirements.in
+deps-upgrade:
+	python3 -m venv .venv
+	$(call python_venv,python3 -m pip install -r requirements-dev.txt)
+	$(call python_venv,pip-compile --upgrade)
 
 # resolve AEM OpenCloud's Puppet module dependencies from local directories
 # TODO: include local InSpec modules
@@ -54,9 +71,10 @@ deps-local:
 # The checks that don't need the bundle run first, as they are the quickest to fail.
 lint:
 	shellcheck files/*/*.sh
-	yamllint .markdownlint.yaml .github/workflows/*.yaml .*.yml inspec.yml conf/*.yaml data/*.yaml data/*/*.yaml
+	$(call python_venv,yamllint .markdownlint.yaml .github/workflows/*.yaml .*.yml inspec.yml conf/*.yaml data/*.yaml data/*/*.yaml)
 	markdownlint-cli2 README.md CHANGELOG.md docs/*.md .github/ISSUE_TEMPLATE/*.md
 	python3 -m json.tool .rtk.json
+	$(call python_venv,pylint files/aws-tools/*.py files/aws-tools/route53-dns-alias-switch)
 	bundle exec puppet-lint \
 		--fail-on-warnings \
 		--no-140chars-check \
@@ -81,8 +99,13 @@ lint:
 	bundle exec puppet epp validate templates/*/*.epp
 	bundle exec rubocop test/inspec/*.rb
 
+# Run the Python unit tests of the aws-tools scripts, without writing __pycache__ into files/,
+# which would end up in the package
+test:
+	$(call python_venv,PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -v -s files/aws-tools -p 'test_*.py')
+
 # Package the working directory, then check the InSpec profile from deps is in it,
-# as pre_common copies files/test to the instances
+# as pre_common copies files/test to the instances. The .venv build tools are left out of it
 # TODO: this tars the whole working directory, so local leftovers (.vscode,
 # .upgrade-checkpoint, vendor) end up in a locally built package; package an
 # explicit list of paths instead
@@ -94,6 +117,7 @@ package:
 		--exclude='.tmp*' \
 		--exclude='stage*' \
 		--exclude='.idea*' \
+		--exclude='.venv' \
 		--exclude='.DS_Store*' \
 		--exclude='*.tar' \
 		-cvf \
@@ -120,4 +144,4 @@ publish:
 	GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=safe.directory GIT_CONFIG_VALUE_0=$(CURDIR) \
 		gh release upload $(version) stage/aem-aws-stack-provisioner-$(version).tar.gz
 
-.PHONY: ci clean deps deps-local lint package release release-major release-minor release-patch publish
+.PHONY: ci rmdeps clean deps deps-upgrade deps-local lint test package release release-major release-minor release-patch publish
