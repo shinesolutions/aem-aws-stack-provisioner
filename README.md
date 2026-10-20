@@ -133,11 +133,14 @@ Run the commands below in [AEM Platform BuildEnv](https://github.com/shinesoluti
 
 | Command | Runs |
 | --- | --- |
-| `make deps` | Install the Ruby gems with Bundler, the Puppetfile modules into `modules/` with r10k, and download the InSpec AEM AWS profile from `inspec.yml` into `files/test/inspec/inspec-aem-aws` |
+| `make deps` | Install the Ruby gems with Bundler, the pinned Python tools into `.venv`, the Puppetfile modules into `modules/` with r10k, and the InSpec AEM AWS profile into `files/test/inspec/inspec-aem-aws` |
+| `make deps-upgrade` | Upgrade the pinned Python dependencies in `requirements.txt` to the latest versions allowed by `requirements.in`, with pip-compile |
+| `make rmdeps` | Remove the `.venv` venv |
 | `make deps-local` | Replace the AEM OpenCloud Puppet modules in `modules/` with local checkouts next to this repository |
-| `make lint` | puppet-lint, Puppet manifest and EPP template validation, ShellCheck, RuboCop, yamllint and markdownlint |
+| `make lint` | puppet-lint, Puppet manifest and EPP template validation, ShellCheck, RuboCop, pylint, yamllint and markdownlint |
+| `make test` | The Python unit tests of the `files/aws-tools` scripts, with AWS mocked by moto |
 | `make package` | Package the provisioner into `stage/aem-aws-stack-provisioner-<version>.tar.gz` |
-| `make ci` | Everything CI runs: clean, deps, lint and package |
+| `make ci` | Everything CI runs: clean, deps, lint, test and package |
 
 The component InSpec tests in `test/inspec/` are run on the instances at the end of cloud-init.
 

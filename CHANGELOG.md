@@ -15,6 +15,8 @@ The directive is indented one space so rtk's parser keeps it as text. -->
 - Added puppet/systemd and puppetlabs/inifile modules, required by puppet-logrotate 9
 - Added a package check that the InSpec AEM AWS profile is included, and yamllint of inspec.yml
 - Added markdownlint of CHANGELOG.md, docs/ and the GitHub issue templates
+- Added a Python venv with pinned requirements (requirements.in, requirements-dev.txt, requirements.txt) and the deps-upgrade and rmdeps targets
+- Added pylint of the aws-tools Python scripts, and the Python unit test to CI with a test target
 
 ### Changed
 - Upgraded to Ruby 4.0.7 and OpenVox 9 with Vox Pupuli tooling, replacing the pinned Puppet 7 gems
@@ -39,6 +41,7 @@ The directive is indented one space so rtk's parser keeps it as text. -->
 - Fixed the author snapshot backup templates for OpenVox 9 strict variables
 - Fixed the publish target to run gh as root in the buildenv container
 - Fixed the deps target to fail the build when the InSpec profile download fails
+- Fixed the launch template snapshot unit test for moto 5
 
 ## [7.2.3] - 2026-03-11
 ### Changed
