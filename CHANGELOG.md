@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 - Added yamllint and markdownlint-cli2 to the lint target, yamllint with its default rules and the exceptions as yamllint comments in the YAML files
 - Added puppet/systemd and puppetlabs/inifile modules, required by puppet-logrotate 9
+- Added a package check that the InSpec AEM AWS profile is included, and yamllint of inspec.yml
 
 ### Changed
 - Upgraded to Ruby 4.0.7 and OpenVox 9 with Vox Pupuli tooling, replacing the pinned Puppet 7 gems
@@ -28,6 +29,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fixed the pre-common host entry for OpenVox 9, which no longer provides legacy facts
 - Fixed the author snapshot backup templates for OpenVox 9 strict variables
 - Fixed the publish target to run gh as root in the buildenv container
+- Fixed the deps target to fail the build when the InSpec profile download fails
 
 ## [7.2.3] - 2026-03-11
 ### Changed
