@@ -49,11 +49,13 @@ deps-local:
 # are disabled, from --no-exec_idempotency-check on, to keep the 2.5.2 checks,
 # as fixing them needs code changes beyond the upgrade.
 # yamllint runs with its default rules, the exceptions are yamllint comments in the YAML files.
+# markdownlint exceptions are inline comments too; CHANGELOG.md's is on its first line, the only
+# place where RTK's keep-a-changelog parser accepts and keeps a comment.
 # The checks that don't need the bundle run first, as they are the quickest to fail.
 lint:
 	shellcheck files/*/*.sh
 	yamllint .markdownlint.yaml .github/workflows/*.yaml .*.yml inspec.yml conf/*.yaml data/*.yaml data/*/*.yaml
-	markdownlint-cli2 README.md
+	markdownlint-cli2 README.md CHANGELOG.md docs/*.md .github/ISSUE_TEMPLATE/*.md
 	python3 -m json.tool .rtk.json
 	bundle exec puppet-lint \
 		--fail-on-warnings \

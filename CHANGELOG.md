@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD022 MD024 MD032 MD053 as RTK rewrites this file in the compact keep-a-changelog format -->
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
