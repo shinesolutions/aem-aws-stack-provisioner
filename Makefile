@@ -16,7 +16,8 @@ clean:
 # resolve dependencies from remote artifact registries
 # The InSpec AEM AWS profile is downloaded from the URL in inspec.yml into files/test/inspec/inspec-aem-aws
 # (run by the aem-tools scripts with `inspec exec`), replacing `inspec vendor`: no InSpec version can share
-# a bundle with OpenVox 9, and recent InSpec versions need a Chef licence.
+# a bundle with OpenVox 9, and recent InSpec versions need a Chef licence. It is saved to a file before
+# extracting it, so a failed download fails the build instead of being hidden by a pipe.
 # bundle install has no --binstubs option anymore in Bundler 4
 deps:
 	gem install bundler --version=4.0.22
@@ -24,7 +25,9 @@ deps:
 	bundle install
 	bundle exec r10k puppetfile install --verbose --moduledir modules
 	rm -rf vendor/inspec/ && mkdir -p vendor/inspec/
-	curl -sfL "$$(ruby -ryaml -e "puts YAML.load_file('inspec.yml')['depends'][0]['url']")" | tar --no-same-owner -xz -C vendor/inspec/
+	curl -sSfL -o vendor/inspec/inspec-aem-aws.tar.gz "$$(ruby -ryaml -e "puts YAML.load_file('inspec.yml')['depends'][0]['url']")"
+	tar --no-same-owner -xzf vendor/inspec/inspec-aem-aws.tar.gz -C vendor/inspec/
+	rm vendor/inspec/inspec-aem-aws.tar.gz
 	rm -rf files/test/inspec/ && mkdir -p files/test/inspec/
 	mv vendor/inspec/inspec-aem-aws-* files/test/inspec/inspec-aem-aws
 
@@ -72,7 +75,7 @@ lint:
 		--log-format "%{path} (%{check}) L%{line} %{message}" \
 		manifests/*.pp
 	bundle exec puppet parser validate manifests/*.pp
-	bundle exec puppet epp validate templates/**/*.epp
+	bundle exec puppet epp validate templates/*/*.epp
 	bundle exec rubocop test/inspec/*.rb
 
 # Package the working directory, then check the InSpec profile from deps is in it,
