@@ -45,7 +45,12 @@ deps-local:
 # are disabled, from --no-exec_idempotency-check on, to keep the 2.5.2 checks,
 # as fixing them needs code changes beyond the upgrade.
 # yamllint runs with its default rules, the exceptions are yamllint comments in the YAML files.
+# The checks that don't need the bundle run first, as they are the quickest to fail.
 lint:
+	shellcheck files/*/*.sh
+	yamllint .markdownlint.yaml .github/workflows/*.yaml .*.yml inspec.yml conf/*.yaml data/*.yaml data/*/*.yaml
+	markdownlint-cli2 README.md
+	python3 -m json.tool .rtk.json
 	bundle exec puppet-lint \
 		--fail-on-warnings \
 		--no-140chars-check \
@@ -66,14 +71,12 @@ lint:
 		--no-trailing_comma-check \
 		--log-format "%{path} (%{check}) L%{line} %{message}" \
 		manifests/*.pp
-	shellcheck files/*/*.sh
 	bundle exec puppet parser validate manifests/*.pp
 	bundle exec puppet epp validate templates/**/*.epp
 	bundle exec rubocop test/inspec/*.rb
-	yamllint .markdownlint.yaml .github/workflows/*.yaml .*.yml conf/*.yaml data/*.yaml data/*/*.yaml
-	markdownlint-cli2 README.md
-	python3 -m json.tool .rtk.json
 
+# Package the working directory, then check the InSpec profile from deps is in it,
+# as pre_common copies files/test to the instances
 package:
 	rm -rf stage
 	mkdir -p stage
@@ -87,6 +90,7 @@ package:
 		-cvf \
 		stage/aem-aws-stack-provisioner-$(version).tar ./
 	gzip stage/aem-aws-stack-provisioner-$(version).tar
+	tar -tzf stage/aem-aws-stack-provisioner-$(version).tar.gz ./files/test/inspec/inspec-aem-aws/inspec.yml
 
 release-major:
 	rtk release --release-increment-type major
