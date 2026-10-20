@@ -1,0 +1,9 @@
+boto3
+coloredlogs
+jmespath
+moto
+pyyaml
+requests
+retrying
+sh
+yamllint
