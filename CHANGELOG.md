@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added yamllint and markdownlint-cli2 to the lint target, yamllint with its default rules and the exceptions as yamllint comments in the YAML files
 - Added puppet/systemd and puppetlabs/inifile modules, required by puppet-logrotate 9
 - Added a package check that the InSpec AEM AWS profile is included, and yamllint of inspec.yml
+- Added markdownlint of CHANGELOG.md, docs/ and the GitHub issue templates
 
 ### Changed
 - Upgraded to Ruby 4.0.7 and OpenVox 9 with Vox Pupuli tooling, replacing the pinned Puppet 7 gems
@@ -26,6 +27,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Simplify CI workflow to not use action files anymore
 - Upgrade aem-platform-buildenv to 6.4.1
 - Upgrade release workflows to cliffano/release-action 2.1.0
+- Restructured the README into Installation, Usage, Result Model, Error Handling, Testing and Versions History sections
+- Committed Gemfile.lock and kept it on make clean, so CI installs the pinned gems
+- Removed the librarian-puppet leftovers from make clean
 
 ### Fixed
 - Fixed the pre-common host entry for OpenVox 9, which no longer provides legacy facts
