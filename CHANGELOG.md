@@ -4,17 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-<!-- rtk release rewrites this file in keep-a-changelog's own layout (no blank lines
-around headings and lists, Added/Changed/Fixed headings repeated per release).
-The directive is indented one space so rtk's parser keeps it as text. -->
- <!-- markdownlint-disable-file MD022 MD024 MD032 -->
-
 ## [Unreleased]
 ### Added
 - Added yamllint and markdownlint-cli2 to the lint target, yamllint with its default rules and the exceptions as yamllint comments in the YAML files
 - Added puppet/systemd and puppetlabs/inifile modules, required by puppet-logrotate 9
 - Added a package check that the InSpec AEM AWS profile is included, and yamllint of inspec.yml
-- Added markdownlint of CHANGELOG.md, docs/ and the GitHub issue templates
+- Added markdownlint of docs/ and the GitHub issue templates
 - Added a Python venv with pinned requirements (requirements.in, requirements-dev.txt, requirements.txt) and the deps-upgrade and rmdeps targets
 - Added pylint of the aws-tools Python scripts, and the Python unit test to CI with a test target
 

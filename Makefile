@@ -66,13 +66,13 @@ deps-local:
 # are disabled, from --no-exec_idempotency-check on, to keep the 2.5.2 checks,
 # as fixing them needs code changes beyond the upgrade.
 # yamllint runs with its default rules, the exceptions are yamllint comments in the YAML files.
-# markdownlint exceptions are inline comments too; CHANGELOG.md's is indented one space so that
-# rtk release's keep-a-changelog parser keeps it as text.
+# markdownlint exceptions are inline comments too. CHANGELOG.md isn't linted, as rtk release
+# rewrites it in its own layout.
 # The checks that don't need the bundle run first, as they are the quickest to fail.
 lint:
 	shellcheck files/*/*.sh
 	$(call python_venv,yamllint .markdownlint.yaml .github/workflows/*.yaml .*.yml inspec.yml conf/*.yaml data/*.yaml data/*/*.yaml)
-	markdownlint-cli2 README.md CHANGELOG.md docs/*.md .github/ISSUE_TEMPLATE/*.md
+	markdownlint-cli2 README.md docs/*.md .github/ISSUE_TEMPLATE/*.md
 	python3 -m json.tool .rtk.json
 	$(call python_venv,pylint files/aws-tools/*.py files/aws-tools/route53-dns-alias-switch)
 	bundle exec puppet-lint \
