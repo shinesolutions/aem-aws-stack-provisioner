@@ -49,8 +49,8 @@ deps-local:
 # are disabled, from --no-exec_idempotency-check on, to keep the 2.5.2 checks,
 # as fixing them needs code changes beyond the upgrade.
 # yamllint runs with its default rules, the exceptions are yamllint comments in the YAML files.
-# markdownlint exceptions are inline comments too; CHANGELOG.md's is on its first line, the only
-# place where RTK's keep-a-changelog parser accepts and keeps a comment.
+# markdownlint exceptions are inline comments too; CHANGELOG.md's is indented one space so that
+# rtk release's keep-a-changelog parser keeps it as text.
 # The checks that don't need the bundle run first, as they are the quickest to fail.
 lint:
 	shellcheck files/*/*.sh
