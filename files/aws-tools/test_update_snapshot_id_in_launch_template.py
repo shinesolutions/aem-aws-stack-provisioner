@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# Existing test: these pylint findings are kept as they are, as the upgrade only changes
+# what the moto 5 API move requires
+# pylint: disable=consider-using-f-string,line-too-long,missing-function-docstring,missing-module-docstring,too-many-locals,unused-variable
 #
 # test_update_snapshot_id_in_launch_template.py is used to update the snapshot_id in the launch template
 #
@@ -6,11 +9,11 @@
 #
 import os
 import unittest
+# mock is part of the standard library as unittest.mock
+from unittest.mock import patch
 import boto3
 
-# moto 5 replaced the per-service mocks (mock_autoscaling, mock_ec2) with mock_aws,
-# and mock is part of the standard library as unittest.mock
-from unittest.mock import patch
+# moto 5 replaced the per-service mocks (mock_autoscaling, mock_ec2) with mock_aws
 from moto import mock_aws
 from update_snapshot_id_in_launch_template import update_snapshot_id_in_launch_template
 
