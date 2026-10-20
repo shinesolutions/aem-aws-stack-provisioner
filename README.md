@@ -24,7 +24,7 @@ AEM AWS Stack Provisioner targets OpenVox 9 on Amazon Linux 2023 and Rocky Linux
 The instances run the [InSpec AEM AWS](https://github.com/shinesolutions/inspec-aem-aws) 4.0.0 profile with Cinc InSpec 7.2.1 on Ruby 4,
 and the orchestrator instance runs AEM Orchestrator 5.0.0 on Java 21, with its jar taken from the stack's data bucket.
 
-Run the commands below in [AEM Platform BuildEnv](https://github.com/shinesolutions/aem-platform-buildenv), as CI does:
+Run the commands below in [AEM Platform BuildEnv](https://github.com/shinesolutions/aem-platform-buildenv) (`shinesolutions/aem-platform-buildenv:6.4.1`), as CI does:
 
 | Command | Runs |
 | --- | --- |
