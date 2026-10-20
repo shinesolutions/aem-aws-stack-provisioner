@@ -2,15 +2,16 @@
 #
 # test_update_snapshot_id_in_launch_template.py is used to update the snapshot_id in the launch template
 #
-# TODO: this test can't run: moto 5 removed mock_autoscaling and mock_ec2
-# (use mock_aws), and the repo pins no Python dependencies to run it with
+#
 #
 import os
 import unittest
 import boto3
 
-from moto import mock_autoscaling, mock_ec2
-from mock import patch
+# moto 5 replaced the per-service mocks (mock_autoscaling, mock_ec2) with mock_aws,
+# and mock is part of the standard library as unittest.mock
+from unittest.mock import patch
+from moto import mock_aws
 from update_snapshot_id_in_launch_template import update_snapshot_id_in_launch_template
 
 
@@ -19,8 +20,7 @@ class TestAwsAutoScalingGroup(unittest.TestCase):
     Moto mock AwsAutoScalingGroup tests
     """
 
-    @mock_autoscaling
-    @mock_ec2
+    @mock_aws
     def test_update_snapshot_id_in_launch_template(self):
         os.environ["AWS_REGION"] = "ap-southeast-2"
         asg_name = "mock-asg"

@@ -100,9 +100,10 @@ lint:
 	bundle exec rubocop test/inspec/*.rb
 
 # Run the Python unit tests of the aws-tools scripts, without writing __pycache__ into files/,
-# which would end up in the package
+# which would end up in the package. The scripts create their boto3 clients without a region
+# (boto3 reads AWS_DEFAULT_REGION, the test only sets AWS_REGION), so it is set to the test's region
 test:
-	$(call python_venv,PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -v -s files/aws-tools -p 'test_*.py')
+	$(call python_venv,AWS_DEFAULT_REGION=ap-southeast-2 PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -v -s files/aws-tools -p 'test_*.py')
 
 # Package the working directory, then check the InSpec profile from deps is in it,
 # as pre_common copies files/test to the instances. The .venv build tools are left out of it
