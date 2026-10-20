@@ -4,7 +4,7 @@ ci: clean deps lint package
 
 # Gemfile.lock is committed and kept, so CI installs the pinned gems
 clean:
-	rm -rf .tmp Puppetfile.lock modules stage vendor files/test
+	rm -rf modules stage vendor files/test
 
 ################################################################################
 # Dependencies resolution targets.
