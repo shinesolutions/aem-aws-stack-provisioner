@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Existing script that runs on the instances: these pylint findings are kept as they are,
 # as fixing them would change its code (and possibly its behaviour) beyond the upgrade
-# pylint: disable=duplicate-code,bare-except,consider-using-f-string,fixme,invalid-name,line-too-long,logging-not-lazy,missing-class-docstring,missing-function-docstring,missing-module-docstring,multiple-imports,raise-missing-from,redefined-outer-name,unspecified-encoding,unused-import,useless-object-inheritance,wrong-import-order
+# pylint: disable=duplicate-code,bare-except,consider-using-f-string,invalid-name,line-too-long,logging-not-lazy,missing-class-docstring,missing-function-docstring,missing-module-docstring,multiple-imports,raise-missing-from,redefined-outer-name,unspecified-encoding,unused-import,useless-object-inheritance,wrong-import-order
 #
 # update_hiera.py is used to updates parameters in the hiera YAML file.
 #
@@ -127,12 +127,10 @@ class update_hiera(object):
 
         if args.action in ('add', 'change'):
             if args.parameter_value is not None:
-                # TODO: ('true') is a string, not a tuple, so this is a substring match
-                # (e.g. 't' is True)
-                if args.parameter_value.lower() in ('true'):  # pylint: disable=superfluous-parens
+                # Only true and false (any case) are booleans, ('true') was a substring match
+                if args.parameter_value.lower() == 'true':
                     self.parameter_value = True
-                # TODO: substring match too, see above
-                elif args.parameter_value.lower() in ('false'):  # pylint: disable=superfluous-parens
+                elif args.parameter_value.lower() == 'false':
                     self.parameter_value = False
                 else:
                     self.parameter_value = args.parameter_value
@@ -198,9 +196,9 @@ class update_hiera(object):
             file = self.hiera_file
         try:
             with open(file, 'r') as yamlfile:
-                # TODO: PyYAML 6 requires a Loader (e.g. yaml.safe_load), otherwise this raises
-                # TypeError and the script exits with 2
-                content = yaml.load(yamlfile)  # pylint: disable=no-value-for-parameter
+                # safe_load works on PyYAML 3 to 6, yaml.load without a Loader fails on PyYAML 6;
+                # local.yaml is plain hiera data
+                content = yaml.safe_load(yamlfile)
             return content
         except Exception as e:
             log.error("Error: Can't open file:  " + file + " - " + str(e))
