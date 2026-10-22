@@ -17,12 +17,7 @@ mod 'puppetlabs/stdlib', '9.7.0'
 # TODO: puppet-logrotate 9.0.0 declares puppet/systemd < 10.0.0, align this pin
 mod 'puppet/systemd', '10.3.0'
 mod 'puppet-yum', '8.3.0'
-# Only aem_curator 4.1.9 still needs it (aem_resources 8.0.0 includes the parts it used); remove it
-# when aem_curator is bumped to the release that includes the rest
-mod 'bstopp/aem', '3.0.0'
 mod 'shinesolutions/aem_orchestrator', '3.0.2'
-# aem_curator 4.1.9's metadata still pins aem_resources 7.10.2; r10k doesn't resolve dependencies, so
-# 8.0.0 (OpenVox 9, ruby_aem 4.1.0) is installed regardless
 mod 'shinesolutions/aem_resources', '8.0.0'
-mod 'shinesolutions/aem_curator', '4.1.9'
+mod 'shinesolutions/aem_curator', '5.0.0'
 mod 'shinesolutions/simianarmy', '1.1.4'

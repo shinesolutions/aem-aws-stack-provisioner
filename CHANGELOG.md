@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added unit tests for update_hiera.py
 
 ### Changed
+- Upgraded Puppet module shinesolutions/aem_curator to 5.0.0 (OpenVox 9, JDK 11/21, without bstopp/aem), and removed bstopp/aem, which no module needs any more
 - Upgraded Puppet module shinesolutions/aem_resources to 8.0.0 (OpenVox 9, ruby_aem 4.1.0, without bstopp/aem)
 - Upgraded to Ruby 4.0.7 and OpenVox 9 with Vox Pupuli tooling, replacing the pinned Puppet 7 gems
 - Upgraded puppet-aem-orchestrator to 3.0.2

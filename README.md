@@ -121,8 +121,6 @@ What isn't checked:
 * The offline snapshot scripts stop AEM with `systemctl stop`. The AEM systemd unit has `TimeoutStopSec=4min`, so systemd kills AEM
   if a graceful stop takes longer
 * `common-tools/run-adhoc-puppet.sh` runs with `errexit`, so a Puppet run with changes (exit code 2) exits with 2 before it's translated
-* AEM Curator 4.1.9 and bstopp/aem 3.0.0 use functions that OpenVox 9 and puppetlabs/stdlib 9 no longer provide, so `author-primary.pp`,
-  `author-standby.pp`, `publish.pp`, `preview-publish.pp` and `author-publish-dispatcher.pp` don't compile until AEM Curator is upgraded
 * CI doesn't compile the catalogs or run the InSpec tests, as they need an AEM environment on AWS
 
 ## Testing
