@@ -1,6 +1,6 @@
 version ?= 7.2.4-pre.0
 
-ci: clean deps lint test package
+ci: clean deps lint test package acceptance
 
 # Run a command in the Python venv created by deps
 define python_venv
@@ -80,7 +80,7 @@ deps-local:
 # The checks that don't need the bundle run first, as they are the quickest to fail.
 lint:
 	shellcheck files/*/*.sh
-	$(call python_venv,yamllint .yamllint.yaml .markdownlint.yaml .github/workflows/*.yaml .*.yml inspec.yml conf/*.yaml data/*.yaml data/*/*.yaml)
+	$(call python_venv,yamllint .yamllint.yaml .markdownlint.yaml .github/workflows/*.yaml .*.yml inspec.yml conf/*.yaml data/*.yaml spec/acceptance/nodesets/*.yml)
 	markdownlint-cli2 README.md docs/*.md .github/ISSUE_TEMPLATE/*.md
 	python3 -m json.tool .rtk.json
 	$(call python_venv,pylint files/aws-tools/*.py files/aws-tools/route53-dns-alias-switch)
@@ -106,13 +106,20 @@ lint:
 		manifests/*.pp
 	bundle exec puppet parser validate manifests/*.pp
 	bundle exec puppet epp validate templates/*/*.epp
-	bundle exec rubocop test/inspec/*.rb
+	bundle exec rubocop test/inspec/*.rb spec/*.rb spec/acceptance/*.rb
 
 # Run the Python unit tests of the aws-tools scripts, without writing __pycache__ into files/,
 # which would end up in the package. The scripts create their boto3 clients without a region
 # (boto3 reads AWS_DEFAULT_REGION, the test only sets AWS_REGION), so it is set to the test's region
 test:
 	$(call python_venv,AWS_DEFAULT_REGION=ap-southeast-2 PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -v -s files/aws-tools -p 'test_*.py')
+
+# Acceptance tests with Beaker on Docker: the package is provisioned as stack-init.sh does on a stand-in for the
+# AEM AMIs, without AWS and AEM (see README Testing). NODESET selects another nodeset, e.g. an aarch64 copy on an
+# arm64 machine, where httpd can't run emulated as x86_64
+NODESET ?= spec/acceptance/nodesets/amazon-2023-x86_64.yml
+acceptance: package
+	BEAKER_SETFILE=$(NODESET) bundle exec rspec spec/acceptance
 
 # Package the working directory, then check the InSpec profile from deps is in it,
 # as pre_common copies files/test to the instances. The .venv build tools are left out of it
@@ -151,4 +158,4 @@ publish:
 	GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=safe.directory GIT_CONFIG_VALUE_0=$(CURDIR) \
 		gh release upload $(version) stage/aem-aws-stack-provisioner-$(version).tar.gz
 
-.PHONY: ci rmdeps clean deps deps-upgrade deps-local lint test package release release-major release-minor release-patch publish
+.PHONY: ci rmdeps clean deps deps-upgrade deps-local lint test acceptance package release release-major release-minor release-patch publish

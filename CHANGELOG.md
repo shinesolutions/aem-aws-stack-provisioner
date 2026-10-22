@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added a Python venv with pinned requirements (requirements.in, requirements-dev.txt, requirements.txt) and the deps-upgrade and rmdeps targets
 - Added pylint of the aws-tools Python scripts, and the Python unit test to CI with a test target
 - Added unit tests for update_hiera.py
+- Added acceptance tests with voxpupuli-acceptance (Beaker on Docker), run by CI, which provision the package as stack-init.sh does on an Amazon Linux 2023 stand-in for the AEM AMIs, without AWS and AEM, and check the scheduled jobs, the logrotate configuration and the component InSpec controls that need neither
 - Added checks to the component InSpec tests that the system services the provisioning relies on are enabled and running: crond on every component, collectd on the AEM components, and awslogs when the AMI has it
 
 ### Changed
@@ -27,6 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added comments explaining the OpenVox 9 upgrade changes and the 4 minute AEM stop timeout in the offline snapshot scripts
 - Replaced the deprecated hiera() interpolation function with lookup() in the hiera data
 - Changed the target platforms to Amazon Linux 2023 and Rocky Linux 10
+- Grouped the checks of the component InSpec tests into controls, and check the Simian Army log on Amazon Linux too
 - Upgraded GitHub CI to actions/checkout v7
 - Simplify CI workflow to not use action files anymore
 - Upgrade aem-platform-buildenv to 6.4.1
@@ -34,6 +36,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Restructured the README into Installation, Usage, Result Model, Error Handling, Testing and Versions History sections
 - Committed Gemfile.lock and kept it on make clean, so CI installs the pinned gems
 - Removed the librarian-puppet leftovers from make clean
+
+### Removed
+- Removed Amazon Linux 2 support: its hiera data (data/RedHat/Amazon-2.yaml) and the InSpec 1.51.6 workaround in the component InSpec tests
 
 ### Fixed
 - Fixed the pre-common host entry for OpenVox 9, which no longer provides legacy facts

@@ -2,7 +2,13 @@
 # so `require 'facter'` failed every spec before it ran (and nothing used it), and hiera isn't part of Cinc InSpec.
 # hiera is only required by init_conf, whose use is disabled (see chaos-monkey_spec.rb)
 
-# The system services that every component's provisioning relies on, checked by each component spec:
+# Each component spec groups its checks into controls, so they can be selected with `inspec exec --controls`:
+# aem-* (AEM and AEM Orchestrator), java (the Oracle JDK), simian-army, dispatcher and system-services.
+# stack-init.sh runs all of them; the acceptance tests (spec/acceptance) run dispatcher and system-services,
+# as AEM, the Oracle JDK and the AWS services the others need aren't available there.
+
+# The system services that every component's provisioning relies on, checked by each component spec's
+# system-services control:
 # - crond runs the crontab entries of manifests/action-scheduled-jobs.pp (which stack-init.sh applies to every
 #   component) and puppet-logrotate's /etc/cron.daily and /etc/cron.hourly scripts. Amazon Linux 2023 doesn't
 #   install cronie by default, so the AMI has to provide it

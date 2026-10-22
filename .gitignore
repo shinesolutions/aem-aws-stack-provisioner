@@ -13,3 +13,6 @@ files/test
 files/aws-tools/__pycache__
 core
 .venv
+# Beaker logs of the acceptance tests
+/log/
+/junit/

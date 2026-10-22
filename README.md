@@ -65,7 +65,7 @@ and the hiera configuration in `conf/hiera.yaml`, as the scripts in this reposit
 
 The hiera data in `data/` is looked up in this order (see `conf/hiera.yaml`):
 
-1. `data/<os family>/<os name>-<os major release>.yaml`, e.g. `data/RedHat/Amazon-2.yaml`
+1. `data/<os family>/<os name>-<os major release>.yaml`, e.g. `data/RedHat/Amazon-2023.yaml` (the repository has no OS specific data)
 2. `data/<os family>/<os name>.yaml`
 3. `data/local.yaml`, the user defined configuration, which is not part of this repository
 4. `data/<event>.yaml`, from the `event` fact
@@ -122,7 +122,8 @@ What isn't checked:
 * The offline snapshot scripts stop AEM with `systemctl stop`. The AEM systemd unit has `TimeoutStopSec=4min`, so systemd kills AEM
   if a graceful stop takes longer
 * `common-tools/run-adhoc-puppet.sh` runs with `errexit`, so a Puppet run with changes (exit code 2) exits with 2 before it's translated
-* CI doesn't compile the catalogs or run the InSpec tests, as they need an AEM environment on AWS
+* CI compiles the component manifests and runs the InSpec controls that need neither AWS nor AEM (`make acceptance`), the rest needs an
+  AEM environment on AWS
 
 ## Testing
 
@@ -139,10 +140,30 @@ Run the commands below in [AEM Platform BuildEnv](https://github.com/shinesoluti
 | `make lint` | puppet-lint, Puppet manifest and EPP template validation, ShellCheck, RuboCop, pylint, yamllint and markdownlint |
 | `make test` | The Python unit tests of the `files/aws-tools` scripts, with AWS mocked by moto |
 | `make package` | Package the provisioner into `stage/aem-aws-stack-provisioner-<version>.tar.gz` |
-| `make ci` | Everything CI runs: clean, deps, lint, test and package |
+| `make acceptance` | Package the provisioner and run the acceptance tests in `spec/acceptance` with Beaker on Docker (see below) |
+| `make ci` | Everything CI runs: clean, deps, lint, test, package and acceptance |
 
 The component InSpec tests in `test/inspec/` are run on the instances at the end of cloud-init. Besides the component's own services and ports,
 they check that the system services the provisioning relies on are enabled and running: crond, collectd on the AEM components, and awslogs when the AMI has it.
+Their checks are grouped into controls: `aem-*` (AEM and AEM Orchestrator), `java` (the Oracle JDK), `simian-army`, `dispatcher` and
+`system-services`.
+
+The acceptance tests ([voxpupuli-acceptance](https://github.com/voxpupuli/voxpupuli-acceptance), Beaker on Docker) provision the package as
+`stack-init.sh` does, without AWS and AEM, so they are the test bed for upgrading OpenVox, Amazon Linux, the Puppet modules and the system packages:
+
+* The nodeset `spec/acceptance/nodesets/amazon-2023-x86_64.yml` stands in for the AEM AMIs: Amazon Linux 2023 with OpenVox 9, cronie, httpd
+  and mod_ssl, collectd with the collectd-cloudwatch plugin, amazon-cloudwatch-agent, Cinc InSpec 7.2.1, and Amazon Corretto 11 for collectd's GenericJMX plugin in place of the
+  Oracle JDK. The spec helper adds libcurl and ruby_aem, and bakes the AEM Dispatcher as packer-aem does (`aem_curator::install_dispatcher`)
+* The stack's hiera data is `spec/fixtures/local.yaml`, rendered from aem-aws-stack-builder's template with its default configuration
+* They apply `pre-common.pp`, then for each component its manifest, compiled in full but with only the classes that need neither AWS
+  nor AEM applied (logrotate, collectd, the scheduled offline compaction, the dispatcher configuration and its aem-tools scripts), and
+  `action-scheduled-jobs.pp`. They check the scheduled jobs, the logrotate configuration and the `dispatcher` and `system-services` controls
+  of the component's InSpec test
+
+AEM (it needs an Adobe licence), the Oracle JDK and the AWS calls (S3, EC2, EBS) aren't covered. The nodeset is x86_64 like the AMIs. On an
+arm64 machine, x86_64 runs emulated, where httpd can't start (QEMU doesn't support its accept mutex), so set `NODESET` to a copy of the
+nodeset for aarch64: the `linux/arm64` digest of `amazonlinux:2023` as `image`, `amazon-2023-aarch64` as host name and `platform`, and
+`java-11-amazon-corretto.aarch64` in the libjvm path. The spec helper then bakes the aarch64 build of AEM Dispatcher.
 
 ## Versions History
 
