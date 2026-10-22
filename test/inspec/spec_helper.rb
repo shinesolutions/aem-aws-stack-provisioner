@@ -8,7 +8,7 @@
 #   install cronie by default, so the AMI has to provide it
 # - awslogs ships the logs to CloudWatch. It's optional: the component manifests only start it (update_awslogs)
 #   when its configuration (common::awslogs_config_path) exists, i.e. the AMI was baked with it, so it's only
-#   checked then
+#   checked then. Amazon Linux 2023 has no awslogs, see the amazon-cloudwatch-agent TODO in data/common.yaml
 SYSTEM_SERVICES = %w[crond].freeze
 AWSLOGS_SERVICE = 'awslogs'.freeze
 AWSLOGS_CONFIG_PATH = '/etc/awslogs/awslogs.conf'.freeze

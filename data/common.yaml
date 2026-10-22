@@ -39,6 +39,10 @@ common::tmp_base_dir: /tmp/shinesolutions
 common::tmp_dir: /tmp/shinesolutions/aem-aws-stack-provisioner
 common::puppet_conf_dir: /etc/puppetlabs/puppet/
 common::credentials_file: system-users-credentials.json
+# TODO: Amazon Linux 2023 has no awslogs (deprecated in Amazon Linux 2, replaced by amazon-cloudwatch-agent), so the
+# component manifests skip it, as awslogs_config_path doesn't exist. Switch update_awslogs, the publish and
+# preview-publish snapshot steps and the InSpec check to amazon-cloudwatch-agent, with packer-aem baking its config.
+# Its collectd input could also replace packer-aem's collectd-cloudwatch plugin (awslabs/collectd-cloudwatch is archived)
 common::awslogs_service_name: awslogs
 common::awslogs_config_path: /etc/awslogs/awslogs.conf
 common::aws_tags: "%{alias('common::aws_tags')}"
