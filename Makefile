@@ -1,6 +1,6 @@
 version ?= 7.2.4-pre.0
 
-ci: clean deps lint test package acceptance
+ci: clean deps lint test acceptance package
 
 # Run a command in the Python venv created by deps
 define python_venv
