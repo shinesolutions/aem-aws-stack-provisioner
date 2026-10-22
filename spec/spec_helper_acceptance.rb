@@ -56,6 +56,9 @@ STACK_FACTS = {
 # The system users the manifests read from the credentials file (pre-common.pp downloads it from the data bucket)
 SYSTEM_USERS = %w[admin deployer exporter importer orchestrator replicator].freeze
 
+# The ruby_aem version the shinesolutions/aem_resources version in the Puppetfile (8.0.0) requires
+RUBY_AEM_VERSION = '4.1.0'
+
 # The latest AEM Dispatcher built for OpenSSL 3 (Amazon Linux 2023), a public download
 DISPATCHER_VERSION = '4.3.8'
 # Adobe builds AEM Dispatcher for x86_64 (the AMIs) and aarch64, which Facter's os.architecture reports
@@ -75,8 +78,10 @@ end
 # system libcurl then binds to that OpenSSL and fails ("undefined symbol: EVP_camellia_256_cbc"), so
 # build curl against OpenVox's OpenSSL into /opt/puppetlabs/puppet once per host, as
 # the-works-buildenv's provisioners/shell/init.sh does ("Fix missing libcurl for OpenVox Puppet 9
-# bundled Ruby"), and install ruby_aem into the agent's Ruby (the AEM AMIs provide both). ruby_aem is
-# the version in Gemfile.lock, as in puppet-aem-curator's acceptance tests.
+# bundled Ruby"), and install ruby_aem into the agent's Ruby (the AEM AMIs provide both).
+# ruby_aem isn't in the Gemfile, unlike in puppet-aem-curator: it brings typhoeus into the bundle, and r10k's
+# puppet_forge then uses typhoeus' Faraday adapter, which doesn't work with Faraday 2 ("method 'call' not
+# defined in Faraday::Adapter::Typhoeus"), so no module can be installed
 def install_aem_resources_dependencies(host, curl_version: '8.12.1')
   unless host.file_exist?('/opt/puppetlabs/puppet/lib/libcurl.so')
     on(host, 'dnf -y install gcc make perl tar gzip')
@@ -93,9 +98,8 @@ def install_aem_resources_dependencies(host, curl_version: '8.12.1')
       cd /tmp && rm -rf curl-#{curl_version} curl-#{curl_version}.tar.gz
     SHELL
   end
-  ruby_aem_version = Gem.loaded_specs.fetch('ruby_aem').version
-  on(host, "/opt/puppetlabs/puppet/bin/gem list -i ruby_aem -v #{ruby_aem_version} || " \
-           "/opt/puppetlabs/puppet/bin/gem install ruby_aem -v #{ruby_aem_version} --no-document")
+  on(host, "/opt/puppetlabs/puppet/bin/gem list -i ruby_aem -v #{RUBY_AEM_VERSION} || " \
+           "/opt/puppetlabs/puppet/bin/gem install ruby_aem -v #{RUBY_AEM_VERSION} --no-document")
 end
 
 # EC2 instances have IPv6 on the loopback interface, while Docker disables IPv6 in the container but still maps
