@@ -31,6 +31,7 @@ Requirements on the instances:
 * Java 21 on the orchestrator instance, which runs AEM Orchestrator 5.0.0. Its jar is taken from the stack's data bucket,
   `s3://<data_bucket_name>/<stack_prefix>/aem-orchestrator-5.0.0.jar`, and verified against the SHA-256 checksum in `data/orchestrator.yaml`
 * The AWS CLI, used by the scripts and to download the `s3://` sources
+* cronie, which Amazon Linux 2023 doesn't install by default, for the scheduled jobs' crontab entries and the logrotate cron scripts
 
 The package is a tarball of this repository with its dependencies, built with:
 
@@ -140,7 +141,8 @@ Run the commands below in [AEM Platform BuildEnv](https://github.com/shinesoluti
 | `make package` | Package the provisioner into `stage/aem-aws-stack-provisioner-<version>.tar.gz` |
 | `make ci` | Everything CI runs: clean, deps, lint, test and package |
 
-The component InSpec tests in `test/inspec/` are run on the instances at the end of cloud-init.
+The component InSpec tests in `test/inspec/` are run on the instances at the end of cloud-init. Besides the component's own services and ports,
+they check that the system services the provisioning relies on are enabled and running: crond, collectd on the AEM components, and awslogs when the AMI has it.
 
 ## Versions History
 

@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added a Python venv with pinned requirements (requirements.in, requirements-dev.txt, requirements.txt) and the deps-upgrade and rmdeps targets
 - Added pylint of the aws-tools Python scripts, and the Python unit test to CI with a test target
 - Added unit tests for update_hiera.py
+- Added checks to the component InSpec tests that the system services the provisioning relies on are enabled and running: crond on every component, collectd on the AEM components, and awslogs when the AMI has it
 
 ### Changed
 - Upgraded Puppet module shinesolutions/aem_curator to 5.0.0 (OpenVox 9, JDK 11/21, without bstopp/aem), and removed bstopp/aem, which no module needs any more
@@ -42,6 +43,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fixed the launch template snapshot unit test for moto 5
 - Fixed update_hiera.py failing to read the hiera file on PyYAML 6, by using yaml.safe_load
 - Fixed update_hiera.py treating any part of true or false (e.g. t) as a boolean, only true and false in any case are booleans now
+- Fixed the component InSpec tests failing to load on Cinc InSpec 7, whose thor conflicts with facter, by removing the unused facter and hiera requires
 
 ## [7.2.3] - 2026-03-11
 ### Changed

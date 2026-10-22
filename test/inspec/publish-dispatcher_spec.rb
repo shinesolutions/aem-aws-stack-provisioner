@@ -37,3 +37,5 @@ end
 describe ssl(port: 443) do
   it { should be_enabled }
 end
+
+describe_system_services(SYSTEM_SERVICES)

@@ -50,3 +50,5 @@ end
 describe ssl(port: 4502) do
   it { should_not be_enabled }
 end
+
+describe_system_services(AEM_SYSTEM_SERVICES)

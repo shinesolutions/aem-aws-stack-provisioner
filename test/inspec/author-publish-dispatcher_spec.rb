@@ -147,3 +147,5 @@ end
 describe command('java -version') do
   its('stdout') { should_not match(/openjdk/i) }
 end
+
+describe_system_services(AEM_SYSTEM_SERVICES)
