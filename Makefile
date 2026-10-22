@@ -23,10 +23,18 @@ clean:
 ################################################################################
 
 # resolve dependencies from remote artifact registries
-# The InSpec AEM AWS profile is downloaded from the URL in inspec.yml into files/test/inspec/inspec-aem-aws
-# (run by the aem-tools scripts with `inspec exec`), replacing `inspec vendor`: no InSpec version can share
-# a bundle with OpenVox 9, and recent InSpec versions need a Chef licence. It is saved to a file before
-# extracting it, so a failed download fails the build instead of being hidden by a pipe.
+# The InSpec AEM AWS profile (run on the instances by the aem-tools scripts with `inspec exec`) is
+# downloaded from the URL in inspec.yml into files/test/inspec/inspec-aem-aws with curl and tar. This
+# replaces `bundle exec inspec vendor`, which only downloaded and unpacked that same tarball, because the
+# InSpec gem can't be used in this build any more:
+# - InSpec 1.51.6 (the previous pin) doesn't load on Ruby 4
+# - no InSpec version can share a bundle with OpenVox 9 (thor) or r10k 5 (faraday)
+# - InSpec 5+ needs the Chef licence accepted, and 6/7 need licence keys
+# The result is the same tree as before. InSpec is only needed at runtime on the instances, where
+# inspec-aem-aws 4.0.0 expects Cinc InSpec 7.2.1 (an AMI requirement).
+# It is saved to a file before extracting it, so a failed download (curl -f) fails the build instead of
+# being hidden by a pipe; tar --no-same-owner, as root in the buildenv container can't chown files on a
+# macOS bind mount.
 # bundle install has no --binstubs option anymore in Bundler 4
 # requirements-dev.txt is installed too, so lint runs the pinned pylint, which sees the venv's packages
 deps:
