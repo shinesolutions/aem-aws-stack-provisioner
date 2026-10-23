@@ -2,7 +2,7 @@ inherit_mode:
   merge:
     - Exclude
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 3.4
   DisplayCopNames: true
   Exclude:
     - .bundle/*
@@ -14,7 +14,7 @@ Metrics/BlockLength:
     - "**/**/*_spec.rb"
 Metrics/ClassLength:
   Max: 300
-Metrics/LineLength:
+Layout/LineLength:
   Max: 280
 Metrics/MethodLength:
   Max: 30

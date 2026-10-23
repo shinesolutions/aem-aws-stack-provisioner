@@ -15,9 +15,9 @@ clean:
 
 # resolve dependencies from remote artifact registries
 deps:
-	gem install bundler --version=2.3.21
+	gem install bundler --version=4.0.22
 	rm -rf .bundle
-	bundle install --binstubs
+	bundle install -j4
 	bundle exec r10k puppetfile install --verbose --moduledir modules
 	bundle exec inspec vendor --overwrite
 	cd vendor && find . -name "*.tar.gz" -exec tar -xzvf '{}' \; -exec rm '{}' \;
