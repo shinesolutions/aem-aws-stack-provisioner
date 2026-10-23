@@ -117,6 +117,22 @@ class publish (
       }
     }
 
+    # The CloudWatch agent (installed instead of awslogs on Amazon Linux 2023)
+    # tails AEM logs on the data volume, which keeps the volume busy and makes
+    # snapshot_attach.py fail to unmount it.
+    if find_file('/opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl') {
+      exec { 'Stop CloudWatch agent to release the mounted FS':
+        command => 'systemctl stop amazon-cloudwatch-agent',
+        path    => $exec_path,
+        before  => Exec["Attach volume from snapshot ID ${snapshotid}"],
+      }
+      exec { 'Start CloudWatch agent after attaching the volume':
+        command => 'systemctl start amazon-cloudwatch-agent',
+        path    => $exec_path,
+        require => Exec['Sleep 15 seconds before allowing access the mounted FS'],
+      }
+    }
+
     exec { "Attach volume from snapshot ID ${snapshotid}":
       command => "${base_dir}/aws-tools/snapshot_attach.py --device ${aem_repo_devices[0][device_name]} --device-alias ${aem_repo_devices[0][device_alias]} --volume-type ${volume_type} --snapshot-id ${snapshotid} -vvvv",
       timeout => 0,
