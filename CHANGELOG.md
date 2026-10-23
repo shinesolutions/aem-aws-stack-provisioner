@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Vendor aem_curator's InSpec profile in `make deps` when aem_curator is installed from git
 - Pass every variable EPP templates use, which OpenVox 9's strict variables require
 - Only configure collectd when it's installed, as Amazon Linux 2023 AMIs don't have it
+- Fetch instance metadata with an IMDSv2 token, required by Amazon Linux 2023 AMIs
 
 ## [7.2.3] - 2026-03-11
 ### Changed
