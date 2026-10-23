@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Add Amazon Linux 2023 hieradata for SimianArmy's Tomcat install
+
 ### Changed
 - Upgrade the build toolchain to OpenVox 9, puppet-lint 5 and r10k 5, and Puppet module dependencies to versions that support OpenVox 9
 - Update RuboCop configuration for RuboCop 1.90
