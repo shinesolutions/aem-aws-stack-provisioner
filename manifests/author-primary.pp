@@ -36,11 +36,19 @@ class author_primary (
     aem_tools_env_path => $aem_tools_env_path
   } -> class { 'aem_curator::config_author_primary':
   } -> class { 'aem_curator::config_logrotate':
-  } -> class { 'aem_curator::config_collectd':
-    component       => $component,
-    collectd_prefix => "${stack_prefix}-${component}",
-    ec2_id          => $ec2_id
   } -> class { 'aem_curator::config_aem_scheduled_jobs':
+  }
+
+  # collectd is not installed on every AMI (e.g. Amazon Linux 2023), so only
+  # configure it when its configuration file exists.
+  if find_file('/etc/collectd.conf') {
+    class { 'aem_curator::config_collectd':
+      component       => $component,
+      collectd_prefix => "${stack_prefix}-${component}",
+      ec2_id          => $ec2_id,
+      require         => Class['aem_curator::config_logrotate'],
+      before          => Class['aem_curator::config_aem_scheduled_jobs'],
+    }
   }
 
   ##############################################################################
