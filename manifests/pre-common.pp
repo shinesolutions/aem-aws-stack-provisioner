@@ -17,8 +17,8 @@ class pre_common (
   $enable_preview_architecture = false,
   $template_dir                = undef,
   $file_dir                    = undef,
-  $stack_prefix                = $::stack_prefix,
-  $data_bucket_name            = $::data_bucket_name,
+  $stack_prefix                = $facts['stack_prefix'],
+  $data_bucket_name            = $facts['data_bucket_name'],
   $log_dir                     = '/var/log/shinesolutions',
   $ssh_public_keys             = undef,
 ) {
@@ -41,10 +41,10 @@ class pre_common (
   )
 
   # Ensure we have a working FQDN <=> IP mapping.
-  host { $facts['fqdn']:
+  host { $facts['networking']['fqdn']:
     ensure       => present,
-    ip           => $facts['ipaddress'],
-    host_aliases => $facts['hostname'],
+    ip           => $facts['networking']['ip'],
+    host_aliases => $facts['networking']['hostname'],
   }
 
   if $ssh_public_keys {

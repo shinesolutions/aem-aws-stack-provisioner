@@ -9,10 +9,11 @@ class orchestrator (
   $awslogs_config_path,
   $aem_tools_env_path          = '$PATH:/opt/puppetlabs/puppet/bin',
   $stack_manager_stack_name    = undef,
-  $data_bucket_name            = $::data_bucket_name,
-  $stack_prefix                = $::stack_prefix,
-  $component                   = $::component,
+  $data_bucket_name            = $facts['data_bucket_name'],
+  $stack_prefix                = $facts['stack_prefix'],
+  $component                   = $facts['component'],
   $enable_cloudwatch_s3_stream = false,
+  $java_bin                    = '/usr/lib/jvm/jre-21/bin/java',
 ) {
 
   # A simple check for checking if the awslogs(Cloudwatch Agent)
@@ -31,6 +32,30 @@ class orchestrator (
   }
 
   include aem_orchestrator
+
+  # AEM Orchestrator 5 requires Java 21, while /usr/bin/java on the java AMI is
+  # the JDK SimianArmy needs, so start it with $java_bin. It also writes
+  # orchestrator.log relative to its working directory, which the module's
+  # service unit doesn't set.
+  file { "/etc/systemd/system/${aem_orchestrator::service_name}.service.d":
+    ensure => directory,
+    mode   => '0755',
+    owner  => 'root',
+    group  => 'root',
+  } -> file { "/etc/systemd/system/${aem_orchestrator::service_name}.service.d/override.conf":
+    ensure  => file,
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root',
+    content => join([
+      '[Service]',
+      "WorkingDirectory=${aem_orchestrator::installdir}",
+      'ExecStart=',
+      "ExecStart=${java_bin} -jar ${aem_orchestrator::jarfile}",
+      '',
+    ], "\n"),
+    notify  => Service[$aem_orchestrator::service_name],
+  }
 
   ##############################################################################
   # Stack offline snapshot without compaction
@@ -107,6 +132,7 @@ class orchestrator (
       {
         'aem_tools_env_path' => $aem_tools_env_path,
         'base_dir'           => $base_dir,
+        'aws_region'         => $aws_region,
         }
       ),
       mode    => '0750',

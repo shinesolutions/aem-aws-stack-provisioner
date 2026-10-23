@@ -3,7 +3,7 @@ version ?= 7.2.4-pre.0
 ci: clean deps lint package
 
 clean:
-	rm -rf .tmp Puppetfile.lock Gemfile.lock modules stage vendor files/test
+	rm -rf .tmp Puppetfile.lock Gemfile.lock Gemfile.inspec.lock modules stage vendor files/test
 
 ################################################################################
 # Dependencies resolution targets.
@@ -14,15 +14,28 @@ clean:
 ################################################################################
 
 # resolve dependencies from remote artifact registries
+# InSpec has its own Gemfile.inspec because InSpec 7 (faraday 1) can't be
+# bundled with r10k 5 (faraday 2). InSpec 7 vendors each profile already
+# extracted under a <sha256> directory.
+# aem_curator installed from git lacks its generated files/test InSpec profile
+# (a Forge release includes it), so vendor it from aem_curator's inspec.yml.
 deps:
-	gem install bundler --version=2.3.21
+	gem install bundler --version=4.0.22
 	rm -rf .bundle
-	bundle install --binstubs
+	bundle install -j4
+	BUNDLE_GEMFILE=Gemfile.inspec bundle install -j4
 	bundle exec r10k puppetfile install --verbose --moduledir modules
-	bundle exec inspec vendor --overwrite
-	cd vendor && find . -name "*.tar.gz" -exec tar -xzvf '{}' \; -exec rm '{}' \;
-	cd vendor && mv inspec-aem-aws-*.*.* inspec-aem-aws
+	BUNDLE_GEMFILE=Gemfile.inspec bundle exec inspec vendor --overwrite
+	cd vendor && mv */inspec-aem-aws-*.*.* inspec-aem-aws
+	cd vendor && find . -mindepth 1 -maxdepth 1 -type d ! -name inspec-aem-aws -exec rm -rf '{}' +
 	rm -rf files/test/inspec/ && mkdir -p files/test/inspec/ && cp -R vendor/* files/test/inspec/
+	if [ ! -d modules/aem_curator/files/test/inspec ]; then \
+	  rm -rf .tmp/aem_curator_inspec && mkdir -p .tmp/aem_curator_inspec && \
+	  cp modules/aem_curator/inspec.yml .tmp/aem_curator_inspec/ && \
+	  BUNDLE_GEMFILE=Gemfile.inspec bundle exec inspec vendor --overwrite .tmp/aem_curator_inspec && \
+	  mkdir -p modules/aem_curator/files/test/inspec && \
+	  mv .tmp/aem_curator_inspec/vendor/*/inspec-aem-*.*.* modules/aem_curator/files/test/inspec/inspec-aem; \
+	fi
 
 # resolve AEM OpenCloud's Puppet module dependencies from local directories
 # TODO: include local InSpec modules

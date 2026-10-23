@@ -16,12 +16,12 @@ class author_publish_dispatcher (
   $aem_repo_devices,
   $dispatcher_data_devices,
   $awslogs_config_path,
-  $component                   = $::component,
-  $data_bucket_name            = $::data_bucket_name,
-  $stack_prefix                = $::stack_prefix,
+  $component                   = $facts['component'],
+  $data_bucket_name            = $facts['data_bucket_name'],
+  $stack_prefix                = $facts['stack_prefix'],
   $aem_tools_env_path          = '$PATH:/opt/puppetlabs/puppet/bin',
   $aem_id_author_primary       = 'author-primary',
-  $ec2_id                      = $::ec2_metadata['instance-id'],
+  $ec2_id                      = $facts['ec2_metadata']['instance-id'],
   $log_dir                     = '/var/log/shinesolutions',
   $deploy_timeout              = 1200,
   $enable_cloudwatch_s3_stream = false,
@@ -76,11 +76,19 @@ class author_publish_dispatcher (
     exec_path             => ['/bin', '/usr/local/bin', '/usr/bin'],
     enable_deploy_on_init => $enable_deploy_on_init,
     deploy_timeout        => $deploy_timeout,
-  } -> class { 'aem_curator::config_collectd':
-    component       => $component,
-    collectd_prefix => "${stack_prefix}-${component}",
-    ec2_id          => $ec2_id
   } -> class { 'aem_curator::config_aem_scheduled_jobs':
+  }
+
+  # collectd is not installed on every AMI (e.g. Amazon Linux 2023), so only
+  # configure it when its configuration file exists.
+  if find_file('/etc/collectd.conf') {
+    class { 'aem_curator::config_collectd':
+      component       => $component,
+      collectd_prefix => "${stack_prefix}-${component}",
+      ec2_id          => $ec2_id,
+      require         => Class['deploy_on_init'],
+      before          => Class['aem_curator::config_aem_scheduled_jobs'],
+    }
   }
 
   ##############################################################################
@@ -131,13 +139,14 @@ class author_publish_dispatcher (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/live-snapshot-backup.sh.epp",
       {
-        'base_dir'           => $base_dir,
-        'aem_tools_env_path' => $aem_tools_env_path,
-        'aem_repo_devices'   => $aem_repo_devices,
-        'component'          => $component,
-        'stack_prefix'       => $stack_prefix,
-        'aws_region'         => $aws_region,
-        'aws_tags'           => $aws_tags,
+        'base_dir'             => $base_dir,
+        'aem_tools_env_path'   => $aem_tools_env_path,
+        'aem_repo_devices'     => $aem_repo_devices,
+        'component'            => $component,
+        'stack_prefix'         => $stack_prefix,
+        'revert_snapshot_type' => undef,
+        'aws_region'           => $aws_region,
+        'aws_tags'             => $aws_tags,
       }
     ),
   }
@@ -220,6 +229,7 @@ class author_publish_dispatcher (
       {
         'aem_tools_env_path' => $aem_tools_env_path,
         'base_dir'           => $base_dir,
+        'aws_region'         => $aws_region,
         }
       ),
       mode    => '0750',
@@ -279,7 +289,7 @@ class deploy_on_init (
   if $enable_deploy_on_init == true {
     exec { 'Deploy Author and Publish AEM packages and Dispatcher artifacts':
       path        => $exec_path,
-      environment => ["https_proxy=${::cron_https_proxy}"],
+      environment => ["https_proxy=${facts['cron_https_proxy']}"],
       cwd         => $tmp_dir,
       timeout     => $deploy_timeout,
       command     => "${base_dir}/aem-tools/deploy-artifacts.sh deploy-artifacts-descriptor.json >>${log_dir}/puppet-deploy-artifacts-init.log 2>&1",

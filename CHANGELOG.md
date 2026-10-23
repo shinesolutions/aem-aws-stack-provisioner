@@ -6,6 +6,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+- Add Amazon Linux 2023 hieradata for SimianArmy's Tomcat install
+
+### Changed
+- Upgrade the build toolchain to OpenVox 9, puppet-lint 5 and r10k 5, and Puppet module dependencies to versions that support OpenVox 9
+- Update RuboCop configuration for RuboCop 1.90
+- Install Cinc InSpec 7 from a separate `Gemfile.inspec`, as it can't share a bundle with r10k 5
+- Use puppet-aem and puppet-aem-curator from their `feature/AOC-I21-al23` branches for OpenVox 9 support
+- Use the `$facts` hash instead of top-scope facts, for puppet-lint 5
+- Upgrade the default AEM Orchestrator to 5.0.0
+- Run AEM Orchestrator with Java 21 (`orchestrator::java_bin`) and set its working directory via a systemd drop-in, for AEM Orchestrator 5
+
+### Fixed
+- Pin the `json` gem below 3, which breaks OpenVox 9's JSON parsing
+- Vendor aem_curator's InSpec profile in `make deps` when aem_curator is installed from git
+- Pass every variable EPP templates use, which OpenVox 9's strict variables require
+- Only configure collectd when it's installed, as Amazon Linux 2023 AMIs don't have it
+- Fetch instance metadata with an IMDSv2 token, required by Amazon Linux 2023 AMIs
+- Stop the CloudWatch agent while attaching a volume from a snapshot, as it keeps the data volume busy and the unmount fails
+- Pass `InstanceId` as a keyword in `snapshot_attach.py`, which boto3 resource actions require
+- Retry mounting in `snapshot_attach.py` until the new volume is actually mounted, as the device can appear after EC2 reports the volume attached
+
 ## [7.2.3] - 2026-03-11
 ### Changed
 - Upgraded puppet-aem-curator to 4.1.9

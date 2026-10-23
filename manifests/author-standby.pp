@@ -9,12 +9,12 @@ class author_standby (
   $aws_region,
   $aws_tags,
   $awslogs_config_path,
-  $author_primary_host        = $::authorprimaryhost,
-  $component                  = $::component,
-  $data_bucket_name           = $::data_bucket_name,
-  $stack_prefix               = $::stack_prefix,
+  $author_primary_host        = $facts['authorprimaryhost'],
+  $component                  = $facts['component'],
+  $data_bucket_name           = $facts['data_bucket_name'],
+  $stack_prefix               = $facts['stack_prefix'],
   $aem_tools_env_path         = '$PATH:/opt/puppetlabs/puppet/bin',
-  $ec2_id                     = $::ec2_metadata['instance-id'],
+  $ec2_id                     = $facts['ec2_metadata']['instance-id'],
 ) {
 
   # A simple check for checking if the awslogs(Cloudwatch Agent)
@@ -35,10 +35,17 @@ class author_standby (
   } -> class { 'aem_curator::config_author_standby':
     author_primary_host => $author_primary_host,
   } -> class { 'aem_curator::config_logrotate':
-  } -> class { 'aem_curator::config_collectd':
-    component       => $component,
-    collectd_prefix => "${stack_prefix}-${component}",
-    ec2_id          => $ec2_id
+  }
+
+  # collectd is not installed on every AMI (e.g. Amazon Linux 2023), so only
+  # configure it when its configuration file exists.
+  if find_file('/etc/collectd.conf') {
+    class { 'aem_curator::config_collectd':
+      component       => $component,
+      collectd_prefix => "${stack_prefix}-${component}",
+      ec2_id          => $ec2_id,
+      require         => Class['aem_curator::config_logrotate'],
+    }
   }
 
   ##############################################################################
@@ -53,13 +60,14 @@ class author_standby (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/live-snapshot-backup.sh.epp",
       {
-        'aem_tools_env_path' => $aem_tools_env_path,
-        'base_dir'           => $base_dir,
-        'aem_repo_devices'   => $aem_repo_devices,
-        'component'          => $component,
-        'stack_prefix'       => $stack_prefix,
-        'aws_region'         => $aws_region,
-        'aws_tags'           => $aws_tags,
+        'aem_tools_env_path'   => $aem_tools_env_path,
+        'base_dir'             => $base_dir,
+        'aem_repo_devices'     => $aem_repo_devices,
+        'component'            => $component,
+        'stack_prefix'         => $stack_prefix,
+        'revert_snapshot_type' => undef,
+        'aws_region'           => $aws_region,
+        'aws_tags'             => $aws_tags,
       }
     ),
   }
@@ -76,13 +84,14 @@ class author_standby (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-snapshot-backup-full-set.sh.epp",
       {
-        'aem_tools_env_path' => $aem_tools_env_path,
-        'base_dir'           => $base_dir,
-        'aem_repo_devices'   => $aem_repo_devices,
-        'component'          => $component,
-        'stack_prefix'       => $stack_prefix,
-        'aws_region'         => $aws_region,
-        'aws_tags'           => $aws_tags,
+        'aem_tools_env_path'   => $aem_tools_env_path,
+        'base_dir'             => $base_dir,
+        'aem_repo_devices'     => $aem_repo_devices,
+        'component'            => $component,
+        'stack_prefix'         => $stack_prefix,
+        'aws_region'           => $aws_region,
+        'aws_tags'             => $aws_tags,
+        'revert_snapshot_type' => undef,
       }
     ),
   }
@@ -99,7 +108,8 @@ class author_standby (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aws-tools/promote-author-standby-to-primary.sh.epp",
       {
-        'base_dir' => $base_dir,
+        'base_dir'   => $base_dir,
+        'aws_region' => $aws_region,
       }
     ),
   }
