@@ -355,7 +355,7 @@ class ec2_instance(object):
         return mkfs
 
     @retry(**_retry_params)
-    def mount(self, device = None, mount_point = None, sudo = False):
+    def mount(self, device = None, mount_point = None, sudo = False, devices = []):
         if device is None or mount_point is None:
             log.debug('Mounting all filesystems')
             mount_args = ['-a']
@@ -366,6 +366,16 @@ class ec2_instance(object):
             mount = sh.sudo('-n', 'mount', *mount_args)
         else:
             mount = sh.mount(*mount_args)
+        # The volume_in_use waiter returns once EC2 reports the attachment, which
+        # can be before the kernel has created the device node. 'mount -a' then
+        # skips the device's nofail fstab entry and still succeeds, so check the
+        # device is actually mounted and retry until it is.
+        if devices:
+            names = set(devices) | set(os.path.realpath(d) for d in devices)
+            if not [m for m in self._mounts if m.spec in names]:
+                log.info('Device %s is not mounted yet', devices[0])
+                raise Exception('Device %s is not mounted' % devices[0])
+            log.info('Device %s is mounted', devices[0])
         return mount
 
     @retry(**_retry_params)
@@ -483,7 +493,7 @@ if __name__ == '__main__':
     attach = instance.attach(new_volume, args.device, args.no_delete_on_termination)
     if needs_format:
         instance.format(device, args.fs_type, args.fs_options, args.sudo)
-    mount  = instance.mount(args.device, args.mount_point, args.sudo)
+    mount  = instance.mount(args.device, args.mount_point, args.sudo, devices)
 
     log.info('Deleting original volume: %r', orig_volume)
     orig_volume.delete()
