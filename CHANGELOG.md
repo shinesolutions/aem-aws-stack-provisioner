@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Install Cinc InSpec 7 from a separate `Gemfile.inspec`, as it can't share a bundle with r10k 5
 - Use puppet-aem and puppet-aem-curator from their `feature/AOC-I21-al23` branches for OpenVox 9 support
 - Use the `$facts` hash instead of top-scope facts, for puppet-lint 5
+- Upgrade the default AEM Orchestrator to 5.0.0
+- Run AEM Orchestrator with Java 21 (`orchestrator::java_bin`) and set its working directory via a systemd drop-in, for AEM Orchestrator 5
 
 ### Fixed
 - Pin the `json` gem below 3, which breaks OpenVox 9's JSON parsing
