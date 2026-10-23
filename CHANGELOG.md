@@ -9,9 +9,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Upgrade the build toolchain to OpenVox 9, puppet-lint 5 and r10k 5, and Puppet module dependencies to versions that support OpenVox 9
 - Update RuboCop configuration for RuboCop 1.90
+- Install Cinc InSpec 7 from a separate `Gemfile.inspec`, as it can't share a bundle with r10k 5
 
 ### Fixed
 - Pin the `json` gem below 3, which breaks OpenVox 9's JSON parsing
+- Vendor aem_curator's InSpec profile in `make deps` when aem_curator is installed from git
 
 ## [7.2.3] - 2026-03-11
 ### Changed

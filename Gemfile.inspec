@@ -1,0 +1,8 @@
+# InSpec is kept in its own Gemfile because InSpec 7 (faraday 1)
+# can't be resolved in the same bundle as r10k 5 (faraday 2).
+source "https://rubygems.org"
+
+source "https://rubygems.cinc.sh/" do
+  gem 'inspec', '7.2.1'
+  gem 'inspec-bin', '7.2.1'
+end
