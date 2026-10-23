@@ -313,7 +313,7 @@ class ec2_instance(object):
                 raise Exception('Found more than one volume attached to device "%s"', devices[0])
             current_volume = current_volumes.pop()
             log.info('Detaching current volume: %s', current_volume)
-            current_volume.detach_from_instance(instance.instance_id)
+            current_volume.detach_from_instance(InstanceId=instance.instance_id)
             log.info('Waiting for current volume to reach state "available"')
             waiter.wait( VolumeIds=(current_volume.id,) )
             self._orig_volume = current_volume

@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Only configure collectd when it's installed, as Amazon Linux 2023 AMIs don't have it
 - Fetch instance metadata with an IMDSv2 token, required by Amazon Linux 2023 AMIs
 - Stop the CloudWatch agent while attaching a volume from a snapshot, as it keeps the data volume busy and the unmount fails
+- Pass `InstanceId` as a keyword in `snapshot_attach.py`, which boto3 resource actions require
 
 ## [7.2.3] - 2026-03-11
 ### Changed
