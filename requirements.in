@@ -2,6 +2,7 @@ boto3
 coloredlogs
 jmespath
 moto
+pylint
 pyyaml
 requests
 retrying

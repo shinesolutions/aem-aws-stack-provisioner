@@ -36,7 +36,7 @@ clean:
 # being hidden by a pipe; tar --no-same-owner, as root in the buildenv container can't chown files on a
 # macOS bind mount.
 # bundle install has no --binstubs option anymore in Bundler 4
-# requirements-dev.txt is installed too, so lint runs the pinned pylint, which sees the venv's packages
+# pylint is pinned in requirements.txt with the scripts' packages, so lint runs it in the venv, where it sees them
 deps:
 	gem install bundler --version=4.0.22
 	rm -rf .bundle
