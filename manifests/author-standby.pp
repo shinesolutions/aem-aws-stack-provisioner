@@ -53,13 +53,15 @@ class author_standby (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/live-snapshot-backup.sh.epp",
       {
-        'aem_tools_env_path' => $aem_tools_env_path,
-        'base_dir'           => $base_dir,
-        'aem_repo_devices'   => $aem_repo_devices,
-        'component'          => $component,
-        'stack_prefix'       => $stack_prefix,
-        'aws_region'         => $aws_region,
-        'aws_tags'           => $aws_tags,
+        'aem_tools_env_path'   => $aem_tools_env_path,
+        'base_dir'             => $base_dir,
+        'aem_repo_devices'     => $aem_repo_devices,
+        'component'            => $component,
+        'stack_prefix'         => $stack_prefix,
+        # The template reads $revert_snapshot_type; OpenVox 9 fails on unknown variables, undef keeps the old behaviour
+        'revert_snapshot_type' => undef,
+        'aws_region'           => $aws_region,
+        'aws_tags'             => $aws_tags,
       }
     ),
   }
@@ -76,13 +78,15 @@ class author_standby (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-snapshot-backup-full-set.sh.epp",
       {
-        'aem_tools_env_path' => $aem_tools_env_path,
-        'base_dir'           => $base_dir,
-        'aem_repo_devices'   => $aem_repo_devices,
-        'component'          => $component,
-        'stack_prefix'       => $stack_prefix,
-        'aws_region'         => $aws_region,
-        'aws_tags'           => $aws_tags,
+        'aem_tools_env_path'   => $aem_tools_env_path,
+        'base_dir'             => $base_dir,
+        'aem_repo_devices'     => $aem_repo_devices,
+        'component'            => $component,
+        'stack_prefix'         => $stack_prefix,
+        # The template reads $revert_snapshot_type; OpenVox 9 fails on unknown variables, undef keeps the old behaviour
+        'revert_snapshot_type' => undef,
+        'aws_region'           => $aws_region,
+        'aws_tags'             => $aws_tags,
       }
     ),
   }

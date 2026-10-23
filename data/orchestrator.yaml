@@ -1,32 +1,38 @@
 ---
-orchestrator::base_dir: "%{hiera('common::base_dir')}"
-orchestrator::tmp_dir: "%{hiera('common::tmp_dir')}"
-orchestrator::aem_orchestrator_version: 3.0.0
-orchestrator::awslogs_config_path: "%{hiera('common::awslogs_config_path')}"
-orchestrator::aws_region: "%{hiera('common::aws_region')}"
+# yamllint disable rule:line-length
+# (hiera keys with lookup() interpolations do not fit in 80 characters)
+orchestrator::base_dir: "%{lookup('common::base_dir')}"
+orchestrator::tmp_dir: "%{lookup('common::tmp_dir')}"
+# aem_orchestrator 3.x verifies the jar checksum (its default is for 4.0.0), so the version and
+# aem_orchestrator::jarfile_checksum_value below must change together; 5.0.0 needs Java 21
+orchestrator::aem_orchestrator_version: 5.0.0
+orchestrator::awslogs_config_path: "%{lookup('common::awslogs_config_path')}"
+orchestrator::aws_region: "%{lookup('common::aws_region')}"
 
 action_scheduled_jobs::offline_compaction_snapshot_enable: "%{alias('aem_orchestrator::scheduled_jobs::enable::offline_compaction_snapshot')}"
-action_scheduled_jobs::offline_compaction_snapshot_weekday: "%{hiera('aem_orchestrator::scheduled_jobs::weekday::offline_compaction_snapshot')}"
-action_scheduled_jobs::offline_compaction_snapshot_hour: "%{hiera('aem_orchestrator::scheduled_jobs::hour::offline_compaction_snapshot')}"
-action_scheduled_jobs::offline_compaction_snapshot_minute: "%{hiera('aem_orchestrator::scheduled_jobs::minute::offline_compaction_snapshot')}"
+action_scheduled_jobs::offline_compaction_snapshot_weekday: "%{lookup('aem_orchestrator::scheduled_jobs::weekday::offline_compaction_snapshot')}"
+action_scheduled_jobs::offline_compaction_snapshot_hour: "%{lookup('aem_orchestrator::scheduled_jobs::hour::offline_compaction_snapshot')}"
+action_scheduled_jobs::offline_compaction_snapshot_minute: "%{lookup('aem_orchestrator::scheduled_jobs::minute::offline_compaction_snapshot')}"
 action_scheduled_jobs::offline_snapshot_enable: "%{alias('aem_orchestrator::scheduled_jobs::enable::offline_snapshot')}"
-action_scheduled_jobs::offline_snapshot_weekday: "%{hiera('aem_orchestrator::scheduled_jobs::weekday::offline_snapshot')}"
-action_scheduled_jobs::offline_snapshot_hour: "%{hiera('aem_orchestrator::scheduled_jobs::hour::offline_snapshot')}"
-action_scheduled_jobs::offline_snapshot_minute: "%{hiera('aem_orchestrator::scheduled_jobs::minute::offline_snapshot')}"
+action_scheduled_jobs::offline_snapshot_weekday: "%{lookup('aem_orchestrator::scheduled_jobs::weekday::offline_snapshot')}"
+action_scheduled_jobs::offline_snapshot_hour: "%{lookup('aem_orchestrator::scheduled_jobs::hour::offline_snapshot')}"
+action_scheduled_jobs::offline_snapshot_minute: "%{lookup('aem_orchestrator::scheduled_jobs::minute::offline_snapshot')}"
 action_scheduled_jobs::cloudwatch_s3_stream_enable: "%{alias('orchestrator::enable_cloudwatch_s3_stream')}"
-action_scheduled_jobs::cloudwatch_s3_stream_weekday: "%{hiera('aem_orchestrator::scheduled_jobs::weekday::cloudwatch_s3_stream')}"
-action_scheduled_jobs::cloudwatch_s3_stream_hour: "%{hiera('aem_orchestrator::scheduled_jobs::hour::cloudwatch_s3_stream')}"
-action_scheduled_jobs::cloudwatch_s3_stream_minute: "%{hiera('aem_orchestrator::scheduled_jobs::minute::cloudwatch_s3_stream')}"
+action_scheduled_jobs::cloudwatch_s3_stream_weekday: "%{lookup('aem_orchestrator::scheduled_jobs::weekday::cloudwatch_s3_stream')}"
+action_scheduled_jobs::cloudwatch_s3_stream_hour: "%{lookup('aem_orchestrator::scheduled_jobs::hour::cloudwatch_s3_stream')}"
+action_scheduled_jobs::cloudwatch_s3_stream_minute: "%{lookup('aem_orchestrator::scheduled_jobs::minute::cloudwatch_s3_stream')}"
 
 aem_orchestrator::user: aem-orchestrator
-aem_orchestrator::jarfile_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/aem-orchestrator-%{hiera('orchestrator::aem_orchestrator_version')}.jar"
+aem_orchestrator::jarfile_source: "s3://%{::data_bucket_name}/%{::stack_prefix}/aem-orchestrator-%{lookup('orchestrator::aem_orchestrator_version')}.jar"
+# SHA-256 of aem-orchestrator-5.0.0.jar as published on Maven Central
+aem_orchestrator::jarfile_checksum_value: c42928026c73e733b3c9d70e372a9536b78afcb4187a2bf23ee394acaea86718
 aem_orchestrator::manage_installdir: true
 aem_orchestrator::basedir_mode: '0755'
 aem_orchestrator::installdir_mode: '0750'
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_messaging: "%{::stack_prefix}-aem-messaging-stack"
-aem_orchestrator::application_properties::aws_client_use_proxy: "%{hiera('common::proxy_enabled')}"
-aem_orchestrator::application_properties::aws_client_proxy_host: "%{hiera('common::proxy_host')}"
-aem_orchestrator::application_properties::aws_client_proxy_port: "%{hiera('common::proxy_port')}"
+aem_orchestrator::application_properties::aws_client_use_proxy: "%{lookup('common::proxy_enabled')}"
+aem_orchestrator::application_properties::aws_client_proxy_host: "%{lookup('common::proxy_host')}"
+aem_orchestrator::application_properties::aws_client_proxy_port: "%{lookup('common::proxy_port')}"
 aem_orchestrator::application_properties::aws_sqs_queue_name: "%{::stack_prefix}-aem-asg-event-queue"
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_author: "%{::stack_prefix}-aem-author-stack"
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_author_dispatcher: "%{::stack_prefix}-aem-author-dispatcher-stack"

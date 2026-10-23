@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# Existing script that runs on the instances: these pylint findings are kept as they are,
+# as fixing them would change its code (and possibly its behaviour) beyond the upgrade
+# pylint: disable=duplicate-code,bare-except,consider-using-f-string,invalid-name,line-too-long,logging-not-lazy,missing-class-docstring,missing-function-docstring,missing-module-docstring,multiple-imports,raise-missing-from,redefined-outer-name,unspecified-encoding,unused-import,useless-object-inheritance,wrong-import-order
 #
 # update_hiera.py is used to updates parameters in the hiera YAML file.
 #
@@ -124,9 +127,10 @@ class update_hiera(object):
 
         if args.action in ('add', 'change'):
             if args.parameter_value is not None:
-                if args.parameter_value.lower() in ('true'):
+                # Only true and false (any case) are booleans, ('true') was a substring match
+                if args.parameter_value.lower() == 'true':
                     self.parameter_value = True
-                elif args.parameter_value.lower() in ('false'):
+                elif args.parameter_value.lower() == 'false':
                     self.parameter_value = False
                 else:
                     self.parameter_value = args.parameter_value
@@ -192,7 +196,9 @@ class update_hiera(object):
             file = self.hiera_file
         try:
             with open(file, 'r') as yamlfile:
-                content = yaml.load(yamlfile)
+                # safe_load works on PyYAML 3 to 6, yaml.load without a Loader fails on PyYAML 6;
+                # local.yaml is plain hiera data
+                content = yaml.safe_load(yamlfile)
             return content
         except Exception as e:
             log.error("Error: Can't open file:  " + file + " - " + str(e))
@@ -222,8 +228,11 @@ if __name__ == '__main__':
     update_hiera = update_hiera(args)
 
     if action == 'add':
-        update_hiera.add()
+        # update_hiera is rebound to an instance of the class above
+        update_hiera.add()  # pylint: disable=no-value-for-parameter
     elif action == 'change':
-        update_hiera.change()
+        # update_hiera is rebound to an instance of the class above
+        update_hiera.change()  # pylint: disable=no-value-for-parameter
     elif action == 'remove':
-        update_hiera.remove()
+        # update_hiera is rebound to an instance of the class above
+        update_hiera.remove()  # pylint: disable=no-value-for-parameter
