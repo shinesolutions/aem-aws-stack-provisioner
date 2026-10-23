@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixed
 - Pin the `json` gem below 3, which breaks OpenVox 9's JSON parsing
 - Vendor aem_curator's InSpec profile in `make deps` when aem_curator is installed from git
+- Pass every variable EPP templates use, which OpenVox 9's strict variables require
 
 ## [7.2.3] - 2026-03-11
 ### Changed

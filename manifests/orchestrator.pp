@@ -107,6 +107,7 @@ class orchestrator (
       {
         'aem_tools_env_path' => $aem_tools_env_path,
         'base_dir'           => $base_dir,
+        'aws_region'         => $aws_region,
         }
       ),
       mode    => '0750',

@@ -91,13 +91,14 @@ class author_primary (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/live-snapshot-backup.sh.epp",
       {
-        'base_dir'           => $base_dir,
-        'aem_tools_env_path' => $aem_tools_env_path,
-        'aem_repo_devices'   => $aem_repo_devices,
-        'component'          => $component,
-        'stack_prefix'       => $stack_prefix,
-        'aws_region'         => $aws_region,
-        'aws_tags'           => $aws_tags,
+        'base_dir'             => $base_dir,
+        'aem_tools_env_path'   => $aem_tools_env_path,
+        'aem_repo_devices'     => $aem_repo_devices,
+        'component'            => $component,
+        'stack_prefix'         => $stack_prefix,
+        'revert_snapshot_type' => undef,
+        'aws_region'           => $aws_region,
+        'aws_tags'             => $aws_tags,
       }
     ),
   }
@@ -114,13 +115,14 @@ class author_primary (
     content => epp(
       "${base_dir}/aem-aws-stack-provisioner/templates/aem-tools/offline-snapshot-backup-full-set.sh.epp",
       {
-        'base_dir'           => $base_dir,
-        'aem_tools_env_path' => $aem_tools_env_path,
-        'aem_repo_devices'   => $aem_repo_devices,
-        'component'          => $component,
-        'stack_prefix'       => $stack_prefix,
-        'aws_region'         => $aws_region,
-        'aws_tags'           => $aws_tags,
+        'base_dir'             => $base_dir,
+        'aem_tools_env_path'   => $aem_tools_env_path,
+        'aem_repo_devices'     => $aem_repo_devices,
+        'component'            => $component,
+        'stack_prefix'         => $stack_prefix,
+        'aws_region'           => $aws_region,
+        'aws_tags'             => $aws_tags,
+        'revert_snapshot_type' => undef,
       }
     ),
   }
