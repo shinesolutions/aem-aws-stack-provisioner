@@ -14,16 +14,16 @@ class preview_publish (
   $revert_snapshot_type,
   $awslogs_config_path,
   $awslogs_service_name            = lookup('common::awslogs_service_name'),
-  $preview_publish_dispatcher_id   = $::pairinstanceid,
-  $preview_publish_dispatcher_host = $::previewpublishdispatcherhost,
-  $stack_prefix                    = $::stack_prefix,
-  $component                       = $::component,
-  $data_bucket_name                = $::data_bucket_name,
-  $env_path                        = $::cron_env_path,
+  $preview_publish_dispatcher_id   = $facts['pairinstanceid'],
+  $preview_publish_dispatcher_host = $facts['previewpublishdispatcherhost'],
+  $stack_prefix                    = $facts['stack_prefix'],
+  $component                       = $facts['component'],
+  $data_bucket_name                = $facts['data_bucket_name'],
+  $env_path                        = $facts['cron_env_path'],
   $aem_tools_env_path              = '$PATH:/opt/puppetlabs/puppet/bin',
-  $https_proxy                     = $::cron_https_proxy,
-  $ec2_id                          = $::ec2_metadata['instance-id'],
-  $snapshotid                      = $::snapshotid
+  $https_proxy                     = $facts['cron_https_proxy'],
+  $ec2_id                          = $facts['ec2_metadata']['instance-id'],
+  $snapshotid                      = $facts['snapshotid']
 ) {
 
   # A simple check for checking if the awslogs(Cloudwatch Agent)

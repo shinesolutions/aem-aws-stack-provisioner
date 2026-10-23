@@ -9,9 +9,9 @@ class orchestrator (
   $awslogs_config_path,
   $aem_tools_env_path          = '$PATH:/opt/puppetlabs/puppet/bin',
   $stack_manager_stack_name    = undef,
-  $data_bucket_name            = $::data_bucket_name,
-  $stack_prefix                = $::stack_prefix,
-  $component                   = $::component,
+  $data_bucket_name            = $facts['data_bucket_name'],
+  $stack_prefix                = $facts['stack_prefix'],
+  $component                   = $facts['component'],
   $enable_cloudwatch_s3_stream = false,
 ) {
 

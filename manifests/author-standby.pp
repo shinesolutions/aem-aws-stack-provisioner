@@ -9,12 +9,12 @@ class author_standby (
   $aws_region,
   $aws_tags,
   $awslogs_config_path,
-  $author_primary_host        = $::authorprimaryhost,
-  $component                  = $::component,
-  $data_bucket_name           = $::data_bucket_name,
-  $stack_prefix               = $::stack_prefix,
+  $author_primary_host        = $facts['authorprimaryhost'],
+  $component                  = $facts['component'],
+  $data_bucket_name           = $facts['data_bucket_name'],
+  $stack_prefix               = $facts['stack_prefix'],
   $aem_tools_env_path         = '$PATH:/opt/puppetlabs/puppet/bin',
-  $ec2_id                     = $::ec2_metadata['instance-id'],
+  $ec2_id                     = $facts['ec2_metadata']['instance-id'],
 ) {
 
   # A simple check for checking if the awslogs(Cloudwatch Agent)

@@ -10,11 +10,11 @@ class author_primary (
   $aem_repo_devices,
   $aem_password_retrieval_command,
   $awslogs_config_path,
-  $component          = $::component,
-  $stack_prefix       = $::stack_prefix,
-  $data_bucket_name   = $::data_bucket_name,
+  $component          = $facts['component'],
+  $stack_prefix       = $facts['stack_prefix'],
+  $data_bucket_name   = $facts['data_bucket_name'],
   $aem_tools_env_path = '$PATH:/opt/puppetlabs/puppet/bin',
-  $ec2_id             = $::ec2_metadata['instance-id'],
+  $ec2_id             = $facts['ec2_metadata']['instance-id'],
 ) {
 
   # A simple check for checking if the awslogs(Cloudwatch Agent)
