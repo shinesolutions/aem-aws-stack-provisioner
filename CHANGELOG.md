@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Use the `$facts` hash instead of top-scope facts, for puppet-lint 5
 - Upgrade the default AEM Orchestrator to 5.0.0
 - Run AEM Orchestrator with Java 21 (`orchestrator::java_bin`) and set its working directory via a systemd drop-in, for AEM Orchestrator 5
+- Upgrade the inspec-aem-aws profile to 4.0.1, which uses ruby_aem_aws 4.0.2
 
 ### Fixed
 - Pin the `json` gem below 3, which breaks OpenVox 9's JSON parsing
