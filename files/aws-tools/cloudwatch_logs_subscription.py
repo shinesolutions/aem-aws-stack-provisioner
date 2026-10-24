@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# Existing script that runs on the instances: these pylint findings are kept as they are,
+# as fixing them would change its code (and possibly its behaviour) beyond the upgrade
+# pylint: disable=fixme,logging-not-lazy,missing-function-docstring,missing-module-docstring,redefined-outer-name,unused-import,wrong-import-order
 import boto3
 from botocore.config import Config
 import logging
@@ -15,7 +18,8 @@ logging.basicConfig(
     datefmt = "%Y-%m-%d %H:%M:%S"
     )
 logger = logging.getLogger(__name__)
-logger.setLevel(int(os.getenv('LOG_LEVEL', logging.INFO)))
+# int() accepts both the int default and a LOG_LEVEL string
+logger.setLevel(int(os.getenv('LOG_LEVEL', logging.INFO)))  # pylint: disable=invalid-envvar-default
 
 client = boto3.client('logs')
 
@@ -109,7 +113,10 @@ def get_subscribed_log_group(log_group_name):
             response = client.describe_subscription_filters(
                 limit=50,
                 nextToken=response['nextToken'],
-                logGroupName=stack_prefix + '/'
+                # stack_prefix is the module-level global set in __main__
+                # TODO: the next pages use stack_prefix + '/' instead of log_group_name, and read
+                # response['logGroups'] instead of 'subscriptionFilters', so paging fails
+                logGroupName=stack_prefix + '/'  # pylint: disable=possibly-used-before-assignment
             )
 
             subscribed_log_group = subscribed_log_group + response['logGroups']

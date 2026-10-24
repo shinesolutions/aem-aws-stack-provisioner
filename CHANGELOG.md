@@ -5,23 +5,53 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
 ### Added
+- Added yamllint and markdownlint-cli2 to the lint target, yamllint with its default rules plus the repo-wide truthy exception in .yamllint.yaml, and file-specific exceptions as yamllint comments in the YAML files
+- Added puppet/systemd (9.4.0, the latest version puppet-logrotate 9.0.0 allows) and puppetlabs/inifile modules, required by puppet-logrotate 9
+- Added a package check that the InSpec AEM AWS profile is included, and yamllint of inspec.yml
+- Added markdownlint of docs/ and the GitHub issue templates
+- Added a Python venv with pinned requirements (requirements.in, requirements-dev.txt, requirements.txt) and the deps-upgrade and rmdeps targets
+- Added pylint of the aws-tools Python scripts, and the Python unit test to CI with a test target
+- Added unit tests for update_hiera.py
+- Added acceptance tests with voxpupuli-acceptance (Beaker on Docker), run by CI, which provision the package as stack-init.sh does on an Amazon Linux 2023 stand-in for the AEM AMIs, without AWS and AEM, and check the scheduled jobs, the logrotate configuration and the component InSpec controls that need neither
+- Added checks to the component InSpec tests that the system services the provisioning relies on are enabled and running: crond on every component, collectd on the AEM components when the AMI has it, and awslogs when the AMI has it
 - Add Amazon Linux 2023 hieradata for SimianArmy's Tomcat install
 
 ### Changed
-- Upgrade the build toolchain to OpenVox 9, puppet-lint 5 and r10k 5, and Puppet module dependencies to versions that support OpenVox 9
-- Update RuboCop configuration for RuboCop 1.90
-- Install Cinc InSpec 7 from a separate `Gemfile.inspec`, as it can't share a bundle with r10k 5
-- Use puppet-aem and puppet-aem-curator from their `feature/AOC-I21-al23` branches for OpenVox 9 support
+- Upgraded Puppet module shinesolutions/aem_curator to 5.1.0 (OpenVox 9, JDK 11/21, without bstopp/aem), and removed bstopp/aem, which no module needs any more
+- Upgraded Puppet module shinesolutions/aem_resources to 8.0.0 (OpenVox 9, ruby_aem 4.1.0, without bstopp/aem)
+- Upgraded to Ruby 4.0.7 and OpenVox 9 with Vox Pupuli tooling, replacing the pinned Puppet 7 gems
+- Upgraded puppet-aem-orchestrator to 3.0.2
+- Upgraded third-party Puppet modules to their latest versions compatible with OpenVox 9
+- Upgrade the inspec-aem-aws profile to 4.0.1, which uses ruby_aem_aws 4.0.2, the instances need Cinc InSpec 7.2.1 and Ruby 4
+- Replaced InSpec profile vendoring with a download of the profile tarball in the deps target, as InSpec 1.51.6 does not run on Ruby 4
+- Upgraded AEM Orchestrator to 5.0.0 with its jar checksum, the jar must be in the data bucket and the orchestrator instance needs Java 21
+- Added comments explaining the OpenVox 9 upgrade changes and the 4 minute AEM stop timeout in the offline snapshot scripts
+- Replaced the deprecated hiera() interpolation function with lookup() in the hiera data
+- Changed the target platforms to Amazon Linux 2023 and Rocky Linux 10
+- Grouped the checks of the component InSpec tests into controls, and check the Simian Army log on Amazon Linux too
+- Upgraded GitHub CI to actions/checkout v7
+- Simplify CI workflow to not use action files anymore
+- Upgrade aem-platform-buildenv to 6.4.1
+- Upgrade release workflows to cliffano/release-action 2.1.0
+- Restructured the README into Installation, Usage, Result Model, Error Handling, Testing and Versions History sections
+- Committed Gemfile.lock and kept it on make clean, so CI installs the pinned gems
+- Removed the librarian-puppet leftovers from make clean
 - Use the `$facts` hash instead of top-scope facts, for puppet-lint 5
-- Upgrade the default AEM Orchestrator to 5.0.0
 - Run AEM Orchestrator with Java 21 (`orchestrator::java_bin`) and set its working directory via a systemd drop-in, for AEM Orchestrator 5
-- Upgrade the inspec-aem-aws profile to 4.0.1, which uses ruby_aem_aws 4.0.2
+
+### Removed
+- Removed Amazon Linux 2 support: its hiera data (data/RedHat/Amazon-2.yaml) and the InSpec 1.51.6 workaround in the component InSpec tests
 
 ### Fixed
-- Pin the `json` gem below 3, which breaks OpenVox 9's JSON parsing
-- Vendor aem_curator's InSpec profile in `make deps` when aem_curator is installed from git
+- Fixed the pre-common host entry for OpenVox 9, which no longer provides legacy facts
+- Fixed the author snapshot backup templates for OpenVox 9 strict variables
+- Fixed the publish target to run gh as root in the buildenv container
+- Fixed the deps target to fail the build when the InSpec profile download fails
+- Fixed the launch template snapshot unit test for moto 5
+- Fixed update_hiera.py failing to read the hiera file on PyYAML 6, by using yaml.safe_load
+- Fixed update_hiera.py treating any part of true or false (e.g. t) as a boolean, only true and false in any case are booleans now
+- Fixed the component InSpec tests failing to load on Cinc InSpec 7, whose thor conflicts with facter, by removing the unused facter and hiera requires
 - Pass every variable EPP templates use, which OpenVox 9's strict variables require
 - Only configure collectd when it's installed, as Amazon Linux 2023 AMIs don't have it
 - Fetch instance metadata with an IMDSv2 token, required by Amazon Linux 2023 AMIs
@@ -47,8 +77,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [7.2.0] - 2024-06-27
 ### Added
 - Added tagging for snapshots from config #RS-165
-
-## [7.1.1] - 2023-10-23
 
 ## [7.1.1] - 2023-10-23
 ### Changed
@@ -928,7 +956,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [7.2.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.2.1...7.2.2
 [7.2.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.2.0...7.2.1
 [7.2.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.1.1...7.2.0
-[7.1.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.1.1...7.1.1
 [7.1.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.1.0...7.1.1
 [7.1.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.0.4...7.1.0
 [7.0.4]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.0.3...7.0.4

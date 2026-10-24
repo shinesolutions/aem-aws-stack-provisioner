@@ -104,6 +104,7 @@ class author_primary (
         'aem_repo_devices'     => $aem_repo_devices,
         'component'            => $component,
         'stack_prefix'         => $stack_prefix,
+        # The template reads $revert_snapshot_type; OpenVox 9 fails on unknown variables, undef keeps the old behaviour
         'revert_snapshot_type' => undef,
         'aws_region'           => $aws_region,
         'aws_tags'             => $aws_tags,
@@ -128,9 +129,10 @@ class author_primary (
         'aem_repo_devices'     => $aem_repo_devices,
         'component'            => $component,
         'stack_prefix'         => $stack_prefix,
+        # The template reads $revert_snapshot_type; OpenVox 9 fails on unknown variables, undef keeps the old behaviour
+        'revert_snapshot_type' => undef,
         'aws_region'           => $aws_region,
         'aws_tags'             => $aws_tags,
-        'revert_snapshot_type' => undef,
       }
     ),
   }

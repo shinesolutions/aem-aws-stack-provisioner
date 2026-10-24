@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+# Existing script that runs on the instances: these pylint findings are kept as they are,
+# as fixing them would change its code (and possibly its behaviour) beyond the upgrade
+# pylint: disable=bare-except,consider-using-f-string,duplicate-code,expression-not-assigned,invalid-name,line-too-long,missing-function-docstring,missing-module-docstring,multiple-imports,redefined-outer-name,simplifiable-if-expression,too-many-arguments,too-many-positional-arguments,trailing-comma-tuple
 import sys, os, logging, argparse, socket, textwrap
 import boto3
 

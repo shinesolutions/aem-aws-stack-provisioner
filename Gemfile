@@ -1,10 +1,14 @@
-source "https://rubygems.org"
+source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
-# json 3 changed JSON.parse to keyword-only options, which breaks OpenVox 9's
-# Puppet::Util::Json.load, and bundle install puts it in the agent's Ruby
-gem 'json', '< 3', require: false
-gem 'openvox', '9.0.0', require: false
-gem 'puppet-lint', '5.1.1', require: false
-gem 'r10k', '5.0.3', require: false
-gem 'rubocop', '1.90.0', require: false
-gem 'yaml-lint', '0.1.2', require: false
+group :development, :test do
+  # OpenVox 9 calls JSON.parse(string, options), which json 3 no longer accepts
+  gem 'json',                '~> 2.21'
+  # Installs the Puppetfile modules
+  gem 'r10k',                '~> 5.0', require: false
+  # Provides OpenVox, puppet-lint (with the Vox Pupuli plugins) and rubocop
+  gem 'voxpupuli-test',      '~> 15.0', require: false
+  # Runs the acceptance tests in spec/acceptance with Beaker on Docker
+  gem 'voxpupuli-acceptance', '~> 4.4', require: false
+  # Loaded as a plugin in .rubocop.yml, not a dependency of voxpupuli-test
+  gem 'rubocop-performance', '~> 1.27', require: false
+end

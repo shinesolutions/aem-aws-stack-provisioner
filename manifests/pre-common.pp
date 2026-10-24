@@ -41,6 +41,7 @@ class pre_common (
   )
 
   # Ensure we have a working FQDN <=> IP mapping.
+  # Uses the structured networking facts, as OpenVox 9 no longer provides the legacy fqdn/ipaddress/hostname facts
   host { $facts['networking']['fqdn']:
     ensure       => present,
     ip           => $facts['networking']['ip'],
