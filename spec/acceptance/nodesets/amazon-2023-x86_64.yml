@@ -29,6 +29,10 @@ HOSTS:
       # Part of the Amazon Linux 2023 AMIs but not of the image: InSpec's port
       # resource (the dispatcher control) lists the listening ports with ss
       - dnf install -y iproute
+      # Part of the Amazon Linux 2023 AMIs but not of the image: the openssl
+      # command aem_curator::install_dispatcher runs to convert the
+      # dispatcher key to PEM (mod_ssl only brings in openssl-libs)
+      - dnf install -y openssl
       # The AMIs' default user (common::user), which pre-common.pp sets up the
       # AWS CLI configuration for
       - useradd ec2-user
