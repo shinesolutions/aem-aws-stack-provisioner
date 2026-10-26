@@ -23,7 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Upgraded to Ruby 4.0.7 and OpenVox 9 with Vox Pupuli tooling, replacing the pinned Puppet 7 gems
 - Upgraded puppet-aem-orchestrator to 3.0.2
 - Upgraded third-party Puppet modules to their latest versions compatible with OpenVox 9
-- Upgrade the inspec-aem-aws profile to 4.0.1, which uses ruby_aem_aws 4.0.2, the instances need Cinc InSpec 7.2.1 and Ruby 4
+- Upgrade the inspec-aem-aws profile to 4.1.0, which uses ruby_aem_aws 4.0.2 and runs its readiness targets with the instances' own inspec, the instances need Cinc InSpec 7.2.1 and Ruby 4
 - Replaced InSpec profile vendoring with a download of the profile tarball in the deps target, as InSpec 1.51.6 does not run on Ruby 4
 - Upgraded AEM Orchestrator to 5.0.0 with its jar checksum, the jar must be in the data bucket and the orchestrator instance needs Java 21
 - Added comments explaining the OpenVox 9 upgrade changes and the 4 minute AEM stop timeout in the offline snapshot scripts
@@ -38,7 +38,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Committed Gemfile.lock and kept it on make clean, so CI installs the pinned gems
 - Removed the librarian-puppet leftovers from make clean
 - Use the `$facts` hash instead of top-scope facts, for puppet-lint 5
-- Run AEM Orchestrator with Java 21 (`orchestrator::java_bin`) and set its working directory via a systemd drop-in, for AEM Orchestrator 5
 
 ### Removed
 - Removed Amazon Linux 2 support: its hiera data (data/RedHat/Amazon-2.yaml) and the InSpec 1.51.6 workaround in the component InSpec tests
