@@ -20,6 +20,10 @@ HOSTS:
       # be wrapped)
       # yamllint disable-line rule:line-length
       - dnf install -y https://ftp.gwdg.de/pub/linux/openvox/yum/openvox9-release-amazon-2023.noarch.rpm
+      # The release package's repo file points at yum.voxpupuli.org, which
+      # is down, so switch its baseurl to the mirror (the GPG key is in the
+      # release package)
+      # yamllint disable-line rule:line-length
       - sed -i 's|https://yum.voxpupuli.org/|https://ftp.gwdg.de/pub/linux/openvox/yum/|' /etc/yum.repos.d/openvox9-release.repo
       - dnf install -y openvox-agent
       # Part of the Amazon Linux 2023 AMIs but not of the image: InSpec's port
