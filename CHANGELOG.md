@@ -1,10 +1,9 @@
 # Changelog
-
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [8.0.0] - 2026-10-26
 ### Added
 - Added yamllint and markdownlint-cli2 to the lint target, yamllint with its default rules plus the repo-wide truthy exception in .yamllint.yaml, and file-specific exceptions as yamllint comments in the YAML files
 - Added puppet/systemd (9.4.0, the latest version puppet-logrotate 9.0.0 allows) and puppetlabs/inifile modules, required by puppet-logrotate 9
@@ -924,7 +923,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Backup export should now clean up all versions of the package before exporting
 - Set backup export timeout to 15 minutes
 
-## 1.0.0 - 2017-05-22
+## [1.0.0] - 2017-05-22
 ### Added
 - Initial version
 
@@ -950,7 +949,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#225]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/225
 [#236]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/236
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.2.3...HEAD
+[8.0.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.2.3...8.0.0
 [7.2.3]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.2.2...7.2.3
 [7.2.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.2.1...7.2.2
 [7.2.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.2.0...7.2.1
@@ -1092,3 +1091,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [1.1.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/1.0.0...1.1.0
+[1.0.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/releases/tag/1.0.0

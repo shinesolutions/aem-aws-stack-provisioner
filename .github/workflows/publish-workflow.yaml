@@ -10,13 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: main
+          ref: 8.0.0
           set-safe-directory: ${{ github.workspace }}
       - uses: cliffano/command-docker-action@v2.1.0
         with:
           image: shinesolutions/aem-platform-buildenv:6.4.1
           shell: bash
-          # Pass the token into the buildenv container for gh in make publish
           extra_args: -e GITHUB_TOKEN
           command: |
             make clean deps lint package publish
