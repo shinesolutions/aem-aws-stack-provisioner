@@ -19,7 +19,7 @@ HOSTS:
       # OpenVox 9 is baked in, as on the AMIs (the release package URL can't
       # be wrapped)
       # yamllint disable-line rule:line-length
-      - dnf install -y https://yum.voxpupuli.org/openvox9-release-amazon-2023.noarch.rpm
+      - dnf install -y https://ftp.gwdg.de/pub/linux/openvox/yum/openvox9-release-amazon-2023.noarch.rpm
       - dnf install -y openvox-agent
       # Part of the Amazon Linux 2023 AMIs but not of the image: InSpec's port
       # resource (the dispatcher control) lists the listening ports with ss
