@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
 ## [8.0.0] - 2026-10-26
 ### Added
 - Added yamllint and markdownlint-cli2 to the lint target, yamllint with its default rules plus the repo-wide truthy exception in .yamllint.yaml, and file-specific exceptions as yamllint comments in the YAML files
@@ -949,6 +951,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#225]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/225
 [#236]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/236
 
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.0.0...HEAD
 [8.0.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.2.3...8.0.0
 [7.2.3]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.2.2...7.2.3
 [7.2.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.2.1...7.2.2
