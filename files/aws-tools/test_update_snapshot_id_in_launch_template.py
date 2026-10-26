@@ -7,6 +7,7 @@
 #
 #
 #
+import logging
 import os
 import unittest
 # mock is part of the standard library as unittest.mock
@@ -22,6 +23,12 @@ class TestAwsAutoScalingGroup(unittest.TestCase):
     """
     Moto mock AwsAutoScalingGroup tests
     """
+
+    def setUp(self):
+        # The script under test logs at NOTSET, which makes botocore log the
+        # whole moto AMI catalogue (about 1MB on a single line) for the
+        # unfiltered describe_images call, and CI stalls on that line
+        logging.getLogger("botocore").setLevel(logging.WARNING)
 
     @mock_aws
     def test_update_snapshot_id_in_launch_template(self):
