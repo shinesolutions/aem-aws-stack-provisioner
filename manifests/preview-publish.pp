@@ -14,16 +14,16 @@ class preview_publish (
   $revert_snapshot_type,
   $awslogs_config_path,
   $awslogs_service_name            = lookup('common::awslogs_service_name'),
-  $preview_publish_dispatcher_id   = $::pairinstanceid,
-  $preview_publish_dispatcher_host = $::previewpublishdispatcherhost,
-  $stack_prefix                    = $::stack_prefix,
-  $component                       = $::component,
-  $data_bucket_name                = $::data_bucket_name,
-  $env_path                        = $::cron_env_path,
+  $preview_publish_dispatcher_id   = $facts['pairinstanceid'],
+  $preview_publish_dispatcher_host = $facts['previewpublishdispatcherhost'],
+  $stack_prefix                    = $facts['stack_prefix'],
+  $component                       = $facts['component'],
+  $data_bucket_name                = $facts['data_bucket_name'],
+  $env_path                        = $facts['cron_env_path'],
   $aem_tools_env_path              = '$PATH:/opt/puppetlabs/puppet/bin',
-  $https_proxy                     = $::cron_https_proxy,
-  $ec2_id                          = $::ec2_metadata['instance-id'],
-  $snapshotid                      = $::snapshotid
+  $https_proxy                     = $facts['cron_https_proxy'],
+  $ec2_id                          = $facts['ec2_metadata']['instance-id'],
+  $snapshotid                      = $facts['snapshotid']
 ) {
 
   # A simple check for checking if the awslogs(Cloudwatch Agent)
@@ -117,6 +117,22 @@ class preview_publish (
       }
     }
 
+    # The CloudWatch agent (installed instead of awslogs on Amazon Linux 2023)
+    # tails AEM logs on the data volume, which keeps the volume busy and makes
+    # snapshot_attach.py fail to unmount it.
+    if find_file('/opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl') {
+      exec { 'Stop CloudWatch agent to release the mounted FS':
+        command => 'systemctl stop amazon-cloudwatch-agent',
+        path    => $exec_path,
+        before  => Exec["Attach volume from snapshot ID ${snapshotid}"],
+      }
+      exec { 'Start CloudWatch agent after attaching the volume':
+        command => 'systemctl start amazon-cloudwatch-agent',
+        path    => $exec_path,
+        require => Exec['Sleep 15 seconds before allowing access the mounted FS'],
+      }
+    }
+
     exec { "Attach volume from snapshot ID ${snapshotid}":
       command => "${base_dir}/aws-tools/snapshot_attach.py --device ${aem_repo_devices[0][device_name]} --device-alias ${aem_repo_devices[0][device_alias]} --volume-type ${volume_type} --snapshot-id ${snapshotid} -vvvv",
       timeout => 0,
@@ -144,11 +160,19 @@ class preview_publish (
     publish_dispatcher_id   => $preview_publish_dispatcher_id,
     publish_dispatcher_host => $preview_publish_dispatcher_host,
   } -> class { 'aem_curator::config_logrotate':
-  } -> class { 'aem_curator::config_collectd':
-    component       => $component,
-    collectd_prefix => "${stack_prefix}-${component}",
-    ec2_id          => $ec2_id
   } -> class { 'aem_curator::config_aem_scheduled_jobs':
+  }
+
+  # collectd is not installed on every AMI (e.g. Amazon Linux 2023), so only
+  # configure it when its configuration file exists.
+  if find_file('/etc/collectd.conf') {
+    class { 'aem_curator::config_collectd':
+      component       => $component,
+      collectd_prefix => "${stack_prefix}-${component}",
+      ec2_id          => $ec2_id,
+      require         => Class['aem_curator::config_logrotate'],
+      before          => Class['aem_curator::config_aem_scheduled_jobs'],
+    }
   }
 
   ##############################################################################

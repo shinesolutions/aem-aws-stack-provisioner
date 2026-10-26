@@ -46,7 +46,10 @@ _retry_params = dict(
 )
 @retry(**_retry_params)
 def _retry_fetch(url, json):
-    resp = requests.get(url)
+    # Use IMDSv2 token, required by AMIs with ImdsSupport v2.0 (e.g. Amazon Linux 2023)
+    token = requests.put('http://169.254.169.254/latest/api/token', headers = {'X-aws-ec2-metadata-token-ttl-seconds': '300'})
+    token.raise_for_status()
+    resp = requests.get(url, headers = {'X-aws-ec2-metadata-token': token.text})
     resp.raise_for_status()
     if json:
         return resp.json()
@@ -318,7 +321,7 @@ class ec2_instance(object):
             current_volume = current_volumes.pop()
             log.info('Detaching current volume: %s', current_volume)
             # instance is the module-level ec2_instance set in __main__
-            current_volume.detach_from_instance(instance.instance_id)  # pylint: disable=possibly-used-before-assignment
+            current_volume.detach_from_instance(InstanceId=instance.instance_id)  # pylint: disable=possibly-used-before-assignment
             log.info('Waiting for current volume to reach state "available"')
             waiter.wait( VolumeIds=(current_volume.id,) )
             self._orig_volume = current_volume
@@ -364,7 +367,7 @@ class ec2_instance(object):
         return mkfs
 
     @retry(**_retry_params)
-    def mount(self, device = None, mount_point = None, sudo = False):
+    def mount(self, device = None, mount_point = None, sudo = False, devices = []):
         if device is None or mount_point is None:
             log.debug('Mounting all filesystems')
             mount_args = ['-a']
@@ -376,6 +379,16 @@ class ec2_instance(object):
         else:
             # sh resolves commands at run time, which pylint can't see
             mount = sh.mount(*mount_args)  # pylint: disable=no-member
+        # The volume_in_use waiter returns once EC2 reports the attachment, which
+        # can be before the kernel has created the device node. 'mount -a' then
+        # skips the device's nofail fstab entry and still succeeds, so check the
+        # device is actually mounted and retry until it is.
+        if devices:
+            names = set(devices) | set(os.path.realpath(d) for d in devices)
+            if not [m for m in self._mounts if m.spec in names]:
+                log.info('Device %s is not mounted yet', devices[0])
+                raise Exception('Device %s is not mounted' % devices[0])
+            log.info('Device %s is mounted', devices[0])
         return mount
 
     @retry(**_retry_params)
@@ -494,7 +507,7 @@ if __name__ == '__main__':
     if needs_format:
         # TODO: device is undefined here (args.device?), see format above
         instance.format(device, args.fs_type, args.fs_options, args.sudo)  # pylint: disable=too-many-function-args,undefined-variable
-    mount  = instance.mount(args.device, args.mount_point, args.sudo)
+    mount  = instance.mount(args.device, args.mount_point, args.sudo, devices)
 
     log.info('Deleting original volume: %r', orig_volume)
     orig_volume.delete()

@@ -19,8 +19,12 @@ SYSTEM_SERVICES = %w[crond].freeze
 AWSLOGS_SERVICE = 'awslogs'.freeze
 AWSLOGS_CONFIG_PATH = '/etc/awslogs/awslogs.conf'.freeze
 
-# collectd collects the AEM JMX metrics, set up by aem_curator::config_collectd on the AEM components
-AEM_SYSTEM_SERVICES = (SYSTEM_SERVICES + %w[collectd]).freeze
+# collectd collects the AEM JMX metrics, set up by aem_curator::config_collectd on the AEM components. Like awslogs
+# it's optional: the component manifests only configure it when its configuration exists, and Amazon Linux 2023
+# AMIs don't install it, so it's only checked then
+COLLECTD_SERVICE = 'collectd'.freeze
+COLLECTD_CONFIG_PATH = '/etc/collectd.conf'.freeze
+AEM_SYSTEM_SERVICES = (SYSTEM_SERVICES + [COLLECTD_SERVICE]).freeze
 
 def init_conf
   require 'hiera'
@@ -31,6 +35,7 @@ end
 # Each service must be enabled, so it starts again after a reboot, and running
 def describe_system_services(services)
   services += [AWSLOGS_SERVICE] if file(AWSLOGS_CONFIG_PATH).exist?
+  services -= [COLLECTD_SERVICE] unless file(COLLECTD_CONFIG_PATH).exist?
   services.each do |name|
     describe service(name) do
       it { should be_enabled }

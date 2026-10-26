@@ -4,10 +4,10 @@ File {
 
 class action_scheduled_jobs (
   $base_dir,
-  $env_path                            = $::cron_env_path,
-  $http_proxy                          = $::cron_http_proxy,
-  $https_proxy                         = $::cron_https_proxy,
-  $no_proxy                            = $::cron_no_proxy,
+  $env_path                            = $facts['cron_env_path'],
+  $http_proxy                          = $facts['cron_http_proxy'],
+  $https_proxy                         = $facts['cron_https_proxy'],
+  $no_proxy                            = $facts['cron_no_proxy'],
   $cloudwatch_s3_stream_enable         = false,
   $export_enable                       = false,
   $live_snapshot_enable                = false,
@@ -34,7 +34,7 @@ class action_scheduled_jobs (
   $offline_snapshot_minute             = '15',
   $offline_snapshot_weekday            = '2-7',
   $log_dir                             = '/var/log/shinesolutions',
-  $stack_prefix                        = $::stack_prefix,
+  $stack_prefix                        = $facts['stack_prefix'],
 ) {
 
   # This dummy job is a placeholder just to import proxy environment variables once off

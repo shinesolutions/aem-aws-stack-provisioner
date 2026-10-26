@@ -11,16 +11,16 @@ class chaos_monkey (
   $author_dispatcher_enable_random_termination          = true,
   $preview_publish_enable_random_termination            = false,
   $preview_publish_dispatcher_enable_random_termination = false,
-  $component                                            = $::component,
-  $stack_prefix                                         = $::stack_prefix,
-  $orchestrator_asg                                     = $::orchestratorasg,
-  $publish_asg                                          = $::publisherasg,
-  $preview_publish_asg                                  = $::previewpublisherasg,
-  $publish_dispatcher_asg                               = $::publisherdispatcherasg,
-  $preview_publish_dispatcher_asg                       = $::previewpublisherdispatcherasg,
-  $author_dispatcher_asg                                = $::authordispatcherasg,
-  $asg_probability                                      = $::asg_probability,
-  $asg_max_terminations_per_day                         = $::asg_max_terminations_per_day,
+  $component                                            = $facts['component'],
+  $stack_prefix                                         = $facts['stack_prefix'],
+  $orchestrator_asg                                     = $facts['orchestratorasg'],
+  $publish_asg                                          = $facts['publisherasg'],
+  $preview_publish_asg                                  = $facts['previewpublisherasg'],
+  $publish_dispatcher_asg                               = $facts['publisherdispatcherasg'],
+  $preview_publish_dispatcher_asg                       = $facts['previewpublisherdispatcherasg'],
+  $author_dispatcher_asg                                = $facts['authordispatcherasg'],
+  $asg_probability                                      = $facts['asg_probability'],
+  $asg_max_terminations_per_day                         = $facts['asg_max_terminations_per_day'],
 ) {
 
   # A simple check for checking if the awslogs(Cloudwatch Agent)
@@ -35,7 +35,7 @@ class chaos_monkey (
   $awslogs_exists = find_file($awslogs_config_path)
 
   class { 'simianarmy':
-  } -> simianarmy::chaos_properties::asg { $::orchestratorasg:
+  } -> simianarmy::chaos_properties::asg { $facts['orchestratorasg']:
     enabled                  => $orchestrator_enable_random_termination,
     probability              => $asg_probability,
     max_terminations_per_day => $asg_max_terminations_per_day,

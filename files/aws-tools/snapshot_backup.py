@@ -37,7 +37,10 @@ _retry_params = dict(
 )
 @retry(**_retry_params)
 def _retry_fetch(url, parse_json):
-    resp = requests.get(url)
+    # Use IMDSv2 token, required by AMIs with ImdsSupport v2.0 (e.g. Amazon Linux 2023)
+    token = requests.put('http://169.254.169.254/latest/api/token', headers = {'X-aws-ec2-metadata-token-ttl-seconds': '300'})
+    token.raise_for_status()
+    resp = requests.get(url, headers = {'X-aws-ec2-metadata-token': token.text})
     resp.raise_for_status()
     if parse_json:
         return resp.json()

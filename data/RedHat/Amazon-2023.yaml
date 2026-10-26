@@ -1,0 +1,16 @@
+---
+
+# Legacy awslogs agent does not exist on Amazon Linux 2023 (packer-aem installs
+# amazon-cloudwatch-agent instead), so common::awslogs_config_path is never
+# found and the awslogs-specific resources in each component manifest are
+# skipped. No awslogs overrides are needed here.
+
+# AL2023's repos don't carry a tomcat package, so packer-aem installs Apache
+# Tomcat from the upstream tarball under /opt/apache-tomcat-<version>, with
+# /opt/tomcat symlinked to it and a systemd unit named tomcat.
+simianarmy::tomcat_pkg_name: tomcat
+simianarmy::tomcat_srv_name: tomcat
+simianarmy::installdir: /opt/tomcat/webapps
+
+# aem_orchestrator::application_properties::aws_device_name is left to the
+# value aem-aws-stack-builder generates in local.yaml from its ami_device map.

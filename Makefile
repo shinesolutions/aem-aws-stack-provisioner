@@ -31,7 +31,7 @@ clean:
 # - no InSpec version can share a bundle with OpenVox 9 (thor) or r10k 5 (faraday)
 # - InSpec 5+ needs the Chef licence accepted, and 6/7 need licence keys
 # The result is the same tree as before. InSpec is only needed at runtime on the instances, where
-# inspec-aem-aws 4.0.0 expects Cinc InSpec 7.2.1 (an AMI requirement).
+# inspec-aem-aws 4.0.1 expects Cinc InSpec 7.2.1 (an AMI requirement).
 # It is saved to a file before extracting it, so a failed download (curl -f) fails the build instead of
 # being hidden by a pipe; tar --no-same-owner, as root in the buildenv container can't chown files on a
 # macOS bind mount.

@@ -14,15 +14,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added pylint of the aws-tools Python scripts, and the Python unit test to CI with a test target
 - Added unit tests for update_hiera.py
 - Added acceptance tests with voxpupuli-acceptance (Beaker on Docker), run by CI, which provision the package as stack-init.sh does on an Amazon Linux 2023 stand-in for the AEM AMIs, without AWS and AEM, and check the scheduled jobs, the logrotate configuration and the component InSpec controls that need neither
-- Added checks to the component InSpec tests that the system services the provisioning relies on are enabled and running: crond on every component, collectd on the AEM components, and awslogs when the AMI has it
+- Added checks to the component InSpec tests that the system services the provisioning relies on are enabled and running: crond on every component, collectd on the AEM components when the AMI has it, and awslogs when the AMI has it
+- Add Amazon Linux 2023 hieradata for SimianArmy's Tomcat install
 
 ### Changed
-- Upgraded Puppet module shinesolutions/aem_curator to 5.0.0 (OpenVox 9, JDK 11/21, without bstopp/aem), and removed bstopp/aem, which no module needs any more
+- Upgraded Puppet module shinesolutions/aem_curator to 5.1.0 (OpenVox 9, JDK 11/21, without bstopp/aem), and removed bstopp/aem, which no module needs any more
 - Upgraded Puppet module shinesolutions/aem_resources to 8.0.0 (OpenVox 9, ruby_aem 4.1.0, without bstopp/aem)
 - Upgraded to Ruby 4.0.7 and OpenVox 9 with Vox Pupuli tooling, replacing the pinned Puppet 7 gems
 - Upgraded puppet-aem-orchestrator to 3.0.2
 - Upgraded third-party Puppet modules to their latest versions compatible with OpenVox 9
-- Upgraded the InSpec AEM AWS profile to 4.0.0, the instances need Cinc InSpec 7.2.1 and Ruby 4
+- Upgrade the inspec-aem-aws profile to 4.1.0, which uses ruby_aem_aws 4.0.2 and runs its readiness targets with the instances' own inspec, the instances need Cinc InSpec 7.2.1 and Ruby 4
 - Replaced InSpec profile vendoring with a download of the profile tarball in the deps target, as InSpec 1.51.6 does not run on Ruby 4
 - Upgraded AEM Orchestrator to 5.0.0 with its jar checksum, the jar must be in the data bucket and the orchestrator instance needs Java 21
 - Added comments explaining the OpenVox 9 upgrade changes and the 4 minute AEM stop timeout in the offline snapshot scripts
@@ -36,6 +37,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Restructured the README into Installation, Usage, Result Model, Error Handling, Testing and Versions History sections
 - Committed Gemfile.lock and kept it on make clean, so CI installs the pinned gems
 - Removed the librarian-puppet leftovers from make clean
+- Use the `$facts` hash instead of top-scope facts, for puppet-lint 5
 
 ### Removed
 - Removed Amazon Linux 2 support: its hiera data (data/RedHat/Amazon-2.yaml) and the InSpec 1.51.6 workaround in the component InSpec tests
@@ -49,6 +51,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fixed update_hiera.py failing to read the hiera file on PyYAML 6, by using yaml.safe_load
 - Fixed update_hiera.py treating any part of true or false (e.g. t) as a boolean, only true and false in any case are booleans now
 - Fixed the component InSpec tests failing to load on Cinc InSpec 7, whose thor conflicts with facter, by removing the unused facter and hiera requires
+- Pass every variable EPP templates use, which OpenVox 9's strict variables require
+- Only configure collectd when it's installed, as Amazon Linux 2023 AMIs don't have it
+- Fetch instance metadata with an IMDSv2 token, required by Amazon Linux 2023 AMIs
+- Stop the CloudWatch agent while attaching a volume from a snapshot, as it keeps the data volume busy and the unmount fails
+- Pass `InstanceId` as a keyword in `snapshot_attach.py`, which boto3 resource actions require
+- Retry mounting in `snapshot_attach.py` until the new volume is actually mounted, as the device can appear after EC2 reports the volume attached
 
 ## [7.2.3] - 2026-03-11
 ### Changed

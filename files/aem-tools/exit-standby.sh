@@ -2,7 +2,8 @@
 set -o nounset
 set -o errexit
 
-instance_id=$(curl --silent http://169.254.169.254/latest/meta-data/instance-id)
+imds_token=$(curl --silent --fail -X PUT http://169.254.169.254/latest/api/token -H 'X-aws-ec2-metadata-token-ttl-seconds: 300')
+instance_id=$(curl --silent --fail -H "X-aws-ec2-metadata-token: ${imds_token}" http://169.254.169.254/latest/meta-data/instance-id)
 
 lifecycle_state=$(aws autoscaling describe-auto-scaling-instances --instance-ids "${instance_id}" --query AutoScalingInstances[].LifecycleState --output text)
 
