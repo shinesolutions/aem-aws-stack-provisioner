@@ -27,7 +27,7 @@ Learn more about AEM AWS Stack Provisioner:
 Requirements on the instances:
 
 * OpenVox 9 on Amazon Linux 2023 or Rocky Linux 10
-* Cinc InSpec 7.2.1 on Ruby 4, which runs the [InSpec AEM AWS](https://github.com/shinesolutions/inspec-aem-aws) 4.0.1 profile included in the package
+* Cinc InSpec 7.2.1 on Ruby 4, which runs the [InSpec AEM AWS](https://github.com/shinesolutions/inspec-aem-aws) 4.1.0 profile included in the package
 * Java 21 on the orchestrator instance, which runs AEM Orchestrator 5.0.0. Its jar is taken from the stack's data bucket,
   `s3://<data_bucket_name>/<stack_prefix>/aem-orchestrator-5.0.0.jar`, and verified against the SHA-256 checksum in `data/orchestrator.yaml`
 * The AWS CLI, used by the scripts and to download the `s3://` sources
