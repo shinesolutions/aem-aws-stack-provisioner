@@ -50,6 +50,15 @@ deps:
 	rm vendor/inspec/inspec-aem-aws.tar.gz
 	rm -rf files/test/inspec/ && mkdir -p files/test/inspec/
 	mv vendor/inspec/inspec-aem-aws-* files/test/inspec/inspec-aem-aws
+	# TODO: remove with the Puppetfile's aem_curator git source once aem_curator 5.1.1 is on the Forge.
+	# aem_curator from git has no files/test, which only its Forge package has, so vendor its InSpec profile here
+	if [ ! -d modules/aem_curator/files/test ]; then \
+		curl -sSfL -o vendor/inspec/inspec-aem.tar.gz "$$(ruby -ryaml -e "puts YAML.load_file('modules/aem_curator/inspec.yml')['depends'][0]['url']")" && \
+		tar --no-same-owner -xzf vendor/inspec/inspec-aem.tar.gz -C vendor/inspec/ && \
+		rm vendor/inspec/inspec-aem.tar.gz && \
+		mkdir -p modules/aem_curator/files/test/inspec/ && \
+		mv vendor/inspec/inspec-aem-* modules/aem_curator/files/test/inspec/inspec-aem; \
+	fi
 
 # Upgrade the Python dependencies in requirements.txt to the latest versions allowed by requirements.in
 deps-upgrade:
