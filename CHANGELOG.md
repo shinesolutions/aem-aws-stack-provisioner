@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Give the unified CloudWatch agent's log groups, log streams and metrics the stack prefix and component names on Amazon Linux 2023, via aem_curator::config_cloudwatch_agent
+
+### Changed
+- Upgraded the InSpec AEM AWS profile to inspec-aem-aws 4.2.0
+- Upgraded Puppet module shinesolutions/aem_curator to 5.1.1, which clears the unified CloudWatch agent's saved read positions before applying the stack configuration, so quiet logs such as /var/log/secure get their stack-prefixed log streams
 
 ## [8.0.0] - 2026-10-26
 ### Added
@@ -17,10 +23,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added acceptance tests with voxpupuli-acceptance (Beaker on Docker), run by CI, which provision the package as stack-init.sh does on an Amazon Linux 2023 stand-in for the AEM AMIs, without AWS and AEM, and check the scheduled jobs, the logrotate configuration and the component InSpec controls that need neither
 - Added checks to the component InSpec tests that the system services the provisioning relies on are enabled and running: crond on every component, collectd on the AEM components when the AMI has it, and awslogs when the AMI has it
 - Add Amazon Linux 2023 hieradata for SimianArmy's Tomcat install
-- Give the unified CloudWatch agent's log groups, log streams and metrics the stack prefix and component names on Amazon Linux 2023, via aem_curator::config_cloudwatch_agent 
 
 ### Changed
-- Upgraded Puppet module shinesolutions/aem_curator to 5.1.1 (OpenVox 9, JDK 11/21, without bstopp/aem), and removed bstopp/aem, which no module needs any more
+- Upgraded Puppet module shinesolutions/aem_curator to 5.1.0 (OpenVox 9, JDK 11/21, without bstopp/aem), and removed bstopp/aem, which no module needs any more
 - Upgraded Puppet module shinesolutions/aem_resources to 8.0.0 (OpenVox 9, ruby_aem 4.1.0, without bstopp/aem)
 - Upgraded to Ruby 4.0.7 and OpenVox 9 with Vox Pupuli tooling, replacing the pinned Puppet 7 gems
 - Upgraded puppet-aem-orchestrator to 3.0.2

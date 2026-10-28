@@ -19,8 +19,5 @@ mod 'puppet/systemd', '9.4.0'
 mod 'puppet-yum', '8.3.0'
 mod 'shinesolutions/aem_orchestrator', '3.1.0'
 mod 'shinesolutions/aem_resources', '8.0.0'
-# TODO: switch back to the Forge release 5.1.1 once it's published
-mod 'shinesolutions/aem_curator',
-  :git    => 'https://github.com/shinesolutions/puppet-aem-curator.git',
-  :branch => 'feature/AOC-I22-accpetance-test'
+mod 'shinesolutions/aem_curator', '5.1.1'
 mod 'shinesolutions/simianarmy', '1.1.4'

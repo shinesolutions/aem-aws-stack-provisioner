@@ -31,7 +31,7 @@ clean:
 # - no InSpec version can share a bundle with OpenVox 9 (thor) or r10k 5 (faraday)
 # - InSpec 5+ needs the Chef licence accepted, and 6/7 need licence keys
 # The result is the same tree as before. InSpec is only needed at runtime on the instances, where
-# inspec-aem-aws 4.1.0 expects Cinc InSpec 7.2.1 (an AMI requirement).
+# inspec-aem-aws 4.2.0 expects Cinc InSpec 7.2.1 (an AMI requirement).
 # It is saved to a file before extracting it, so a failed download (curl -f) fails the build instead of
 # being hidden by a pipe; tar --no-same-owner, as root in the buildenv container can't chown files on a
 # macOS bind mount.
@@ -50,15 +50,6 @@ deps:
 	rm vendor/inspec/inspec-aem-aws.tar.gz
 	rm -rf files/test/inspec/ && mkdir -p files/test/inspec/
 	mv vendor/inspec/inspec-aem-aws-* files/test/inspec/inspec-aem-aws
-	# TODO: remove with the Puppetfile's aem_curator git source once aem_curator 5.1.1 is on the Forge.
-	# aem_curator from git has no files/test, which only its Forge package has, so vendor its InSpec profile here
-	if [ ! -d modules/aem_curator/files/test ]; then \
-		curl -sSfL -o vendor/inspec/inspec-aem.tar.gz "$$(ruby -ryaml -e "puts YAML.load_file('modules/aem_curator/inspec.yml')['depends'][0]['url']")" && \
-		tar --no-same-owner -xzf vendor/inspec/inspec-aem.tar.gz -C vendor/inspec/ && \
-		rm vendor/inspec/inspec-aem.tar.gz && \
-		mkdir -p modules/aem_curator/files/test/inspec/ && \
-		mv vendor/inspec/inspec-aem-* modules/aem_curator/files/test/inspec/inspec-aem; \
-	fi
 
 # Upgrade the Python dependencies in requirements.txt to the latest versions allowed by requirements.in
 deps-upgrade:
