@@ -13,7 +13,6 @@ class orchestrator (
   $stack_prefix                = $facts['stack_prefix'],
   $component                   = $facts['component'],
   $enable_cloudwatch_s3_stream = false,
-  $java_bin                    = '/usr/lib/jvm/jre-21/bin/java',
 ) {
 
   # A simple check for checking if the awslogs(Cloudwatch Agent)
@@ -33,10 +32,8 @@ class orchestrator (
 
   include aem_orchestrator
 
-  # AEM Orchestrator 5 requires Java 21, while /usr/bin/java on the java AMI is
-  # the JDK SimianArmy needs, so start it with $java_bin. It also writes
-  # orchestrator.log relative to its working directory, which the module's
-  # service unit doesn't set.
+  # AEM Orchestrator writes orchestrator.log relative to its working directory,
+  # which the module's service unit doesn't set.
   file { "/etc/systemd/system/${aem_orchestrator::service_name}.service.d":
     ensure => directory,
     mode   => '0755',
@@ -50,8 +47,6 @@ class orchestrator (
     content => join([
       '[Service]',
       "WorkingDirectory=${aem_orchestrator::installdir}",
-      'ExecStart=',
-      "ExecStart=${java_bin} -jar ${aem_orchestrator::jarfile}",
       '',
     ], "\n"),
     notify  => Service[$aem_orchestrator::service_name],
@@ -163,6 +158,16 @@ class orchestrator (
     class { 'update_awslogs':
       config_file_path => $awslogs_config_path
     }
+  }
+
+  # Amazon Linux 2023 AMIs have the unified CloudWatch agent instead of awslogs
+  # and collectd, so give its log groups, log streams and metrics the stack
+  # prefix and component names here. The class does nothing on an AMI
+  # without the agent.
+  class { 'aem_curator::config_cloudwatch_agent':
+    stack_prefix => $stack_prefix,
+    component    => $component,
+    ec2_id       => $facts['ec2_metadata']['instance-id'],
   }
 
   ##############################################################################

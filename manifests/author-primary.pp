@@ -172,6 +172,16 @@ class author_primary (
     }
   }
 
+  # Amazon Linux 2023 AMIs have the unified CloudWatch agent instead of awslogs
+  # and collectd, so give its log groups, log streams and metrics the stack
+  # prefix and component names here. The class does nothing on an AMI
+  # without the agent.
+  class { 'aem_curator::config_cloudwatch_agent':
+    stack_prefix => $stack_prefix,
+    component    => $component,
+    ec2_id       => $ec2_id,
+  }
+
   exec { 'Resize data volume size':
     command => "resize2fs ${aem_repo_devices[0][device_name]}",
     path    => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/sbin'],

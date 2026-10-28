@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Give the unified CloudWatch agent's log groups, log streams and metrics the stack prefix and component names on Amazon Linux 2023, via aem_curator::config_cloudwatch_agent
+
+### Changed
+- Upgraded the InSpec AEM AWS profile to inspec-aem-aws 4.2.0
+- Upgraded Puppet module shinesolutions/aem_curator to 5.1.1, which clears the unified CloudWatch agent's saved read positions before applying the stack configuration, so quiet logs such as /var/log/secure get their stack-prefixed log streams
 
 ## [8.0.0] - 2026-10-26
 ### Added
