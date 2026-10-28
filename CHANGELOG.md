@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Publish author-standby's sync delay metric, collectd/GenericJMX.delay.seconds_since_last_success, on AMIs without collectd such as Amazon Linux 2023, via aem_curator::config_standby_status_metric, so the sync delay alarm and its acceptance test work again
 
 ## [8.1.0] - 2026-10-28
 ### Changed

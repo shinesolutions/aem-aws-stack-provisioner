@@ -38,13 +38,23 @@ class author_standby (
   }
 
   # collectd is not installed on every AMI (e.g. Amazon Linux 2023), so only
-  # configure it when its configuration file exists.
+  # configure it when its configuration file exists. Without collectd, publish
+  # the sync delay metric collectd's GenericJMX plugin would publish, with the
+  # same name and dimensions, from a systemd timer instead.
   if find_file('/etc/collectd.conf') {
     class { 'aem_curator::config_collectd':
       component       => $component,
       collectd_prefix => "${stack_prefix}-${component}",
       ec2_id          => $ec2_id,
       require         => Class['aem_curator::config_logrotate'],
+    }
+  } else {
+    class { 'aem_curator::config_standby_status_metric':
+      stack_prefix => $stack_prefix,
+      component    => $component,
+      ec2_id       => $ec2_id,
+      aws_region   => $aws_region,
+      require      => Class['aem_curator::config_author_standby'],
     }
   }
 

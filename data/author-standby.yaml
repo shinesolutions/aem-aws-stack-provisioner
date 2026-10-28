@@ -64,6 +64,17 @@ aem_curator::config_collectd::aem_instances:
     instance_prefixes:
       - standby-status
 
+# Publishes the sync delay metric on AMIs without collectd, reading AEM's JMX the way config_collectd does
+aem_curator::config_standby_status_metric::jmxremote_port: "%{lookup('aem_curator::config_author_standby::jmxremote_port')}"
+aem_curator::config_standby_status_metric::jmxremote_keystore_path: "%{lookup('aem_curator::config_author_standby::jmxremote_keystore_path')}"
+aem_curator::config_standby_status_metric::jmx_user: "%{lookup('common::jmxremote::user')}"
+aem_curator::config_standby_status_metric::jmx_user_password: "%{lookup('common::jmxremote::user_password')}"
+aem_curator::config_standby_status_metric::proxy_enabled: "%{alias('common::proxy_enabled')}"
+aem_curator::config_standby_status_metric::proxy_protocol: "%{lookup('common::proxy_protocol')}"
+aem_curator::config_standby_status_metric::proxy_host: "%{lookup('common::proxy_host')}"
+aem_curator::config_standby_status_metric::proxy_port: "%{lookup('common::proxy_port')}"
+aem_curator::config_standby_status_metric::proxy_noproxy: "%{alias('common::proxy_noproxy')}"
+
 aem_curator::config_author_standby::tmp_dir: "%{lookup('common::tmp_dir')}"
 aem_curator::config_author_standby::aem_base: "%{lookup('common::aem_base')}"
 aem_curator::config_author_standby::puppet_conf_dir: "%{lookup('common::puppet_conf_dir')}"
