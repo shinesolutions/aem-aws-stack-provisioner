@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 ### Changed
 - Updated AEM Password Reset to the latest release, 2.0.0, and AEM Health Check in the acceptance hiera data to 2.0.0
+- Fall back to the GWDG mirror of yum.voxpupuli.org for the OpenVox 9 release package and repo in the acceptance nodesets, so an outage of yum.voxpupuli.org does not block CI
 
 ## [8.0.0] - 2026-10-26
 ### Added
