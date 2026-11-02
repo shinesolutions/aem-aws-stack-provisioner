@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [8.1.1] - 2026-11-02
 ### Changed
 - Upgraded the InSpec AEM AWS profile to inspec-aem-aws 4.2.1
 - Upgraded puppet-aem-curator to 5.1.2
@@ -967,7 +967,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#225]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/225
 [#236]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/236
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.1.0...HEAD
+[8.1.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.1.0...8.1.1
 [8.1.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.0.1...8.1.0
 [8.0.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.0.0...8.0.1
 [8.0.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/7.2.3...8.0.0
