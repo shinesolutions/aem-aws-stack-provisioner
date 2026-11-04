@@ -10,6 +10,7 @@ class pre_common (
   $user,
   $group,
   $credentials_file,
+  $credentials_secret_id,
   $awslogs_service_name,
   $aem_tools_env_path          = '$PATH:/opt/puppetlabs/puppet/bin',
   $extra_packages              = [],
@@ -17,8 +18,6 @@ class pre_common (
   $enable_preview_architecture = false,
   $template_dir                = undef,
   $file_dir                    = undef,
-  $stack_prefix                = $facts['stack_prefix'],
-  $data_bucket_name            = $facts['data_bucket_name'],
   $log_dir                     = '/var/log/shinesolutions',
   $ssh_public_keys             = undef,
 ) {
@@ -218,12 +217,18 @@ class pre_common (
     group  => 'root',
   }
 
-  # Download credentials file from S3 to temp directory, these credentials will
-  # used for component provisioning and will be cleaned up at the end of stack
+  # Write the credentials from AWS Secrets Manager (previously a file in the
+  # data bucket) to the temp directory, these credentials will used for
+  # component provisioning and will be cleaned up at the end of stack
   # initialisation.
-  archive { "${tmp_dir}/${credentials_file}":
-    ensure => present,
-    source => "s3://${data_bucket_name}/${stack_prefix}/${credentials_file}"
+  # umask 077 keeps the plain-text copy readable by root only, and writing to
+  # a .tmp file first means a failed retrieval leaves no empty file that
+  # `creates` would then skip on the next run.
+  exec { "Retrieve ${credentials_file} from AWS Secrets Manager":
+    command  => "umask 077 && aws secretsmanager get-secret-value --region ${aws_region} --secret-id ${credentials_secret_id} --query SecretString --output text > ${tmp_dir}/${credentials_file}.tmp && mv ${tmp_dir}/${credentials_file}.tmp ${tmp_dir}/${credentials_file}",
+    creates  => "${tmp_dir}/${credentials_file}",
+    path     => ['/bin', '/usr/local/bin', '/usr/bin', '/usr/sbin'],
+    provider => shell,
   }
 
   ##############################################################################

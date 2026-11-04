@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- The system users credentials are read from AWS Secrets Manager secret `aem-opencloud/<stack_prefix>/system-users-credentials` (new hiera key `common::credentials_secret_id`) instead of `system-users-credentials.json` in the data bucket, by pre-common, `common::aem_password_retrieval_command` and AEM Orchestrator
 
 ## [8.1.1] - 2026-11-02
 ### Changed
