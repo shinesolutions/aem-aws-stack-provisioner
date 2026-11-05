@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Upgrade aem-platform-buildenv to 6.5.0, which has RTK 4.4.0
 - Upgrade release-action to 2.2.0
+- Upgrade puppet-aem-orchestrator to 3.2.0
 
 ## [8.1.1] - 2026-11-02
 ### Changed
