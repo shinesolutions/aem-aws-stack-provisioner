@@ -28,8 +28,8 @@ Requirements on the instances:
 
 * OpenVox 9 on Amazon Linux 2023 or Rocky Linux 10
 * Cinc InSpec 7.2.1 on Ruby 4, which runs the [InSpec AEM AWS](https://github.com/shinesolutions/inspec-aem-aws) 4.2.0 profile included in the package
-* Java 21 on the orchestrator instance, which runs AEM Orchestrator 5.0.0. Its jar is taken from the stack's data bucket,
-  `s3://<data_bucket_name>/<stack_prefix>/aem-orchestrator-5.0.0.jar`, and verified against the SHA-256 checksum in `data/orchestrator.yaml`
+* Java 21 on the orchestrator instance, which runs AEM Orchestrator 5.1.0. Its jar is taken from the stack's data bucket,
+  `s3://<data_bucket_name>/<stack_prefix>/aem-orchestrator-5.1.0.jar`, and verified against the SHA-256 checksum in `data/orchestrator.yaml`
 * The AWS CLI, used by the scripts and to download the `s3://` sources
 * cronie, which Amazon Linux 2023 doesn't install by default, for the scheduled jobs' crontab entries and the logrotate cron scripts
 
@@ -129,7 +129,7 @@ What isn't checked:
 
 AEM AWS Stack Provisioner targets OpenVox 9 on Amazon Linux 2023 and Rocky Linux 10.
 
-Run the commands below in [AEM Platform BuildEnv](https://github.com/shinesolutions/aem-platform-buildenv) (`shinesolutions/aem-platform-buildenv:6.4.1`), as CI does:
+Run the commands below in [AEM Platform BuildEnv](https://github.com/shinesolutions/aem-platform-buildenv) (`shinesolutions/aem-platform-buildenv:6.5.0`), as CI does:
 
 | Command | Runs |
 | --- | --- |
