@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Made the collectd GenericJMX plugin trust AEM's JMX SSL certificate through AEM's JMX keystore on author-primary, author-standby, publish and preview-publish
+- Upgraded Puppet module shinesolutions/aem_curator to 5.1.3, which publishes the collectd GenericJMX metrics (including the author-standby seconds_since_last_success) through the unified CloudWatch agent on Amazon Linux 2023
+- Upgraded the InSpec AEM AWS profile to inspec-aem-aws 4.2.2
 
 ## [8.2.0] - 2026-11-05
 ### Changed
