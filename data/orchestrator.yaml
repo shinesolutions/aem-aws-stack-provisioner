@@ -38,8 +38,8 @@ aem_orchestrator::application_properties::aws_cloudformation_stack_name_author: 
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_author_dispatcher: "%{::stack_prefix}-aem-author-dispatcher-stack"
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_publish: "%{::stack_prefix}-aem-publish-stack"
 aem_orchestrator::application_properties::aws_cloudformation_stack_name_publish_dispatcher: "%{::stack_prefix}-aem-publish-dispatcher-stack"
-aem_orchestrator::application_properties::aem_credentials_s3_use: 'true'
-aem_orchestrator::application_properties::aem_credentials_s3_file_uri: "s3://%{::data_bucket_name}/%{::stack_prefix}/system-users-credentials.json"
+aem_orchestrator::application_properties::aem_credentials_secretsmanager_use: 'true'
+aem_orchestrator::application_properties::aem_credentials_secretsmanager_secret_id: "%{lookup('common::credentials_secret_id')}"
 aem_orchestrator::application_properties::aem_client_api_debug: 'true'
 
 aem_orchestrator::application_properties::aem_protocol_author: 'https'
