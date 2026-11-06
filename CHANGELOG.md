@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 ### Changed
+- Upgraded Puppet module shinesolutions/aem_resources to 8.1.0, which uses ruby_aem 4.2.0 with swagger_aem 4.1.0 and swagger_aem_osgi 2.1.0
 - Made the collectd GenericJMX plugin trust AEM's JMX SSL certificate through AEM's JMX keystore on author-primary, author-standby, publish and preview-publish
 - Upgraded Puppet module shinesolutions/aem_curator to 5.1.3, which publishes the collectd GenericJMX metrics (including the author-standby seconds_since_last_success) through the unified CloudWatch agent on Amazon Linux 2023
 - Upgraded the InSpec AEM AWS profile to inspec-aem-aws 4.2.2
