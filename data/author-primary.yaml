@@ -71,6 +71,8 @@ aem_curator::config_collectd::aem_instances:
     jmxremote_port: "%{lookup('aem_curator::config_author_primary::jmxremote_port')}"
     instance_prefixes:
       - memory-heap
+# The GenericJMX plugin's JVM trusts AEM's JMX SSL certificate through AEM's JMX keystore
+aem_curator::config_collectd::jmx_truststore_path: "%{lookup('aem_curator::config_author_primary::jmxremote_keystore_path')}"
 
 aem_curator::config_author_primary::tmp_dir: "%{lookup('common::tmp_dir')}"
 aem_curator::config_author_primary::aem_base: "%{lookup('common::aem_base')}"

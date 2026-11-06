@@ -5,7 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 ### Changed
-- Upgraded AEM Orchestrator to 5.1.0 with its jar checksum, the jar must be in the data bucket as `aem-orchestrator-5.1.0.jar`
+- Made the collectd GenericJMX plugin trust AEM's JMX SSL certificate through AEM's JMX keystore on author-primary, author-standby, publish and preview-publish
+- Upgraded Puppet module shinesolutions/aem_curator to 5.1.3, which publishes the collectd GenericJMX metrics (including the author-standby seconds_since_last_success) through the unified CloudWatch agent on Amazon Linux 2023
+- Upgraded the InSpec AEM AWS profile to inspec-aem-aws 4.2.2
+
+## [8.2.0] - 2026-11-05
+### Changed
+- Upgrade aem-platform-buildenv to 6.5.0, which has RTK 4.4.0
+- Upgrade release-action to 2.2.0
+- Upgrade puppet-aem-orchestrator to 3.2.0
+- Upgrade AEM Orchestrator to 5.1.0
 
 ## [8.1.1] - 2026-11-02
 ### Changed
@@ -971,7 +980,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#225]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/225
 [#236]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/236
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.1.1...HEAD
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.2.0...HEAD
+[8.2.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.1.1...8.2.0
 [8.1.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.1.0...8.1.1
 [8.1.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.0.1...8.1.0
 [8.0.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.0.0...8.0.1

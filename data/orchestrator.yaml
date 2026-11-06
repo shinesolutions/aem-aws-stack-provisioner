@@ -3,7 +3,7 @@
 # (hiera keys with lookup() interpolations do not fit in 80 characters)
 orchestrator::base_dir: "%{lookup('common::base_dir')}"
 orchestrator::tmp_dir: "%{lookup('common::tmp_dir')}"
-# aem_orchestrator 3.x verifies the jar checksum (its default is for 4.0.0), so the version and
+# aem_orchestrator 3.x verifies the jar checksum (its 3.2.0 default is for 5.1.0), so the version and
 # aem_orchestrator::jarfile_checksum_value below must change together; 5.x needs Java 21
 orchestrator::aem_orchestrator_version: 5.1.0
 orchestrator::awslogs_config_path: "%{lookup('common::awslogs_config_path')}"
