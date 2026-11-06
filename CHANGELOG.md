@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
 ## [8.3.0] - 2026-11-06
 ### Changed
 - Upgraded Puppet module shinesolutions/aem_resources to 8.1.0, which uses ruby_aem 4.2.0 with swagger_aem 4.1.0 and swagger_aem_osgi 2.1.0
@@ -981,6 +983,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#225]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/225
 [#236]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/236
 
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.3.0...HEAD
 [8.3.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.2.0...8.3.0
 [8.2.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.1.1...8.2.0
 [8.1.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.1.0...8.1.1
