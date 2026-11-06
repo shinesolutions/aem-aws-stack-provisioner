@@ -56,8 +56,8 @@ STACK_FACTS = {
 # The system users the manifests read from the credentials file (pre-common.pp downloads it from the data bucket)
 SYSTEM_USERS = %w[admin deployer exporter importer orchestrator replicator].freeze
 
-# The ruby_aem version the shinesolutions/aem_resources version in the Puppetfile (8.0.0) requires
-RUBY_AEM_VERSION = '4.1.0'
+# The ruby_aem version the shinesolutions/aem_resources version in the Puppetfile (8.1.0) requires
+RUBY_AEM_VERSION = '4.2.0'
 
 # The latest AEM Dispatcher built for OpenSSL 3 (Amazon Linux 2023), a public download
 DISPATCHER_VERSION = '4.3.8'

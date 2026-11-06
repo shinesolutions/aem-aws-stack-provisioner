@@ -19,7 +19,7 @@ PARAMETER = 'aem_orchestrator::scheduled_jobs::enable::offline_snapshot'
 # Hiera data as in data/orchestrator.yaml and data/common.yaml, with a scheduled job flag
 # that schedule-snapshots.sh changes (the backslash joins the long alias line)
 LOCAL_YAML = """---
-orchestrator::aem_orchestrator_version: 5.0.0
+orchestrator::aem_orchestrator_version: 5.1.0
 orchestrator::base_dir: "%{lookup('common::base_dir')}"
 action_scheduled_jobs::offline_snapshot_enable: \
 "%{alias('aem_orchestrator::scheduled_jobs::enable::offline_snapshot')}"
@@ -69,7 +69,7 @@ class TestUpdateHiera(unittest.TestCase):
         self.assertEqual(0, self.update_hiera('change', PARAMETER, 'True'))
         content = self.read(self.dest_file)
         self.assertIs(True, content[PARAMETER])
-        self.assertEqual('5.0.0', content['orchestrator::aem_orchestrator_version'])
+        self.assertEqual('5.1.0', content['orchestrator::aem_orchestrator_version'])
 
     def test_change_parameter_to_false(self):
         """change sets False as the boolean false"""
