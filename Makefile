@@ -1,4 +1,4 @@
-version ?= 8.3.1
+version ?= 8.3.2-pre.0
 
 ci: clean deps lint test acceptance package
 
