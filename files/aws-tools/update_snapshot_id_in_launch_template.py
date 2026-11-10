@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.12
 # Existing script that runs on the instances: these pylint findings are kept as they are,
 # as fixing them would change its code (and possibly its behaviour) beyond the upgrade
 # pylint: disable=bare-except,consider-using-f-string,inconsistent-return-statements,line-too-long,missing-function-docstring,missing-module-docstring,redefined-outer-name

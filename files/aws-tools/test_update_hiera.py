@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.12
 """
 Tests for update_hiera.py, run as schedule-snapshots.sh runs it on the instances:
 as a script on a copy of local.yaml, checking the written file and the exit code.
