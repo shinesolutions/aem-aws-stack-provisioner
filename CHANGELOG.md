@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- Upgrade Puppet module shinesolutions/aem_curator to 5.1.5, which runs generate-artifacts-descriptor.py with python3.12, so dispatcher artifact deployment works on Amazon Linux 2023
+- Run the aws-tools and aem-tools Python scripts with `python3.12`. On Amazon Linux 2023, `python3` is the system Python 3.9, which doesn't have the boto3, requests and retrying packages packer-aem installs for 3.12, so `wait_for_ec2tags.py` failed at boot and every component was tagged `ComponentInitStatus: Failed`. `route53-dns-alias-switch` used `python`, which doesn't exist on Amazon Linux 2023
 
 ## [8.3.1] - 2026-11-09
 ### Fixed

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.12
 # Existing test: these pylint findings are kept as they are, as the upgrade only changes
 # what the moto 5 API move requires
 # pylint: disable=consider-using-f-string,line-too-long,missing-function-docstring,missing-module-docstring,too-many-locals,unused-variable
