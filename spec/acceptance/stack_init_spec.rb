@@ -63,11 +63,6 @@ COMPONENTS = {
     classes: LOGROTATE,
     controls: %w[system-services],
     scheduled_jobs: %w[stack-offline-compaction-snapshot stack-offline-snapshot]
-  },
-  'chaos-monkey' => {
-    classes: LOGROTATE,
-    controls: %w[system-services],
-    scheduled_jobs: []
   }
 }.freeze
 

@@ -31,7 +31,7 @@ clean:
 # - no InSpec version can share a bundle with OpenVox 9 (thor) or r10k 5 (faraday)
 # - InSpec 5+ needs the Chef licence accepted, and 6/7 need licence keys
 # The result is the same tree as before. InSpec is only needed at runtime on the instances, where
-# inspec-aem-aws 4.2.0 expects Cinc InSpec 7.2.1 (an AMI requirement).
+# inspec-aem-aws 4.2.2 expects Cinc InSpec 7.2.1 (an AMI requirement).
 # It is saved to a file before extracting it, so a failed download (curl -f) fails the build instead of
 # being hidden by a pipe; tar --no-same-owner, as root in the buildenv container can't chown files on a
 # macOS bind mount.
@@ -63,11 +63,9 @@ deps-local:
 	rm -rf modules/aem_orchestrator/*
 	rm -rf modules/aem_resources/*
 	rm -rf modules/aem_curator/*
-	rm -rf modules/simianarmy/*
 	cp -R ../puppet-aem-orchestrator/* modules/aem_orchestrator/
 	cp -R ../puppet-aem-resources/* modules/aem_resources/
 	cp -R ../puppet-aem-curator/* modules/aem_curator/
-	cp -R ../puppet-simianarmy/* modules/simianarmy/
 
 # The puppet-lint checks added since puppet-lint 2.5.2 (mostly the Vox Pupuli
 # plugins installed by voxpupuli-test) that report warnings on the manifests

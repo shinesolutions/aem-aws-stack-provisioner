@@ -27,7 +27,7 @@ Learn more about AEM AWS Stack Provisioner:
 Requirements on the instances:
 
 * OpenVox 9 on Amazon Linux 2023 or Rocky Linux 10
-* Cinc InSpec 7.2.1 on Ruby 4, which runs the [InSpec AEM AWS](https://github.com/shinesolutions/inspec-aem-aws) 4.2.0 profile included in the package
+* Cinc InSpec 7.2.1 on Ruby 4, which runs the [InSpec AEM AWS](https://github.com/shinesolutions/inspec-aem-aws) 4.2.2 profile included in the package
 * Java 21 on the orchestrator instance, which runs AEM Orchestrator 5.1.0. Its jar is taken from the stack's data bucket,
   `s3://<data_bucket_name>/<stack_prefix>/aem-orchestrator-5.1.0.jar`, and verified against the SHA-256 checksum in `data/orchestrator.yaml`
 * The AWS CLI, used by the scripts and to download the `s3://` sources
@@ -57,7 +57,6 @@ and the hiera configuration in `conf/hiera.yaml`, as the scripts in this reposit
 | `publish.pp`, `publish-dispatcher.pp` | AEM Full-Set publish and publish dispatcher instances |
 | `preview-publish.pp`, `preview-publish-dispatcher.pp` | AEM Full-Set preview publish and preview publish dispatcher instances, when the preview architecture is enabled |
 | `orchestrator.pp` | AEM Full-Set orchestrator instance |
-| `chaos-monkey.pp` | AEM Full-Set Chaos Monkey instance, when Chaos Monkey is enabled |
 | `author-publish-dispatcher.pp` | AEM Consolidated instance, with author, publish and dispatcher |
 | `pre-common.pp` | Common setup shared by the components |
 | `wait-until-ready.pp` | Waits until the AEM login page is ready and the AEM health check is OK |
@@ -92,7 +91,6 @@ The component manifests result in:
 | `author-dispatcher.pp`, `publish-dispatcher.pp`, `preview-publish-dispatcher.pp` | AEM Dispatcher configured by AEM Curator, its artifacts deployed, the data volume resized, logrotate, and the `enter-standby.sh` and `exit-standby.sh` scripts |
 | `author-publish-dispatcher.pp` | Author, publish and dispatcher configured by AEM Curator, the AEM packages and Dispatcher artifacts deployed, the data volumes resized, and the backup and snapshot scripts |
 | `orchestrator.pp` | AEM Orchestrator installed by [puppet-aem-orchestrator](https://github.com/shinesolutions/puppet-aem-orchestrator), and the stack offline snapshot scripts and messages |
-| `chaos-monkey.pp` | Chaos Monkey installed by [puppet-simianarmy](https://github.com/shinesolutions/puppet-simianarmy) |
 
 `publish.pp` and `preview-publish.pp` first attach their repository volume from a snapshot when a snapshot ID is given.
 `publish-dispatcher.pp` and `preview-publish-dispatcher.pp` also install `aem-tools/content-healthcheck.py`.
@@ -145,8 +143,7 @@ Run the commands below in [AEM Platform BuildEnv](https://github.com/shinesoluti
 
 The component InSpec tests in `test/inspec/` are run on the instances at the end of cloud-init. Besides the component's own services and ports,
 they check that the system services the provisioning relies on are enabled and running: crond, collectd on the AEM components, and awslogs when the AMI has it.
-Their checks are grouped into controls: `aem-*` (AEM and AEM Orchestrator), `java` (the Oracle JDK), `simian-army`, `dispatcher` and
-`system-services`.
+Their checks are grouped into controls: `aem-*` (AEM and AEM Orchestrator), `java` (the Oracle JDK), `dispatcher` and `system-services`.
 
 The acceptance tests ([voxpupuli-acceptance](https://github.com/voxpupuli/voxpupuli-acceptance), Beaker on Docker) provision the package as
 `stack-init.sh` does, without AWS and AEM, so they are the test bed for upgrading OpenVox, Amazon Linux, the Puppet modules and the system packages:

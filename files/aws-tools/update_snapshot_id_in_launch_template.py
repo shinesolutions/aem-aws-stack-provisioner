@@ -65,7 +65,7 @@ def parse_args():
     p.add_argument(
         "--component",
         "-c",
-        metavar="author-dispatcher|author-primary|author-standby|chaos-monkey|orchestrator|publish|publish-dispatcher",
+        metavar="author-dispatcher|author-primary|author-standby|orchestrator|publish|publish-dispatcher",
         required=True,
         help=unwrap(
             """

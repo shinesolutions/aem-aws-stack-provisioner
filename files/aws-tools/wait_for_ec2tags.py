@@ -13,7 +13,6 @@ tag_keys = {
     'author-dispatcher': ['Component', 'StackPrefix', 'AuthorHost', 'ComponentInitStatus'],
     'author-primary': ['Component', 'StackPrefix', 'ComponentInitStatus'],
     'author-standby': ['Component', 'StackPrefix', 'ComponentInitStatus'],
-    'chaos-monkey': ['Component', 'StackPrefix', 'ComponentInitStatus'],
     'orchestrator': ['Component', 'StackPrefix', 'ComponentInitStatus'],
     'publish': ['Component', 'StackPrefix', 'PairInstanceId', 'PublishDispatcherHost', 'SnapshotId', 'ComponentInitStatus'],
     'publish-dispatcher': ['Component', 'StackPrefix', 'PairInstanceId', 'PublishHost', 'ComponentInitStatus'],

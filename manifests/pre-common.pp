@@ -13,7 +13,6 @@ class pre_common (
   $awslogs_service_name,
   $aem_tools_env_path          = '$PATH:/opt/puppetlabs/puppet/bin',
   $extra_packages              = [],
-  $enable_chaos_monkey         = true,
   $enable_preview_architecture = false,
   $template_dir                = undef,
   $file_dir                    = undef,
@@ -240,7 +239,6 @@ class pre_common (
       {
         'aem_tools_env_path'          => $aem_tools_env_path,
         'base_dir'                    => $base_dir,
-        'enable_chaos_monkey'         => $enable_chaos_monkey,
         'enable_preview_architecture' => $enable_preview_architecture,
         'aws_region'                  => $aws_region,
       }
