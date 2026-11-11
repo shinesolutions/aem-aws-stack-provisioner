@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - The system users credentials are read from AWS Secrets Manager secret `aem-opencloud/<stack_prefix>/system-users-credentials` (new hiera key `common::credentials_secret_id`) instead of `system-users-credentials.json` in the data bucket, by pre-common, `common::aem_password_retrieval_command` and AEM Orchestrator
 - Make the GitHub Actions workflows' GITHUB_TOKEN read-only, and create the GitHub release in the publish workflow with SHINEOPENSOURCE_GITHUB_TOKEN
+- Upgrade AEM Orchestrator to 6.0.0, which reads the AEM credentials from AWS Secrets Manager
 
 ## [8.3.0] - 2026-11-06
 ### Changed
