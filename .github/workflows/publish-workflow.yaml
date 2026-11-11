@@ -4,6 +4,10 @@ name: Publish
   push:
     tags:
       - '*'
+# GITHUB_TOKEN is read-only; workflows that write to the repository use
+# SHINEOPENSOURCE_GITHUB_TOKEN instead
+permissions:
+  contents: read
 jobs:
   build:
     runs-on: ubuntu-26.04
@@ -20,4 +24,5 @@ jobs:
           command: |
             make clean deps lint package publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # gh creates the GitHub release, which the read-only GITHUB_TOKEN can't
+          GITHUB_TOKEN: ${{ secrets.SHINEOPENSOURCE_GITHUB_TOKEN }}
