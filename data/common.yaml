@@ -39,6 +39,9 @@ common::tmp_base_dir: /tmp/shinesolutions
 common::tmp_dir: /tmp/shinesolutions/aem-aws-stack-provisioner
 common::puppet_conf_dir: /etc/puppetlabs/puppet/
 common::credentials_file: system-users-credentials.json
+# The AWS Secrets Manager secret aem-aws-stack-builder creates with the stack's system users credentials (previously
+# system-users-credentials.json in the data bucket). credentials_file is now only the name of its copy in tmp_dir
+common::credentials_secret_id: "aem-opencloud/%{::stack_prefix}/system-users-credentials"
 # TODO: Amazon Linux 2023 has no awslogs (deprecated in Amazon Linux 2, replaced by amazon-cloudwatch-agent), so the
 # component manifests skip it, as awslogs_config_path doesn't exist. Switch update_awslogs, the publish and
 # preview-publish snapshot steps and the InSpec check to amazon-cloudwatch-agent, with packer-aem baking its config.
@@ -47,7 +50,7 @@ common::awslogs_service_name: awslogs
 common::awslogs_config_path: /etc/awslogs/awslogs.conf
 common::aws_tags: "%{alias('common::aws_tags')}"
 
-common::aem_password_retrieval_command: "aws s3 cp s3://%{::data_bucket_name}/%{::stack_prefix}/system-users-credentials.json - | jq --raw-output .$aem_username"
+common::aem_password_retrieval_command: "aws secretsmanager get-secret-value --region %{lookup('common::aws_region')} --secret-id %{lookup('common::credentials_secret_id')} --query SecretString --output text | jq --raw-output .$aem_username"
 
 common::aem_base: /opt
 
@@ -95,6 +98,7 @@ pre_common::awslogs_service_name: "%{lookup('common::awslogs_service_name')}"
 pre_common::user: "%{lookup('common::user')}"
 pre_common::group: "%{lookup('common::group')}"
 pre_common::credentials_file: "%{lookup('common::credentials_file')}"
+pre_common::credentials_secret_id: "%{lookup('common::credentials_secret_id')}"
 pre_common::log_dir: "%{lookup('common::log_dir')}"
 pre_common::enable_preview_architecture: "%{lookup('preview_publish::include_stack')}"
 pre_common::ssh_public_keys: "%{alias('common::ssh_public_keys')}"
