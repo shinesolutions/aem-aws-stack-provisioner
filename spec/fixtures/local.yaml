@@ -324,26 +324,6 @@ aem_orchestrator::jarfile_checksum_value: 133ad0f9a6c083701b2531b677a4458ebe021a
 orchestrator::enable_cloudwatch_s3_stream: False
 action_scheduled_jobs::cloudwatch_log_subscription_arn: overwrite-me
 
-# Common Chaos Monkey configuration parameters
-chaos_monkey::simian_army_version: '2.5.3'
-chaos_monkey::asg_probability: '1.0'
-chaos_monkey::asg_max_terminations_per_day: '1.0'
-chaos_monkey::orchestrator_enable_random_termination: True
-chaos_monkey::chaos_monkey_enable_random_termination: True
-chaos_monkey::publish_enable_random_termination: True
-chaos_monkey::preview_publish_enable_random_termination: False
-chaos_monkey::publish_dispatcher_enable_random_termination: True
-chaos_monkey::preview_publish_dispatcher_enable_random_termination: False
-chaos_monkey::author_dispatcher_enable_random_termination: True
-chaos_monkey::include_stack: True
-simianarmy::simianarmy_properties::simianarmy_calendar_open_hour: '9'
-simianarmy::simianarmy_properties::simianarmy_calendar_close_hour: '15'
-simianarmy::simianarmy_properties::simianarmy_calendar_timezone: 'Australia/Sydney'
-simianarmy::simianarmy_properties::simianarmy_scheduler_frequency_in_minutes: '5'
-simianarmy::chaos_properties::simianarmy_chaos_asg_probability: '1.0'
-simianarmy::chaos_properties::simianarmy_chaos_asg_max_terminations_per_day: '1.0'
-
-
 # AEM Tools configuration parameters
 aem_curator::config_aem_tools::oak_run_version: '1.8.3'
 aem_curator::config_aem_tools::aem_vlt_version: '3.7.0'
@@ -472,10 +452,6 @@ preview_publish_dispatcher::logrotation:
           postrotate: /bin/systemctl reload httpd.service > /dev/null 2>/dev/null||true
 
 aem_orchestrator::logrotation:
-  config: null
-  rules: null
-
-simianarmy::logrotation:
   config: null
   rules: null
 

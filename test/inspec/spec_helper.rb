@@ -1,9 +1,9 @@
 # facter and hiera aren't required at the top any more: facter 4 needs thor < 1.3 but Cinc InSpec 7 ships thor 1.4,
 # so `require 'facter'` failed every spec before it ran (and nothing used it), and hiera isn't part of Cinc InSpec.
-# hiera is only required by init_conf, whose use is disabled (see chaos-monkey_spec.rb)
+# hiera is only required by init_conf, which no spec uses at the moment
 
 # Each component spec groups its checks into controls, so they can be selected with `inspec exec --controls`:
-# aem-* (AEM and AEM Orchestrator), java (the Oracle JDK), simian-army, dispatcher and system-services.
+# aem-* (AEM and AEM Orchestrator), java (the Oracle JDK), dispatcher and system-services.
 # stack-init.sh runs all of them; the acceptance tests (spec/acceptance) run dispatcher and system-services,
 # as AEM, the Oracle JDK and the AWS services the others need aren't available there.
 
