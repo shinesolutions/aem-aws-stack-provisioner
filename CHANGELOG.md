@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [9.0.0] - 2026-11-12
 ### Changed
 - The readiness test (`test-readiness.sh`) no longer depends on Chaos Monkey: it runs the InSpec AEM AWS `test-provisioning-readiness` or `test-provisioning-readiness-with-enabled-preview-architecture` target, chosen only by preview #AOC-I231
 - Upgrade the InSpec AEM AWS profile to inspec-aem-aws 4.3.0, which no longer checks Chaos Monkey and removes the `-with-disabled-chaosmonkey` targets #AOC-I231
@@ -1007,7 +1007,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#225]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/225
 [#236]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/236
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.3.2...HEAD
+[9.0.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.3.2...9.0.0
 [8.3.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.3.1...8.3.2
 [8.3.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.3.0...8.3.1
 [8.3.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.2.0...8.3.0
