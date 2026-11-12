@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.12
 # Existing script that runs on the instances: these pylint findings are kept as they are,
 # as fixing them would change its code (and possibly its behaviour) beyond the upgrade
 # pylint: disable=duplicate-code,bare-except,consider-using-f-string,invalid-name,line-too-long,logging-not-lazy,missing-class-docstring,missing-function-docstring,missing-module-docstring,multiple-imports,raise-missing-from,redefined-outer-name,unspecified-encoding,unused-import,useless-object-inheritance,wrong-import-order

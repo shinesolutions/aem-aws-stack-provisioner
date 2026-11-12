@@ -9,6 +9,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Make the GitHub Actions workflows' GITHUB_TOKEN read-only, and create the GitHub release in the publish workflow with SHINEOPENSOURCE_GITHUB_TOKEN
 - Upgrade AEM Orchestrator to 6.0.0, which reads the AEM credentials from AWS Secrets Manager
 
+## [8.3.2] - 2026-11-10
+### Fixed
+- Upgrade Puppet module shinesolutions/aem_curator to 5.1.5, which runs generate-artifacts-descriptor.py with python3.12, so dispatcher artifact deployment works on Amazon Linux 2023
+- Run the aws-tools and aem-tools Python scripts with `python3.12`. On Amazon Linux 2023, `python3` is the system Python 3.9, which doesn't have the boto3, requests and retrying packages packer-aem installs for 3.12, so `wait_for_ec2tags.py` failed at boot and every component was tagged `ComponentInitStatus: Failed`. `route53-dns-alias-switch` used `python`, which doesn't exist on Amazon Linux 2023
+
+## [8.3.1] - 2026-11-09
+### Fixed
+- Upgraded Puppet module shinesolutions/aem_curator to 5.1.4, which sends export-backups package filters to AEM as JSON, fixing export-packages on OpenVox 9 (Ruby 4)
+
 ## [8.3.0] - 2026-11-06
 ### Changed
 - Upgraded Puppet module shinesolutions/aem_resources to 8.1.0, which uses ruby_aem 4.2.0 with swagger_aem 4.1.0 and swagger_aem_osgi 2.1.0
@@ -987,7 +996,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#225]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/225
 [#236]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/236
 
-[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.3.0...HEAD
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.3.2...HEAD
+[8.3.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.3.1...8.3.2
+[8.3.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.3.0...8.3.1
 [8.3.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.2.0...8.3.0
 [8.2.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.1.1...8.2.0
 [8.1.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.1.0...8.1.1
