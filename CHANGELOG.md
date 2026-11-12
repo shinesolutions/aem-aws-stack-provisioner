@@ -4,11 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- The system users credentials are read from AWS Secrets Manager secret `aem-opencloud/<stack_prefix>/system-users-credentials` (new hiera key `common::credentials_secret_id`) instead of `system-users-credentials.json` in the data bucket, by pre-common, `common::aem_password_retrieval_command` and AEM Orchestrator
+- Make the GitHub Actions workflows' GITHUB_TOKEN read-only, and create the GitHub release in the publish workflow with SHINEOPENSOURCE_GITHUB_TOKEN
+- Upgrade AEM Orchestrator to 6.0.0, which reads the AEM credentials from AWS Secrets Manager
+- Upgrade Puppet module shinesolutions/aem_orchestrator to 4.0.0, which has the `aem_credentials_secretsmanager_*` parameters and defaults to AEM Orchestrator 6.0.0
+- Upgrade Puppet module shinesolutions/aem_curator to 6.0.0, whose content sync reads the source stack's credentials from AWS Secrets Manager
+- Update the other development and test gems in Gemfile.lock to the latest versions the Gemfile allows, including OpenVox 9.3.0 and beaker 7.8.4 (json stays on 2.x, as OpenVox 9 doesn't work with json 3)
+
 ### Fixed
 - Upgrade the development gem nokogiri to 1.19.7, fixing Dependabot alerts GHSA-3w22-6jfg-527w, GHSA-v995-44v6-5fqm and GHSA-4p39-36wj-23h4
-
-### Changed
-- Update the other development and test gems in Gemfile.lock to the latest versions the Gemfile allows, including OpenVox 9.3.0 and beaker 7.8.4 (json stays on 2.x, as OpenVox 9 doesn't work with json 3)
 
 ## [8.3.2] - 2026-11-10
 ### Fixed
