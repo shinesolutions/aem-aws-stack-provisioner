@@ -111,8 +111,8 @@ def enable_ipv6_loopback(host)
 end
 
 # What stack-init.sh does before applying the manifests: unpack the package, add the stack's hiera data
-# (data/local.yaml) and facts. The credentials file is created in place of pre-common.pp's download from
-# the data bucket, which puppet-archive then skips as the file exists
+# (data/local.yaml) and facts. The credentials file is created in place of pre-common.pp's retrieval from
+# AWS Secrets Manager, which its exec then skips as the file exists
 def install_provisioner(host)
   scp_to(host, provisioner_package, '/tmp/aem-aws-stack-provisioner.tar.gz')
   on(host, "mkdir -p #{PROVISIONER_DIR} && tar -xzf /tmp/aem-aws-stack-provisioner.tar.gz -C #{PROVISIONER_DIR} " \
