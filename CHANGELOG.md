@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixed
 - Upgrade the development gem nokogiri to 1.19.7, fixing Dependabot alerts GHSA-3w22-6jfg-527w, GHSA-v995-44v6-5fqm and GHSA-4p39-36wj-23h4
 
+### Changed
+- Update the other development and test gems in Gemfile.lock to the latest versions the Gemfile allows, including OpenVox 9.3.0 and beaker 7.8.4 (json stays on 2.x, as OpenVox 9 doesn't work with json 3)
+
 ## [8.3.2] - 2026-11-10
 ### Fixed
 - Upgrade Puppet module shinesolutions/aem_curator to 5.1.5, which runs generate-artifacts-descriptor.py with python3.12, so dispatcher artifact deployment works on Amazon Linux 2023
