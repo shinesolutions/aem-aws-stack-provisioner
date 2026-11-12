@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Make the GitHub Actions workflows' GITHUB_TOKEN read-only, and create the GitHub release in the publish workflow with SHINEOPENSOURCE_GITHUB_TOKEN
 - Upgrade AEM Orchestrator to 6.0.0, which reads the AEM credentials from AWS Secrets Manager
 - Upgrade Puppet module shinesolutions/aem_orchestrator to 4.0.0, which has the `aem_credentials_secretsmanager_*` parameters and defaults to AEM Orchestrator 6.0.0
+- Upgrade Puppet module shinesolutions/aem_curator to 6.0.0, whose content sync reads the source stack's credentials from AWS Secrets Manager
 
 ## [8.3.2] - 2026-11-10
 ### Fixed
