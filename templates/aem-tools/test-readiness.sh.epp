@@ -20,22 +20,20 @@ if [ ${component} = 'author-publish-dispatcher' ]; then
   #   aem_stack_prefix="${stack_prefix}" \
   #   test-successful-provisioning-author-publish-dispatcher
 elif [ ${component} = 'orchestrator' ]; then
-  # Uses the -with-disabled-chaosmonkey targets: in InSpec AEM AWS 4.2.2 the plain targets still check
-  # Chaos Monkey, and later versions keep these targets as aliases of the plain ones
   case $enable_preview_architecture in
     'true')
       echo "Testing if AEM Full-Set with enabled Preview components is ready using InSpec..."
       cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
       HOME=/root \
         aem_stack_prefix="${stack_prefix}" \
-        make test-provisioning-readiness-with-disabled-chaosmonkey-with-enabled-preview-architecture
+        make test-provisioning-readiness-with-enabled-preview-architecture
       ;;
     *)
       echo "Testing if AEM Full-Set is ready using InSpec..."
       cd "<%= $base_dir %>/aem-tools/test/inspec/inspec-aem-aws"
       HOME=/root \
         aem_stack_prefix="${stack_prefix}" \
-        make test-provisioning-readiness-with-disabled-chaosmonkey
+        make test-provisioning-readiness
       ;;
   esac
 else

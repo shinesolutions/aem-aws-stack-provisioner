@@ -5,7 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 ### Changed
-- The readiness test (`test-readiness.sh`) no longer depends on Chaos Monkey: it always runs the InSpec AEM AWS `test-provisioning-readiness-with-disabled-chaosmonkey` targets, with or without preview. These don't check Chaos Monkey in InSpec AEM AWS 4.2.2, and later versions keep them as aliases of the plain targets #AOC-I231
+- The readiness test (`test-readiness.sh`) no longer depends on Chaos Monkey: it runs the InSpec AEM AWS `test-provisioning-readiness` or `test-provisioning-readiness-with-enabled-preview-architecture` target, chosen only by preview #AOC-I231
+- Upgrade the InSpec AEM AWS profile to inspec-aem-aws 4.3.0, which no longer checks Chaos Monkey and removes the `-with-disabled-chaosmonkey` targets #AOC-I231
 
 ### Removed
 - Remove the Chaos Monkey component, replaced by the AEM Chaos Engine in AEM AWS Stack Builder: `manifests/chaos-monkey.pp`, `data/chaos-monkey.yaml`, its InSpec spec (`simian-army` control), the `shinesolutions/simianarmy` Puppet module, the `simianarmy::*` hiera data and the `pre_common::enable_chaos_monkey` parameter. The provisioner no longer reads `chaos_monkey::include_stack`. **Upgrade note:** this version requires AEM AWS Stack Builder 10.0.0 or later, or `chaos_monkey.include_stack: false` with earlier versions: an environment with a Chaos Monkey instance fails to provision with this version #AOC-I231
