@@ -22,5 +22,5 @@ jobs:
           command: |
             make clean deps lint package publish
         env:
-          # gh creates the GitHub release, which the read-only GITHUB_TOKEN can't
+          # gh creates the GitHub release; the read-only GITHUB_TOKEN can't
           GITHUB_TOKEN: ${{ secrets.SHINEOPENSOURCE_GITHUB_TOKEN }}
