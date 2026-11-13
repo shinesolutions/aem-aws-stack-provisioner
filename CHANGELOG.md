@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
 ## [9.0.1] - 2026-11-13
 ### Changed
 - Upgrade Puppet module shinesolutions/aem_curator to 6.0.1, which adds the `aem65_sp26` profile (AEM 6.5 Service Pack 26). Its module dependencies are the same as 6.0.0
@@ -1011,6 +1013,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [#225]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/225
 [#236]: https://github.com/shinesolutions/aem-aws-stack-provisioner/issues/236
 
+[Unreleased]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/9.0.1...HEAD
 [9.0.1]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/9.0.0...9.0.1
 [9.0.0]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.3.2...9.0.0
 [8.3.2]: https://github.com/shinesolutions/aem-aws-stack-provisioner/compare/8.3.1...8.3.2
