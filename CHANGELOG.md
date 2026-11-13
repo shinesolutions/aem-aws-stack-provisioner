@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 ### Changed
-- Pin Puppet module shinesolutions/aem_curator to branch chore/aem-65-sp26 of puppet-aem-curator for AEM 6.5 SP26 testing (temporary)
+- Upgrade Puppet module shinesolutions/aem_curator to 6.0.1, which adds the `aem65_sp26` profile (AEM 6.5 Service Pack 26). Its module dependencies are the same as 6.0.0
 
 ## [9.0.0] - 2026-11-12
 ### Changed
