@@ -17,6 +17,6 @@ mod 'puppetlabs/stdlib', '9.7.0'
 # 9.4.0 is the latest version puppet-logrotate 9.0.0 allows (< 10.0.0), as in aem_curator's tests
 mod 'puppet/systemd', '9.4.0'
 mod 'puppet-yum', '8.3.0'
-mod 'shinesolutions/aem_curator', '6.0.0'
+mod 'shinesolutions/aem_curator', '6.0.1'
 mod 'shinesolutions/aem_orchestrator', '4.0.0'
 mod 'shinesolutions/aem_resources', '8.1.0'
