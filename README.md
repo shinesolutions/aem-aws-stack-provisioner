@@ -1,4 +1,5 @@
 [![Build Status](https://github.com/shinesolutions/aem-aws-stack-provisioner/workflows/CI/badge.svg)](https://github.com/shinesolutions/aem-aws-stack-provisioner/actions?query=workflow%3ACI)
+[![Code Scanning Status](https://github.com/shinesolutions/aem-aws-stack-provisioner/workflows/CodeQL/badge.svg)](https://github.com/shinesolutions/aem-aws-stack-provisioner/actions?query=workflow%3ACodeQL)
 [![Known Vulnerabilities](https://snyk.io/test/github/shinesolutions/aem-aws-stack-provisioner/badge.svg)](https://snyk.io/test/github/shinesolutions/aem-aws-stack-provisioner)
 
 # AEM AWS Stack Provisioner
