@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 ### Changed
+- Upgrade AEM Platform BuildEnv to 6.6.0
 - Speed up CI: skip CI for release tags, same-repo pull requests and version bump commits, cancel superseded branch runs, and add job timeouts
 
 ## [9.0.1] - 2026-11-13
