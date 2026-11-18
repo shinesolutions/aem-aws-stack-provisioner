@@ -1,4 +1,4 @@
-version ?= 9.0.2-pre.0
+version ?= 9.0.2
 
 ci: clean deps lint test acceptance package
 
