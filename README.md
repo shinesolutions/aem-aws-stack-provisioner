@@ -127,7 +127,7 @@ What isn't checked:
 
 AEM AWS Stack Provisioner targets OpenVox 9 on Amazon Linux 2023 and Rocky Linux 10.
 
-Run the commands below in [AEM Platform BuildEnv](https://github.com/shinesolutions/aem-platform-buildenv) (`shinesolutions/aem-platform-buildenv:6.6.0`), as CI does:
+Run the commands below in [AEM Platform BuildEnv](https://github.com/shinesolutions/aem-platform-buildenv) (`shinesolutions/aem-platform-buildenv:6.7.0`), as CI does:
 
 | Command | Runs |
 | --- | --- |
